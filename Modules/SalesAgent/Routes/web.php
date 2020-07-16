@@ -11,6 +11,4 @@
 |
 */
 
-Route::prefix('salesagent')->group(function() {
-    Route::get('/', 'SalesAgentController@index');
-});
+Route::resource('salesagent', 'SalesAgentController')->except(['show']);

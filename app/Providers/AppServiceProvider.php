@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('path.public', function() {
             return base_path();
         });
+
+        require __DIR__.'/../Helpers.php';
     }
 
     /**
