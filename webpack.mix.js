@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,26 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.setPublicPath('/')
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css');
+
+mix.babelConfig({
+  plugins: [
+    '@babel/plugin-syntax-dynamic-import'
+  ]
+});
+
+if (mix.inProduction()) {
+    mix.disableNotifications();
+    mix.version();
+}
+
+mix.webpackConfig({
+    plugins: [
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    ],
+    output: {
+        chunkFilename: mix.inProduction() ? 'public/dist/[name].[chunkhash].js' : 'public/chunks/[name].[chunkhash].js',
+    }
+});
