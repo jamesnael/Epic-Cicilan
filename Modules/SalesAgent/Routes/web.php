@@ -11,4 +11,5 @@
 |
 */
 
+Route::get('salesagent/table', 'SalesAgentController@table')->name('table');
 Route::resource('salesagent', 'SalesAgentController')->except(['show']);

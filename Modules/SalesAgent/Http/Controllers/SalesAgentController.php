@@ -17,7 +17,82 @@ class SalesAgentController extends Controller
      */
     public function index()
     {
-        return view('salesagent::index');
+        $this->breadcrumbs[] = ['url' => route('salesagent.index'), 'title' => 'Data Sales Agency'];
+
+        return view('salesagent::index', [
+            'page' => $this,
+        ]);
+    }
+
+    /**
+     *
+     * Validation Rules for Get Table Data
+     *
+     */
+    public function validateTableRequest($request)
+    {
+        return Validator::make($request->all(), [
+            "params" => "bail|required",
+            "params.paginate" => "bail|required|numeric|in:10,25,50,100",
+            "params.query" => "bail|required",
+            "params.query.generalSearch" => "bail|present|nullable",
+            "params.query.formFilter" => "bail|present|array",
+            "params.query.formFilter.*.column" => ["bail", "required_with_all:params.query.formFilter.*.value"],
+            "params.query.formFilter.*.value" => ["bail", "required_with_all:params.query.formFilter.*.column"],
+            "params.sort" => "bail|required|array|min:1",
+            "params.sort.*.column" => ["bail", "required"],
+            "params.sort.*.value" => "bail|required|in:asc,desc",
+        ]);
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableData(Request $request)
+    {
+        $query = Agency::query();
+
+        if ($request->input('params')['query']['generalSearch']) {
+            $generalSearch = $request->input('params')['query']['generalSearch'];
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('agency_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('params')['query']['formFilter'] as $search_key => $search) {
+            $query->where($search['column'], 'LIKE', '%' . $search['value'] . '%');
+        }
+
+        foreach ($request->input('params')['sort'] as $sort_key => $sort) {
+            $query->orderBy($sort['column'], $sort['value']);
+        }
+
+        return $query->paginate($request->input('params')['paginate']);
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function table(Request $request)
+    {
+        $request->merge(['params' => json_decode($request->input('params'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**
