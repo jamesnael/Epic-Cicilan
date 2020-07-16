@@ -14,8 +14,7 @@ Vue.use(VueRouter)
 Vue.use(Vuetify);
 
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
+Vue.component('base-layout', require('./components/BaseLayout.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
