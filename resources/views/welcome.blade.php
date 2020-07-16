@@ -10,91 +10,50 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <link href="{{ mix('public/css/app.css') }}?t={{date('Ymd')}}" rel="stylesheet">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+        <div id="page-content">
+            <example-component inline-template>
+                <v-app id="sandbox">
+                    <v-navigation-drawer
+                      v-model="primaryDrawer.model"
+                      :clipped="primaryDrawer.clipped"
+                      :floating="primaryDrawer.floating"
+                      :mini-variant="primaryDrawer.mini"
+                      :permanent="primaryDrawer.type === 'permanent'"
+                      :temporary="primaryDrawer.type === 'temporary'"
+                      app
+                      overflow
+                    ></v-navigation-drawer>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                    <v-app-bar
+                      :clipped-left="primaryDrawer.clipped"
+                      app
+                    >
+                      <v-app-bar-nav-icon
+                        v-if="primaryDrawer.type !== 'permanent'"
+                        @click.stop="primaryDrawer.model = !primaryDrawer.model"
+                      ></v-app-bar-nav-icon>
+                      <v-toolbar-title>Vuetify</v-toolbar-title>
+                    </v-app-bar>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                    <v-main>
+                      <v-container fluid>
+                        @yield('content')
+                      </v-container>
+                    </v-main>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+                    <v-footer
+                      :inset="footer.inset"
+                      app
+                    >
+                      <span class="px-4">&copy; @{{ new Date().getFullYear() }}</span>
+                    </v-footer>
+                  </v-app>
+            </example-component>
         </div>
+
+        <script src="{{ mix('public/js/app.js') }}?t={{date('Ymd')}}"></script>
     </body>
 </html>
