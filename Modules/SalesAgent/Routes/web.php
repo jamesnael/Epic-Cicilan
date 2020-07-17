@@ -11,5 +11,7 @@
 |
 */
 
-Route::get('salesagent/table', 'SalesAgentController@table')->name('table');
-Route::resource('salesagent', 'SalesAgentController')->except(['show']);
+Route::group(['namespace' => 'Agency'], function() {
+	Route::get('agencies/table', 'AgencyController@table')->name('agencies.table');
+	Route::resource('agencies', 'AgencyController')->except(['show']);
+});

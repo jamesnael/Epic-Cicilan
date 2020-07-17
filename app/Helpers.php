@@ -99,39 +99,3 @@ if (! function_exists('get_available_routes')) {
         return $routes = array_values($filtered->all());
     }
 }
-
-if (! function_exists('user_cluster_id')) {
-    function user_cluster_id() {
-        if (\Auth::user()) {
-            $data = \Auth::user()->load('resident.units.unit.cluster');
-            $cluster_id = collect($data->resident->units ?? [])->pluck('unit.cluster_id')->values();
-
-            return $cluster_id;
-        }
-        return [];
-    }
-}
-
-if (! function_exists('user_project_id')) {
-    function user_project_id() {
-        if (\Auth::user()) {
-            $data = \Auth::user()->load('resident.units.unit.cluster');
-            $project_id = collect($data->resident->units ?? [])->pluck('unit.cluster.project_id')->values();
-
-            return $project_id;
-        }
-        return [];
-    }
-}
-
-if (! function_exists('user_unit_id')) {
-    function user_unit_id() {
-        if (\Auth::user()) {
-            $data = \Auth::user()->load('resident.units.unit.cluster');
-            $unit_id = collect($data->resident->units ?? [])->pluck('unit_id')->values();
-
-            return $unit_id;
-        }
-        return [];
-    }
-}

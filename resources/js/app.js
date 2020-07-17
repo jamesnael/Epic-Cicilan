@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import Vuetify from 'vuetify';
 
 require('./bootstrap');
+require('./v-mixins');
 
 window.Vue = require('vue');
 
@@ -15,6 +16,7 @@ Vue.use(Vuetify);
 
 
 Vue.component('base-layout', require('./components/BaseLayout.vue').default);
+Vue.component('table-layout', () => import('./components/Table.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
