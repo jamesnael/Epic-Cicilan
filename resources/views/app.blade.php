@@ -15,7 +15,8 @@
 	<body>
 		
 		<div id="page-content">
-			<base-layout inline-template>
+			<base-layout inline-template
+				:items='@json(aside_menu())'>
 				<v-app id="content">
 				    <v-navigation-drawer
 				        v-model="drawer"
@@ -80,6 +81,7 @@
 				                    :key="item.text"
 				                    v-model="item.model"
 				                    link
+				                    :href="item.uri"
 				                    color="primary"
 				                >
 				                    <v-list-item-action>

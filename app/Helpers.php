@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 if (! function_exists('format_money')) {
     function format_money($value=0)
@@ -97,5 +98,46 @@ if (! function_exists('get_available_routes')) {
         });
 
         return $routes = array_values($filtered->all());
+    }
+}
+
+if (! function_exists('aside_menu')) {
+    function aside_menu()
+    {
+        return [
+            [
+                'icon' => 'mdi-contacts',
+                'text' => 'Agensi',
+                'uri' => route('agencies.index'),
+                'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
+            ]
+            // { icon: 'mdi-contacts', text: 'Contacts' },
+            // { icon: 'mdi-history', text: 'Frequently contacted', model: true },
+            // { icon: 'mdi-content-copy', text: 'Duplicates' },
+            // {
+            //     icon: 'mdi-chevron-up',
+            //     'icon-alt': 'mdi-chevron-down',
+            //     text: 'Labels',
+            //     model: true,
+            //     children: [
+            //         { icon: 'mdi-plus', text: 'Create label', model: false },
+            //         { icon: 'mdi-plus', text: 'Create label', model: true },
+            //     ],
+            // },
+            // {
+            //     icon: 'mdi-chevron-up',
+            //     'icon-alt': 'mdi-chevron-down',
+            //     text: 'Labels',
+            //     model: false,
+            //     children: [
+            //         { icon: 'mdi-plus', text: 'Create label', model: false },
+            //     ],
+            // },
+            // { icon: 'mdi-cog', text: 'Settings' },
+            // { icon: 'mdi-message', text: 'Send feedback' },
+            // { icon: 'mdi-help-circle', text: 'Help' },
+            // { icon: 'mdi-cellphone-link', text: 'App downloads' },
+            // { icon: 'mdi-keyboard', text: 'Go to the old version' },
+        ];
     }
 }
