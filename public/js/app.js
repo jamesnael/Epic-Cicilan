@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"036ac2542f87c8772ac8"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"036ac2542f87c8772ac8","1":"80c1949213cab36c5b26","2":"bdd2897ab384b007243c"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -200,6 +200,19 @@
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./Modules/SalesAgent/Resources/js/app.js":
+/*!************************************************!*\
+  !*** ./Modules/SalesAgent/Resources/js/app.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+Vue.component('salesagent-agency-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+});
+
+/***/ }),
 
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
@@ -85250,11 +85263,14 @@ Vue.component('base-layout', __webpack_require__(/*! ./components/BaseLayout.vue
 Vue.component('table-layout', function () {
   return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
 });
+
+__webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history'
@@ -85364,8 +85380,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ziggy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ziggy */ "./resources/js/ziggy.js");
 /* harmony import */ var _vendor_tightenco_ziggy_src_js_route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../vendor/tightenco/ziggy/src/js/route */ "./vendor/tightenco/ziggy/src/js/route.js");
-/* harmony import */ var moment_locale_id__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment/locale/id */ "./node_modules/moment/locale/id.js");
-/* harmony import */ var moment_locale_id__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment_locale_id__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment_locale_id__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/id */ "./node_modules/moment/locale/id.js");
+/* harmony import */ var moment_locale_id__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_id__WEBPACK_IMPORTED_MODULE_2__);
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
@@ -85440,6 +85456,11 @@ var Ziggy = {
   namedRoutes: {
     "agencies.table": {
       "uri": "agencies\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "agencies.data": {
+      "uri": "agencies\/{agency}\/data",
       "methods": ["GET", "HEAD"],
       "domain": null
     },

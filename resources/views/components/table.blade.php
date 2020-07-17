@@ -152,7 +152,7 @@
         multi-line
         :color="tableAlertState"
         elevation="5"
-        timeout="10000"
+        timeout="6000"
     >
     	@{{ tableAlertText }}
 

@@ -13,5 +13,6 @@
 
 Route::group(['namespace' => 'Agency'], function() {
 	Route::get('agencies/table', 'AgencyController@table')->name('agencies.table');
+	Route::get('agencies/{agency}/data', 'AgencyController@data')->name('agencies.data');
 	Route::resource('agencies', 'AgencyController')->except(['show']);
 });

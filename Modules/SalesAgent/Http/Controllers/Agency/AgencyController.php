@@ -166,16 +166,12 @@ class AgencyController extends Controller
     public function validateTableRequest($request)
     {
         return Validator::make($request->all(), [
-            "params" => "bail|required",
-            "params.paginate" => "bail|required|numeric|in:10,25,50,100",
-            "params.query" => "bail|required",
-            "params.query.generalSearch" => "bail|present|nullable",
-            "params.query.formFilter" => "bail|present|array",
-            "params.query.formFilter.*.column" => ["bail", "required_with_all:params.query.formFilter.*.value"],
-            "params.query.formFilter.*.value" => ["bail", "required_with_all:params.query.formFilter.*.column"],
-            "params.sort" => "bail|required|array|min:1",
-            "params.sort.*.column" => ["bail", "required"],
-            "params.sort.*.value" => "bail|required|in:asc,desc",
+            "page" => "bail|required|numeric|min:1",
+            "search" => "bail|present|nullable",
+            "paginate" => "bail|required|numeric|in:5,10,15,-1",
+            "sort" => "bail|present|array",
+            "sort.*[0]" => "bail|required",
+            "sort.*[1]" => "bail|required|boolean",
         ]);
     }
 
@@ -216,14 +212,28 @@ class AgencyController extends Controller
     {
         $request->merge(['sort' => json_decode($request->input('sort'), true)]);
 
-        // $validator = $this->validateTableRequest($request);
+        $validator = $this->validateTableRequest($request);
 
-        // if ($validator->fails()) {
-        //     return response_json(false, 'Isian form salah', $validator->errors()->first());
-        // }
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Handle incoming request for specific data
+     *
+     */
+    public function data(Agency $agency)
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $agency);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
@@ -237,22 +247,22 @@ class AgencyController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "agency_name" => "bail|required|max:255",
+            "agency_name" => "bail|required|string|max:255",
             "agency_email" => "bail|required|required|email",
             "agency_phone" => "bail|required|numeric",
-            "agency_address" => "bail|required",
-            "province" => "bail|required|max:255",
-            "city" => "bail|required|max:255",
+            "agency_address" => "bail|nullable|string|max:255",
+            "province" => "bail|nullable|max:255",
+            "city" => "bail|nullable|max:255",
         ], [
-            "agency_name.required" => __('validation.required', ['attribute' => 'nama agensi']),
-            "agency_name.max" => __('validation.max.string', ['attribute' => 'nama agensi', 'max' => '255']),
-            "agency_phone.required" => __('validation.required', ['attribute' => 'nomor telepon']),
-            "agency_phone.numeric" => __('validation.numeric', ['attribute' => 'nomor telepon']),
-            "agency_email.required" => __('validation.required', ['attribute' => 'alamat e-mail']),
-            "agency_email.email" => __('validation.email', ['attribute' => 'alamat e-mail']),
-            "agency_address.required"=> __('validation.required', ['attribute' => 'alamat agensi']),
-            "province.required"=> __('validation.required', ['attribute' => 'provinsi']),
-            "city.required"=> __('validation.required', ['attribute' => 'kota']),
+            // "agency_name.required" => __('salesagent::validation.required'),
+            // "agency_name.max" => __('salesagent::validation.max.string'),
+            // "agency_phone.required" => __('salesagent::validation.required'),
+            // "agency_phone.numeric" => __('salesagent::validation.numeric'),
+            // "agency_email.required" => __('salesagent::validation.required'),
+            // "agency_email.email" => __('salesagent::validation.email'),
+            // "agency_address.required"=> __('salesagent::validation.required'),
+            // "province.required"=> __('salesagent::validation.required'),
+            // "city.required"=> __('salesagent::validation.required'),
         ]);
     }
 }

@@ -7,10 +7,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-		@yield('styles')
 		<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
 
 		<link href="{{ mix('public/css/app.css') }}?t={{date('Ymd')}}" rel="stylesheet">
+		@yield('styles')
 	</head>
 	<body>
 		
@@ -137,7 +137,7 @@
 			</base-layout>
 		</div>
 		
-		@yield('scripts')
 		<script src="{{ mix('public/js/app.js') }}?t={{date('Ymd')}}"></script>
+		@yield('scripts')
 	</body>
 </html>
