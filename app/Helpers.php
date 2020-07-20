@@ -110,6 +110,12 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Agensi',
                 'uri' => route('agencies.index'),
                 'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
+            ],
+            [
+                'icon' => 'mdi-contacts',
+                'text' => 'User',
+                'uri' => route('users.index'),
+                'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
             ]
             // { icon: 'mdi-contacts', text: 'Contacts' },
             // { icon: 'mdi-history', text: 'Frequently contacted', model: true },
