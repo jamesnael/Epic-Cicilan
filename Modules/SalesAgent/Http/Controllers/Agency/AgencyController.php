@@ -249,10 +249,10 @@ class AgencyController extends Controller
         return Validator::make($request->all(), [
             "agency_name" => "bail|required|string|max:255",
             "agency_email" => "bail|required|required|email",
-            "agency_phone" => "bail|required|numeric",
+            "agency_phone" => "bail|required|string|max:255",
             "agency_address" => "bail|nullable|string|max:255",
-            "province" => "bail|nullable|max:255",
-            "city" => "bail|nullable|max:255",
+            "province" => "bail|nullable|string|max:255",
+            "city" => "bail|nullable|string|max:255",
         ], [
             // "agency_name.required" => __('salesagent::validation.required'),
             // "agency_name.max" => __('salesagent::validation.max.string'),
