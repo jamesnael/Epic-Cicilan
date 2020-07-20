@@ -112,10 +112,16 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
             ],
             [
-                'icon' => 'mdi-contacts',
+                'icon' => 'mdi-badge-account',
                 'text' => 'User',
                 'uri' => route('users.index'),
                 'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
+            ],
+            [
+                'icon' => 'mdi-account-tie',
+                'text' => 'Sales',
+                'uri' => route('sales.index'),
+                'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
             ]
             // { icon: 'mdi-contacts', text: 'Contacts' },
             // { icon: 'mdi-history', text: 'Frequently contacted', model: true },
