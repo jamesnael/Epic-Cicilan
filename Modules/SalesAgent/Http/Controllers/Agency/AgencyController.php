@@ -55,6 +55,12 @@ class AgencyController extends Controller
                 "sortable" => true,
                 "value" => 'agency_address',
             ],
+            [
+                "text" => 'PPH Final',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'pph_final',
+            ],
         ];
         return view('salesagent::agency.index', [
             'page' => $this,
@@ -192,15 +198,20 @@ class AgencyController extends Controller
                 $subquery->orWhere('agency_email', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('agency_phone', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('agency_address', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('pph_final', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
         foreach ($request->input('sort') as $sort_key => $sort) {
-            \Log::info(json_encode($sort, JSON_PRETTY_PRINT));
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        return $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->pph_final = $item->pph_final . ' %';
+            return $item;
+        });
+        return $data;
     }
 
     /**
@@ -249,10 +260,11 @@ class AgencyController extends Controller
         return Validator::make($request->all(), [
             "agency_name" => "bail|required|string|max:255",
             "agency_email" => "bail|required|required|email",
-            "agency_phone" => "bail|required|numeric",
+            "agency_phone" => "bail|required|string|max:255",
             "agency_address" => "bail|nullable|string|max:255",
-            "province" => "bail|nullable|max:255",
-            "city" => "bail|nullable|max:255",
+            "province" => "bail|nullable|string|max:255",
+            "city" => "bail|nullable|string|max:255",
+            "pph_final" => "bail|required|between:0,100",
         ], [
             // "agency_name.required" => __('salesagent::validation.required'),
             // "agency_name.max" => __('salesagent::validation.max.string'),

@@ -22,6 +22,7 @@ class Agency extends Model
         'agency_address',
         'province',
         'city',
+        'pph_final',
     ];
 
     /**
