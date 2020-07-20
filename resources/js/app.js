@@ -18,6 +18,7 @@ Vue.use(Vuetify);
 Vue.component('base-layout', require('./components/BaseLayout.vue').default);
 Vue.component('table-layout', () => import('./components/Table.vue'));
 require('./../../Modules/SalesAgent/Resources/js/app');
+require('./../../Modules/AppUser/Resources/js/app');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -11,6 +11,9 @@
 |
 */
 
-Route::prefix('appuser')->group(function() {
-    Route::get('/', 'AppUserController@index');
+Route::group(['namespace' => 'User'], function() {
+	Route::get('users/table', 'AppUserController@table')->name('users.table');
+	Route::get('users/{users}/data', 'AppUserController@data')->name('users.data');
+	Route::resource('users', 'AppUserController')->except(['show']);
 });
+

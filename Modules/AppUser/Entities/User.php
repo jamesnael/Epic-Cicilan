@@ -22,9 +22,11 @@ class User extends Authenticatable
         'full_name',
         'email',
         'password',
+        'phone_number',
         'address',
         'city',
         'province',
+        'role_id',
     ];
 
     /**
@@ -67,5 +69,13 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function role()
+    {
+        return $this->belongsTo('Modules\AppUser\Entities\Role', 'role_id');
     }
 }

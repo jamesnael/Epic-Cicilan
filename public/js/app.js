@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"83c840e5c660f07bea48","1":"978966478a034a3d6e84","2":"2ea6da458dc7e03eca18"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"83c840e5c660f07bea48","1":"978966478a034a3d6e84","3":"07d2699f82e2a7dfee18","4":"4f9d474841d51e88e0a9"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -201,6 +201,19 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./Modules/AppUser/Resources/js/app.js":
+/*!*********************************************!*\
+  !*** ./Modules/AppUser/Resources/js/app.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+Vue.component('user-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/User/Form.vue */ "./Modules/AppUser/Resources/js/components/User/Form.vue"));
+});
+
+/***/ }),
+
 /***/ "./Modules/SalesAgent/Resources/js/app.js":
 /*!************************************************!*\
   !*** ./Modules/SalesAgent/Resources/js/app.js ***!
@@ -209,7 +222,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('salesagent-agency-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
 });
 
 /***/ }),
@@ -85221,6 +85234,8 @@ Vue.component('table-layout', function () {
 });
 
 __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
+
+__webpack_require__(/*! ./../../Modules/AppUser/Resources/js/app */ "./Modules/AppUser/Resources/js/app.js");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -85410,6 +85425,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Ziggy", function() { return Ziggy; });
 var Ziggy = {
   namedRoutes: {
+    "users.table": {
+      "uri": "users\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "users.data": {
+      "uri": "users\/{users}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "users.index": {
+      "uri": "users",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "users.create": {
+      "uri": "users\/create",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "users.store": {
+      "uri": "users",
+      "methods": ["POST"],
+      "domain": null
+    },
+    "users.edit": {
+      "uri": "users\/{user}\/edit",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "users.update": {
+      "uri": "users\/{user}",
+      "methods": ["PUT", "PATCH"],
+      "domain": null
+    },
+    "users.destroy": {
+      "uri": "users\/{user}",
+      "methods": ["DELETE"],
+      "domain": null
+    },
     "agencies.table": {
       "uri": "agencies\/table",
       "methods": ["GET", "HEAD"],
