@@ -6,6 +6,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_name"
+		    			name="agency_name"
 			    		label="Nama Agensi"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
@@ -18,6 +19,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_email"
+		    			name="agency_email"
 			    		label="Email Agensi"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
@@ -29,6 +31,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_phone"
+		    			name="agency_phone"
 			    		label="Nomor Telepon Agensi"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
@@ -41,6 +44,7 @@
 		    		<v-textarea
 		    			class="mt-4"
 		    			v-model="form_data.agency_address"
+		    			name="agency_address"
 			    		label="Alamat Agensi"
 			    		auto-grow
 		    			clearable
@@ -55,6 +59,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.province"
+		    			name="province"
 		    			label="Province"
 			    		:counter="255"
 			    		:error-messages="errors"
@@ -65,6 +70,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.city"
+		    			name="city"
 			    		label="Kota"
 			    		:counter="255"
 			    		:error-messages="errors"

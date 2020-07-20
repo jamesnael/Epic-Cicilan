@@ -103,7 +103,7 @@
 		        this.$refs.observer.reset()
 		    },
 		    postFormData() {
-	    		const data = new FormData();
+	    		const data = new FormData(this.$refs['post-form']);
 	    	    data.append("agency_name", this.form_data.agency_name);
 	    	    data.append("agency_email", this.form_data.agency_email);
 	    	    data.append("agency_phone", this.form_data.agency_phone);
