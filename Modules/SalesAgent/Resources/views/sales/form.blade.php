@@ -2,12 +2,23 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Nama agensi" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Agensi" rules="required">
+		    		<v-select
+		    			v-model="form_data.agency_id" 
+		              	:items="filter_agency"
+		              	label="Agensi"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Nama lengkap" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.agency_name"
-		    			name="agency_name"
-			    		label="Nama Agensi"
+		    			v-model="form_user.full_name"
+		    			name="full_name"
+			    		label="Nama Lengkap"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -15,24 +26,39 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Email agensi" rules="required|email">
+	    		<validation-provider v-slot="{ errors }" name="Email" rules="required|email">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.agency_email"
-		    			name="agency_email"
-			    		label="Email Agensi"
+		    			v-model="form_user.email"
+		    			name="email"
+			    		label="Email"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon agensi" rules="required|max:255">
+	    		<validation-provider v-if="!slug" v-slot="{ errors }" name="Password" rules="required">
+		    		<v-text-field
+    		            v-model="form_user.password"
+    		            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+    		            :type="show1 ? 'text' : 'password'"
+    		            hint="* harus diisi minimal 8 characters"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+    		            name="password"
+    		            label="Password"
+    		            counter
+    		            @click:append="show1 = !show1"
+    		          ></v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.agency_phone"
-		    			name="agency_phone"
-			    		label="Nomor Telepon Agensi"
+		    			v-model="form_user.phone_number"
+		    			name="phone_number"
+			    		label="Nomor Telepon"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -40,12 +66,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Alamat agensi" rules="max:255">
+	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"
-		    			v-model="form_data.agency_address"
-		    			name="agency_address"
-			    		label="Alamat Agensi"
+		    			v-model="form_user.address"
+		    			name="address"
+			    		label="Alamat"
 			    		auto-grow
 		    			clearable
 		    			rows="1"
@@ -58,7 +84,7 @@
 	    		<validation-provider v-slot="{ errors }" name="Province" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.province"
+		    			v-model="form_user.province"
 		    			name="province"
 		    			label="Province"
 			    		:counter="255"
@@ -69,7 +95,7 @@
 	    		<validation-provider v-slot="{ errors }" name="Kota" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.city"
+		    			v-model="form_user.city"
 		    			name="city"
 			    		label="Kota"
 			    		:counter="255"
@@ -77,17 +103,35 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="PPH Komisi Final" rules="required|between:0,100">
+	    		<validation-provider v-slot="{ errors }" name="NIP Sales" rules="required|numeric|max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.pph_final"
-		    			name="pph_final"
-			    		label="PPH Komisi Final"
-			    		:error-messages="errors"
+		    			v-model="form_data.sales_nip"
+		    			name="sales_nip"
+			    		label="NIP Sales"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
 			    		:readonly="field_state">
-			    		<v-icon slot="append">mdi-percent-outline</v-icon>
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<br>
+	    		<validation-provider v-slot="{ errors }" name="Foto KTP" rules="image">
+		    		<v-file-input
+		    		    accept="image/png, image/jpeg, image/bmp"
+		    		    prepend-icon="mdi-camera"
+		    		    label="Foto KTP"
+		    		    name="file_ktp"
+		    		  ></v-file-input>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Foto NPWP" rules="image">
+		    		<v-file-input
+		    		    accept="image/png, image/jpeg, image/bmp"
+		    		    prepend-icon="mdi-camera"
+		    		    label="Foto NPWP"
+		    		    name="file_npwp"
+		    		  ></v-file-input>
 	    			</v-text-field>
 	    		</validation-provider>
 	    		

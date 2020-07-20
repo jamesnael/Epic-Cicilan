@@ -66,4 +66,12 @@ class Agency extends Model
     {
         return 'slug';
     }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function sales()
+    {
+        return $this->hasMany('Modules\SalesAgent\Entities\Sales', 'role_id');
+    }
 }

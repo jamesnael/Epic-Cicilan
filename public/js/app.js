@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"83c840e5c660f07bea48","1":"978966478a034a3d6e84","3":"07d2699f82e2a7dfee18","4":"4f9d474841d51e88e0a9"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"753bc7f9fc6cc5d8e5ef","3":"48e3633bb9dc5a31895d","4":"0e07ba4b61ccbf1bf3f0"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -209,7 +209,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('user-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/User/Form.vue */ "./Modules/AppUser/Resources/js/components/User/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./components/User/Form.vue */ "./Modules/AppUser/Resources/js/components/User/Form.vue"));
 });
 
 /***/ }),
@@ -222,7 +222,10 @@ Vue.component('user-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('salesagent-agency-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+});
+Vue.component('sales-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
 });
 
 /***/ }),
@@ -85230,7 +85233,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.component('base-layout', __webpack_require__(/*! ./components/BaseLayout.vue */ "./resources/js/components/BaseLayout.vue")["default"]);
 Vue.component('table-layout', function () {
-  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
+  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
 });
 
 __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
@@ -85502,6 +85505,46 @@ var Ziggy = {
     },
     "agencies.destroy": {
       "uri": "agencies\/{agency}",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+    "sales.table": {
+      "uri": "sales\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "sales.data": {
+      "uri": "sales\/{agency}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "sales.index": {
+      "uri": "sales",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "sales.create": {
+      "uri": "sales\/create",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "sales.store": {
+      "uri": "sales",
+      "methods": ["POST"],
+      "domain": null
+    },
+    "sales.edit": {
+      "uri": "sales\/{sales}\/edit",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "sales.update": {
+      "uri": "sales\/{sales}",
+      "methods": ["PUT", "PATCH"],
+      "domain": null
+    },
+    "sales.destroy": {
+      "uri": "sales\/{sales}",
       "methods": ["DELETE"],
       "domain": null
     }

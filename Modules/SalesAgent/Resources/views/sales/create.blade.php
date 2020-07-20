@@ -4,10 +4,13 @@
 
 	@include('components.breadcrumbs')
 
-	<salesagent-agency-form inline-template
-	uri="{{ route('agencies.store') }}"
-	redirect-uri="{{ route('agencies.index') }}">
-		@include('salesagent::agency.form')
-	</salesagent-agency-form>
+	<sales-form inline-template
+	uri="{{ route('sales.store') }}"
+	redirect-uri="{{ route('sales.index') }}"
+	:filter_user='@json($user)'
+	:filter_agency='@json($agency)'
+	slug="">
+		@include('salesagent::sales.form')
+	</sales-form>
 
 @endsection

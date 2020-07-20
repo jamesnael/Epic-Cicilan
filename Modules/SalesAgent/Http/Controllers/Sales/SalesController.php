@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\Sales;
+use Modules\SalesAgent\Entities\Agency;
+use Modules\AppUser\Entities\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SalesController extends Controller
 {
@@ -32,35 +35,23 @@ class SalesController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Nama Sales',
+                "text" => 'Nama User',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'sales_name',
+                "value" => 'full_name',
             ],
             [
-                "text" => 'Email Sales',
+                "text" => 'Nama Agensi',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'sales_email',
+                "value" => 'sales.agency.agency_name',
             ],
             [
-                "text" => 'Nomor Telepon',
+                "text" => 'Email',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'sales_phone',
-            ],
-            [
-                "text" => 'Alamat',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => 'sales_address',
-            ],
-            [
-                "text" => 'PPH Final',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => 'pph_final',
-            ],
+                "value" => 'email',
+            ]
         ];
         return view('salesagent::sales.index', [
             'page' => $this,
@@ -76,8 +67,8 @@ class SalesController extends Controller
         $this->breadcrumbs[] = ['href' => route('sales.index'), 'text' => 'Tambah Sales'];
 
         return view('salesagent::sales.create', [
-            'page' => $this,
-        ]);
+            'page' => $this
+        ])->with($this->getHelper());
     }
 
     /**
@@ -96,18 +87,33 @@ class SalesController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = Sales::create($request->all());
-            // if (condition) {
-            //     $filename = 'ktp-' . $data->slug . 'extension'
-            //     Storage::disk('public')->save('sales/' . $data->slug . '/' . $filename)
-            //     $data->file_ktp
-            // }
-            // if (condition) {
-            //     $data->file_npwp
-            // }
-            // $data->save();
+
+            $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city']));
+            $data = Sales::create([
+                'user_id' => $user->id,
+                'agency_id' => $request->agency_id,
+                'sales_nip' => $request->sales_nip
+            ]);
+
+            if ($request->hasFile('file_ktp')) {
+                $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/', $request->file('file_ktp'), $file_name
+                );
+                $data->file_ktp = $file_name;
+
+            }
+
+            if ($request->hasFile('file_npwp')) {
+                $file_name = 'npwp-' . $data->slug . '.' . $request->file('file_npwp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/', $request->file('file_npwp'), $file_name
+                );
+                $data->file_npwp = $file_name;
+            }
+
+            $data->save();
+
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil disimpan.', $data);
+            return response_json(true, null, 'Data sales berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -119,14 +125,14 @@ class SalesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(Sales $sales)
+    public function edit(User $sales)
     {
-        $this->breadcrumbs[] = ['href' => route('sales.edit', [$sales->slug]), 'text' => 'Edit Sales ' . $sales->sales_name];
+        $this->breadcrumbs[] = ['href' => route('sales.edit', [$sales->slug]), 'text' => 'Edit Sales'];
 
         return view('salesagent::sales.edit', [
             'page' => $this,
-            'data' => $sales
-        ]);
+            'data' => $sales,
+        ])->with($this->getHelper());
     }
 
     /**
@@ -135,9 +141,9 @@ class SalesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, Sales $sales)
+    public function update(Request $request, User $sales)
     {
-        $validator = $this->validateFormRequest($request, $sales->id);
+        $validator = $this->validateFormRequest($request, $sale->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -145,9 +151,9 @@ class SalesController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $sales->update($request->all());
+            $data = $sale->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil disimpan.', $data);
+            return response_json(true, null, 'Data sales berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -160,16 +166,43 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sales $sales)
+    public function destroy(User $sale)
     {
         DB::beginTransaction();
         try {
-            $sales->delete();
+            $sale->delete();
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil dihapus.');
+            return response_json(true, null, 'Data sales berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+     /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'agency' => Agency::select('id AS value', 'agency_name AS text')->get(),
+            'user' => User::select('id AS value', 'full_name AS text')->get()
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
 
@@ -197,17 +230,14 @@ class SalesController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Sales::query();
-
+        $query = User::has('sales')->with('sales.agency');
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('sales_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('sales_email', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('sales_phone', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('sales_address', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('pph_final', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -250,7 +280,7 @@ class SalesController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(Sales $sales)
+    public function data(User $sales)
     {
         try {
             return response_json(true, null, 'Sukses mengambil data.', $sales);
@@ -267,23 +297,18 @@ class SalesController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "sales_name" => "bail|required|string|max:255",
-            "sales_email" => "bail|required|required|email",
-            "sales_phone" => "bail|required|string|max:255",
-            "sales_address" => "bail|nullable|string|max:255",
+            "user_id" => "bail|nullable|exists:Modules\AppUser\Entities\User,id",
+            "agency_id" => "bail|required|exists:Modules\SalesAgent\Entities\Agency,id",
+            "sales_nip" => "bail|required|numeric",
+            "file_ktp" => "bail|nullable|image",
+            "file_npwp" => "bail|nullable|image",
+            "full_name" => "bail|required|string|max:255",
+            "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
+            "phone_number" => "bail|nullable|numeric",
+            "address" => "bail|nullable|string|max:255",
             "province" => "bail|nullable|string|max:255",
             "city" => "bail|nullable|string|max:255",
-            "pph_final" => "bail|required|between:0,100",
-        ], [
-            // "sales_name.required" => __('salesagent::validation.required'),
-            // "sales_name.max" => __('salesagent::validation.max.string'),
-            // "sales_phone.required" => __('salesagent::validation.required'),
-            // "sales_phone.numeric" => __('salesagent::validation.numeric'),
-            // "sales_email.required" => __('salesagent::validation.required'),
-            // "sales_email.email" => __('salesagent::validation.email'),
-            // "sales_address.required"=> __('salesagent::validation.required'),
-            // "province.required"=> __('salesagent::validation.required'),
-            // "city.required"=> __('salesagent::validation.required'),
         ]);
     }
+
 }

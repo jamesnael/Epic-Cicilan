@@ -36,4 +36,21 @@ class Sales extends Model
     protected $casts = [
         
     ];
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function agency()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\Agency', 'agency_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function user()
+    {
+        return $this->belongsTo('Modules\AppUser\Entities\User', 'user_id');
+    }
+    
 }
