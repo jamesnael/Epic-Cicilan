@@ -1,0 +1,1 @@
+Vue.component('salesagent-agency-form', () => import('./components/Agency/Form.vue'));

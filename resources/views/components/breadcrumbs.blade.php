@@ -1,0 +1,1 @@
+<v-breadcrumbs :items='@json($page->breadcrumbs)' large></v-breadcrumbs>
