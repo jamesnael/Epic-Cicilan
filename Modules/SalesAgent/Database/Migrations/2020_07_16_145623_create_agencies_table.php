@@ -23,6 +23,7 @@ class CreateAgenciesTable extends Migration
             $table->string('agency_address')->nullable();
             $table->string('province')->nullable();
             $table->string('city')->nullable();
+            $table->double('pph_final', 20, 2)->default(0);
 
             $table->timestamps();
             $table->softDeletes();
