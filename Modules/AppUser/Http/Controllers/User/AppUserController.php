@@ -38,12 +38,12 @@ class AppUserController extends Controller
                 "sortable" => true,
                 "value" => 'full_name',
             ],
-            [
-                "text" => 'Hak Akses',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => 'role.role_name',
-            ],
+            // [
+            //     "text" => 'Hak Akses',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => 'role.role_name',
+            // ],
             [
                 "text" => 'Email',
                 "align" => 'center',
