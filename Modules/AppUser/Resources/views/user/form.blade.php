@@ -44,12 +44,11 @@
     		            @click:append="show1 = !show1"
     		          ></v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Hak akses user" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Hak akses user" rules="">
 		    		<v-select
 		    			v-model="form_data.role_id" 
 		              	:items="filter_role"
 		              	label="Hak Akses User"
-		              	hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"

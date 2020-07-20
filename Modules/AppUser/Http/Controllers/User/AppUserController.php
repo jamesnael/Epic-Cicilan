@@ -262,7 +262,7 @@ class AppUserController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "role_id" => "bail|required|exists:Modules\AppUser\Entities\Role,id",
+            "role_id" => "bail|nullable|exists:Modules\AppUser\Entities\Role,id",
             "full_name" => "bail|required|string|max:255",
             "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
             "phone_number" => "bail|required|numeric|unique:Modules\AppUser\Entities\User,phone_number,$id,id,deleted_at,NULL",
