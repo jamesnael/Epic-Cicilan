@@ -1,12 +1,13 @@
 <script>
 	import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
-	import { required, email, max, numeric } from 'vee-validate/dist/rules'
+	import { required, email, max, numeric, between } from 'vee-validate/dist/rules'
 	import id from 'vee-validate/dist/locale/id.json'
 
 	extend('required', required)
 	extend('email', email)
 	extend('max', max)
 	extend('numeric', numeric)
+	extend('between', between)
     localize('id', id);
 
 	export default {
@@ -41,6 +42,7 @@
             		agency_address: '',
             		province: '',
             		city: '',
+            		pph_final: '',
             	}
         	}
         },
@@ -64,6 +66,7 @@
     		            			agency_address: data.agency_address,
     		            			province: data.province,
     		            			city: data.city,
+    		            			pph_final: data.pph_final,
     		            		}
 
     			                this.field_state = false
@@ -99,17 +102,12 @@
 		        	agency_address: '',
 		        	province: '',
 		        	city: '',
+		        	pph_final: '',
 		        }
 		        this.$refs.observer.reset()
 		    },
 		    postFormData() {
 	    		const data = new FormData(this.$refs['post-form']);
-	    	    data.append("agency_name", this.form_data.agency_name);
-	    	    data.append("agency_email", this.form_data.agency_email);
-	    	    data.append("agency_phone", this.form_data.agency_phone);
-	    	    data.append("agency_address", this.form_data.agency_address);
-	    	    data.append("province", this.form_data.province);
-	    	    data.append("city", this.form_data.city);
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
 	    		}
