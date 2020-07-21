@@ -2,12 +2,50 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Nama Kategori" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required">
+		    		<v-select
+		    			v-model="form_data.category_reward_id" 
+		              	:items="filter_category"
+		              	label="Kategori Reward"
+		              	name="category_reward_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Nama Reward" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.category_name"
-		    			name="category_name"
-			    		label="Nama Kategori"
+		    			v-model="form_data.reward_name"
+		    			name="reward_name"
+			    		label="Nama Reward"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Reedem point" rules="required|numeric">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.redeem_point"
+		    			name="redeem_point"
+			    		label="Reedem Point"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Kuota" rules="required|numeric">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.kuota"
+		    			name="kuota"
+			    		label="Kuota"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -29,7 +67,17 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		
+	    		<validation-provider v-slot="{ errors }" name="Status" rules="required">
+		    		<v-select
+		    			v-model="form_data.status" 
+		              	:items="listStatus"
+		              	label="Status"
+		              	name="status"
+		              	hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+		            ></v-select>
+	    		</validation-provider>
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"

@@ -44,9 +44,13 @@
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 /******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
 =======
 /******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"b05c3441645af85da389","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
+>>>>>>> branch-rusadi
+=======
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"fcdd92721342694ac640","3":"1ac96daca735c84f3137","4":"a36f086b077160f8a982","5":"6ed2e54771e27dc2cd52","6":"146fca7fd37fc7050bb0"}[chunkId] + ".js"
 >>>>>>> branch-rusadi
 /******/ 	}
 /******/
@@ -228,7 +232,7 @@ Vue.component('user-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('reward-category-form', function () {
-  return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module './components/RewardPoint/Form.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/RewardCategory/Form.vue */ "./Modules/RewardCategory/Resources/js/components/RewardCategory/Form.vue"));
 });
 
 /***/ }),
@@ -241,7 +245,7 @@ Vue.component('reward-category-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('reward-point-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
 });
 
 /***/ }),
@@ -255,10 +259,10 @@ Vue.component('reward-point-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('salesagent-agency-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
 });
 Vue.component('sales-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
 });
 
 /***/ }),
@@ -85266,7 +85270,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.component('base-layout', __webpack_require__(/*! ./components/BaseLayout.vue */ "./resources/js/components/BaseLayout.vue")["default"]);
 Vue.component('table-layout', function () {
-  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
+  return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
 });
 
 __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
@@ -85550,6 +85554,49 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+<<<<<<< HEAD
+>>>>>>> branch-rusadi
+=======
+    "reward-point.table": {
+      "uri": "reward-point\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-point.data": {
+      "uri": "reward-point\/{reward_point}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-point.index": {
+      "uri": "reward-point",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-point.create": {
+      "uri": "reward-point\/create",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-point.store": {
+      "uri": "reward-point",
+      "methods": ["POST"],
+      "domain": null
+    },
+    "reward-point.edit": {
+      "uri": "reward-point\/{reward_point}\/edit",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-point.update": {
+      "uri": "reward-point\/{reward_point}",
+      "methods": ["PUT", "PATCH"],
+      "domain": null
+    },
+    "reward-point.destroy": {
+      "uri": "reward-point\/{reward_point}",
+      "methods": ["DELETE"],
+      "domain": null
+    },
 >>>>>>> branch-rusadi
     "agencies.table": {
       "uri": "agencies\/table",
@@ -85597,7 +85644,7 @@ var Ziggy = {
       "domain": null
     },
     "sales.data": {
-      "uri": "sales\/{agency}\/data",
+      "uri": "sales\/{sales}\/data",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
