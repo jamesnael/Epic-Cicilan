@@ -18,10 +18,6 @@
 		    ValidationProvider
 		},
 		props: {
-			slug: {
-				type: String,
-				required: true
-			},
 			uri: {
 				type: String,
 				required: true
@@ -33,12 +29,6 @@
 			dataUri: {
 			    type: String,
 			    default: ''
-			},
-			filter_user: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
 			},
 			filter_agency: {
 			    type: Array,
@@ -53,10 +43,9 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
-	            show1: false,
+	            showPassword: false,
             	form_data: {
             		agency_id: '',
-            		user_id: '',
             		sales_nip:'',
             		file_ktp:'',
             		file_npwp:'',
@@ -88,8 +77,17 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			agency_id: data.agency_id,
-    		            			user_id: data.user_id,
     		            			sales_nip: data.sales_nip,
+    		            		}
+    		            		this.form_user = {
+    		            			full_name: data.full_name,
+    		            			email: data.email,
+    		            			password: '',
+    		            			phone_number: data.phone_number,
+    		            			address: data.address,
+    		            			province: data.province,
+    		            			city: data.city,
+    		            			role_id: data.role_id
     		            		}
 
     			                this.field_state = false
@@ -120,18 +118,25 @@
         	clear () {
 		        this.form_data = {
 		        	agency_id: '',
-            		user_id: '',
             		sales_nip:'',
 		        	pph_final: '',
 		        	file_ktp:'',
             		file_npwp:'',
 		        }
+		        this.form_user = {
+		        	full_name: '',
+		        	email: '',
+		        	password:'',
+		        	phone_number: '',
+		        	address: '',
+		        	province: '',
+		        	city: '',
+		        	role_id:''
+		        }
 		        this.$refs.observer.reset()
 		    },
 		    postFormData() {
 	    		const data = new FormData(this.$refs['post-form']);
-	    		data.append("user_id", this.form_data.user_id);
-	    		data.append("agency_id", this.form_data.agency_id);
 
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");

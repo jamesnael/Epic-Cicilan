@@ -11,6 +11,7 @@ use Modules\AppUser\Entities\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class SalesController extends Controller
 {
@@ -44,13 +45,19 @@ class SalesController extends Controller
                 "text" => 'Nama Agensi',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'sales.agency.agency_name',
+                "value" => 'agency_name',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'email',
+            ],
+            [
+                "text" => 'Nomor Telepon',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'phone_number',
             ]
         ];
         return view('salesagent::sales.index', [
@@ -143,7 +150,7 @@ class SalesController extends Controller
      */
     public function update(Request $request, User $sales)
     {
-        $validator = $this->validateFormRequest($request, $sale->id);
+        $validator = $this->validateFormRequest($request, $sales->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -151,7 +158,29 @@ class SalesController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $sale->update($request->all());
+            $sales->update($request->only(['full_name','email','password','phone_number','address','province','city']));
+            $data = $sales->sales;
+            $data->update([
+                'agency_id' => $request->agency_id,
+                'sales_nip' => $request->sales_nip
+            ]);
+
+            if ($request->hasFile('file_ktp')) {
+                $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/', $request->file('file_ktp'), $file_name
+                );
+                $data->file_ktp = $file_name;
+
+            }
+
+            if ($request->hasFile('file_npwp')) {
+                $file_name = 'npwp-' . $data->slug . '.' . $request->file('file_npwp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/', $request->file('file_npwp'), $file_name
+                );
+                $data->file_npwp = $file_name;
+            }
+
+            $data->save();
             DB::commit();
             return response_json(true, null, 'Data sales berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -166,11 +195,12 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $sale)
+    public function destroy(User $sales)
     {
         DB::beginTransaction();
         try {
-            $sale->delete();
+            $sales->sales->delete();
+            $sales->delete();
             DB::commit();
             return response_json(true, null, 'Data sales berhasil dihapus.');
         } catch (\Exception $e) {
@@ -187,8 +217,7 @@ class SalesController extends Controller
     public function getHelper()
     {
         return [
-            'agency' => Agency::select('id AS value', 'agency_name AS text')->get(),
-            'user' => User::select('id AS value', 'full_name AS text')->get()
+            'agency' => Agency::select('id AS value', 'agency_name AS text')->get()
         ];
     }
 
@@ -230,26 +259,40 @@ class SalesController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::has('sales')->with('sales.agency');
+        $query = User::select(
+            'users.full_name',
+            'users.email',
+            'users.phone_number',
+            'agencies.agency_name'
+        );
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('users.email', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('users.phone_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('agencies.agency_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
 
+        $query->join('sales', 'sales.user_id', '=', 'users.id')
+        ->join('agencies', 'sales.agency_id', '=', 'agencies.id');
+        
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            if ($sort[0] == 'agency_name') {
+                $query->orderBy('agencies.agency_name', $sort[1] ? 'desc' : 'asc');
+            } else {
+                $query->orderBy('users.'.$sort[0], $sort[1] ? 'desc' : 'asc');
+            }
+        }
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
-        $data->getCollection()->transform(function($item) {
-            $item->pph_final = $item->pph_final . ' %';
-            return $item;
-        });
+        // $data->getCollection()->transform(function($item) {
+        //     \Log::info(json_encode($item, JSON_PRETTY_PRINT));
+        //     $item->agency_name = $item->sales->agency->agency_name;
+        //     return $item;
+        // });
         return $data;
     }
 
@@ -282,8 +325,19 @@ class SalesController extends Controller
      */
     public function data(User $sales)
     {
+        $data = [
+            'agency_id' => $sales->sales->agency_id,
+            'sales_nip' => $sales->sales->sales_nip,
+            'full_name' => $sales->full_name,
+            'email' => $sales->email,
+            'phone_number' => $sales->phone_number,
+            'address' => $sales->address,
+            'province' => $sales->province,
+            'city' => $sales->city,
+            'role_id' => $sales->role_id,
+        ];
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $sales);
+            return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
@@ -297,14 +351,13 @@ class SalesController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "user_id" => "bail|nullable|exists:Modules\AppUser\Entities\User,id",
             "agency_id" => "bail|required|exists:Modules\SalesAgent\Entities\Agency,id",
-            "sales_nip" => "bail|required|numeric",
+            "sales_nip" => "bail|nullable|string|max:255",
             "file_ktp" => "bail|nullable|image",
             "file_npwp" => "bail|nullable|image",
             "full_name" => "bail|required|string|max:255",
             "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
-            "phone_number" => "bail|nullable|numeric",
+            "phone_number" => "bail|required|string|max:255",
             "address" => "bail|nullable|string|max:255",
             "province" => "bail|nullable|string|max:255",
             "city" => "bail|nullable|string|max:255",

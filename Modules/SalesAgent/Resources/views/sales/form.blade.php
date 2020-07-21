@@ -7,6 +7,7 @@
 		    			v-model="form_data.agency_id" 
 		              	:items="filter_agency"
 		              	label="Agensi"
+		              	name="agency_id"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
@@ -38,19 +39,19 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-if="!slug" v-slot="{ errors }" name="Password" rules="required">
+	    		<validation-provider v-if="!dataUri" v-slot="{ errors }" name="Password" rules="required">
 		    		<v-text-field
     		            v-model="form_user.password"
-    		            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-    		            :type="show1 ? 'text' : 'password'"
-    		            hint="* harus diisi minimal 8 characters"
+    		            :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+    		            :type="showPassword ? 'text' : 'password'"
+    		            hint="* harus diisi minimal 8 karakter"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
     		            name="password"
     		            label="Password"
     		            counter
-    		            @click:append="show1 = !show1"
+    		            @click:append="showPassword = !showPassword"
     		          ></v-text-field>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
@@ -103,14 +104,14 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="NIP Sales" rules="required|numeric|max:255">
+	    		<validation-provider v-slot="{ errors }" name="NIP Sales" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.sales_nip"
 		    			name="sales_nip"
 			    		label="NIP Sales"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
+			    		{{-- hint="* harus diisi" --}}
+			    		{{-- :persistent-hint="true" --}}
 			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
@@ -119,16 +120,23 @@
 	    		<br>
 	    		<validation-provider v-slot="{ errors }" name="Foto KTP" rules="image">
 		    		<v-file-input
-		    		    accept="image/png, image/jpeg, image/bmp"
+		    		    accept="image/*"
 		    		    prepend-icon="mdi-camera"
+		    		    hint="hanya menerima file dalam format image"
+			    		:persistent-hint="true"
+		    		    show-size
 		    		    label="Foto KTP"
 		    		    name="file_ktp"
 		    		  ></v-file-input>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Foto NPWP" rules="image">
 		    		<v-file-input
-		    		    accept="image/png, image/jpeg, image/bmp"
+		    			class="mt-4"
+		    		    accept="image/*"
 		    		    prepend-icon="mdi-camera"
+		    		    show-size
+		    		    hint="hanya menerima file dalam format image"
+			    		:persistent-hint="true"
 		    		    label="Foto NPWP"
 		    		    name="file_npwp"
 		    		  ></v-file-input>
