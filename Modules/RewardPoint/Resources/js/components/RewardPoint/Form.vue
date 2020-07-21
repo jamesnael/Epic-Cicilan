@@ -27,7 +27,13 @@
 			dataUri: {
 			    type: String,
 			    default: ''
-			}
+			},
+			filter_category: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
+			},
 		},
 		data: function () {
             return {
@@ -35,9 +41,15 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+	            switchStatus: true,
+	            listStatus:['Aktif', 'Tidak Aktif'],
             	form_data: {
-            		category_name: '',
+            		category_reward_id: '',
+            		reward_name: '',
+            		redeem_point: '',
+            		kuota: '',
             		description: '',
+            		status: '',
             	}
         	}
         },
@@ -57,6 +69,12 @@
     		            		this.form_data = {
     		            			category_name: data.category_name,
     		            			description: data.description,
+    		            			category_reward_id: data.category_reward_id,
+    		            			reward_name: data.reward_name,
+    		            			redeem_point: data.redeem_point,
+    		            			kuota: data.kuota,
+    		            			description:data.description,
+    		            			status: data.status,
     		            		}
 
     			                this.field_state = false
@@ -86,8 +104,12 @@
         	},
         	clear () {
 		        this.form_data = {
-		        	category_name: '',
-		        	description: '',
+		        	category_reward_id: '',
+            		reward_name: '',
+            		redeem_point: '',
+            		kuota: '',
+            		description: '',
+            		status: '',
 		        }
 		        this.$refs.observer.reset()
 		    },

@@ -5,6 +5,10 @@ namespace Modules\RewardPoint\Http\Controllers\RewardPoint;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\RewardCategory\Entities\RewardCategory;
+use Modules\RewardPoint\Entities\RewardPoint;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RewardPointController extends Controller
 {
@@ -17,7 +21,7 @@ class RewardPointController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('users.index'), 'text' => 'Data Reward Category'],
+            ['href' => route('users.index'), 'text' => 'Data Reward Point'],
         ];
     }
 
@@ -70,11 +74,11 @@ class RewardPointController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('reward-point.index'), 'text' => 'Tambah Kategori Reward'];
+        $this->breadcrumbs[] = ['href' => route('reward-point.index'), 'text' => 'Tambah Reward Point'];
 
         return view('rewardpoint::reward-point.create', [
             'page' => $this,
-        ]);
+        ])->with($this->getHelper());
     }
 
      /**
@@ -95,7 +99,7 @@ class RewardPointController extends Controller
         try {
             $data = RewardPoint::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data kategori reward berhasil disimpan.', $data);
+            return response_json(true, null, 'Data reward point berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -107,15 +111,15 @@ class RewardPointController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(RewardCategory $reward_category)
+    public function edit(RewardPoint $reward_point)
     {
-        $this->breadcrumbs[] = ['href' => route('reward-point.edit', [$reward_category->slug]), 'text' => 'Edit Kategori Reward ' . $reward_category->category_name];
+        $this->breadcrumbs[] = ['href' => route('reward-point.edit', [$reward_point->slug]), 'text' => 'Edit Reward Point' . $reward_point->reward_name];
 
-        return view('rewardPoint::reward-point.edit', [
+        return view('rewardpoint::reward-point.edit', [
             'page' => $this,
-            'data' => $reward_category,
+            'data' => $reward_point,
 
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -124,9 +128,9 @@ class RewardPointController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, RewardCategory $reward_category)
+    public function update(Request $request, RewardPoint $reward_point)
     {
-        $validator = $this->validateFormRequest($request, $reward_category->id);
+        $validator = $this->validateFormRequest($request, $reward_point->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -134,9 +138,9 @@ class RewardPointController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $reward_category->update($request->all());
+            $data = $reward_point->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data kategori reward berhasil disimpan.', $data);
+            return response_json(true, null, 'Data reward point berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -149,13 +153,13 @@ class RewardPointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RewardCategory $reward_category)
+    public function destroy(RewardPoint $reward_point)
     {
         DB::beginTransaction();
         try {
-            $reward_category->delete();
+            $reward_point->delete();
             DB::commit();
-            return response_json(true, null, 'Data kategori reward berhasil dihapus.');
+            return response_json(true, null, 'Data reward point berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -237,10 +241,10 @@ class RewardPointController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(RewardCategory $reward_category)
+    public function data(RewardPoint $reward_point)
     {
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $reward_category);
+            return response_json(true, null, 'Sukses mengambil data.', $reward_point);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
@@ -254,9 +258,38 @@ class RewardPointController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "category_name" => "bail|required|string|max:255",
+            "category_reward_id" => "bail|required|string|max:255",
+            "reward_name" => "bail|required|string|max:255",
+            "redeem_point" => "bail|required|numeric",
+            "kuota" => "bail|required|numeric",
             "description" => "bail|nullable",
         ]);
+    }
+
+     /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'category' => RewardCategory::select('id AS value', 'category_name AS text')->get()
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
 }
