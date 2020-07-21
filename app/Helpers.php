@@ -122,7 +122,14 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Sales',
                 'uri' => route('sales.index'),
                 'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
+            ],
+            [
+                'icon' => 'mdi-gift',
+                'text' => 'Kategori Reward',
+                'uri' => route('sales.index'),
+                'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
             ]
+
             // { icon: 'mdi-contacts', text: 'Contacts' },
             // { icon: 'mdi-history', text: 'Frequently contacted', model: true },
             // { icon: 'mdi-content-copy', text: 'Duplicates' },

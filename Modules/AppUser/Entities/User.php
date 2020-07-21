@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -37,6 +38,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Set the user's password.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
     /**
      * The attributes that should be cast to native types.
@@ -84,6 +96,6 @@ class User extends Authenticatable
      */
     public function sales()
     {
-        return $this->hasMany('Modules\SalesAgent\Entities\Sales', 'user_id');
+        return $this->hasOne('Modules\SalesAgent\Entities\Sales', 'user_id');
     }
 }

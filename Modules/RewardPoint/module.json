@@ -1,0 +1,13 @@
+{
+    "name": "RewardPoint",
+    "alias": "rewardpoint",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\RewardPoint\\Providers\\RewardPointServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

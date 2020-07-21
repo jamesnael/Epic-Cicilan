@@ -1,0 +1,1 @@
+Vue.component('reward-category-form', () => import('./components/RewardCategory/Form.vue'));
