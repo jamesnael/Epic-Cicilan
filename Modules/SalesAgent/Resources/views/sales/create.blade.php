@@ -7,9 +7,7 @@
 	<sales-form inline-template
 	uri="{{ route('sales.store') }}"
 	redirect-uri="{{ route('sales.index') }}"
-	:filter_user='@json($user)'
-	:filter_agency='@json($agency)'
-	slug="">
+	:filter_agency='@json($agency)'>
 		@include('salesagent::sales.form')
 	</sales-form>
 

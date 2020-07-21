@@ -19,6 +19,6 @@ Route::group(['namespace' => 'Agency'], function() {
 
 Route::group(['namespace' => 'Sales'], function() {
 	Route::get('sales/table', 'SalesController@table')->name('sales.table');
-	Route::get('sales/{agency}/data', 'SalesController@data')->name('sales.data');
+	Route::get('sales/{sales}/data', 'SalesController@data')->name('sales.data');
 	Route::resource('sales', 'SalesController')->parameters(['sales' => 'sales'])->except(['show']);
 });

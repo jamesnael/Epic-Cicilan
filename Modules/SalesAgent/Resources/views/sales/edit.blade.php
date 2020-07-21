@@ -8,9 +8,7 @@
 	uri="{{ route('sales.update', [$data->slug]) }}"
 	redirect-uri="{{ route('sales.index') }}"
 	data-uri="{{ route('sales.data', [$data->slug]) }}"
-	:filter_user='@json($user)'
-	:filter_agency='@json($agency)'
-	:slug='@json($data->slug)'>
+	:filter_agency='@json($agency)'>
 		@include('salesagent::sales.form')
 	</sales-form>
 
