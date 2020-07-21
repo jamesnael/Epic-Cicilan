@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"fcdd92721342694ac640","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"b05c3441645af85da389","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -222,7 +222,20 @@ Vue.component('user-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('reward-category-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/RewardCategory/Form.vue */ "./Modules/RewardCategory/Resources/js/components/RewardCategory/Form.vue"));
+  return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module './components/RewardPoint/Form.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
+});
+
+/***/ }),
+
+/***/ "./Modules/RewardPoint/Resources/js/app.js":
+/*!*************************************************!*\
+  !*** ./Modules/RewardPoint/Resources/js/app.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+Vue.component('reward-point-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
 });
 
 /***/ }),
@@ -85254,6 +85267,8 @@ __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Module
 __webpack_require__(/*! ./../../Modules/AppUser/Resources/js/app */ "./Modules/AppUser/Resources/js/app.js");
 
 __webpack_require__(/*! ./../../Modules/RewardCategory/Resources/js/app */ "./Modules/RewardCategory/Resources/js/app.js");
+
+__webpack_require__(/*! ./../../Modules/RewardPoint/Resources/js/app */ "./Modules/RewardPoint/Resources/js/app.js");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

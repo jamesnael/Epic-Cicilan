@@ -1,0 +1,1 @@
+Vue.component('reward-point-form', () => import('./components/RewardPoint/Form.vue'));

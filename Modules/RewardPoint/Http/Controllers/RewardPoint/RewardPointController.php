@@ -192,8 +192,10 @@ class RewardPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('description', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('reward_categories.category_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('reward_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('redeem_point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('kuota', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -203,7 +205,6 @@ class RewardPointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->pph_final = $item->pph_final . ' %';
             return $item;
         });
         return $data;
@@ -258,5 +259,4 @@ class RewardPointController extends Controller
         ]);
     }
 
-}
 }

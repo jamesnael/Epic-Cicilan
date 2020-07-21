@@ -126,8 +126,14 @@ if (! function_exists('aside_menu')) {
             [
                 'icon' => 'mdi-gift',
                 'text' => 'Kategori Reward',
-                'uri' => route('sales.index'),
+                'uri' => route('reward-category.index'),
                 'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
+            ],
+            [
+                'icon' => 'mdi-wallet-giftcard',
+                'text' => 'Reward Point',
+                'uri' => route('reward-point.index'),
+                'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
             ]
 
             // { icon: 'mdi-contacts', text: 'Contacts' },
