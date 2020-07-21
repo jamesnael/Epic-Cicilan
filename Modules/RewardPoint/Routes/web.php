@@ -1,0 +1,19 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::group(['namespace' => 'RewardPoint'], function() {
+	Route::get('reward-point/table', 'RewardPointController@table')->name('reward-point.table');
+	Route::get('reward-point/{reward_point}/data', 'RewardPointController@data')->name('reward-point.data');
+	Route::resource('reward-point', 'RewardPointController')->except(['show']);
+});
+

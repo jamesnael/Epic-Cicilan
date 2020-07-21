@@ -1,0 +1,13 @@
+{
+    "name": "RewardCategory",
+    "alias": "rewardcategory",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\RewardCategory\\Providers\\RewardCategoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

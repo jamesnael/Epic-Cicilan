@@ -43,7 +43,11 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
+<<<<<<< HEAD
 /******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
+=======
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"b05c3441645af85da389","3":"b29830250b2e1ba505f3","4":"12e6be591552740ad7d6","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
+>>>>>>> branch-rusadi
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -214,6 +218,35 @@ Vue.component('user-form', function () {
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./Modules/RewardCategory/Resources/js/app.js":
+/*!****************************************************!*\
+  !*** ./Modules/RewardCategory/Resources/js/app.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+Vue.component('reward-category-form', function () {
+  return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module './components/RewardPoint/Form.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
+});
+
+/***/ }),
+
+/***/ "./Modules/RewardPoint/Resources/js/app.js":
+/*!*************************************************!*\
+  !*** ./Modules/RewardPoint/Resources/js/app.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+Vue.component('reward-point-form', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
+});
+
+/***/ }),
+
+>>>>>>> branch-rusadi
 /***/ "./Modules/SalesAgent/Resources/js/app.js":
 /*!************************************************!*\
   !*** ./Modules/SalesAgent/Resources/js/app.js ***!
@@ -85239,6 +85272,13 @@ Vue.component('table-layout', function () {
 __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
 
 __webpack_require__(/*! ./../../Modules/AppUser/Resources/js/app */ "./Modules/AppUser/Resources/js/app.js");
+<<<<<<< HEAD
+=======
+
+__webpack_require__(/*! ./../../Modules/RewardCategory/Resources/js/app */ "./Modules/RewardCategory/Resources/js/app.js");
+
+__webpack_require__(/*! ./../../Modules/RewardPoint/Resources/js/app */ "./Modules/RewardPoint/Resources/js/app.js");
+>>>>>>> branch-rusadi
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -85468,6 +85508,49 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+<<<<<<< HEAD
+=======
+    "reward-category.table": {
+      "uri": "reward-category\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-category.data": {
+      "uri": "reward-category\/{reward_category}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-category.index": {
+      "uri": "reward-category",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-category.create": {
+      "uri": "reward-category\/create",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-category.store": {
+      "uri": "reward-category",
+      "methods": ["POST"],
+      "domain": null
+    },
+    "reward-category.edit": {
+      "uri": "reward-category\/{reward_category}\/edit",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "reward-category.update": {
+      "uri": "reward-category\/{reward_category}",
+      "methods": ["PUT", "PATCH"],
+      "domain": null
+    },
+    "reward-category.destroy": {
+      "uri": "reward-category\/{reward_category}",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+>>>>>>> branch-rusadi
     "agencies.table": {
       "uri": "agencies\/table",
       "methods": ["GET", "HEAD"],

@@ -1,4 +1,6 @@
 {
     "AppUser": true,
-    "SalesAgent": true
+    "SalesAgent": true,
+    "RewardCategory": true,
+    "RewardPoint": true
 }
