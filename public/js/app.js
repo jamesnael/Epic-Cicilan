@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","2":"753bc7f9fc6cc5d8e5ef","3":"48e3633bb9dc5a31895d","4":"0e07ba4b61ccbf1bf3f0"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"0a8a7c1b7ac214c970dc","1":"d9ef3e6027358d4a1eda","3":"b29830250b2e1ba505f3","4":"3cbc2583a3288e3229d7","5":"c6fceeb5c96adb5e0134"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -222,10 +222,10 @@ Vue.component('user-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('salesagent-agency-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
 });
 Vue.component('sales-form', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
 });
 
 /***/ }),
@@ -85233,7 +85233,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.component('base-layout', __webpack_require__(/*! ./components/BaseLayout.vue */ "./resources/js/components/BaseLayout.vue")["default"]);
 Vue.component('table-layout', function () {
-  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
+  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
 });
 
 __webpack_require__(/*! ./../../Modules/SalesAgent/Resources/js/app */ "./Modules/SalesAgent/Resources/js/app.js");
