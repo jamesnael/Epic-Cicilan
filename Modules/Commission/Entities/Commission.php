@@ -51,7 +51,7 @@ class Commission extends Model
     {
         return [
             'slug' => [
-                'source' => ['slug_name'],
+                'source' => ['sales_commission','main_coordinator_commission'],
             ]
         ];
     }
