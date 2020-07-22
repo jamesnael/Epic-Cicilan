@@ -93,7 +93,7 @@ class MainCoordinatorController extends Controller
         try {
             $data = MainCoordinator::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data koordinator utama disimpan.', $data);
+            return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

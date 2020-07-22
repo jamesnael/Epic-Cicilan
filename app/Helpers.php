@@ -142,6 +142,12 @@ if (! function_exists('aside_menu')) {
                         'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
                     ],
                 ],
+            ],
+            [
+                'icon' => 'mdi-cash-multiple',
+                'text' => 'Komisi',
+                'uri' => route('commission.index'),
+                'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
             ],                        
             [
                 'icon' => 'mdi-gift',

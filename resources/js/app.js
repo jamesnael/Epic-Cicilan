@@ -20,6 +20,7 @@ Vue.component('table-layout', () => import('./components/Table.vue'));
 require('./../../Modules/SalesAgent/Resources/js/app');
 require('./../../Modules/AppUser/Resources/js/app');
 require('./../../Modules/RewardPoint/Resources/js/app');
+require('./../../Modules/Commission/Resources/js/app');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -55,4 +55,12 @@ class MainCoordinator extends Model
         return 'slug';
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function regional_coordinators()
+    {
+        return $this->hasMany('Modules\SalesAgent\Entities\RegionalCoordinator', 'main_coordinator_id');
+    }
+
 }

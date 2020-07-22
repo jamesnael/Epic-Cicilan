@@ -11,7 +11,7 @@ class RegionalCoordinator extends Model
 
 	use Sluggable, SoftDeletes;
 
-    protected $fillable = ['slug', 'full_name', 'email', 'phone_number', 'address'];
+    protected $fillable = ['slug','main_coordinator_id' , 'full_name', 'email', 'phone_number', 'address'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -53,5 +53,13 @@ class RegionalCoordinator extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function main_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coordinator_id');
     }
 }

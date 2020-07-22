@@ -27,7 +27,13 @@
 			dataUri: {
 			    type: String,
 			    default: ''
-			}
+			},
+			filter_main_coordinator: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
+			},
 		},
 		data: function () {
             return {
@@ -36,6 +42,7 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
             	form_data: {
+            		main_coordinator_id: '',
             		full_name: '',
             		phone_number: '',
             		email: '',
@@ -58,6 +65,7 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			full_name: data.full_name,
+    		            			main_coordinator_id: data.main_coordinator_id,
     		            			phone_number: data.phone_number,
     		            			email: data.email,
     		            			address: data.address,
@@ -90,6 +98,7 @@
         	},
         	clear () {
 		        this.form_data = {
+		        	main_coordinator_id: '',
 		        	full_name: '',
             		phone_number: '',
             		email: '',

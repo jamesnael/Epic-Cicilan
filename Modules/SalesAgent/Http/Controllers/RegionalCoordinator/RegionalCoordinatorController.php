@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
+use Modules\SalesAgent\Entities\MainCoordinator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,12 @@ class RegionalCoordinatorController extends Controller
     public function index()
     {
         $this->table_headers = [
+            [
+                "text" => 'Koordinator Utama',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'main_coordinator.full_name',
+            ],
             [
                 "text" => 'Nama',
                 "align" => 'center',
@@ -72,7 +79,7 @@ class RegionalCoordinatorController extends Controller
 
         return view('salesagent::regional-coordinator.create', [
             'page' => $this,
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -93,7 +100,7 @@ class RegionalCoordinatorController extends Controller
         try {
             $data = RegionalCoordinator::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data koordinator wilayah disimpan.', $data);
+            return response_json(true, null, 'Data koordinator wilayah berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -112,7 +119,7 @@ class RegionalCoordinatorController extends Controller
         return view('salesagent::regional-coordinator.edit', [
             'page' => $this,
             'data' => $regional_coordinator
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -183,7 +190,7 @@ class RegionalCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RegionalCoordinator::query();
+        $query = RegionalCoordinator::with('main_coordinator');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -257,5 +264,31 @@ class RegionalCoordinatorController extends Controller
             "phone_number" => "bail|required|numeric",
             "address" => "bail|nullable|string|max:255",
         ]);
+    }
+
+    /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'main_coordinator' => MainCoordinator::select('id AS value', 'full_name AS text')->get()
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 }

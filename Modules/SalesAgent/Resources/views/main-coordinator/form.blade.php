@@ -2,12 +2,12 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Nama koordinator wilayah" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nama koordinator utama" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.full_name"
 		    			name="full_name"
-			    		label="Nama Koordinator Wilayah"
+			    		label="Nama Koordinator Utama"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"

@@ -2,5 +2,6 @@
     "AppUser": true,
     "SalesAgent": true,
     "RewardCategory": true,
-    "RewardPoint": true
+    "RewardPoint": true,
+    "Commission": true
 }

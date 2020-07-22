@@ -16,6 +16,7 @@ class CreateRegionalCoordinatorsTable extends Migration
         Schema::create('regional_coordinators', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('slug')->nullable();
+            $table->string('main_coordinator_id');
             $table->string('full_name');
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();
