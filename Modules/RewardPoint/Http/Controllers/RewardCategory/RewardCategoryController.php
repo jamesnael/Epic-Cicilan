@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\RewardCategory\Http\Controllers\RewardCategory;
+namespace Modules\RewardPoint\Http\Controllers\RewardCategory;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\RewardCategory\Entities\RewardCategory;
+use Modules\RewardPoint\Entities\RewardCategory;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +44,7 @@ class RewardCategoryController extends Controller
                 "value" => 'description',
             ]
         ];
-        return view('rewardcategory::reward-category.index', [
+        return view('rewardpoint::reward-category.index', [
             'page' => $this,
         ]);
     }
@@ -57,7 +57,7 @@ class RewardCategoryController extends Controller
     {
         $this->breadcrumbs[] = ['href' => route('reward-category.index'), 'text' => 'Tambah Kategori Reward'];
 
-        return view('rewardcategory::reward-category.create', [
+        return view('rewardpoint::reward-category.create', [
             'page' => $this,
         ]);
     }
@@ -96,7 +96,7 @@ class RewardCategoryController extends Controller
     {
         $this->breadcrumbs[] = ['href' => route('reward-category.edit', [$reward_category->slug]), 'text' => 'Edit Kategori Reward ' . $reward_category->category_name];
 
-        return view('rewardcategory::reward-category.edit', [
+        return view('rewardpoint::reward-category.edit', [
             'page' => $this,
             'data' => $reward_category,
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\RewardCategory\Entities;
+namespace Modules\RewardPoint\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
