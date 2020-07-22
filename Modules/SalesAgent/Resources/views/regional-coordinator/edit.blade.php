@@ -8,7 +8,7 @@
 	uri="{{ route('regional-coordinator.update', [$data->slug]) }}"
 	redirect-uri="{{ route('regional-coordinator.index') }}"
 	data-uri="{{ route('regional-coordinator.data', [$data->slug]) }}">
-		@include('salesagent::sales.regional-coordinator.form')
+		@include('salesagent::regional-coordinator.form')
 	</regional-coordinator-form>
 
 @endsection

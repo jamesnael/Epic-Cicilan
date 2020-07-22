@@ -1,16 +1,16 @@
 <?php
 
-namespace Modules\SalesAgent\Http\Controllers\Sales\MainCoordinator;
+namespace Modules\SalesAgent\Http\Controllers\RegionalCoordinator;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\SalesAgent\Entities\MainCoordinator;
+use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class MainCoordinatorController extends Controller
+class RegionalCoordinatorController extends Controller
 {
     /**
      * Instantiate a new controller instance.
@@ -21,7 +21,7 @@ class MainCoordinatorController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('main-coordinator.index'), 'text' => 'Data Koordinator Utama'],
+            ['href' => route('regional-coordinator.index'), 'text' => 'Data Koordinator Wilayah'],
         ];
     }
 
@@ -33,7 +33,7 @@ class MainCoordinatorController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Nama Koordinator Utama',
+                "text" => 'Nama',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'full_name',
@@ -57,7 +57,7 @@ class MainCoordinatorController extends Controller
                 "value" => 'address',
             ]
         ];
-        return view('salesagent::sales.main-coordinator.index', [
+        return view('salesagent::regional-coordinator.index', [
             'page' => $this,
         ]);
     }
@@ -68,9 +68,9 @@ class MainCoordinatorController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('main-coordinator.index'), 'text' => 'Tambah Koordinator Utama'];
+        $this->breadcrumbs[] = ['href' => route('regional-coordinator.index'), 'text' => 'Tambah Koordinator Wilayah'];
 
-        return view('salesagent::sales.main-coordinator.create', [
+        return view('salesagent::regional-coordinator.create', [
             'page' => $this,
         ]);
     }
@@ -91,9 +91,9 @@ class MainCoordinatorController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = MainCoordinator::create($request->all());
+            $data = RegionalCoordinator::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data koordinator utama disimpan.', $data);
+            return response_json(true, null, 'Data koordinator wilayah disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -105,13 +105,13 @@ class MainCoordinatorController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(MainCoordinator $main_coordinator)
+    public function edit(RegionalCoordinator $regional_coordinator)
     {
-        $this->breadcrumbs[] = ['href' => route('regional-coordinator.edit', [$main_coordinator->slug]), 'text' => 'Edit Koordinator Utama ' . $main_coordinator->full_name];
+        $this->breadcrumbs[] = ['href' => route('regional-coordinator.edit', [$regional_coordinator->slug]), 'text' => 'Edit Koordinator Wilayah ' . $regional_coordinator->full_name];
 
-        return view('salesagent::sales.main-coordinator.edit', [
+        return view('salesagent::regional-coordinator.edit', [
             'page' => $this,
-            'data' => $main_coordinator
+            'data' => $regional_coordinator
         ]);
     }
 
@@ -121,9 +121,9 @@ class MainCoordinatorController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, MainCoordinator $main_coordinator)
+    public function update(Request $request, RegionalCoordinator $regional_coordinator)
     {
-        $validator = $this->validateFormRequest($request, $main_coordinator->id);
+        $validator = $this->validateFormRequest($request, $regional_coordinator->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -131,9 +131,9 @@ class MainCoordinatorController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $main_coordinator->update($request->all());
+            $data = $regional_coordinator->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
+            return response_json(true, null, 'Data koordinator wilayah berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -146,13 +146,13 @@ class MainCoordinatorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MainCoordinator $main_coordinator)
+    public function destroy(RegionalCoordinator $regional_coordinator)
     {
         DB::beginTransaction();
         try {
-            $main_coordinator->delete();
+            $regional_coordinator->delete();
             DB::commit();
-            return response_json(true, null, 'Data koordinator utama berhasil dihapus.');
+            return response_json(true, null, 'Data koordinator wilayah berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -183,7 +183,7 @@ class MainCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = MainCoordinator::query();
+        $query = RegionalCoordinator::query();
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -235,10 +235,10 @@ class MainCoordinatorController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(MainCoordinator $main_coordinator)
+    public function data(RegionalCoordinator $regional_coordinator)
     {
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $main_coordinator);
+            return response_json(true, null, 'Sukses mengambil data.', $regional_coordinator);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

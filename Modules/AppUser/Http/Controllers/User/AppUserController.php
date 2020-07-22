@@ -193,7 +193,7 @@ class AppUserController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::with('role');
+        $query = User::doesntHave('sales')->with('role');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

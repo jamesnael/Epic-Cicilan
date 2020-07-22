@@ -7,7 +7,7 @@
 	<main-coordinator-form inline-template
 	uri="{{ route('main-coordinator.store') }}"
 	redirect-uri="{{ route('main-coordinator.index') }}">
-		@include('salesagent::sales.main-coordinator.form')
+		@include('salesagent::main-coordinator.form')
 	</main-coordinator-form>
 
 @endsection

@@ -118,23 +118,31 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
             ],
             [
-                'icon' => 'mdi-account-tie',
-                'text' => 'Sales',
-                'uri' => route('sales.index'),
-                'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
-            ],
-            [
                 'icon' => 'mdi-account-group',
-                'text' => 'Koordinator Wilayah',
-                'uri' => route('regional-coordinator.index'),
-                'model' => in_array(Route::currentRouteName(), ['regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit'])
-            ],
-            [
-                'icon' => 'mdi-account-group',
-                'text' => 'Koordinator Utama',
-                'uri' => route('main-coordinator.index'),
-                'model' => in_array(Route::currentRouteName(), ['main-coordinator.index','main-coordinator.create','main-coordinator.edit'])
-            ],
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Kelola Sales',
+                'model' => in_array(Route::currentRouteName(), ['main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit']),
+                'children' => [
+                    [
+                        'icon' => 'mdi-account-network',
+                        'text' => 'Koordinator Utama',
+                        'uri' => route('main-coordinator.index'),
+                        'model' => in_array(Route::currentRouteName(), ['main-coordinator.index','main-coordinator.create','main-coordinator.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-account-supervisor-circle',
+                        'text' => 'Koordinator Wilayah',
+                        'uri' => route('regional-coordinator.index'),
+                        'model' => in_array(Route::currentRouteName(), ['regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-account-tie',
+                        'text' => 'Sales',
+                        'uri' => route('sales.index'),
+                        'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
+                    ],
+                ],
+            ],                        
             [
                 'icon' => 'mdi-gift',
                 'text' => 'Kategori Reward',
@@ -147,34 +155,6 @@ if (! function_exists('aside_menu')) {
                 'uri' => route('reward-point.index'),
                 'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
             ]
-
-            // { icon: 'mdi-contacts', text: 'Contacts' },
-            // { icon: 'mdi-history', text: 'Frequently contacted', model: true },
-            // { icon: 'mdi-content-copy', text: 'Duplicates' },
-            // {
-            //     icon: 'mdi-chevron-up',
-            //     'icon-alt': 'mdi-chevron-down',
-            //     text: 'Labels',
-            //     model: true,
-            //     children: [
-            //         { icon: 'mdi-plus', text: 'Create label', model: false },
-            //         { icon: 'mdi-plus', text: 'Create label', model: true },
-            //     ],
-            // },
-            // {
-            //     icon: 'mdi-chevron-up',
-            //     'icon-alt': 'mdi-chevron-down',
-            //     text: 'Labels',
-            //     model: false,
-            //     children: [
-            //         { icon: 'mdi-plus', text: 'Create label', model: false },
-            //     ],
-            // },
-            // { icon: 'mdi-cog', text: 'Settings' },
-            // { icon: 'mdi-message', text: 'Send feedback' },
-            // { icon: 'mdi-help-circle', text: 'Help' },
-            // { icon: 'mdi-cellphone-link', text: 'App downloads' },
-            // { icon: 'mdi-keyboard', text: 'Go to the old version' },
         ];
     }
 }

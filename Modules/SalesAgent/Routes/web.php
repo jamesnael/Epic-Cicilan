@@ -23,13 +23,13 @@ Route::group(['namespace' => 'Sales'], function() {
 	Route::resource('sales', 'SalesController')->parameters(['sales' => 'sales'])->except(['show']);
 });
 
-Route::group(['namespace' => 'Sales\RegionalCoordinator'], function() {
+Route::group(['namespace' => 'RegionalCoordinator'], function() {
 	Route::get('regional-coordinator/table', 'RegionalCoordinatorController@table')->name('regional-coordinator.table');
 	Route::get('regional-coordinator/{regional_coordinator}/data', 'RegionalCoordinatorController@data')->name('regional-coordinator.data');
 	Route::resource('regional-coordinator', 'RegionalCoordinatorController')->parameters(['regional-coordinator' => 'regional-coordinator'])->except(['show']);
 });
 
-Route::group(['namespace' => 'Sales\MainCoordinator'], function() {
+Route::group(['namespace' => 'MainCoordinator'], function() {
 	Route::get('main-coordinator/table', 'MainCoordinatorController@table')->name('main-coordinator.table');
 	Route::get('main-coordinator/{main_coordinator}/data', 'MainCoordinatorController@data')->name('main-coordinator.data');
 	Route::resource('main-coordinator', 'MainCoordinatorController')->parameters(['main-coordinator' => 'main-coordinator'])->except(['show']);

@@ -8,7 +8,7 @@
 	uri="{{ route('main-coordinator.update', [$data->slug]) }}"
 	redirect-uri="{{ route('main-coordinator.index') }}"
 	data-uri="{{ route('main-coordinator.data', [$data->slug]) }}">
-		@include('salesagent::sales.main-coordinator.form')
+		@include('salesagent::main-coordinator.form')
 	</main-coordinator-form>
 
 @endsection
