@@ -124,6 +124,18 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
             ],
             [
+                'icon' => 'mdi-account-group',
+                'text' => 'Koordinator Wilayah',
+                'uri' => route('regional-coordinator.index'),
+                'model' => in_array(Route::currentRouteName(), ['regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit'])
+            ],
+            [
+                'icon' => 'mdi-account-group',
+                'text' => 'Koordinator Utama',
+                'uri' => route('main-coordinator.index'),
+                'model' => in_array(Route::currentRouteName(), ['main-coordinator.index','main-coordinator.create','main-coordinator.edit'])
+            ],
+            [
                 'icon' => 'mdi-gift',
                 'text' => 'Kategori Reward',
                 'uri' => route('reward-category.index'),
