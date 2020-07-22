@@ -91,13 +91,14 @@ class CommissionController extends Controller
         DB::beginTransaction();
         try {
 
-            if ($request->total < 100) {
+            if ($request->total > 100) {
                 return response_json(true, null, 'Total komisi tidak boleh melebihi 100%.');
             }
 
             $data = Commission::create($request->all());
-            return response_json(true, null, 'Data komisi berhasil disimpan.', $data);
             DB::commit();
+            
+            return response_json(true, null, 'Data komisi berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

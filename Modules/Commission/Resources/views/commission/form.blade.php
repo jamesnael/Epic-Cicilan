@@ -66,7 +66,7 @@
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		readonly="field_state"
+			    		readonly
 		    			:value="total">
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>

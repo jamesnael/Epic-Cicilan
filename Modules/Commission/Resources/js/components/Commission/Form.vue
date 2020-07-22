@@ -49,7 +49,7 @@
               return parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
 
             }
-         },
+        },
         mounted() {
             this.setData();
         },
