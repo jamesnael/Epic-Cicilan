@@ -17,3 +17,9 @@ Route::group(['namespace' => 'RewardPoint'], function() {
 	Route::resource('reward-point', 'RewardPointController')->except(['show']);
 });
 
+Route::group(['namespace' => 'RewardCategory'], function() {
+	Route::get('reward-category/table', 'RewardCategoryController@table')->name('reward-category.table');
+	Route::get('reward-category/{reward_category}/data', 'RewardCategoryController@data')->name('reward-category.data');
+	Route::resource('reward-category', 'RewardCategoryController')->except(['show']);
+});
+
