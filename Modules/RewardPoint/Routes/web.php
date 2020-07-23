@@ -11,6 +11,12 @@
 |
 */
 
+Route::group(['namespace' => 'Point'], function() {
+	Route::get('point/table', 'PointController@table')->name('point.table');
+	Route::get('point/{point}/data', 'PointController@data')->name('point.data');
+	Route::resource('point', 'PointController')->except(['show']);
+});
+
 Route::group(['namespace' => 'RewardPoint'], function() {
 	Route::get('reward-point/table', 'RewardPointController@table')->name('reward-point.table');
 	Route::get('reward-point/{reward_point}/data', 'RewardPointController@data')->name('reward-point.data');

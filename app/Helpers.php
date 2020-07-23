@@ -148,7 +148,7 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Komisi',
                 'uri' => route('commission.index'),
                 'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
-            ],                        
+            ],
             [
                 'icon' => 'mdi-gift',
                 'text' => 'Kategori Reward',
