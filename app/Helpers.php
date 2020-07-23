@@ -160,7 +160,13 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Reward Point',
                 'uri' => route('reward-point.index'),
                 'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
-            ]
+            ],
+            [
+                'icon' => 'mdi-cash-multiple',
+                'text' => 'Point',
+                'uri' => route('point.index'),
+                'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
+            ],
         ];
     }
 }
