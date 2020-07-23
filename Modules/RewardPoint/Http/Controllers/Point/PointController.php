@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Point\Http\Controllers\Point;
+namespace Modules\RewardPoint\Http\Controllers\Point;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
