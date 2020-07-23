@@ -237,7 +237,7 @@ class SalesController extends Controller
             'regional_coordinator_commission' => Commission::select('id AS value', 'regional_coordinator_commission AS text')->get(),
             'main_coordinator_commission' => Commission::select('id AS value', 'main_coordinator_commission AS text')->get(),
             'agency_commission' => Commission::select('id AS value', 'agency_commission AS text')->get(),
-            'sales_commission' => Commission::select('id AS value', 'sales_commission AS text')->get()
+            'sales_commission' => Commission::select('id AS value', 'sales_commission AS text', 'agency_commission', 'main_coordinator_commission', 'regional_coordinator_commission')->get()
         ];
     }
 

@@ -208,6 +208,10 @@ class CommissionController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $item->agency_commission = $item->agency_commission . ' %';
+            $item->main_coordinator_commission = $item->main_coordinator_commission . ' %';
+            $item->regional_coordinator_commission = $item->regional_coordinator_commission . ' %';
+            $item->sales_commission = $item->sales_commission . ' %';
             return $item;
         });
         return $data;

@@ -237,7 +237,35 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state"
-				            ></v-select>
+				            >
+				            	<template slot="selection" slot-scope="data">
+				            	    @{{ data.item.text }} %
+				            	</template>
+			            	  	<template slot="item" slot-scope="data">
+			            	  		<table width="100%" border="0">
+			            	  			<tr>
+			            	  				<td width="30%">Koordinator Utama</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.main_coordinator_commission }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Koordinator Wilayah</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.regional_coordinator_commission }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Agensi</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.agency_commission }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Sales</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.text }} %</td>
+			            	  			</tr>
+			            	  		</table>
+			            	  	</template>
+				            </v-select>
 	    				</validation-provider>
 			        </v-col>
 			    </v-row>
