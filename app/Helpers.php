@@ -121,8 +121,14 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-account-group',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Sales',
-                'model' => in_array(Route::currentRouteName(), ['main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit']),
+                'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit','main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit']),
                 'children' => [
+                    [
+                        'icon' => 'mdi-account-cash',
+                        'text' => 'Komisi',
+                        'uri' => route('commission.index'),
+                        'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
+                    ],
                     [
                         'icon' => 'mdi-account-network',
                         'text' => 'Koordinator Utama',
@@ -144,29 +150,31 @@ if (! function_exists('aside_menu')) {
                 ],
             ],
             [
-                'icon' => 'mdi-cash-multiple',
-                'text' => 'Komisi',
-                'uri' => route('commission.index'),
-                'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
-            ],
-            [
                 'icon' => 'mdi-gift',
-                'text' => 'Kategori Reward',
-                'uri' => route('reward-category.index'),
-                'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
-            ],
-            [
-                'icon' => 'mdi-wallet-giftcard',
-                'text' => 'Reward Point',
-                'uri' => route('reward-point.index'),
-                'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
-            ],
-            [
-                'icon' => 'mdi-cash-multiple',
-                'text' => 'Point',
-                'uri' => route('point.index'),
-                'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
-            ],
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Kelola Reward',
+                'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit','point.index','point.create','point.edit','reward-point.index','reward-point.create','reward-point.edit']),
+                'children' => [
+                    [
+                        'icon' => 'mdi-certificate',
+                        'text' => 'Kategori Reward',
+                        'uri' => route('reward-category.index'),
+                        'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-numeric-0-circle-outline',
+                        'text' => 'Point',
+                        'uri' => route('point.index'),
+                        'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-wallet-giftcard',
+                        'text' => 'Reward Point',
+                        'uri' => route('reward-point.index'),
+                        'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
+                    ],
+                ]
+            ]            
         ];
     }
 }
