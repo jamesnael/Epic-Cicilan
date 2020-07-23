@@ -63,4 +63,12 @@ class MainCoordinator extends Model
         return $this->hasMany('Modules\SalesAgent\Entities\RegionalCoordinator', 'main_coordinator_id');
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function sales()
+    {
+        return $this->hasMany('Modules\SalesAgent\Entities\Sales', 'main_coordinator_id');
+    }
+
 }

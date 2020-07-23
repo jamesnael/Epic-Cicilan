@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\Agency;
+use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +32,12 @@ class AgencyController extends Controller
     public function index()
     {
         $this->table_headers = [
+            [
+                "text" => 'Koordinator Wilayah',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'regional_coordinator.full_name',
+            ],
             [
                 "text" => 'Nama Agensi',
                 "align" => 'center',
@@ -77,7 +84,7 @@ class AgencyController extends Controller
 
         return view('salesagent::agency.create', [
             'page' => $this,
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -117,7 +124,7 @@ class AgencyController extends Controller
         return view('salesagent::agency.edit', [
             'page' => $this,
             'data' => $agency
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -188,7 +195,7 @@ class AgencyController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Agency::query();
+        $query = Agency::with('regional_coordinator');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -276,5 +283,31 @@ class AgencyController extends Controller
             // "province.required"=> __('salesagent::validation.required'),
             // "city.required"=> __('salesagent::validation.required'),
         ]);
+    }
+
+     /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'regional_coordinator' => RegionalCoordinator::select('id AS value', 'full_name AS text')->get()
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 }

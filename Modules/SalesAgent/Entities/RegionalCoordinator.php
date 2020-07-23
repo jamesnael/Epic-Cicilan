@@ -62,4 +62,13 @@ class RegionalCoordinator extends Model
     {
         return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coordinator_id');
     }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function agency()
+    {
+        return $this->hasMany('Modules\SalesAgent\Entities\Agency', 'regional_coordinator_id');
+    }
+    
 }

@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\Sales;
+use Modules\Commission\Entities\Commission;
 use Modules\SalesAgent\Entities\Agency;
+use Modules\SalesAgent\Entities\MainCoordinator;
+use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Modules\AppUser\Entities\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +38,12 @@ class SalesController extends Controller
     public function index()
     {
         $this->table_headers = [
+            [
+                "text" => 'Koordinator Utama',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'main_coordinator_name',
+            ],
             [
                 "text" => 'Nama User',
                 "align" => 'center',
@@ -96,11 +105,18 @@ class SalesController extends Controller
         try {
 
             $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city']));
-            $data = Sales::create([
-                'user_id' => $user->id,
-                'agency_id' => $request->agency_id,
-                'sales_nip' => $request->sales_nip
+            
+            $request->merge([
+                'user_id' => $user->id
             ]);
+
+            $data = Sales::create($request->all());
+
+            // $data = Sales::create([
+            //     'user_id' => $user->id,
+            //     'agency_id' => $request->agency_id,
+            //     'sales_nip' => $request->sales_nip
+            // ]);
 
             if ($request->hasFile('file_ktp')) {
                 $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
@@ -160,10 +176,8 @@ class SalesController extends Controller
         try {
             $sales->update($request->only(['full_name','email','password','phone_number','address','province','city']));
             $data = $sales->sales;
-            $data->update([
-                'agency_id' => $request->agency_id,
-                'sales_nip' => $request->sales_nip
-            ]);
+            
+            $data->update($request->all());
 
             if ($request->hasFile('file_ktp')) {
                 $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
@@ -217,7 +231,13 @@ class SalesController extends Controller
     public function getHelper()
     {
         return [
-            'agency' => Agency::select('id AS value', 'agency_name AS text')->get()
+            'agency' => Agency::select('id AS value', 'agency_name AS text','regional_coordinator_id')->get(),
+            'main_coordinator' => MainCoordinator::select('id AS value', 'full_name AS text')->get(),
+            'regional_coordinator' => RegionalCoordinator::select('id AS value', 'full_name AS text')->get(),
+            'regional_coordinator_commission' => Commission::select('id AS value', 'regional_coordinator_commission AS text')->get(),
+            'main_coordinator_commission' => Commission::select('id AS value', 'main_coordinator_commission AS text')->get(),
+            'agency_commission' => Commission::select('id AS value', 'agency_commission AS text')->get(),
+            'sales_commission' => Commission::select('id AS value', 'sales_commission AS text')->get()
         ];
     }
 
@@ -260,11 +280,14 @@ class SalesController extends Controller
     public function getTableData(Request $request)
     {
         $query = User::select(
+            'users.slug',
             'users.full_name',
             'users.email',
             'users.phone_number',
-            'agencies.agency_name'
+            'agencies.agency_name',
+            'main_coordinators.full_name AS main_coordinator_name'
         );
+
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -278,7 +301,8 @@ class SalesController extends Controller
 
 
         $query->join('sales', 'sales.user_id', '=', 'users.id')
-        ->join('agencies', 'sales.agency_id', '=', 'agencies.id');
+        ->join('agencies', 'sales.agency_id', '=', 'agencies.id')
+        ->join('main_coordinators', 'sales.main_coordinator_id', '=', 'main_coordinators.id');
         
         foreach ($request->input('sort') as $sort_key => $sort) {
             if ($sort[0] == 'agency_name') {
@@ -327,6 +351,12 @@ class SalesController extends Controller
     {
         $data = [
             'agency_id' => $sales->sales->agency_id,
+            'main_coordinator_id' => $sales->sales->main_coordinator_id,
+            'regional_coordinator_id' => $sales->sales->regional_coordinator_id,
+            'sales_commission' => $sales->sales->sales_commission,
+            'agency_commission' => $sales->sales->agency_commission,
+            'regional_coordinator_commission' => $sales->sales->regional_coordinator_commission,
+            'main_coordinator_commission' => $sales->sales->main_coordinator_commission,
             'sales_nip' => $sales->sales->sales_nip,
             'full_name' => $sales->full_name,
             'email' => $sales->email,

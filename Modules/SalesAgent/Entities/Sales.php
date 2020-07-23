@@ -17,6 +17,12 @@ class Sales extends Model
         'sales_nip',
         'file_ktp',
         'file_npwp',
+        'main_coordinator_id',
+        'regional_coordinator_id',
+        'sales_commission',
+        'agency_commission',
+        'regional_coordinator_commission',
+        'main_coordinator_commission'
     ];
 
     /**
@@ -52,5 +58,21 @@ class Sales extends Model
     {
         return $this->belongsTo('Modules\AppUser\Entities\User', 'user_id');
     }
-    
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function main_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coordinator_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function regional_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coordinator_id');
+    }
+
 }

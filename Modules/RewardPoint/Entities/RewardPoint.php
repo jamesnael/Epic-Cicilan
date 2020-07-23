@@ -66,6 +66,6 @@ class RewardPoint extends Model
      */
     public function category()
     {
-        return $this->belongsTo('Modules\RewardCategory\Entities\RewardCategory', 'category_reward_id');
+        return $this->belongsTo('Modules\RewardPoint\Entities\RewardCategory', 'category_reward_id');
     }
 }

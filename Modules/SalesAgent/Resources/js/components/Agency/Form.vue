@@ -27,6 +27,12 @@
 			dataUri: {
 			    type: String,
 			    default: ''
+			},
+			filter_regional_coordinator: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
 			}
 		},
 		data: function () {
@@ -36,6 +42,7 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
             	form_data: {
+            		regional_coordinator_id: '',
             		agency_name: '',
             		agency_email: '',
             		agency_phone: '',
@@ -60,6 +67,7 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
+    		            			regional_coordinator_id: data.regional_coordinator_id,
     		            			agency_name: data.agency_name,
     		            			agency_email: data.agency_email,
     		            			agency_phone: data.agency_phone,
@@ -96,6 +104,7 @@
         	},
         	clear () {
 		        this.form_data = {
+		        	regional_coordinator_id: '',
 		        	agency_name: '',
 		        	agency_email: '',
 		        	agency_phone: '',
