@@ -23,7 +23,6 @@
 			    		label="Point"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
