@@ -63,9 +63,10 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+    		            		console.log(data)
     		            		this.form_data = {
     		            			full_name: data.full_name,
-    		            			main_coordinator_id: data.main_coordinator_id,
+    		            			main_coordinator_id: parseInt(data.main_coordinator_id),
     		            			phone_number: data.phone_number,
     		            			email: data.email,
     		            			address: data.address,

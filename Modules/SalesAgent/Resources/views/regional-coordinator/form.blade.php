@@ -5,7 +5,7 @@
 	    		<validation-provider v-slot="{ errors }" name="Koordinator utama" rules="required">
 		    		<v-select
 		    			v-model="form_data.main_coordinator_id" 
-		              	:items="filter_main_coordinator"
+		              	:items="filter_main_coordinator" 
 		              	label="Koordinator Utama"
 		              	name="main_coordinator_id"
 			    		hint="* harus diisi"

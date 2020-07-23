@@ -12,7 +12,8 @@
 			    		:persistent-hint="true"
 			    		:counter="255"
 			    		:error-messages="errors"
-			    		:readonly="field_state">
+			    		:readonly="field_state"
+			    		placeholder>
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider>

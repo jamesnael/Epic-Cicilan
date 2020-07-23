@@ -5,7 +5,7 @@ namespace Modules\RewardPoint\Http\Controllers\RewardPoint;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\RewardCategory\Entities\RewardCategory;
+use Modules\RewardPoint\Entities\RewardCategory;
 use Modules\RewardPoint\Entities\RewardPoint;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;

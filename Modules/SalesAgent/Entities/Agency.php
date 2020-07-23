@@ -16,6 +16,7 @@ class Agency extends Model
      * @var array
      */
     protected $fillable = [
+        'regional_coordinator_id',
         'agency_name',
         'agency_email',
         'agency_phone',
@@ -73,5 +74,13 @@ class Agency extends Model
     public function sales()
     {
         return $this->hasMany('Modules\SalesAgent\Entities\Sales', 'role_id');
+    }
+
+     /**
+     * Get the relationship for the model.
+     */
+    public function regional_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coordinator_id');
     }
 }
