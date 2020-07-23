@@ -106,12 +106,6 @@ if (! function_exists('aside_menu')) {
     {
         return [
             [
-                'icon' => 'mdi-contacts',
-                'text' => 'Agensi',
-                'uri' => route('agencies.index'),
-                'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
-            ],
-            [
                 'icon' => 'mdi-badge-account',
                 'text' => 'User',
                 'uri' => route('users.index'),
@@ -121,7 +115,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-account-group',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Sales',
-                'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit','main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit']),
+                'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit','main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit','agencies.index','agencies.create','agencies.edit']),
                 'children' => [
                     [
                         'icon' => 'mdi-account-cash',
@@ -140,6 +134,12 @@ if (! function_exists('aside_menu')) {
                         'text' => 'Koordinator Wilayah',
                         'uri' => route('regional-coordinator.index'),
                         'model' => in_array(Route::currentRouteName(), ['regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-contacts',
+                        'text' => 'Agensi',
+                        'uri' => route('agencies.index'),
+                        'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
                     ],
                     [
                         'icon' => 'mdi-account-tie',
