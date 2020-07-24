@@ -3,5 +3,6 @@
     "SalesAgent": true,
     "RewardCategory": true,
     "RewardPoint": true,
-    "Commission": true
+    "Commission": true,
+    "Installment": true
 }
