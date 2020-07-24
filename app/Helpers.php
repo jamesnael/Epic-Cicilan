@@ -174,7 +174,13 @@ if (! function_exists('aside_menu')) {
                         'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
                     ],
                 ]
-            ]            
+            ],
+            [
+                'icon' => 'mdi-account-multiple',
+                'text' => 'Klien',
+                'uri' => route('client.index'),
+                'model' => in_array(Route::currentRouteName(), ['client.index','client.create','client.edit'])
+            ],            
         ];
     }
 }

@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('installment')->group(function() {
-    Route::get('/', 'InstallmentController@index');
+Route::group(['namespace' => 'Client'], function() {
+	Route::get('client/table', 'ClientController@table')->name('client.table');
+	Route::get('client/{client}/data', 'ClientController@data')->name('client.data');
+	Route::resource('client', 'ClientController')->except(['show']);
 });

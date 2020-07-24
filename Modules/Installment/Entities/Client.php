@@ -17,9 +17,8 @@ class Client extends Model
     	'client_name',
     	'client_email',
     	'client_phone_number',
-    	'client_address',
-    	'client_file_ktp',
-    	'client_file_npwp'
+    	'client_mobile_number',
+    	'client_address'
     ];
 
     /**

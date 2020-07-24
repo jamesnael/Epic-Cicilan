@@ -23,8 +23,6 @@ class CreateClientsTable extends Migration
             $table->string('client_phone_number')->nullable();
             $table->string('client_mobile_number')->nullable();
             $table->string('client_address')->nullable();
-            $table->string('client_file_ktp');
-            $table->string('client_file_npwp');
 
             $table->timestamps();
             $table->softDeletes();
