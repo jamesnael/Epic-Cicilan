@@ -21,7 +21,7 @@ class BookingController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('client.index'), 'text' => 'Data Booking'],
+            ['href' => route('booking.index'), 'text' => 'Data Booking'],
         ];
     }
 
