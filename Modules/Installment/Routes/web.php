@@ -16,3 +16,9 @@ Route::group(['namespace' => 'Client'], function() {
 	Route::get('client/{client}/data', 'ClientController@data')->name('client.data');
 	Route::resource('client', 'ClientController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Booking'], function() {
+	Route::get('booking/table', 'BookingController@table')->name('booking.table');
+	Route::get('booking/{booking}/data', 'BookingController@data')->name('booking.data');
+	Route::resource('booking', 'BookingController')->except(['show']);
+});

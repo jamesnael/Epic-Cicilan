@@ -180,6 +180,12 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Klien',
                 'uri' => route('client.index'),
                 'model' => in_array(Route::currentRouteName(), ['client.index','client.create','client.edit'])
+            ],
+            [
+                'icon' => 'mdi-calendar-check',
+                'text' => 'Booking',
+                'uri' => route('booking.index'),
+                'model' => in_array(Route::currentRouteName(), ['booking.index','booking.create','booking.edit'])
             ],            
         ];
     }
