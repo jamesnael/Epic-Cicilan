@@ -62,4 +62,12 @@ class Client extends Model
     {
         return 'slug';
     }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function client_bookings()
+    {
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'client_id');
+    }
 }

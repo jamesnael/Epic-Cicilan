@@ -176,17 +176,31 @@ if (! function_exists('aside_menu')) {
                 ]
             ],
             [
-                'icon' => 'mdi-account-multiple',
-                'text' => 'Klien',
-                'uri' => route('client.index'),
-                'model' => in_array(Route::currentRouteName(), ['client.index','client.create','client.edit'])
+                'icon' => 'mdi-home-city',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Kelola Booking',
+                'model' => in_array(Route::currentRouteName(), ['client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit']),
+                'children' => [
+                    [
+                        'icon' => 'mdi-account-multiple',
+                        'text' => 'Klien',
+                        'uri' => route('client.index'),
+                        'model' => in_array(Route::currentRouteName(), ['client.index','client.create','client.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-home-account',
+                        'text' => 'Unit',
+                        'uri' => route('unit.index'),
+                        'model' => in_array(Route::currentRouteName(), ['unit.index','unit.create','unit.edit'])
+                    ], 
+                    [
+                        'icon' => 'mdi-calendar-check',
+                        'text' => 'Booking',
+                        'uri' => route('booking.index'),
+                        'model' => in_array(Route::currentRouteName(), ['booking.index','booking.create','booking.edit'])
+                    ]
+                ]           
             ],
-            [
-                'icon' => 'mdi-calendar-check',
-                'text' => 'Booking',
-                'uri' => route('booking.index'),
-                'model' => in_array(Route::currentRouteName(), ['booking.index','booking.create','booking.edit'])
-            ],            
         ];
     }
 }

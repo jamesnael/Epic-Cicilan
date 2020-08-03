@@ -1,35 +1,29 @@
 <?php
 
 namespace Modules\Installment\Entities;
-
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Booking extends Model
-{
+use Illuminate\Database\Eloquent\Model;
 
+class Unit extends Model
+{
 	use Sluggable, SoftDeletes;
 
     protected $fillable = [
     	'slug',
-    	'unit_id',
-    	'client_id',
-    	'total_amount',
-    	'ppn',
-    	'payment_type',
-    	'payment_method',
-    	'dp_amount',
-    	'first_payment',
-    	'principal',
-    	'installment',
-    	'installment_time',
-    	'due_date',
-    	'credits',
-    	'payment_method_utj',
-    	'bank_name',
-    	'card_number',
-    	'point'
+    	'unit_type',
+    	'unit_number',
+    	'unit_block',
+    	'surface_area',
+    	'building_area',
+    	'floor_name',
+    	'floorplan_image',
+    	'points',
+    	'electrical_power',
+    	'utj',
+    	'closing_fee',
+    	'available',
     ];
 
      /**
@@ -59,7 +53,7 @@ class Booking extends Model
     {
         return [
             'slug' => [
-                'source' => ['client.client_name', 'unit.unit_number'],
+                'source' => ['unit_number', 'unit_block'],
             ]
         ];
     }
@@ -74,19 +68,11 @@ class Booking extends Model
         return 'slug';
     }
 
-    /**
+     /**
      * Get the relationship for the model.
      */
-    public function unit()
+    public function unit_bookings()
     {
-        return $this->belongsTo('Modules\Installment\Entities\Unit', 'unit_id');
-    }
-
-    /**
-     * Get the relationship for the model.
-     */
-    public function client()
-    {
-        return $this->belongsTo('Modules\Installment\Entities\Client', 'client_id');
+        return $this->hasMany('Modules\Installment\Entities\Unit', 'unit_id');
     }
 }

@@ -22,3 +22,9 @@ Route::group(['namespace' => 'Booking'], function() {
 	Route::get('booking/{booking}/data', 'BookingController@data')->name('booking.data');
 	Route::resource('booking', 'BookingController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Unit'], function() {
+	Route::get('unit/table', 'UnitController@table')->name('unit.table');
+	Route::get('unit/{unit}/data', 'UnitController@data')->name('unit.data');
+	Route::resource('unit', 'UnitController')->except(['show']);
+});

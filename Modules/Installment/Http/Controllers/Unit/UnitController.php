@@ -1,17 +1,17 @@
 <?php
 
-namespace Modules\Installment\Http\Controllers\Booking;
+namespace Modules\Installment\Http\Controllers\Unit;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Installment\Entities\Booking;
+use Modules\Installment\Entities\Unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class BookingController extends Controller
-{
 
+class UnitController extends Controller
+{
     /**
      * Instantiate a new controller instance.
      *
@@ -21,7 +21,7 @@ class BookingController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('booking.index'), 'text' => 'Data Booking'],
+            ['href' => route('unit.index'), 'text' => 'Data Unit'],
         ];
     }
 
@@ -33,61 +33,38 @@ class BookingController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Tipe',
+                "text" => 'Tipe Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Blok',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "value" => 'unit_type',
             ],
             [
                 "text" => 'No Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_number',
             ],
             [
-                "text" => 'Harga Unit + PPN',
+                "text" => 'Blok',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_block',
             ],
             [
-                "text" => 'Tgl. Pembelian',
+                "text" => 'Luas Tanah',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'surface_area',
             ],
             [
-                "text" => 'Nama Klien',
+                "text" => 'Luas Bangunan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'building_area',
             ],
-            [
-                "text" => 'Cara Bayar',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Sales',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Point',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ]
+            
         ];
-        return view('installment::booking.index', [
+        return view('installment::unit.index', [
             'page' => $this,
         ]);
     }
@@ -99,9 +76,9 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('booking.index'), 'text' => 'Tambah Booking'];
+        $this->breadcrumbs[] = ['href' => route('unit.index'), 'text' => 'Tambah Unit'];
 
-        return view('installment::booking.create', [
+        return view('installment::unit.create', [
             'page' => $this,
         ]);
     }
@@ -123,39 +100,28 @@ class BookingController extends Controller
         DB::beginTransaction();
         try {
 
-            $data = Booking::create($request->all());
+            $data = Unit::create($request->all());
             DB::commit();
             
-            return response_json(true, null, 'Data booking berhasil disimpan.', $data);
+            return response_json(true, null, 'Data unit berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
 
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('installment::bookingshow');
-    }
-
-    /**
+   /**
      * Show the form for editing the specified resource.
      * @param int $id
      * @return Responsec
      */
-    public function edit(Booking $booking)
+    public function edit(Unit $unit)
     {
-        $this->breadcrumbs[] = ['href' => route('booking.edit', [$booking->slug]), 'text' => 'Edit Booking ' . ''];
+        $this->breadcrumbs[] = ['href' => route('unit.edit', [$unit->slug]), 'text' => 'Edit Klien ' . $unit->unit_number];
 
-        return view('installment::booking.edit', [
+        return view('installment::unit.edit', [
             'page' => $this,
-            'data' => $booking,
+            'data' => $unit,
 
         ]);
     }
@@ -166,9 +132,9 @@ class BookingController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, Unit $unit)
     {
-        $validator = $this->validateFormRequest($request, $booking->id);
+        $validator = $this->validateFormRequest($request, $unit->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -176,28 +142,28 @@ class BookingController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $booking->update($request->all());
+            $data = $unit->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data booking berhasil disimpan.', $data);
+            return response_json(true, null, 'Data unit berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
 
-    /**
+     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy(Unit $unit)
     {
         DB::beginTransaction();
         try {
-            $booking->delete();
+            $unit->delete();
             DB::commit();
-            return response_json(true, null, 'Data booking berhasil dihapus.');
+            return response_json(true, null, 'Data unit berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -212,25 +178,19 @@ class BookingController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "unit_id" => "bail|nullable|exists:Modules\Installment\Entities\Unit,id",
-            "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",,
-            "total_amount" => "bail|required|numeric",
-            "ppn" => "bail|required|numeric",
-            "payment_type" => "bail|required|string|max:255",
-            "payment_method" => "bail|required|string|max:255",
-            "dp_amount" => "bail|required|numeric",
-            "first_payment" => "bail|required",
-            "principal" => "bail|required|numeric",
-            "installment" => "bail|required|numeric",
-            "installment_time" => "bail|required",
-            "due_date" => "bail|required",
-            "credits" => "bail|required|numeric",
-            "payment_method_utj" => "bail|required|string|max:255",
-            "bank_name" => "bail|required|string|max:255",
-            "card_number" => "bail|required|string|max:255",
-            "point" => "bail|required|numeric",
+            "unit_type" => "bail|required|string|max:255",
+            "unit_number" => "bail|required|string|max:255",
+            "unit_block" => "bail|required|string|max:255",
+            "surface_area" => "bail|required|numeric",
+            "building_area" => "bail|required|numeric",
+            "points" => "bail|required|numeric",
+            "electrical_power" => "bail|required|numeric",
+            "utj" => "bail|required|numeric",
+            "closing_fee" => "bail|required|numeric",
+            "available" => "bail|nullable",
         ]);
     }
+
 
     /**
      *
@@ -256,17 +216,19 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::query();
+        $query = Unit::query();
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('client_name', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_email', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_address', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_phone_number', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_mobile_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('points', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('surface_area', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('building_area', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('closing_fee', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -276,6 +238,8 @@ class BookingController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $item->surface_area = $item->surface_area . ' m2';
+            $item->building_area = $item->building_area . ' m2';
             return $item;
         });
         return $data;
@@ -308,10 +272,10 @@ class BookingController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(Booking $booking)
+    public function data(Unit $unit)
     {
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $booking);
+            return response_json(true, null, 'Sukses mengambil data.', $unit);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
