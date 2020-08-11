@@ -4,5 +4,6 @@
     "RewardCategory": true,
     "RewardPoint": true,
     "Commission": true,
-    "Installment": true
+    "Installment": true,
+    "DocumentClient": true
 }

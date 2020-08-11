@@ -26,6 +26,7 @@ class Booking extends Model
     	'installment_time',
     	'due_date',
     	'credits',
+        'amount',
     	'payment_method_utj',
     	'bank_name',
     	'card_number',

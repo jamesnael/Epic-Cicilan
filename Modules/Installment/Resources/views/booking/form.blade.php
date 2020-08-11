@@ -2,11 +2,60 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Tipe rumah" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
+		    		<v-select
+		    			v-model="form_data.client_id" 
+		              	:items="filter_client"
+		              	label="Klien"
+		              	name="client_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Unit" rules="required">
+		    		<v-select
+		    			v-model="form_data.unit_id" 
+		              	:items="filter_unit"
+		              	label="Unit"
+		              	name="unit_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Total harga" rules="required|numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Tipe Rumah"
+		    			v-model="form_data.total_amount"
+		    			name="total_amount"
+			    		label="Total Harga"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.ppn"
+		    			name="ppn"
+			    		label="PPN"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.payment_type"
+		    			name="payment_type"
+			    		label="Tipe Pembayaran"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -14,144 +63,11 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-
-	    		<v-row>
-    		        <v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Blok" rules="required|max:255">
-				    		<v-text-field
-				    			class="mt-4"
-				    			name=""
-					    		label="Blok"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    	<v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nomor unit" rules="required|max:255">
-				    		<v-text-field
-				    			class="mt-4"
-				    			name=""
-					    		label="Nomor Unit"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    	<v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Luas kavling" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			name=""
-					    		label="Luas Kavling (m2)"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    	<v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Luas bangunan" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			name=""
-					    		label="Luas Bangunan (m2)"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-		    	</v-row>
-		    	<validation-provider v-slot="{ errors }" name="Tanggal pembelian" rules="">
-		    	    <v-menu
-		    	        v-model="datepicker"
-		    	        :close-on-content-click="false"
-		    	        :nudge-right="40"
-		    	        transition="scale-transition"
-		    	        offset-y
-		    	        min-width="290px">
-		    	        <template v-slot:activator="{ on, attrs }">
-		    	          <v-text-field
-			    	        class="mt-4"
-		    	            v-model="date"
-		    	            label="Tanggal Pembelian"
-		    	            readonly
-		    	            v-bind="attrs"
-		    	            v-on="on"
-		    	            prepend-icon="mdi-calendar"
-		    	            :persistent-hint="true"
-		    	            :counter="255"
-		    	            :error-messages="errors"
-		    	            :readonly="field_state">
-		    	          ></v-text-field>
-		    	        </template>
-	    	        <v-date-picker v-model="date" @input="datepicker = false"></v-date-picker>
-	    	      	</v-menu>
-    	      	</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Cara bayar cicilan" rules="max:255">
+	    		<validation-provider v-slot="{ errors }" name="Metode Pembayaran" rules="required">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Cara Bayar Cicilan"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Cara bayar cicilan" rules="max:255">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Cara Bayar Cicilan"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Harga unit + ppn" rules="max:255">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Harga Unit + PPN"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Harga unit exc ppn" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Harga Unit Except PPN"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Harga dasar" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
+		    			v-model="form_data.payment_method"
+		    			name="payment_method"
 			    		label="Harga Dasar"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
@@ -160,11 +76,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Total DP" rules="required|numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="PPN (Rp)"
+		    			v-model="form_data.dp_amount"
+		    			name="dp_amount"
+			    		label="Total DP"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -172,11 +89,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="BPHTB" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="BPHTB"
+		    			v-model="form_data.first_payment"
+		    			name="first_payment"
+			    		label="Pembayaran Pertama"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -184,11 +102,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="NUP" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="NUP"
+		    			v-model="form_data.principal"
+		    			name="principal"
+			    		label="Principal"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -196,37 +115,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran NUP" rules="">
-		    	    <v-menu
-		    	        v-model="datepicker"
-		    	        :close-on-content-click="false"
-		    	        :nudge-right="40"
-		    	        transition="scale-transition"
-		    	        offset-y
-		    	        min-width="290px">
-		    	        <template v-slot:activator="{ on, attrs }">
-		    	          <v-text-field
-			    	        class="mt-4"
-		    	            v-model="date"
-		    	            label="Tanggal Pembayaran NUP"
-		    	            readonly
-		    	            v-bind="attrs"
-		    	            v-on="on"
-		    	            prepend-icon="mdi-calendar"
-		    	            :persistent-hint="true"
-		    	            :counter="255"
-		    	            :error-messages="errors"
-		    	            :readonly="field_state">
-		    	          ></v-text-field>
-		    	        </template>
-	    	        <v-date-picker v-model="date" @input="datepicker = false"></v-date-picker>
-	    	      	</v-menu>
-    	      	</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Pembayaran NUP" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Cicilan" rules="required|numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Pembayaran NUP"
+		    			v-model="form_data.installment"
+		    			name="installment"
+			    		label="Cicilan"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -234,11 +128,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="UTJ" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="UTJ"
+		    			v-model="form_data.installment_time"
+		    			name="installment_time"
+			    		label="Lama Cicilan"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -246,37 +141,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Tgl Pembayaran UTJ" rules="">
-		    	    <v-menu
-		    	        v-model="datepicker"
-		    	        :close-on-content-click="false"
-		    	        :nudge-right="40"
-		    	        transition="scale-transition"
-		    	        offset-y
-		    	        min-width="290px">
-		    	        <template v-slot:activator="{ on, attrs }">
-		    	          <v-text-field
-			    	        class="mt-4"
-		    	            v-model="date"
-		    	            label="Tgl Pembayaran UTJ"
-		    	            readonly
-		    	            v-bind="attrs"
-		    	            v-on="on"
-		    	            prepend-icon="mdi-calendar"
-		    	            :persistent-hint="true"
-		    	            :counter="255"
-		    	            :error-messages="errors"
-		    	            :readonly="field_state">
-		    	          ></v-text-field>
-		    	        </template>
-	    	        <v-date-picker v-model="date" @input="datepicker = false"></v-date-picker>
-	    	      	</v-menu>
-    	      	</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Pembayaran UTJ" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|min:1">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Pembayaran UTJ"
+		    			v-model="form_data.due_date"
+		    			name="due_date"
+			    		label="Tanggal Jatuh Tempo"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -284,11 +154,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Total Bayar DP 1" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Kredit" rules="required|numeric|min:1">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Total Bayar DP 1"
+		    			v-model="form_data.credits"
+		    			name="credits"
+			    		label="Kredit"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -296,11 +167,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Jatuh tempo cicilan" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Metode pembayaran UTJ" rules="required">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Jatuh Tempo Cicilan"
+		    			v-model="form_data.payment_method_utj"
+		    			name="payment_method_utj"
+			    		label="Metode Pembayaran UTJ"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -308,11 +180,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama klien" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Total" rules="required|numeric|min:0">
 		    		<v-text-field
-		    			class="mt-6"
-		    			name=""
-			    		label="Nama Klien"
+		    			class="mt-4"
+		    			v-model="form_data.amount"
+		    			name="amount"
+			    		label="Total"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -320,11 +193,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="ID klien" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="required">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="ID Klien"
+		    			v-model="form_data.bank_name"
+		    			name="bank_name"
+			    		label="Nama Bank"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -332,11 +206,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+	    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="required|numeric">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="Email"
+		    			v-model="form_data.card_number"
+		    			name="card_number"
+			    		label="Nomor Rekening"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -344,61 +219,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="No. Handphone" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Point" rules="required|numeric">
 		    		<v-text-field
 		    			class="mt-4"
-		    			name=""
-			    		label="No. Handphone"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
-		    		<v-textarea
-		    			class="mt-4"
-		    			name=""
-			    		label="Alamat"
-			    		auto-grow
-		    			clearable
-		    			rows="1"
-				      	clear-icon="mdi-close"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-textarea>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama sales" rules="required">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Nama Sales"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama agensi" rules="required">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Nama Agensi"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Point sales" rules="required">
-		    		<v-text-field
-		    			class="mt-4"
-		    			name=""
-			    		label="Point Sales"
+		    			v-model="form_data.point"
+		    			name="point"
+			    		label="Point"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"

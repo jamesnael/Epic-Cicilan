@@ -28,3 +28,5 @@ Route::group(['namespace' => 'Unit'], function() {
 	Route::get('unit/{unit}/data', 'UnitController@data')->name('unit.data');
 	Route::resource('unit', 'UnitController')->except(['show']);
 });
+
+

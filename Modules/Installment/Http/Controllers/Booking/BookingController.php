@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Installment\Entities\Booking;
+use Modules\Installment\Entities\Unit;
+use Modules\Installment\Entities\Client;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -33,58 +35,52 @@ class BookingController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Tipe',
+                "text" => 'Klien',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_name',
             ],
             [
-                "text" => 'Blok',
+                "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_number',
             ],
             [
-                "text" => 'No Unit',
+                "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'total_amount',
             ],
             [
-                "text" => 'Harga Unit + PPN',
+                "text" => 'DP',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'dp_amount',
             ],
             [
-                "text" => 'Tgl. Pembelian',
+                "text" => 'Cicilan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'installment',
             ],
             [
-                "text" => 'Nama Klien',
+                "text" => 'Tanggal Jatuh Tempo',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'due_date',
             ],
             [
-                "text" => 'Cara Bayar',
+                "text" => 'Principal',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Sales',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "value" => 'principal',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'point',
             ]
         ];
         return view('installment::booking.index', [
@@ -103,7 +99,7 @@ class BookingController extends Controller
 
         return view('installment::booking.create', [
             'page' => $this,
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -157,7 +153,7 @@ class BookingController extends Controller
             'page' => $this,
             'data' => $booking,
 
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -213,14 +209,14 @@ class BookingController extends Controller
     {
         return Validator::make($request->all(), [
             "unit_id" => "bail|nullable|exists:Modules\Installment\Entities\Unit,id",
-            "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",,
+            "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",
             "total_amount" => "bail|required|numeric",
             "ppn" => "bail|required|numeric",
             "payment_type" => "bail|required|string|max:255",
             "payment_method" => "bail|required|string|max:255",
             "dp_amount" => "bail|required|numeric",
             "first_payment" => "bail|required",
-            "principal" => "bail|required|numeric",
+            "principal" => "bail|required",
             "installment" => "bail|required|numeric",
             "installment_time" => "bail|required",
             "due_date" => "bail|required",
@@ -256,17 +252,17 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::query();
+        $query = Booking::with('client','unit');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('client_name', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_email', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_address', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_phone_number', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('client_mobile_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -276,6 +272,11 @@ class BookingController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
+            $item->total_amount ='Rp '.$item->total_amount;
+            $item->dp_amount = 'Rp '.$item->dp_amount;
+            $item->installment = 'Rp '.$item->installment;
             return $item;
         });
         return $data;
@@ -312,6 +313,33 @@ class BookingController extends Controller
     {
         try {
             return response_json(true, null, 'Sukses mengambil data.', $booking);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'unit' => Unit::select('id AS value', DB::raw('CONCAT_WS(" ", unit_number, "/", unit_block) AS text'))->get(),
+            'client' => Client::select('id AS value', 'client_name AS text')->get(),
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

@@ -28,6 +28,7 @@ class CreateBookingsTable extends Migration
             $table->double('installment');
             $table->integer('installment_time');
             $table->integer('due_date');
+            $table->double('amount');
             $table->double('credits');
             $table->string('payment_method_utj')->nullable();
             $table->string('bank_name')->nullable();

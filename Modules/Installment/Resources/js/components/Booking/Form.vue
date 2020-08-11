@@ -1,11 +1,12 @@
 <script>
 	import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
-	import { required, email, max, numeric, between } from 'vee-validate/dist/rules'
+	import { required, email, max, min, numeric, between } from 'vee-validate/dist/rules'
 	import id from 'vee-validate/dist/locale/id.json'
 
 	extend('required', required)
 	extend('email', email)
 	extend('max', max)
+	extend('min', min)
 	extend('numeric', numeric)
 	extend('between', between)
     localize('id', id);
@@ -27,7 +28,19 @@
 			dataUri: {
 			    type: String,
 			    default: ''
-			}			
+			},
+			filter_unit: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
+			},
+			filter_client: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
+			},			
 		},
 		data: function () {
             return {
@@ -40,7 +53,24 @@
 			    modal: false,
 	            datepicker: false,
             	form_data: {
-            		
+            		unit_id: '',
+            		client_id: '',
+            		total_amount: '',
+            		ppn: '',
+            		payment_type: '',
+            		payment_method: '',
+            		dp_amount: '',
+            		first_payment: '',
+            		principal: '',
+            		installment: '',
+            		installment_time: '',
+            		due_date: '',
+            		amount:'',
+            		credits: '',
+            		payment_method_utj: '',
+            		bank_name: '',
+            		card_number: '',
+            		point: ''
             	}
         	}
         },
@@ -58,7 +88,24 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
-    		            			
+    		            			unit_id: data.unit_id,
+    		            			client_id: data.client_id,
+    		            			total_amount: data.total_amount,
+    		            			ppn: data.ppn,
+    		            			payment_type: data.payment_type,
+    		            			payment_method: data.payment_method,
+    		            			dp_amount: data.dp_amount,
+    		            			first_payment: data.first_payment,
+    		            			principal: data.principal,
+    		            			installment: data.installment,
+    		            			installment_time: data.installment_time,
+    		            			due_date: data.due_date,
+    		            			credits: data.credits,
+    		            			amount: data.amount,
+    		            			payment_method_utj: data.payment_method_utj,
+    		            			bank_name: data.bank_name,
+    		            			card_number: data.card_number,
+    		            			point: data.point
     		            		}
 
     			                this.field_state = false
@@ -123,7 +170,23 @@
 	                    this.tableAlertText = 'Oops, something went wrong. Please try again later.'
 	    		        this.field_state = false
 	    		    });
-		    }
+		    },
+		    setSelectedUnit() {
+				let unit = _.find(this.filter_unit, o => { return o.unit_id == this.form_data.unit_id})
+				if (_.isUndefined(unit)) {
+					this.form_data.unit_number = ''
+					this.form_data.unit_block = ''
+					this.form_data.unit_type = ''
+					this.form_data.surface_area = ''
+					this.form_data.building_area = ''
+				} else {
+					this.form_data.unit_number = unit.unit_number
+					this.form_data.blok_number = unit.blok_number
+					this.form_data.unit_type = unit.unit_type
+					this.form_data.surface_area = unit.surface_area
+					this.form_data.building_area = unit.building_area
+				}
+			},
         }
 	}
 </script>
