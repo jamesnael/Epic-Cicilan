@@ -53,7 +53,15 @@
 			    modal: false,
 	            datepicker: false,
             	form_data: {
-            		unit_id: '',
+            		unit_type:'',
+            		unit_block:'',
+            		unit_number:'',
+            		surface_area:'',
+            		building_area:'',
+            		utj:'',
+            		electrical_power:'',
+            		points:'',
+            		closing_fee:'',
             		client_id: '',
             		total_amount: '',
             		ppn: '',
@@ -88,6 +96,15 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
+    		            			unit_type:data.unit_type,
+    		            			unit_block:data.unit_block,
+    		            			unit_number:data.unit_number,
+    		            			surface_area:data.surface_area,
+    		            			building_area:data.building_area,
+    		            			utj:data.utj,
+    		            			electrical_power:data.electrical_power,
+    		            			points:data.points,
+    		            			closing_fee:data.closing_fee,
     		            			unit_id: data.unit_id,
     		            			client_id: data.client_id,
     		            			total_amount: data.total_amount,

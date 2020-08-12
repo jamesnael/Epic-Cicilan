@@ -5,6 +5,7 @@ namespace Modules\Installment\Http\Controllers\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Installment\Http\Controllers\Booking\BookingHelper;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
@@ -25,6 +26,8 @@ class BookingController extends Controller
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('booking.index'), 'text' => 'Data Booking'],
         ];
+
+        $this->helper = new BookingHelper;
     }
 
     /**
@@ -118,10 +121,14 @@ class BookingController extends Controller
 
         DB::beginTransaction();
         try {
-
-            $data = Booking::create($request->all());
-            DB::commit();
+            $unit = Unit::create($request->all());
             
+            $request->merge(['unit_id' => $unit->id]);
+            $booking = Booking::create($request->all());
+
+            $data = $this->helper->saveBookingPayments($booking);
+
+            DB::commit();
             return response_json(true, null, 'Data booking berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
@@ -208,7 +215,15 @@ class BookingController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "unit_id" => "bail|nullable|exists:Modules\Installment\Entities\Unit,id",
+            "unit_type" => "bail|required",
+            "unit_block" => "bail|required",
+            "unit_number" => "bail|required",
+            "surface_area" => "bail|required|numeric",
+            "building_area" => "bail|required|numeric",
+            "utj" => "bail|required",
+            "electrical_power" => "bail|required|numeric",
+            "points" => "bail|required|numeric",
+            "closing_fee" => "bail|required",
             "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",
             "total_amount" => "bail|required|numeric",
             "ppn" => "bail|required|numeric",
@@ -224,7 +239,6 @@ class BookingController extends Controller
             "payment_method_utj" => "bail|required|string|max:255",
             "bank_name" => "bail|required|string|max:255",
             "card_number" => "bail|required|string|max:255",
-            "point" => "bail|required|numeric",
         ]);
     }
 

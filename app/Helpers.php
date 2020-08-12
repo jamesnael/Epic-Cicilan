@@ -101,6 +101,99 @@ if (! function_exists('get_available_routes')) {
     }
 }
 
+if (! function_exists('get_next_date')) {
+    function get_next_date($day = 1){
+        $date = \Carbon\Carbon::now()->day($day);
+        
+        if($date->isPast()){
+            $date->month++;
+        }
+
+        return $date->format('Y-m-d');
+    }
+}
+
+if (! function_exists('get_next_month')) {
+    function get_next_month($date_str='1970-01-01', $months=1){
+        $date = new \DateTime($date_str);
+
+        // We extract the day of the month as $start_day
+        $start_day = $date->format('j');
+
+        // We add 1 month to the given date
+        $date->modify("+{$months} month");
+
+        // We extract the day of the month again so we can compare
+        $end_day = $date->format('j');
+
+        if ($start_day != $end_day)
+        {
+            // The day of the month isn't the same anymore, so we correct the date
+            $date->modify('last day of last month');
+        }
+
+        return \Carbon\Carbon::instance($date)->format('Y-m-d');
+    }
+}
+
+if (! function_exists('reformatDate')) {
+    function reformatDate($date) {
+        $strSearch = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ];
+        $strReplace = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'Mei',
+            'Jun',
+            'Jul',
+            'Agu',
+            'Sep',
+            'Okt',
+            'Nov',
+            'Des',
+        ];
+        return str_ireplace($strSearch, $strReplace, $date);
+    }
+}
+
 if (! function_exists('aside_menu')) {
     function aside_menu()
     {

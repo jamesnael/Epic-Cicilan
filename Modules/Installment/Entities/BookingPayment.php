@@ -6,31 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Booking extends Model
+class BookingPayment extends Model
 {
-
-	use Sluggable, SoftDeletes;
+    use Sluggable, SoftDeletes;
 
     protected $fillable = [
     	'slug',
-    	'unit_id',
-    	'client_id',
-    	'total_amount',
-    	'ppn',
-    	'payment_type',
-    	'payment_method',
-    	'dp_amount',
-    	'first_payment',
-    	'principal',
-    	'installment',
-    	'installment_time',
+    	'booking_id',
+    	'payment',
     	'due_date',
-    	'credits',
-        'amount',
-    	'payment_method_utj',
-    	'bank_name',
-    	'card_number',
-    	'point'
+    	'installment',
+    	'credit',
+    	'payment_status',
+    	'payment_date',
+    	'payment_method',
+    	'va_number',
+    	'total_paid',
+    	'number_of_delays',
+    	'fine',
     ];
 
      /**
@@ -60,7 +53,7 @@ class Booking extends Model
     {
         return [
             'slug' => [
-                'source' => ['client.client_name', 'unit.unit_number'],
+                'source' => ['booking_id', uniqid()],
             ]
         ];
     }
@@ -94,8 +87,8 @@ class Booking extends Model
     /**
      * Get the relations for the model.
      */
-    public function payments()
+    public function booking()
     {
-        return $this->hasMany('Modules\Installment\Entities\BookingPayment');
+        return $this->belongsTo('Modules\Installment\Entities\Booking');
     }
 }
