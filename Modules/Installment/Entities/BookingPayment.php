@@ -68,22 +68,6 @@ class BookingPayment extends Model
     }
 
     /**
-     * Get the relationship for the model.
-     */
-    public function unit()
-    {
-        return $this->belongsTo('Modules\Installment\Entities\Unit', 'unit_id');
-    }
-
-    /**
-     * Get the relationship for the model.
-     */
-    public function client()
-    {
-        return $this->belongsTo('Modules\Installment\Entities\Client', 'client_id');
-    }
-
-    /**
      * Get the relations for the model.
      */
     public function booking()

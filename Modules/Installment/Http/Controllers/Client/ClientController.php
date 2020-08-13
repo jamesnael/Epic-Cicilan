@@ -44,6 +44,12 @@ class ClientController extends Controller
                 "value" => 'client_name',
             ],
             [
+                "text" => 'Pekerjaan',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'profession',
+            ],
+            [
                 "text" => 'No Handphone',
                 "align" => 'center',
                 "sortable" => true,
@@ -268,7 +274,8 @@ class ClientController extends Controller
             "client_email" => "bail|required|email",
             "client_phone_number" => "bail|nullable|string|max:255",
             "client_mobile_number" => "bail|required|string|max:255",
-            "client_address" => "bail|nullable|string|max:255"
+            "client_address" => "bail|nullable|string|max:255",
+            "profession" => "bail|required|string|max:255"
         ]);
     }
 }

@@ -143,9 +143,14 @@ class BookingController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show(Booking $booking)
     {
-        return view('installment::bookingshow');
+        $this->breadcrumbs[] = ['href' => route('installment.index'), 'text' => 'Edit Cicilan'];
+
+        return view('installment::booking.show',[
+            'page' => $this,
+            'data' => $booking,
+        ])->with($this->getHelper());
     }
 
     /**

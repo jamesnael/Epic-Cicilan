@@ -20,13 +20,19 @@ Route::group(['namespace' => 'Client'], function() {
 Route::group(['namespace' => 'Booking'], function() {
 	Route::get('booking/table', 'BookingController@table')->name('booking.table');
 	Route::get('booking/{booking}/data', 'BookingController@data')->name('booking.data');
-	Route::resource('booking', 'BookingController')->except(['show']);
+	Route::resource('booking', 'BookingController');
 });
 
 Route::group(['namespace' => 'Unit'], function() {
 	Route::get('unit/table', 'UnitController@table')->name('unit.table');
 	Route::get('unit/{unit}/data', 'UnitController@data')->name('unit.data');
 	Route::resource('unit', 'UnitController')->except(['show']);
+});
+
+Route::group(['namespace' => 'Installment'], function() {
+	Route::get('installment/table', 'InstallementController@table')->name('installment.table');
+	Route::get('installment/{installment}/data', 'InstallementController@data')->name('installment.data');
+	Route::resource('installment', 'InstallementController')->except(['show']);
 });
 
 

@@ -272,7 +272,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-home-city',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Booking',
-                'model' => in_array(Route::currentRouteName(), ['client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit']),
+                'model' => in_array(Route::currentRouteName(), ['client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'installment.index', 'installment.create', 'installment.edit']),
                 'children' => [
                     [
                         'icon' => 'mdi-account-multiple',
@@ -291,6 +291,12 @@ if (! function_exists('aside_menu')) {
                         'text' => 'Booking',
                         'uri' => route('booking.index'),
                         'model' => in_array(Route::currentRouteName(), ['booking.index','booking.create','booking.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-account-cash-outline',
+                        'text' => 'Cicilan',
+                        'uri' => route('installment.index'),
+                        'model' => in_array(Route::currentRouteName(), ['installment.index','installment.create','installment.edit'])
                     ]
                 ]           
             ],

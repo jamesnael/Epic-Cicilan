@@ -27,6 +27,19 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Pekerjaan" rules="required|max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.profession"
+		    			name="profession"
+			    		label="Pekerjaan"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
