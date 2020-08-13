@@ -73,6 +73,6 @@ class Unit extends Model
      */
     public function unit_bookings()
     {
-        return $this->hasMany('Modules\Installment\Entities\Unit', 'unit_id');
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'unit_id');
     }
 }

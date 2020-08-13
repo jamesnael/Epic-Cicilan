@@ -29,13 +29,13 @@
 			    type: String,
 			    default: ''
 			},
-			filter_unit: {
+			filter_client: {
 			    type: Array,
 			    default: function () {
 			        return []
 			    }
 			},
-			filter_client: {
+			filter_sales: {
 			    type: Array,
 			    default: function () {
 			        return []
@@ -54,7 +54,7 @@
 	            datepicker: false,
             	form_data: {
             		unit_type:'',
-            		unit_block:'',
+            		client_name:'',
             		unit_number:'',
             		surface_area:'',
             		building_area:'',
@@ -62,7 +62,6 @@
             		electrical_power:'',
             		points:'',
             		closing_fee:'',
-            		client_id: '',
             		total_amount: '',
             		ppn: '',
             		payment_type: '',
@@ -78,7 +77,18 @@
             		payment_method_utj: '',
             		bank_name: '',
             		card_number: '',
-            		point: ''
+            		point: '',
+            		client_id: '',
+            		client_name: '',
+            		client_email: '',
+            		client_phone_number: '',
+            		client_mobile_number: '',
+            		client_addres: '',
+            		sales_id:'',
+            		sales_name:'',
+            		agency_name:'',
+            		main_coordinator:'',
+            		regional_coordinator:'',
             	}
         	}
         },
@@ -95,18 +105,17 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+    		            		console.log(data)
     		            		this.form_data = {
-    		            			unit_type:data.unit_type,
-    		            			unit_block:data.unit_block,
-    		            			unit_number:data.unit_number,
-    		            			surface_area:data.surface_area,
-    		            			building_area:data.building_area,
-    		            			utj:data.utj,
-    		            			electrical_power:data.electrical_power,
-    		            			points:data.points,
-    		            			closing_fee:data.closing_fee,
-    		            			unit_id: data.unit_id,
-    		            			client_id: data.client_id,
+    		            			unit_type:data.unit.unit_type,
+    		            			unit_block:data.unit.unit_block,
+    		            			unit_number:data.unit.unit_number,
+    		            			surface_area:data.unit.surface_area,
+    		            			building_area:data.unit.building_area,
+    		            			utj:data.unit.utj,
+    		            			electrical_power:data.unit.electrical_power,
+    		            			points:data.unit.points,
+    		            			closing_fee:data.unit.closing_fee,
     		            			total_amount: data.total_amount,
     		            			ppn: data.ppn,
     		            			payment_type: data.payment_type,
@@ -122,7 +131,19 @@
     		            			payment_method_utj: data.payment_method_utj,
     		            			bank_name: data.bank_name,
     		            			card_number: data.card_number,
-    		            			point: data.point
+    		            			point: data.point,
+    		            			client_id: data.client_id,
+    		            			client_name: data.client.client_name,
+    		            			client_number: data.client.client_number,
+    		            			client_email: data.client.client_email,
+    		            			client_phone_number: data.client.client_phone_number,
+    		            			client_mobile_number: data.client.client_mobile_number,
+    		            			client_address: data.client.client_address,
+    		            			sales_id: data.sales_id,
+    		            			sales_name:data.sales.user.full_name,
+    		            			agency_name:data.agency ? data.agency.agency_name : '',
+    		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
+    		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
     		            		}
 
     			                this.field_state = false
@@ -188,20 +209,35 @@
 	    		        this.field_state = false
 	    		    });
 		    },
-		    setSelectedUnit() {
-				let unit = _.find(this.filter_unit, o => { return o.unit_id == this.form_data.unit_id})
-				if (_.isUndefined(unit)) {
-					this.form_data.unit_number = ''
-					this.form_data.unit_block = ''
-					this.form_data.unit_type = ''
-					this.form_data.surface_area = ''
-					this.form_data.building_area = ''
+		    setSelectedClient() {
+				let client = _.find(this.filter_client, o => { return o.value == this.form_data.client_id})
+				if (_.isUndefined(client)) {
+					this.form_data.client_number = ''
+					this.form_data.client_name = ''
+					this.form_data.client_phone_number = ''
+					this.form_data.client_mobile_number = ''
+					this.form_data.client_address = ''
 				} else {
-					this.form_data.unit_number = unit.unit_number
-					this.form_data.blok_number = unit.blok_number
-					this.form_data.unit_type = unit.unit_type
-					this.form_data.surface_area = unit.surface_area
-					this.form_data.building_area = unit.building_area
+					this.form_data.client_number = client.client_number
+					this.form_data.client_name = client.text
+					this.form_data.client_phone_number = client.client_phone_number
+					this.form_data.client_mobile_number = client.client_mobile_number
+					this.form_data.client_address = client.client_address
+				}
+			},
+			setSelectedSales() {
+				let sales = _.find(this.filter_sales, o => { return o.value == this.form_data.sales_id})
+				console.log(sales)
+				if (_.isUndefined(sales)) {
+					this.form_data.sales_name = ''
+					this.form_data.agency_name = ''
+					this.form_data.main_coordinator = ''
+					this.form_data.regional_coordinator = ''
+				} else {
+					this.form_data.sales_name = sales.text
+					this.form_data.agency_name = sales.agency_name
+					this.form_data.main_coordinator = sales.main_coordinator
+					this.form_data.regional_coordinator = sales.regional_coordinator
 				}
 			},
         }

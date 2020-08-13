@@ -15,6 +15,7 @@ class Booking extends Model
     	'slug',
     	'unit_id',
     	'client_id',
+        'sales_id',
     	'total_amount',
     	'ppn',
     	'payment_type',
@@ -83,6 +84,14 @@ class Booking extends Model
         return $this->belongsTo('Modules\Installment\Entities\Unit', 'unit_id');
     }
 
+     /**
+     * Get the relationship for the model.
+     */
+    public function sales()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\Sales', 'sales_id');
+    }
+
     /**
      * Get the relationship for the model.
      */
@@ -96,6 +105,6 @@ class Booking extends Model
      */
     public function payments()
     {
-        return $this->hasMany('Modules\Installment\Entities\BookingPayment');
+        return $this->hasMany('Modules\Installment\Entities\BookingPayment', 'booking_id');
     }
 }

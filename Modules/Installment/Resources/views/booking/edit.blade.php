@@ -8,7 +8,7 @@
 	uri="{{ route('booking.update', [$data->slug]) }}"
 	redirect-uri="{{ route('booking.index') }}"
 	data-uri="{{ route('booking.data', [$data->slug]) }}"
-	:filter_unit='@json($unit)'
+	:filter_sales='@json($sales)'
 	:filter_client='@json($client)'>
 		@include('installment::booking.form')
 	</booking-form>

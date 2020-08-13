@@ -4,11 +4,10 @@ namespace Modules\Installment\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BookingPayment extends Model
 {
-    use Sluggable, SoftDeletes;
+    use Sluggable;
 
     protected $fillable = [
     	'slug',

@@ -29,7 +29,6 @@ class CreateBookingPaymentsTable extends Migration
             $table->integer('number_of_delays')->nullable();
             $table->double('fine')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

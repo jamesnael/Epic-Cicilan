@@ -9,6 +9,7 @@ use Modules\Installment\Http\Controllers\Booking\BookingHelper;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
+use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -97,7 +98,7 @@ class BookingController extends Controller
      * @return Response
      */
     public function create()
-    {
+    {   
         $this->breadcrumbs[] = ['href' => route('booking.index'), 'text' => 'Tambah Booking'];
 
         return view('installment::booking.create', [
@@ -179,7 +180,13 @@ class BookingController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $booking->update($request->all());
+
+            $unit = Unit::where('id', $booking->unit_id)->first();
+            $unit->update($request->all());
+
+            $booking->update($request->all());
+            $data = $this->helper->saveBookingPayments($booking);
+
             DB::commit();
             return response_json(true, null, 'Data booking berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -198,7 +205,12 @@ class BookingController extends Controller
     {
         DB::beginTransaction();
         try {
+            $unit = Unit::where('id', $booking->unit_id)->first();
+            $unit->delete();
+
+            $booking->payments()->delete();
             $booking->delete();
+
             DB::commit();
             return response_json(true, null, 'Data booking berhasil dihapus.');
         } catch (\Exception $e) {
@@ -266,7 +278,7 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit');
+        $query = Booking::with('client','unit')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -291,6 +303,7 @@ class BookingController extends Controller
             $item->total_amount ='Rp '.$item->total_amount;
             $item->dp_amount = 'Rp '.$item->dp_amount;
             $item->installment = 'Rp '.$item->installment;
+            $item->point = $item->unit->points;
             return $item;
         });
         return $data;
@@ -325,8 +338,9 @@ class BookingController extends Controller
      */
     public function data(Booking $booking)
     {
+        $data = $booking->load('unit','client','sales','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $booking);
+            return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
@@ -340,8 +354,15 @@ class BookingController extends Controller
     public function getHelper()
     {
         return [
-            'unit' => Unit::select('id AS value', DB::raw('CONCAT_WS(" ", unit_number, "/", unit_block) AS text'))->get(),
-            'client' => Client::select('id AS value', 'client_name AS text')->get(),
+            'sales' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator')->get()->transform(function($item){
+                        $item->value = $item->id;
+                        $item->text = $item->user->full_name;
+                        $item->agency_name = $item->agency->agency_name ?? '';
+                        $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
+                        $item->main_coordinator = $item->main_coordinator->full_name ?? '';
+                        return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
+                    }),
+            'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
         ];
     }
 
