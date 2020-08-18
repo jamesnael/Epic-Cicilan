@@ -72,4 +72,12 @@ class DocumentClient extends Model
     {
         return 'document-' . $this->attributes['client_id'];
     }
+
+    /**
+     * Get the relations for the model.
+     */
+    public function client()
+    {
+        return $this->belongsTo('Modules\Installment\Entities\Client');
+    }
 }

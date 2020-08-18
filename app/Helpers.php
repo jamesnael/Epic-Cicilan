@@ -300,6 +300,12 @@ if (! function_exists('aside_menu')) {
                     ]
                 ]           
             ],
+            [
+                'icon' => 'mdi-book-multiple',
+                'text' => 'Kelola Dokumen',
+                'uri' => route('document.index'),
+                'model' => in_array(Route::currentRouteName(), ['document.index','document.create','document.edit'])
+            ],
         ];
     }
 }

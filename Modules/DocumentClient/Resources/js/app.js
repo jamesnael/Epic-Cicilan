@@ -1,0 +1,1 @@
+Vue.component('document-form', () => import('./components/Document/Form.vue'));

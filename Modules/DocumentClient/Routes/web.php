@@ -11,5 +11,7 @@
 |
 */
 Route::group(['namespace' => 'DocumentClient'], function() {
-	Route::resource('document-client', 'DocumentClientController')->except(['show']);
+	Route::get('document/table', 'DocumentClientController@table')->name('document.table');
+	Route::get('document/{document}/data', 'DocumentClientController@data')->name('document.data');
+	Route::resource('document', 'DocumentClientController')->except(['show']);
 });
