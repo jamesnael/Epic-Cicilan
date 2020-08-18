@@ -269,6 +269,18 @@
 	    				</validation-provider>
 			        </v-col>
 			    </v-row>
+			    <validation-provider v-slot="{ errors }" name="Status" rules="required">
+		    		<v-select
+		    			v-model="form_data.status" 
+		              	:items='["Aktif","Tidak Aktif"]'
+		              	label="Status"
+		              	name="status"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"

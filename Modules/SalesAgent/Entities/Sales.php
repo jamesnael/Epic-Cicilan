@@ -22,7 +22,8 @@ class Sales extends Model
         'sales_commission',
         'agency_commission',
         'regional_coordinator_commission',
-        'main_coordinator_commission'
+        'main_coordinator_commission',
+        'status'
     ];
 
     /**

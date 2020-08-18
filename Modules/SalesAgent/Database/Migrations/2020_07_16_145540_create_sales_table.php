@@ -22,7 +22,6 @@ class CreateSalesTable extends Migration
             $table->string('sales_nip')->nullable();
             $table->string('file_ktp')->nullable();
             $table->string('file_npwp')->nullable();
-            $table->string('status')->nullable();
             $table->string('join_date')->nullable();
 
             $table->timestamps();

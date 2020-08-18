@@ -11,7 +11,7 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
-use Modules\SalesAgent\Entities\BookingPayment;
+use Modules\Installment\Entities\BookingPayment;
 
 class InstallementController extends Controller
 {
@@ -188,19 +188,28 @@ class InstallementController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Booking $installment)
     {
-        //
-    }
+        $request->merge([
+            'unit_installments' => json_decode($request->input('unit_installments'), true)
+        ]);
+        DB::beginTransaction();
+        try {
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+            foreach ($request->input('unit_installments') as $value) {
+                $data = BookingPayment::find($value['id']);
+                $data->update([
+                    'due_date' => date('Y-m-d', strtotime($value['due_date'])),
+                    'installment' => str_replace('.', '', $value['installment']),
+                    'credit' => str_replace('.', '', $value['credit']),
+                ]);
+            }
+
+            DB::commit();
+            return response_json(true, null, 'Data cicilan berhasil disimpan.', $data);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**

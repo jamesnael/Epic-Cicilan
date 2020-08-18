@@ -464,22 +464,40 @@
 		                	<tr v-for="(payment, idx) in unit_installments">
                                 <td class="text-center">@{{idx + 1}}</td>
                                 <td class="text-center">@{{payment.payment}}</td>
-                                <td class="text-center">@{{payment.due_date}}</td>
-                                <td class="text-center">@{{payment.installment}}</td>
+                                <td class="text-center">
+									@{{payment.due_date}}
+                            	</td>
+                            	<td v-if="idx == 0" align="center">@{{payment.installment}}</td>
+                                <td v-else>
+                		    		<v-text-field
+	                		    		class="text-center"
+                		    			v-model="payment.installment"
+                		    			name="amount"
+                			    		label=""
+                			    		:disabled="field_state"
+                			    		@input="regenerateInstallment()">
+                	    			</v-text-field>
+                                </td>
                                 <td class="text-center">@{{payment.credit}}</td>
                                 
                             </tr>
 		                </tbody>
 	                </template>
 	            </v-simple-table>
+	            <v-btn
+		      		class="mt-4"
+		      		outlined 
+		      		:disabled="field_state">
+    		      	Kembali
+    		    </v-btn>
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
 	    		    elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="submit">
-		    		Simpan
+		    		@click="updateInstallment">
+		    		Update Cicilan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
     		              	<v-icon color="white">mdi-sync</v-icon>
