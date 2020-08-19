@@ -308,7 +308,7 @@ if (! function_exists('aside_menu')) {
                 'children' => [
                     [
                         'icon' => 'mdi-file-document',
-                        'text' => 'Documen Sales',
+                        'text' => 'Dokumen Sales',
                         'uri' => route('document.index'),
                         'model' => in_array(Route::currentRouteName(), ['document.index','document.create','document.edit'])
                     ],
