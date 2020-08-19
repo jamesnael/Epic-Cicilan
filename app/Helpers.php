@@ -302,10 +302,24 @@ if (! function_exists('aside_menu')) {
             ],
             [
                 'icon' => 'mdi-book-multiple',
+                'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Dokumen',
-                'uri' => route('document.index'),
-                'model' => in_array(Route::currentRouteName(), ['document.index','document.create','document.edit'])
-            ],
+                'model' => in_array(Route::currentRouteName(), ['document.index','document.create', 'document.edit', 'document-admin.index', 'document-admin.create', 'document-admin.edit']),
+                'children' => [
+                    [
+                        'icon' => 'mdi-file-document',
+                        'text' => 'Documen Sales',
+                        'uri' => route('document.index'),
+                        'model' => in_array(Route::currentRouteName(), ['document.index','document.create','document.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-file-document-outline',
+                        'text' => 'Dokumen Admin',
+                        'uri' => route('document-admin.index'),
+                        'model' => in_array(Route::currentRouteName(), ['document-admin.index','document-admin.create','document-admin.edit'])
+                    ]
+                ]           
+            ]
         ];
     }
 }

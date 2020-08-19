@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DocumentClient\Http\Controllers\DocumentClient;
+namespace Modules\DocumentClient\Http\Controllers\DocumentAdmin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,10 +12,9 @@ use Modules\DocumentClient\Entities\DocumentClient;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class DocumentClientController extends Controller
+class DocumentAdminController extends Controller
 {
-
-    /**
+     /**
      * Instantiate a new controller instance.
      *
      * @return void
@@ -24,7 +23,7 @@ class DocumentClientController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('document.index'), 'text' => 'Data Dokumen Klien'],
+            ['href' => route('document-admin.index'), 'text' => 'Data Dokumen Admin'],
         ];
     }
 
@@ -64,9 +63,9 @@ class DocumentClientController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => '',
-            ],
+            ]
         ];
-        return view('documentclient::document.index', [
+        return view('documentclient::document-admin.index', [
             'page' => $this,
         ]);
     }
@@ -79,9 +78,9 @@ class DocumentClientController extends Controller
      */
     public function create()
     {   
-        $this->breadcrumbs[] = ['href' => route('document.index'), 'text' => 'Tambah Document Klien'];
+        $this->breadcrumbs[] = ['href' => route('document-admin.index'), 'text' => 'Tambah Dokumen Admin'];
 
-        return view('documentclient::document.create', [
+        return view('documentclient::document-admin.create', [
             'page' => $this,
         ])->with($this->getHelper());
     }

@@ -331,7 +331,38 @@
     		            </tr>
     		          </tbody>
     		        </template>
-    		    </v-simple-table>
+    		      </v-simple-table>
+					
+    		    {{-- @if (!empty(\Auth::user()))
+	    		@if (!empty(\Auth::user()->role_id == '1')) --}}
+    		    <validation-provider v-slot="{ errors }" name="Persetujuan kantor agency" rules="required">
+		    		<v-select
+		    			class="mt-4"
+		    			v-model="form_data.approval_agent" 
+		              	:items="['Pending', 'Approved']"
+		              	label="Persetujuan Kantor Agency"
+		              	name="approval_agent"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Persetujuan Developer" rules="required">
+		    		<v-select
+		    			class="mt-4"
+		    			v-model="form_data.approval_developer" 
+		              	:items="['Pending', 'Approved']"
+		              	label="Persetujuan Developer"
+		              	name="approval_developer"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
+		    	{{-- @endif
+	    		@endif --}}
 	    		<v-btn
 		    		class="mt-5 mr-4 white--text"
 		    		color="primary"
