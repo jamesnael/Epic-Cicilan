@@ -11,5 +11,4 @@ pipelines:
         caches:
           - composer
         script:
-          - cd public_html
           - composer install
