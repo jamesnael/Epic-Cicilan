@@ -12,7 +12,7 @@ class DocumentClient extends Model
 
     protected $fillable = [
     	'slug',
-    	'client_id',
+    	'booking_id',
     	'submission_date',
     	'client_profesion',
     	'file_ktp_pemohon',
@@ -33,6 +33,8 @@ class DocumentClient extends Model
     	'file_sk_domisili',
     	'file_keterangan_usaha',
     	'file_spt',
+        'file_keterangan_kerja',
+        'file_tabungan_3_bulan_terakhir',
     	'approval_agent',
     	'approval_developer',
     	'approval_agent_by',
@@ -70,14 +72,14 @@ class DocumentClient extends Model
      */
     public function getSlugNameAttribute()
     {
-        return 'document-' . $this->attributes['client_id'];
+        return 'document-' . $this->attributes['booking_id'];
     }
 
     /**
      * Get the relations for the model.
      */
-    public function client()
+    public function booking()
     {
-        return $this->belongsTo('Modules\Installment\Entities\Client');
+        return $this->belongsTo('Modules\Installment\Entities\Booking');
     }
 }

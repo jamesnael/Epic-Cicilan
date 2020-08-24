@@ -47,7 +47,7 @@
 	            datepicker: false,
             	form_data: {
             		client_id: '',
-            		profession:'',
+            		client_profession:'',
             		submission_date:new Date().toISOString().substr(0, 10),
             	}
         	}
@@ -72,7 +72,7 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			client_id: data.client_id,
-    		            			profession: data.client.profession,
+    		            			client_profession: data.client.profession,
     		            		}
 
     			                this.field_state = false
@@ -140,13 +140,13 @@
 		    },
 		    setSelectedClient() {
 				let client = _.find(this.filter_client, o => { return o.value == this.form_data.client_id})
-				console.log(client)
+				console.log(client.profession)
 				if (_.isUndefined(client)) {
 					this.form_data.client_number = ''
-					this.form_data.profession = ''
+					this.form_data.client_profession = ''
 				} else {
 					this.form_data.client_number = client.client_number
-					this.form_data.profession = client.profession
+					this.form_data.client_profession = client.profession
 				}
 			}
         }
