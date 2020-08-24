@@ -39,6 +39,7 @@ Route::group(['namespace' => 'PPJB'], function() {
 	Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
 	Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
 	Route::resource('PPJB', 'PPJBController')->except(['show']);
+});
 
 Route::group(['namespace' => 'Akad'], function() {
 	Route::get('akad/table', 'AkadController@table')->name('akad.table');
