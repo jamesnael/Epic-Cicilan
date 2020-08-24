@@ -305,9 +305,10 @@ class BookingController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
-            $item->total_amount ='Rp '.$item->total_amount;
-            $item->dp_amount = 'Rp '.$item->dp_amount;
-            $item->installment = 'Rp '.$item->installment;
+            $item->total_amount ='Rp '.format_money($item->total_amount);
+            $item->dp_amount = 'Rp '.format_money($item->dp_amount);
+            $item->installment = 'Rp '.format_money($item->installment);
+            $item->principal = 'Rp '.format_money($item->principal);
             $item->point = $item->unit->points;
             return $item;
         });

@@ -107,4 +107,12 @@ class Booking extends Model
     {
         return $this->hasMany('Modules\Installment\Entities\BookingPayment', 'booking_id');
     }
+
+    /**
+     * Get the relations for the model.
+     */
+    public function document()
+    {
+        return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
+    }
 }

@@ -72,11 +72,4 @@ class Client extends Model
         return $this->hasMany('Modules\Installment\Entities\Booking', 'client_id');
     }
 
-    /**
-     * Get the relationship for the model.
-     */
-    public function documents()
-    {
-        return $this->hasMany('Modules\DokumentClient\Entities\DokumentClient', 'client_id');
-    }
 }
