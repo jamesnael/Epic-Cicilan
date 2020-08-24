@@ -35,4 +35,8 @@ Route::group(['namespace' => 'Installment'], function() {
 	Route::resource('installment', 'InstallementController')->except(['show']);
 });
 
-
+Route::group(['namespace' => 'PPJB'], function() {
+	Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
+	Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
+	Route::resource('PPJB', 'PPJBController')->except(['show']);
+});
