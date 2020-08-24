@@ -153,7 +153,7 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'Total Solusi Teknologi, PT',
+        'vendor' => 'total-it',
         'author' => [
             'name' => 'TOTAL IT',
             'email' => 'info@totalit.co.id',

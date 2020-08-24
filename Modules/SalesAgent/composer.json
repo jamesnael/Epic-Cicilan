@@ -1,0 +1,25 @@
+{
+    "name": "total-it/salesagent",
+    "description": "",
+    "authors": [
+        {
+            "name": "TOTAL IT",
+            "email": "info@totalit.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\SalesAgent\\Providers\\SalesAgentServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\SalesAgent\\": ""
+        }
+    }
+}

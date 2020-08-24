@@ -1,0 +1,13 @@
+{
+    "name": "DocumentClient",
+    "alias": "documentclient",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\DocumentClient\\Providers\\DocumentClientServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

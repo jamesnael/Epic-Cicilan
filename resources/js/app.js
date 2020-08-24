@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import Vuetify from 'vuetify';
 
 require('./bootstrap');
+require('./v-mixins');
 
 window.Vue = require('vue');
 
@@ -14,8 +15,14 @@ Vue.use(VueRouter)
 Vue.use(Vuetify);
 
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
+Vue.component('base-layout', require('./components/BaseLayout.vue').default);
+Vue.component('table-layout', () => import('./components/Table.vue'));
+require('./../../Modules/SalesAgent/Resources/js/app');
+require('./../../Modules/AppUser/Resources/js/app');
+require('./../../Modules/RewardPoint/Resources/js/app');
+require('./../../Modules/Commission/Resources/js/app');
+require('./../../Modules/Installment/Resources/js/app');
+require('./../../Modules/DocumentClient/Resources/js/app');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

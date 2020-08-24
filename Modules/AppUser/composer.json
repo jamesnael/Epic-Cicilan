@@ -1,0 +1,25 @@
+{
+    "name": "Total Solusi Teknologi, PT/appuser",
+    "description": "",
+    "authors": [
+        {
+            "name": "TOTAL IT",
+            "email": "info@totalit.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\AppUser\\Providers\\AppUserServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\AppUser\\": ""
+        }
+    }
+}

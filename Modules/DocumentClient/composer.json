@@ -1,0 +1,25 @@
+{
+    "name": "total-it/documentclient",
+    "description": "",
+    "authors": [
+        {
+            "name": "TOTAL IT",
+            "email": "info@totalit.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\DocumentClient\\Providers\\DocumentClientServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\DocumentClient\\": ""
+        }
+    }
+}

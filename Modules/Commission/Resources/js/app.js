@@ -1,0 +1,1 @@
+Vue.component('commission-form', () => import('./components/Commission/Form.vue'));

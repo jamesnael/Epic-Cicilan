@@ -1,3 +1,9 @@
 {
-    "Telescope": true
+    "AppUser": true,
+    "SalesAgent": true,
+    "RewardCategory": true,
+    "RewardPoint": true,
+    "Commission": true,
+    "Installment": true,
+    "DocumentClient": true
 }

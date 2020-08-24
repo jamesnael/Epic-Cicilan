@@ -1,0 +1,13 @@
+{
+    "name": "SalesAgent",
+    "alias": "salesagent",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\SalesAgent\\Providers\\SalesAgentServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
