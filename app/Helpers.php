@@ -319,7 +319,28 @@ if (! function_exists('aside_menu')) {
                         'model' => in_array(Route::currentRouteName(), ['document-admin.index','document-admin.create','document-admin.edit'])
                     ]
                 ]           
-            ]
+            ],
+            [
+                'icon' => 'mdi-buffer',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'PPJB',
+                'uri' => route('PPJB.index'),
+                'model' => in_array(Route::currentRouteName(), ['PPJB.index','PPJB.create', 'PPJB.edit']),
+            ],
+            [
+                'icon' => 'mdi-card-account-details-star',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Proses Akad KPR',
+                'uri' => route('akad.index'),
+                'model' => in_array(Route::currentRouteName(), ['akad.index','akad.create', 'akad.edit']),
+            ],
+            [
+                'icon' => 'mdi-cash-multiple',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'AJB (Akte Jual Beli)',
+                'uri' => route('ajb.index'),
+                'model' => in_array(Route::currentRouteName(), ['ajb.index','ajb.create', 'ajb.edit']),
+            ],
         ];
     }
 }
