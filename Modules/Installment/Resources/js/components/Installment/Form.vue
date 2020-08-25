@@ -2,7 +2,6 @@
 	import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
 	import { required, email, max, min, numeric, between } from 'vee-validate/dist/rules'
 	import id from 'vee-validate/dist/locale/id.json'
-
     var moment = require('moment')
 
 	extend('required', required)
@@ -47,15 +46,13 @@
 		data: function () {
             return {
 	            unit_installments: [],
-
             	field_state: false,
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
-	            date: new Date().toISOString().substr(0, 10),
-                menu: false,
                 modal: false,
-                menu2: false,
+                idx:false,
+                menu:false,
 	            datepicker: false,
 	            unit_installments: [],
             	form_data: {
@@ -97,8 +94,6 @@
             		regional_coordinator:'',
             	}
         	}
-        },
-        computed:{
         },
         mounted() {
             this.setData();
@@ -157,7 +152,7 @@
                                         arr_installment.push({
                                             id: value.id,
                                             payment: value.payment,
-                                            due_date: this.showFormattedDt(value.due_date),
+                                            due_date: value.due_date,
                                             installment: this.moneyFormat(value.installment),
                                             credit: this.moneyFormat(value.credit)
                                         })
@@ -249,9 +244,6 @@
                     s[1] += new Array(prec - s[1].length + 1).join('0');
                 }
                 return s.join(dec);
-            },
-        	showFormattedDt(dt) {
-                return moment(dt, "YYYY-MM-DD").format("DD-MMM-YYYY")
             },
         	regenerateInstallment () {
                 let new_installment = []

@@ -27,7 +27,7 @@ class DocumentAdminController extends Controller
         ];
     }
 
-    /**
+   /**
      * Display a listing of the resource.
      * @return Response
      */
@@ -38,13 +38,13 @@ class DocumentAdminController extends Controller
                 "text" => 'Nama Debitur',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_name',
             ],
             [
                 "text" => 'Pekerjaan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_profesion',
             ],
             [
                 "text" => 'Unit',
@@ -62,10 +62,10 @@ class DocumentAdminController extends Controller
                 "text" => 'Tgl Pengajuan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
-            ]
+                "value" => 'submission_date',
+            ],
         ];
-        return view('documentclient::document-admin.index', [
+        return view('documentclient::document.index', [
             'page' => $this,
         ]);
     }
@@ -105,6 +105,8 @@ class DocumentAdminController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->all();
+        
         $validator = $this->validateFormRequest($request);
 
         if ($validator->fails()) {
@@ -181,7 +183,7 @@ class DocumentAdminController extends Controller
         ]);
     }
 
-     /**
+    /**
      *
      * Query for get data for table
      *
@@ -194,11 +196,11 @@ class DocumentAdminController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -208,12 +210,9 @@ class DocumentAdminController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $item->submission_date = \Carbon\Carbon::parse($item->submission_date)->locale('id')->translatedFormat('d F Y');
             $item->client_name = $item->client->client_name;
-            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
-            $item->total_amount ='Rp '.$item->total_amount;
-            $item->dp_amount = 'Rp '.$item->dp_amount;
-            $item->installment = 'Rp '.$item->installment;
-            $item->point = $item->unit->points;
+            
             return $item;
         });
         return $data;

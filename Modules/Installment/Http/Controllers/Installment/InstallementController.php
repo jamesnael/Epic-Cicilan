@@ -259,9 +259,10 @@ class InstallementController extends Controller
             $item->client_number = $item->client->client_number;
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_type .'/'. $item->unit->unit_number .'/'. $item->unit->unit_block;
-            $item->total_amount ='Rp '.$item->total_amount;
+            $item->total_amount ='Rp '.format_money($item->total_amount);
             $item->payment_type = $item->payment_type;
-            $item->dp_amount = 'Rp '.$item->dp_amount;
+            $item->dp_amount = 'Rp '.format_money($item->dp_amount);
+            $item->installment = 'Rp '.format_money($item->installment);
             $item->sales_name = $item->sales->user->full_name;
 
             return $item;

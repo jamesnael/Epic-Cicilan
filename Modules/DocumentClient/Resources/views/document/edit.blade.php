@@ -9,7 +9,7 @@
 	redirect-uri="{{ route('document.index') }}"
 	data-uri="{{ route('document.data', [$data->slug]) }}"
 	:filter_client='@json($client)'>
-		@include('installment::document.form')
+		@include('documentclient::document.form')
 	</document-form>
 
 @endsection
