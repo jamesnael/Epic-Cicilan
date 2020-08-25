@@ -4,12 +4,12 @@
 
 	@include('components.breadcrumbs')
 
-	<akad-form inline-template
-	uri="{{ route('akad.store') }}"
-	redirect-uri="{{ route('akad.index') }}"
+	<paymenttype-form inline-template
+	uri="{{ route('PaymentType.store') }}"
+	redirect-uri="{{ route('PaymentType.index') }}"
 	:filter_sales='@json($sales)'
 	:filter_client='@json($client)'>
-		@include('installment::akad.form')
-	</akad-form>
+		@include('installment::paymenttype.form')
+	</paymenttype-form>
 
 @endsection

@@ -58,3 +58,9 @@ Route::group(['namespace' => 'HandOver'], function() {
 	Route::get('handover/{handover}/data', 'HandOverController@data')->name('handover.data');
 	Route::resource('handover', 'HandOverController')->except(['show']);
 });
+
+Route::group(['namespace' => 'PaymentType'], function() {
+	Route::get('PaymentType/table', 'PaymentTypeController@table')->name('PaymentType.table');
+	Route::get('PaymentType/{PaymentType}/data', 'PaymentTypeController@data')->name('PaymentType.data');
+	Route::resource('PaymentType', 'PaymentTypeController')->except(['show']);
+});
