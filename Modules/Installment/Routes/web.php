@@ -52,3 +52,9 @@ Route::group(['namespace' => 'Ajb'], function() {
 	Route::get('ajb/{ajb}/data', 'AjbController@data')->name('ajb.data');
 	Route::resource('ajb', 'AjbController')->except(['show']);
 });
+
+Route::group(['namespace' => 'HandOver'], function() {
+	Route::get('handover/table', 'HandOverController@table')->name('handover.table');
+	Route::get('handover/{handover}/data', 'HandOverController@data')->name('handover.data');
+	Route::resource('handover', 'HandOverController')->except(['show']);
+});

@@ -5,3 +5,4 @@ Vue.component('installment-form', () => import('./components/Installment/Form.vu
 Vue.component('PPJB-form', () => import('./components/PPJB/Form.vue'));
 Vue.component('akad-form', () => import('./components/Akad/Form.vue'));
 Vue.component('ajb-form', () => import('./components/Ajb/Form.vue'));
+Vue.component('handover-form', () => import('./components/HandOver/Form.vue'));
