@@ -280,12 +280,12 @@ if (! function_exists('aside_menu')) {
                         'uri' => route('client.index'),
                         'model' => in_array(Route::currentRouteName(), ['client.index','client.create','client.edit'])
                     ],
-                    [
-                        'icon' => 'mdi-home-account',
-                        'text' => 'Unit',
-                        'uri' => route('unit.index'),
-                        'model' => in_array(Route::currentRouteName(), ['unit.index','unit.create','unit.edit'])
-                    ], 
+                    // [
+                    //     'icon' => 'mdi-home-account',
+                    //     'text' => 'Unit',
+                    //     'uri' => route('unit.index'),
+                    //     'model' => in_array(Route::currentRouteName(), ['unit.index','unit.create','unit.edit'])
+                    // ], 
                     [
                         'icon' => 'mdi-calendar-check',
                         'text' => 'Booking',

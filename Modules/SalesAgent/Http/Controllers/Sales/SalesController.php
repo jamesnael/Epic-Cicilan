@@ -119,16 +119,16 @@ class SalesController extends Controller
             // ]);
 
             if ($request->hasFile('file_ktp')) {
-                $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('sales/', $request->file('file_ktp'), $file_name
+                $file_name = 'ktp-' . uniqid() . '.' . $request->file('file_ktp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/ktp', $request->file('file_ktp'), $file_name
                 );
                 $data->file_ktp = $file_name;
 
             }
 
             if ($request->hasFile('file_npwp')) {
-                $file_name = 'npwp-' . $data->slug . '.' . $request->file('file_npwp')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('sales/', $request->file('file_npwp'), $file_name
+                $file_name = 'npwp-' . uniqid() . '.' . $request->file('file_npwp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/npwp', $request->file('file_npwp'), $file_name
                 );
                 $data->file_npwp = $file_name;
             }
@@ -180,16 +180,16 @@ class SalesController extends Controller
             $data->update($request->all());
 
             if ($request->hasFile('file_ktp')) {
-                $file_name = 'ktp-' . $data->slug . '.' . $request->file('file_ktp')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('sales/', $request->file('file_ktp'), $file_name
+                $file_name = 'ktp-' . uniqid() . '.' . $request->file('file_ktp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/ktp', $request->file('file_ktp'), $file_name
                 );
                 $data->file_ktp = $file_name;
 
             }
 
             if ($request->hasFile('file_npwp')) {
-                $file_name = 'npwp-' . $data->slug . '.' . $request->file('file_npwp')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('sales/', $request->file('file_npwp'), $file_name
+                $file_name = 'npwp-' . uniqid() . '.' . $request->file('file_npwp')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('sales/npwp', $request->file('file_npwp'), $file_name
                 );
                 $data->file_npwp = $file_name;
             }
@@ -358,6 +358,10 @@ class SalesController extends Controller
             'regional_coordinator_commission' => $sales->sales->regional_coordinator_commission,
             'main_coordinator_commission' => $sales->sales->main_coordinator_commission,
             'sales_nip' => $sales->sales->sales_nip,
+            'file_ktp' => $sales->sales->file_ktp,
+            'url_file_ktp' => $sales->sales->url_file_ktp,
+            'file_npwp' => $sales->sales->file_npwp,
+            'url_file_npwp' => $sales->sales->url_file_npwp,
             'full_name' => $sales->full_name,
             'email' => $sales->email,
             'phone_number' => $sales->phone_number,

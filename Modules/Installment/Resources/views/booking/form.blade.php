@@ -99,6 +99,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.utj ? number_format(form_data.utj) : 0 }}</small>
 			    		</validation-provider>
 			    	</v-col>
 			    	<v-col
@@ -149,6 +150,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.closing_fee ? number_format(form_data.closing_fee) : 0 }}</small>
 			    		</validation-provider>
 			    	</v-col>
 		    	</v-row>
@@ -167,6 +169,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.total_amount ? number_format(form_data.total_amount) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    	<v-col
@@ -231,6 +234,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.dp_amount ? number_format(form_data.dp_amount) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -249,6 +253,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.first_payment ? number_format(form_data.first_payment) : 0 }}</small>
 			    		</validation-provider>
 			    	</v-col>
     		        <v-col
@@ -265,6 +270,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.principal ? number_format(form_data.principal) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -283,6 +289,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.installment ? number_format(form_data.installment) : 0 }}</small>
 			    		</validation-provider>
 			    	</v-col>
     		        <v-col
@@ -306,7 +313,7 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|min:1">
+			    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|between:1,31">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.due_date"
@@ -352,6 +359,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+
 			    		</validation-provider>
 			    	</v-col>
     		        <v-col
@@ -368,6 +376,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.amount ? number_format(form_data.amount) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -375,13 +384,12 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.bank_name"
 				    			name="bank_name"
 					    		label="Nama Bank"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:counter="255"
 					    		:error-messages="errors"
@@ -392,13 +400,12 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="numeric">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.card_number"
 				    			name="card_number"
 					    		label="Nomor Rekening"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
@@ -431,7 +438,8 @@
 					    		label="ID Klien"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -446,7 +454,8 @@
 					    		label="Nama Klien"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -462,7 +471,8 @@
 					    		label="Nomor Telepon"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -477,7 +487,8 @@
 					    		label="Nomor Handphone"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -493,7 +504,8 @@
 					    		label="Email"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -507,7 +519,8 @@
 					    		label="Alamat Klien"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -525,7 +538,36 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            >
+		            	<template slot="selection" slot-scope="data">
+		            	    @{{ data.item.text }}
+		            	</template>
+	            	  	<template slot="item" slot-scope="data">
+	            	  		<table width="100%" class="mt-2">
+	            	  			<tr>
+	            	  				<td>Sales</td>
+	            	  				<td>:</td>
+	            	  				<td>@{{ data.item.text }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Koordinator Utama</td>
+	            	  				<td width="5%">:</td>
+	            	  				<td>@{{ data.item.main_coordinator }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td>Koordinator Wilayah</td>
+	            	  				<td>:</td>
+	            	  				<td>@{{ data.item.regional_coordinator }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td>Agensi</td>
+	            	  				<td>:</td>
+	            	  				<td>@{{ data.item.agency_name }}</td>
+	            	  			</tr>
+	            	  		</table>
+	            	  	</template>
+            	  		<v-divider></v-divider>
+		            </v-select>
 	    		</validation-provider>
 	    		<v-row>
 			    	<v-col
@@ -538,7 +580,8 @@
 					    		label="Nama Sales"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -552,7 +595,8 @@
 					    		label="Nama Agensi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -568,7 +612,8 @@
 					    		label="Koordinator Utama"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -582,7 +627,8 @@
 					    		label="Koordinator Wilayah"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>

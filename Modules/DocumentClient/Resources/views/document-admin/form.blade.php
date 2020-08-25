@@ -10,7 +10,8 @@
               name="client_name"
               :persistent-hint="true"
               :error-messages="errors"
-              :readonly="field_state">
+              :readonly="!field_state"
+              :disabled="field_state">
             </v-text-field>
           </validation-provider>
           <validation-provider v-slot="{ errors }" name="" rules="">
@@ -21,7 +22,8 @@
               name="client_profesion"
               :persistent-hint="true"
               :error-messages="errors"
-              :readonly="field_state">
+              :readonly="!field_state"
+              :disabled="field_state">
             </v-text-field>
           </validation-provider>
           <validation-provider v-slot="{ errors }" name="" rules="">
@@ -32,7 +34,8 @@
               name="unit_name"
               :persistent-hint="true"
               :error-messages="errors"
-              :readonly="field_state">
+              :readonly="!field_state"
+              :disabled="field_state">
             </v-text-field>
           </validation-provider>
           <validation-provider v-slot="{ errors }" name="" rules="">
@@ -43,340 +46,98 @@
               name="unit_price"
               :persistent-hint="true"
               :error-messages="errors"
-              :readonly="field_state">
+              :readonly="!field_state"
+              :disabled="field_state">
             </v-text-field>
           </validation-provider>
-          <validation-provider v-slot="{ errors }" name="" rules="">
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                      {{-- :value="reformatDateTime(form_data.submission_date, 'YYYY-MM-DD', 'DD MMMM YYYY')" --}}
-                      label="Tanggal Pengajuan"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                  ></v-text-field>
-                  </template>
-                  <v-date-picker name="submission_date" v-model="form_data.submission_date" @input="menu2 = false"></v-date-picker>
-                </v-menu>
-            </validation-provider>
-        <h3 class="m-4">Upload Dokumen</h3>
-            <v-simple-table>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">#</th>
-                      <th class="text-left">Nama Dokumen</th>
-                      <th class="text-left">File Upload</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Fotocopy KTP Pemohon</td>
-                      <td>
-                        <v-file-input 
-                        show-size 
-                        chips 
-                        counter 
-                        multiple 
-                        label="File input"
-                        v-model="form_data.ktp_pemohon"
-                          name="ktp_pemohon">
-                        </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Fotocopy KTP Suami/Istri</td>
-                      <td>
-                            <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.ktp_suami_istri"
-                              name="ktp_suami_istri">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Fotocopy NPWP</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.npwp"
-                              name="npwp">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Fotocopy Kartu Keluarga</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.kk"
-                              name="kk">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Fotocopy Buku Nikah</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.surat_nikah"
-                              name="surat_nikah">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Fotocopy Rekening Tabungan</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.rekening_tabungan"
-                              name="rekening_tabungan">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>Asli Slip Gaji (3 Bln Terakhir)</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.slip_gaji"
-                              name="slip_gaji">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>Surat Keterangan Kerja</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.keterangan_kerja"
-                              name="keterangan_kerja">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>Fotocopy R/K Tab.3 bln Terakhir</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.tabungan_3_bulan_terakhir"
-                              name="tabungan_3_bulan_terakhir">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>Rek. Koran 6 Bln Bagi Pengusaha</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.rekening_koran"
-                              name="rekening_koran">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>11</td>
-                      <td>Fotocopy SIUP</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.siup"
-                              name="siup">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>12</td>
-                      <td>Fotocopy TDP/NIB</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.tdp"
-                              name="tdp">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>13</td>
-                      <td>Fotocopy Akte Pendirian/Perubahan</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.akta"
-                              name="akta">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>14</td>
-                      <td>Fotocopy Akte Pengesahan Menkeh</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.pengesahan"
-                              name="pengesahan">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>15</td>
-                      <td>Fotocopy Izin Praktek</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.izin_praktek"
-                              name="izin_praktek">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>16</td>
-                      <td>SK Domisili</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.sk_domisili"
-                              name="sk_domisili">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>17</td>
-                      <td>Surat Keterangan Usaha/Sewa</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.keterangan_usaha"
-                              name="keterangan_usaha">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>18</td>
-                      <td>SPT</td>
-                      <td>
-                          <v-file-input 
-                            show-size 
-                            chips 
-                            counter 
-                            multiple 
-                            label="File input"
-                            v-model="form_data.spt"
-                              name="spt">
-                            </v-file-input>
-                    </td>
-                    </tr>
-                  </tbody>
+          <validation-provider v-slot="{ errors }" name="Tanggal pengajuan" rules="required">
+              <v-menu
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  class="mt-4"
+                  :value="reformatDateTime(form_data.submission_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+                  label="Tanggal Pengajuan"
+                  v-bind="attrs"
+                  v-on="on"
+                  hint="* harus diisi"
+                  :persistent-hint="true"
+                  :error-messages="errors"
+                  :readonly="!field_state"
+                  :disabled="field_state">
+                ></v-text-field>
                 </template>
-            </v-simple-table>
-            <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="required">
-              <v-select
-                  v-model="form_data.approval_agent"
-                  label="Approval Kantor Agensi"
-                  :items="['Approved', 'Pending']"
-                  name="approval_agent"
-                  hint="* harus diisi"
-                  :persistent-hint="true"
-                  :error-messages="errors"
-                  :readonly="field_state">
-                </v-select>
-            </validation-provider>
-
-            <validation-provider v-slot="{ errors }" name="Approval developer" rules="required">
-              <v-select
-                  v-model="form_data.approval_developer"
-                  :items="['Approved', 'Pending']"
-                  label="Approval Developer"
-                  name="approval_developer"
-                  hint="* harus diisi"
-                  :persistent-hint="true"
-                  :error-messages="errors"
-                  :readonly="field_state">
-                >
+                <v-date-picker name="submission_date" v-model="form_data.submission_date" @input="menu2 = false" :disabled="field_state"></v-date-picker>
+              </v-menu>
+          <h3 class="mt-4">Upload Dokumen</h3>
+          <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">Nama Dokumen</th>
+                    <th class="text-left">File Upload</th>
+                    <th class="text-left">File Dokumen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(el, idx) in files">
+                    <td width="5%">@{{idx + 1}}</td>
+                    <td width="35%">@{{el.title}}</td>
+                    <td width="35%">
+                          <v-file-input 
+                          show-size 
+                          small-chips 
+                          counter 
+                          multiple 
+                          :label="el.title"
+                            :name="'files[][' + el.file_name+ ']'">
+                          </v-file-input>
+                  </td>
+                  <td width="25%">
+                    <a :href="el.url" target="_blank">
+                      @{{el.showcase}}
+                    </a>
+                    <div class="float-right">
+                      <v-btn icon small @click.stop="promptDeleteItem(el.file_name)">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                    </div>
+                  </td>
+                  </tr>
+                </tbody>
+              </template>
+          </v-simple-table>
+          <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="">
+            <v-select
+                v-model="form_data.approval_agent"
+                label="Approval Kantor Agensi"
+                :items="['Approved', 'Pending']"
+                name="approval_agent"
+                :persistent-hint="true"
+                :error-messages="errors"
+                :readonly="field_state">
               </v-select>
-            </validation-provider>
+          </validation-provider>
+
+          <validation-provider v-slot="{ errors }" name="Approval developer" rules="">
+            <v-select
+                v-model="form_data.approval_developer"
+                :items="['Approved', 'Pending']"
+                label="Approval Developer"
+                name="approval_developer"
+                :persistent-hint="true"
+                :error-messages="errors"
+                :readonly="field_state">
+              >
+            </v-select>
+          </validation-provider>
           <v-btn
             class="mt-5 mr-4 white--text"
             color="primary"
@@ -412,4 +173,47 @@
     >
       @{{ formAlertText }}
     </v-snackbar>
+    <v-dialog
+      v-model="promptDelete"
+      persistent
+      max-width="550px"
+    >
+      <v-card>
+        <v-card-title>
+          <span class="headline"></span>
+      </v-card-title>
+      <v-card-text>
+        <v-row
+          align="center"
+          justify="center"
+            >
+          <v-icon size="120" color="yellow darken-2">mdi-alert-rhombus</v-icon>
+          <p class="text-md-h6 text-xs-h6 black--text">
+            @{{ deleteConfirmationText }}
+          </p>
+          </v-row>
+
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn text :disabled="deleteLoader" @click="promptDelete = !promptDelete">@{{ deleteCancelText }}</v-btn>
+          <v-btn
+            class="white--text"
+              elevation="5"
+              color="red"
+              :disabled="deleteLoader"
+              :loading="deleteLoader"
+              @click="removeUploadedFile()"
+              >
+              <v-icon>@{{ deleteIcon }}</v-icon>
+              <span class="hidden-xs-only ml-2">@{{ deleteText }}</span>
+              <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon color="white">@{{ deleteIcon }}</v-icon>
+                    </span>
+                </template>
+          </v-btn>
+          </v-card-actions>
+      </v-card>
+    </v-dialog>
 </v-container>

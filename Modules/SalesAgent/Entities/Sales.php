@@ -3,6 +3,7 @@
 namespace Modules\SalesAgent\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Sales extends Model
 {
@@ -26,23 +27,32 @@ class Sales extends Model
         'status'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        
+    protected $appends = [
+        'url_file_ktp',
+        'url_file_npwp'
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the model's url ktp image.
      *
-     * @var array
+     * @param  string  $value
+     * @return string
      */
-    protected $casts = [
-        
-    ];
+    public function getUrlFileKtpAttribute()
+    {
+        return $this->attributes['file_ktp'] ? Storage::disk('public')->url('app/public/sales/ktp/'.$this->attributes['file_ktp']) : null;
+    }
+
+    /**
+     *
+     * Get the model's url npwp image.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlFileNpwpAttribute()
+    {
+        return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/sales/npwp/'.$this->attributes['file_npwp']) : null;
+    }
 
     /**
      * Get the relationship for the model.

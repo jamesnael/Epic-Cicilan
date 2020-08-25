@@ -485,16 +485,15 @@
                                     <v-date-picker v-model="payment.due_date" @input="menu[idx] = false"></v-date-picker>
                                   </v-menu>
                               </td>
-                              <td v-if="idx == 0" align="center">@{{payment.installment}}</td>
+                              <td v-if="idx == 0">@{{payment.installment}}</td>
                                 <td v-else>
-                            <v-text-field
-                              class="text-center"
-                              v-model="payment.installment"
-                              name="amount"
-                              label=""
-                              :disabled="field_state"
-                              @input="regenerateInstallment()">
-                            </v-text-field>
+                                  <v-text-field
+                                    v-model="payment.installment"
+                                    name="amount"
+                                    label=""
+                                    :disabled="field_state"
+                                    @input="regenerateInstallment()">
+                                  </v-text-field>
                                 </td>
                                 <td class="text-center">@{{payment.credit}}</td>
                                 

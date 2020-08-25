@@ -140,6 +140,7 @@
 	    			</v-text-field>
 	    		</validation-provider>
 	    		<br>
+
 	    		<validation-provider v-slot="{ errors }" name="Foto KTP" rules="image">
 		    		<v-file-input
 		    		    accept="image/*"
@@ -150,6 +151,9 @@
 		    		    label="Foto KTP"
 		    		    name="file_ktp"
 		    		  ></v-file-input>
+		    		  <a :href="form_data.url_file_ktp" target="_blank" class="ml-8">
+		    		  	<small>@{{form_data.file_ktp}}</small>
+		    		  </a>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Foto NPWP" rules="image">
 		    		<v-file-input
@@ -162,67 +166,12 @@
 		    		    label="Foto NPWP"
 		    		    name="file_npwp"
 		    		  ></v-file-input>
-	    			</v-text-field>
+		    		  <a :href="form_data.url_file_npwp" target="_blank" class="ml-8">
+		    		  	<small>@{{form_data.file_npwp}}</small>
+		    		  </a>
 	    		</validation-provider>
 
-
-	    		<v-row class="mt-4">
-			        <v-col
-			          	cols="12"
-			          	md="6"
-			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator utama" rules="required">
-          		    		<v-select
-          		    			v-model="form_data.main_coordinator_commission" 
-          		              	:items="filter_main_coordinator_commission"
-          		              	label="Komisi Koordinator Utama (%)"
-          		              	name="main_coordinator_commission"
-          		              	menu-props="auto"
-          			    		:persistent-hint="true"
-          			    		:error-messages="errors"
-          			    		:readonly="field_state"
-          		            ></v-select>
-          	    		</validation-provider>
-			        </v-col>
-
-			        <v-col
-			          cols="12"
-			          md="6"
-			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator wilayah" rules="">
-				    		<v-select
-				    			v-model="form_data.regional_coordinator_commission"
-				    			:items="filter_regional_coordinator_commission" 
-				              	label="Komisi Koordinator Wilayah (%)"
-				              	name="regional_coordinator_commission"
-				              	menu-props="auto"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state"
-				            ></v-select>
-			    		</validation-provider>
-			        </v-col>
-			    </v-row>
-
-			    <v-row>
-			        <v-col
-			          cols="12"
-			          md="6"
-			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="">
-				    		<v-select
-				    			v-model="form_data.agency_commission"
-				    			:items="filter_agency_commission" 
-				              	label="Komisi Agensi (%)"
-				              	menu-props="auto"
-				              	name="agency_commission"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state"
-				            ></v-select>
-	    				</validation-provider>
-			        </v-col>
-
+				<v-row class="mt-4">
 			        <v-col
 			          cols="12"
 			          md="6"
@@ -231,6 +180,7 @@
 				    		<v-select
 				    			v-model="form_data.sales_commission"
 				    			:items="filter_sales_commission" 
+				    			@input="setSelectedSales()"
 				              	label="Komisi Sales (%)"
 				              	name="sales_commission"
 				              	menu-props="auto"
@@ -239,12 +189,12 @@
 					    		:readonly="field_state"
 				            >
 				            	<template slot="selection" slot-scope="data">
-				            	    @{{ data.item.text }} %
+				            	    @{{ data.item.text }}
 				            	</template>
 			            	  	<template slot="item" slot-scope="data">
-			            	  		<table width="100%" border="0">
+			            	  		<table width="100%" border="0" class="mt-2">
 			            	  			<tr>
-			            	  				<td width="30%">Koordinator Utama</td>
+			            	  				<td width="35%">Koordinator Utama</td>
 			            	  				<td>:</td>
 			            	  				<td>@{{ data.item.main_coordinator_commission }} %</td>
 			            	  			</tr>
@@ -268,7 +218,58 @@
 				            </v-select>
 	    				</validation-provider>
 			        </v-col>
+			        <v-col
+			          cols="12"
+			          md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="">
+				    		<v-text-field
+				    			v-model="form_data.agency_commission"
+				              	label="Komisi Agensi (%)"
+				              	name="agency_commission"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></<v-text-field>
+	    				</validation-provider>
+			        </v-col>
 			    </v-row>
+	    		<v-row>
+			        <v-col
+			          	cols="12"
+			          	md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator utama" rules="required">
+          		    		<v-text-field
+          		    			v-model="form_data.main_coordinator_commission" 
+          		              	label="Komisi Koordinator Utama (%)"
+          		              	name="main_coordinator_commission"
+          			    		:persistent-hint="true"
+          			    		:error-messages="errors"
+          			    		:readonly="field_state"
+          		            ></v-text-field>
+          	    		</validation-provider>
+			        </v-col>
+
+			        <v-col
+			          cols="12"
+			          md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator wilayah" rules="">
+				    		<v-text-field
+				    			v-model="form_data.regional_coordinator_commission"
+				              	label="Komisi Koordinator Wilayah (%)"
+				              	name="regional_coordinator_commission"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></v-text-field>
+			    		</validation-provider>
+			        </v-col>
+			    </v-row>
+
+			    
+
 			    <validation-provider v-slot="{ errors }" name="Status" rules="required">
 		    		<v-select
 		    			v-model="form_data.status" 

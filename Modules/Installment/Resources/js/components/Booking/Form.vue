@@ -211,18 +211,21 @@
 		    },
 		    setSelectedClient() {
 				let client = _.find(this.filter_client, o => { return o.value == this.form_data.client_id})
+				console.log(client)
 				if (_.isUndefined(client)) {
 					this.form_data.client_number = ''
 					this.form_data.client_name = ''
 					this.form_data.client_phone_number = ''
 					this.form_data.client_mobile_number = ''
 					this.form_data.client_address = ''
+					this.form_data.client_email = ''
 				} else {
 					this.form_data.client_number = client.client_number
 					this.form_data.client_name = client.text
 					this.form_data.client_phone_number = client.client_phone_number
 					this.form_data.client_mobile_number = client.client_mobile_number
 					this.form_data.client_address = client.client_address
+					this.form_data.client_email = client.client_email
 				}
 			},
 			setSelectedSales() {

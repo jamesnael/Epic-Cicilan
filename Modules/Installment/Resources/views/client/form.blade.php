@@ -40,7 +40,7 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|numeric|min:10|max:13">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.client_mobile_number"
@@ -48,7 +48,7 @@
 			    		label="Nomor Handphone"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
+			    		:counter="13"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>

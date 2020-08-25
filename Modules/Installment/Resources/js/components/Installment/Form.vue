@@ -107,6 +107,7 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+                                console.log(data)
                                 let arr_installment = []
     		            		this.form_data = {
     		            			unit_type:data.unit.unit_type,
@@ -114,7 +115,7 @@
     		            			unit_number:data.unit.unit_number,
     		            			surface_area:data.unit.surface_area,
     		            			building_area:data.unit.building_area,
-    		            			utj:data.unit.utj,
+    		            			utj:this.moneyFormat(data.unit.utj),
     		            			electrical_power:data.unit.electrical_power,
     		            			points:data.unit.points,
     		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
@@ -143,7 +144,8 @@
     		            			client_address: data.client.client_address,
     		            			sales_id: data.sales_id,
     		            			sales_name:data.sales.user.full_name,
-    		            			agency_name:data.agency ? data.agency.agency_name : '',
+
+    		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
     		            		} 
