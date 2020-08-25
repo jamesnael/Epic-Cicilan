@@ -12,14 +12,14 @@
 				    		<v-text-field
 				    			v-model="form_data.client_name"
 				    			name="client_name"
-					    		label="Nama Klien"
 					    		hint="* harus diisi"
-					    		:persistent-hint="True"
+					    		label="Nama Klien"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
-			    	</v-col>
+			    		</v-col>
     		        <v-col
     		          	cols="12"
     		          	md="6">
@@ -28,7 +28,8 @@
 				    			v-model="form_data.phone_number"
 				    			name="phone_number"
 					    		label="Nomor Handphone"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
@@ -44,7 +45,8 @@
 				    			v-model="form_data.unit"
 				    			name="Unit"
 					    		label="Unit"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
@@ -58,7 +60,8 @@
 				    			v-model="form_data.unit_price"
 				    			name="unit_price"
 					    		label="Harga Unit"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
@@ -83,7 +86,8 @@
 	    		        	:value="computedDateFormattedMomentjs"
 	    		            v-model="form_data.submission_date"
 	    		            label="Tanggal Pengajuan"
-	    		            :persistent-hint="True"
+	    		            hint="* harus diisi"
+	    		            :persistent-hint="true"
 					    	:error-messages="errors"
 					    	:readonly="field_state"
 	    		            v-bind="attrs"
@@ -106,6 +110,7 @@
 			              	:items="filter_client"
 			              	label="Nama Sales"
 			              	name="sales_name"
+			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -119,8 +124,9 @@
 				    		<v-text-field
 				    			v-model="form_data.agent_name"
 				    			name="agent_name"
+				    			hint="* harus diisi"
 					    		label="Nama Agent"
-					    		:persistent-hint="True"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
@@ -133,8 +139,9 @@
 				    		<v-file-input
 				    			v-model="form_data.surat_ppjb_awal"
 				    			name="surat_ppjb"
+				    			hint="* harus diisi"
 					    		label="Surat PPJB awal"
-					    		:persistent-hint="True"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-file-input>
@@ -159,7 +166,8 @@
 	    		        	:value="computedDateFormattedMomentjs"
 	    		            v-model="form_data.ppjb_date"
 	    		            label="Tanggal PPJB"
-	    		            :persistent-hint="True"
+	    		            hint="* harus diisi"
+	    		            :persistent-hint="true"
 					    	:error-messages="errors"
 					    	:readonly="field_state"
 	    		            v-bind="attrs"
@@ -188,6 +196,7 @@
 					          <v-text-field
 					            v-model="time"
 					            label="Waktu"
+					            hint="* harus diisi"
 					            :persistent-hint="true"
 					    		:error-messages="errors"
 					            readonly
@@ -216,7 +225,8 @@
 				    			v-model="form_data.ppjb_place"
 				    			name="ppjb_place"
 					    		label="Tempat"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
@@ -232,7 +242,8 @@
 						      v-model="form_data.full_address"
 				    			name="full_address"
 					    		label="Alamat Lengkap"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 						    ></v-textarea>
@@ -250,6 +261,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Pembeli"
 			              	name="approved_pembeli"
+			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -267,6 +279,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Developer"
 			              	name="approved_developer"
+			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -284,6 +297,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Notaris"
 			              	name="approved_notaris"
+			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -300,7 +314,8 @@
 				    			v-model="form_data.surat_ppjb"
 				    			name="surat_ppjb"
 					    		label="Upload Surat PPJB"
-					    		:persistent-hint="True"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-file-input>
