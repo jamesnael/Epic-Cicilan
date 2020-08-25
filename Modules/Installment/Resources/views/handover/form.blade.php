@@ -1,7 +1,7 @@
 <v-container fluid>
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
-    		<h3>Input Schedule AJB</h3>
+    		<h3>Input Schedule Hand Over Unit</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		</v-row>
 	    		<v-row>
@@ -68,35 +68,7 @@
 			    	</v-col>
 			    </v-row>
 			    <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    			<v-menu
-		    		        v-model="menu5"
-		    		        :close-on-content-click="false"
-		    		        :nudge-right="40"
-		    		        transition="scale-transition"
-		    		        offset-y
-		    		        min-width="290px"
-		    		      >
-	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal Pembelian" rules="required|min:1">
-		    		        <v-text-field
-		    		        	:value="computedDateFormattedMomentjs"
-		    		        	hint="* harus diisi"
-		    		        	:persistent-hint="true"
-					    		:error-messages="errors"
-		    		            v-model="form_data.buy_date"
-		    		            label="Tanggal Pembelian"
-		    		            readonly
-		    		            v-bind="attrs"
-		    		            v-on="on"
-		    		        ></v-text-field>
-				    		</validation-provider>
-	    		        	</template>
-	    		        	<v-date-picker v-model="form_data.buy_date" @input="menu5 = false"></v-date-picker>
-			    	</v-col>
-			    	<v-col
+    		        <v-col
     		          	cols="12"
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Harga Unit" rules="required|numeric">
@@ -110,14 +82,12 @@
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
-			    </v-row>
-			    <v-row>
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.how_to_pay"
+				    			v-model="form_data.payment_method"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -125,7 +95,9 @@
 					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
-				    </v-col>
+			    	</v-col>
+			    </v-row>
+			    <v-row>
 			    	<v-col
     		          	cols="12"
     		          	md="6">
@@ -153,6 +125,34 @@
 		    		        	</template>
 		    		        	<v-date-picker v-model="form_data.clear_date" @input="menu3 = false"></v-date-picker>
 				    		</validation-provider>
+			    	</v-col>
+			    	<v-col
+    		          	cols="12"
+    		          	md="6">
+			    			<v-menu
+		    		        v-model="menu5"
+		    		        :close-on-content-click="false"
+		    		        :nudge-right="40"
+		    		        transition="scale-transition"
+		    		        offset-y
+		    		        min-width="290px"
+		    		      >
+	    		        	<template v-slot:activator="{ on, attrs }">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal AJB" rules="required|min:1">
+		    		        <v-text-field
+		    		        	:value="computedDateFormattedMomentjs"
+		    		        	hint="* harus diisi"
+		    		        	:persistent-hint="true"
+					    		:error-messages="errors"
+		    		            v-model="form_data.ajb_date"
+		    		            label="Tanggal AJB"
+		    		            readonly
+		    		            v-bind="attrs"
+		    		            v-on="on"
+		    		        ></v-text-field>
+				    		</validation-provider>
+	    		        	</template>
+	    		        	<v-date-picker v-model="form_data.ajb_date" @input="menu5 = false"></v-date-picker>
 			    	</v-col>
 			    </v-row>
 	    		<v-row>
@@ -219,7 +219,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <h3 class="mt-4">Set Schedule AJB</h3>
+			    <h3 class="mt-4">Set Schedule Hand Over Unit</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -233,20 +233,20 @@
 		    		        min-width="290px"
 		    		    >
 	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal" rules="required|min:1">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal Hand Over Unit" rules="required|min:1">
 		    		        <v-text-field
 		    		        	:value="computedDateFormattedMomentjs"
 		    		        	hint="* harus diisi"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
-		    		            v-model="form_data.date"
-		    		            label="Tanggal"
+		    		            v-model="form_data.handover_date"
+		    		            label="Tanggal Hand Over Unit"
 		    		            readonly
 		    		            v-bind="attrs"
 		    		            v-on="on"
 		    		        ></v-text-field>
 	    		        	</template>
-	    		        	<v-date-picker v-model="form_data.date" @input="menu2 = false"></v-date-picker>
+	    		        	<v-date-picker v-model="form_data.handover_date" @input="menu2 = false"></v-date-picker>
 				    		</validation-provider>
 	    		      	</v-menu>
 			    	</v-col>
@@ -291,11 +291,11 @@
 			    	<v-col
     		          cols="12"
     		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tempat" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Lokasi" rules="required|max:255">
 				    		<v-text-field
 				    			v-model="form_data.place"
-				    			name="tempat"
-					    		label="Tempat"
+				    			name="location"
+					    		label="Lokasi"
 					    		hint="* harus diisi"
 					    		:counter="255"
 					    		:error-messages="errors"
@@ -328,7 +328,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Upload Surat AJB Awal</h3>
+					    <h3 class="mt-4">Upload Surat Hand Over Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Dokumen Awal" rules="required">
 							<v-file-input 
 		    		            show-size
@@ -349,7 +349,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approved AJB (Akta Jual Beli)</h3>
+					    <h3 class="mt-4">Approved Hand Over Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="required">
 							<v-select
 					        v-model="model"
@@ -372,7 +372,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Approval Estate" rules="required">
 	    		          	<v-select
 					        v-model="model"
 					        required
@@ -386,7 +386,7 @@
 				    		:error-messages="errors"
 					        :append-icon="appendIcon ? 'mdi-plus' : ''"
 					        :prepend-icon="prependIcon ? 'mdi-minus' : ''"
-					        label="Approval Developer"
+					        label="Approval Estate"
 					      ></v-select>
 					   </validation-provider>
     		        </v-col>
@@ -395,7 +395,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Approval Teknik" rules="required">
 	    		          	<v-select
 					        v-model="model"
 					        required
@@ -409,7 +409,7 @@
 					        hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
-					        label="Approval Notaris"
+					        label="Approval Teknik"
 					      ></v-select>
 					    </validation-provider>
     		        </v-col>
@@ -418,13 +418,13 @@
     		    	<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Surat AJB yang sudah ditandatangani" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Surat Hand Over Unit yang sudah ditandatangani" rules="required">
 		    		    	<v-file-input 
 		    		            show-size
 		    		            chips 
 		    		            counter 
 		    		            multiple 
-		    		            label="Upload Surat AJB yang sudah ditandatangani"
+		    		            label="Upload Surat Hand Over Unit yang sudah ditandatangani"
 		    		            v-model="form_data.document_done"
 		    		            hint="* harus diisi"
 					    		:persistent-hint="true"
