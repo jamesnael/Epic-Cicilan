@@ -341,6 +341,37 @@ if (! function_exists('aside_menu')) {
                 'uri' => route('ajb.index'),
                 'model' => in_array(Route::currentRouteName(), ['ajb.index','ajb.create', 'ajb.edit']),
             ],
+            [
+                'icon' => 'mdi-handshake',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Handover Unit',
+                'uri' => route('handover.index'),
+                'model' => in_array(Route::currentRouteName(), ['handover.index','handover.create', 'handover.edit']),
+            ],
+            [
+                'icon' => 'mdi-sale',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Komisi Sales',
+                'uri' => route('salescommission.index'),
+                'model' => in_array(Route::currentRouteName(), ['salescommission.index','salescommission.create', 'salescommission.edit']),
+            ],
+            [
+                'icon' => 'mdi-cash-multiple',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Tipe Pembayaran',
+                'uri' => route('PaymentType.index'),
+                'model' => in_array(Route::currentRouteName(), ['PaymentType.index','PaymentType.create', 'PaymentType.edit']),
+            ],
+            [
+                'icon' => 'mdi-gift',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Tukar Point',
+                'uri' => route('TukarPoint.index'),
+                'model' => in_array(Route::currentRouteName(), ['TukarPoint.index','TukarPoint.create', 'TukarPoint.edit']),
+            ],
+
+
+
         ];
     }
 }

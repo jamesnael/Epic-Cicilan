@@ -16,3 +16,9 @@ Route::group(['namespace' => 'Commission'], function() {
 	Route::get('commission/{commission}/data', 'CommissionController@data')->name('commission.data');
 	Route::resource('commission', 'CommissionController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Sales'], function() {
+	Route::get('salescommission/table', 'SalesCommissionController@table')->name('salescommission.table');
+	Route::get('salescommission/{sales}/data', 'SalesCommissionController@data')->name('salescommission.data');
+	Route::resource('salescommission', 'SalesCommissionController')->except(['show']);
+});
