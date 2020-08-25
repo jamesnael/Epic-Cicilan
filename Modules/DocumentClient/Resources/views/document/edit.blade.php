@@ -7,8 +7,7 @@
 	<document-form inline-template
 	uri="{{ route('document.update', [$data->slug]) }}"
 	redirect-uri="{{ route('document.index') }}"
-	data-uri="{{ route('document.data', [$data->slug]) }}"
-	:filter_client='@json($client)'>
+	data-uri="{{ route('document.data', [$data->slug]) }}">
 		@include('documentclient::document.form')
 	</document-form>
 

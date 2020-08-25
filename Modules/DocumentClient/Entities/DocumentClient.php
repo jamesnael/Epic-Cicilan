@@ -5,6 +5,7 @@ namespace Modules\DocumentClient\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentClient extends Model
 {
@@ -73,6 +74,17 @@ class DocumentClient extends Model
     public function getSlugNameAttribute()
     {
         return 'document-' . $this->attributes['booking_id'];
+    }
+
+    /**
+     * Get the model's ktp pemohon image.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getFileKtpPemohonAttribute($value)
+    {
+        return $value ? Storage::disk('public')->url('app/public/document/ktp_pemohon/'.$value) : null;
     }
 
     /**

@@ -2,19 +2,16 @@
     <v-card flat>
       <validation-observer ref="observer" v-slot="{ validate, reset }">
         <form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-          <validation-provider v-slot="{ errors }" name="Klien" rules="required">
-            <v-select
+          <validation-provider v-slot="{ errors }" name="" rules="">
+            <v-text-field
               class="mt-4"
-              v-model="form_data.client_id" 
-              @input="setSelectedClient()"
-                    :items="filter_client"
-                    label="Klien"
-                    name="client_id"
-              hint="* harus diisi"
+              v-model="form_data.client_name"
+              label="Nama Klien"
+              name="client_name"
               :persistent-hint="true"
               :error-messages="errors"
-              :readonly="field_state"
-                ></v-select>
+              :readonly="field_state">
+            </v-text-field>
           </validation-provider>
           <validation-provider v-slot="{ errors }" name="" rules="">
             <v-text-field
@@ -22,6 +19,28 @@
               v-model="form_data.client_profession"
               label="Pekerjaan"
               name="client_profesion"
+              :persistent-hint="true"
+              :error-messages="errors"
+              :readonly="field_state">
+            </v-text-field>
+          </validation-provider>
+          <validation-provider v-slot="{ errors }" name="" rules="">
+            <v-text-field
+              class="mt-4"
+              v-model="form_data.unit_name"
+              label="Unit yang di beli"
+              name="unit_name"
+              :persistent-hint="true"
+              :error-messages="errors"
+              :readonly="field_state">
+            </v-text-field>
+          </validation-provider>
+          <validation-provider v-slot="{ errors }" name="" rules="">
+            <v-text-field
+              class="mt-4"
+              v-model="form_data.unit_price"
+              label="Harga Unit"
+              name="unit_price"
               :persistent-hint="true"
               :error-messages="errors"
               :readonly="field_state">
@@ -38,7 +57,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    :value="reformatDateTime(form_data.submission_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+                      {{-- :value="reformatDateTime(form_data.submission_date, 'YYYY-MM-DD', 'DD MMMM YYYY')" --}}
                       label="Tanggal Pengajuan"
                       readonly
                       v-bind="attrs"
@@ -332,6 +351,32 @@
                   </tbody>
                 </template>
             </v-simple-table>
+            <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="required">
+              <v-select
+                  v-model="form_data.approval_agent"
+                  label="Approval Kantor Agensi"
+                  :items="['Approved', 'Pending']"
+                  name="approval_agent"
+                  hint="* harus diisi"
+                  :persistent-hint="true"
+                  :error-messages="errors"
+                  :readonly="field_state">
+                </v-select>
+            </validation-provider>
+
+            <validation-provider v-slot="{ errors }" name="Approval developer" rules="required">
+              <v-select
+                  v-model="form_data.approval_developer"
+                  :items="['Approved', 'Pending']"
+                  label="Approval Developer"
+                  name="approval_developer"
+                  hint="* harus diisi"
+                  :persistent-hint="true"
+                  :error-messages="errors"
+                  :readonly="field_state">
+                >
+              </v-select>
+            </validation-provider>
           <v-btn
             class="mt-5 mr-4 white--text"
             color="primary"

@@ -25,9 +25,9 @@
 		edit-uri="document.edit"
 		edit-uri-parameter="slug"
 		edit-text="Ubah"
-		delete-uri="document.destroy"
+		{{-- delete-uri="document.destroy"
 		delete-uri-parameter="slug"
-		delete-text="Hapus"
+		delete-text="Hapus" --}}
 		delete-confirmation-text="Apakah Anda yakin untuk menghapus data ini ?"
 		delete-cancel-text="Batal"
 		>

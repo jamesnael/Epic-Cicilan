@@ -28,13 +28,7 @@
 			dataUri: {
 			    type: String,
 			    default: ''
-			},
-			filter_client: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
-			}			
+			}
 		},
 		data: function () {
             return {
@@ -44,18 +38,12 @@
 	            formAlertState: 'info',
 	            menu2: false,
 			    modal: false,
-	            datepicker: false,
             	form_data: {
             		booking_id: '',
             		profession:'',
             		submission_date:new Date().toISOString().substr(0, 10),
             	}
         	}
-        },
-        computed: {
-            computedDateFormattedMomentjs () {
-                return this.submission_date ? moment(this.submission_date).format('dddd, MMMM Do YYYY') : ''
-            }
         },
         mounted() {
             this.setData();
@@ -77,7 +65,8 @@
     		            			client_profession: data.client.profession,
     		            			unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
     		            			unit_price: this.number_format(data.total_amount),
-    		            			submission_date: data.client.document ? data.client.document.submission_date : '' ,
+    		            			// ktp_pemohon: data.document ? data.document.file_ktp_pemohon : '' ,
+    		            			// ktp_suami_istri: data.document ? data.document.file_ktp_suami_istri : '' ,
     		            		}
 
     			                this.field_state = false
