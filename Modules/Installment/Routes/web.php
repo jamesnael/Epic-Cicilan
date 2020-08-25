@@ -52,3 +52,9 @@ Route::group(['namespace' => 'Ajb'], function() {
 	Route::get('ajb/{ajb}/data', 'AjbController@data')->name('ajb.data');
 	Route::resource('ajb', 'AjbController')->except(['show']);
 });
+
+Route::group(['namespace' => 'PaymentType'], function() {
+	Route::get('PaymentType/table', 'PaymentTypeController@table')->name('PaymentType.table');
+	Route::get('PaymentType/{PaymentType}/data', 'PaymentTypeController@data')->name('PaymentType.data');
+	Route::resource('PaymentType', 'PaymentTypeController')->except(['show']);
+});
