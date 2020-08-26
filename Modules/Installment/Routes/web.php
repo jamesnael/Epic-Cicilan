@@ -68,3 +68,9 @@ Route::group(['namespace' => 'PaymentType'], function() {
 	Route::get('PaymentType/{PaymentType}/data', 'PaymentTypeController@data')->name('PaymentType.data');
 	Route::resource('PaymentType', 'PaymentTypeController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Spr'], function() {
+	Route::get('spr/table', 'SprController@table')->name('spr.table');
+	Route::get('spr/{spr}/data', 'SprController@data')->name('spr.data');
+	Route::resource('spr', 'SprController')->except(['show']);
+});

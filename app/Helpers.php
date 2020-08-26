@@ -326,6 +326,13 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Cicilan Unit',
                 'uri' => route('installment-unit.index'),
                 'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
+            ], 
+            [  
+                'icon' => 'mdi-home-currency-usd',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'SPR (Surat Pemesanan Rumah)',
+                'uri' => route('spr.index'),
+                'model' => in_array(Route::currentRouteName(), ['spr.index','spr.create', 'spr.edit']),
             ],
             [
                 'icon' => 'mdi-buffer',
@@ -370,7 +377,7 @@ if (! function_exists('aside_menu')) {
             //     'model' => in_array(Route::currentRouteName(), ['PaymentType.index','PaymentType.create', 'PaymentType.edit']),
             // ],
             [
-                'icon' => 'mdi-gift',
+                'icon' => 'mdi-certificate',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Tukar Point',
                 'uri' => route('tukar-point.index'),
