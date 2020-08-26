@@ -21,7 +21,7 @@ class TukarPointController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('TukarPoint.index'), 'text' => 'Tukar Point'],
+            ['href' => route('tukar-point.index'), 'text' => 'Tukar Point'],
         ];
     }
 
@@ -69,7 +69,7 @@ class TukarPointController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('TukarPoint.index'), 'text' => 'Tambah Tukar Point'];
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
 
         return view('rewardpoint::TukarPoint.create', [
             'page' => $this,
