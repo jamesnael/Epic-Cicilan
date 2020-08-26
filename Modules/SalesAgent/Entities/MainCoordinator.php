@@ -11,7 +11,7 @@ class MainCoordinator extends Model
 
 	use Sluggable, SoftDeletes;
 
-    protected $fillable = ['slug', 'full_name', 'email', 'phone_number', 'address'];
+    protected $fillable = ['slug', 'full_name', 'email', 'phone_number', 'address','pph_final'];
 
     /**
      * The attributes that should be hidden for arrays.

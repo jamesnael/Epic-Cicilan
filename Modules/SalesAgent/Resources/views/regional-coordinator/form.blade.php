@@ -67,6 +67,20 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
+
+	    		<validation-provider v-slot="{ errors }" name="PPH Komisi Final" rules="required|between:0,100">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.pph_final"
+		    			name="pph_final"
+			    		label="PPH Komisi Final"
+			    		:error-messages="errors"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:readonly="field_state">
+			    		<v-icon slot="append">mdi-percent-outline</v-icon>
+	    			</v-text-field>
+	    		</validation-provider>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"

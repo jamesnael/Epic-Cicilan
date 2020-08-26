@@ -13,7 +13,7 @@ use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\Installment\Entities\BookingPayment;
 
-class InstallementController extends Controller
+class InstallmentUnitController extends Controller
 {
     /**
      * Instantiate a new controller instance.
@@ -84,52 +84,23 @@ class InstallementController extends Controller
                 "value" => 'sales_name',
             ],
         ];
-        return view('installment::installment.index', [
+        return view('installment::installment-unit.index', [
             'page' => $this,
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('installment::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Show the specified resource.
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function edit(Booking $installment_unit)
     {
-        return view('installment::show');
-    }
+        $this->breadcrumbs[] = ['href' => route('installment-unit.index'), 'text' => 'Detail Cicilan'];
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit(Booking $installment)
-    {
-        $this->breadcrumbs[] = ['href' => route('installment.index'), 'text' => 'Edit Cicilan'];
-
-        return view('installment::booking.show',[
+        return view('installment::installment-unit.edit',[
             'page' => $this,
-            'data' => $installment,
+            'data' => $installment_unit,
         ])->with($this->getHelper());
     }
 
@@ -158,9 +129,9 @@ class InstallementController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(Booking $installment)
+    public function data(Booking $installment_unit)
     {
-        $data = $installment->load('unit','client','sales','payments','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
+        $data = $installment_unit->load('unit','client','sales','payments','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {
@@ -177,39 +148,6 @@ class InstallementController extends Controller
     {
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
-        } catch (Exception $e) {
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, Booking $installment)
-    {
-        $request->merge([
-            'unit_installments' => json_decode($request->input('unit_installments'), true)
-        ]);
-        DB::beginTransaction();
-        try {
-
-            foreach ($request->input('unit_installments') as $value) {
-                $data = BookingPayment::find($value['id']);
-                $data->update([
-                    'due_date' => date('Y-m-d', strtotime($value['due_date'])),
-                    'sp1_date' => date('Y-m-d', strtotime($value['sp1_date'])),
-                    'sp2_date' => date('Y-m-d', strtotime($value['sp2_date'])),
-                    'sp3_date' => date('Y-m-d', strtotime($value['sp3_date'])),
-                    'installment' => str_replace('.', '', $value['installment']),
-                    'credit' => str_replace('.', '', $value['credit']),
-                ]);
-            }
-
-            DB::commit();
-            return response_json(true, null, 'Data cicilan berhasil disimpan.', $data);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

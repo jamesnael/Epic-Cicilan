@@ -82,9 +82,13 @@ class BookingHelper
         $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
         for ($i = 1; $i <= $booking->installment_time; $i++) {
             $credits = $credits - $booking->installment;
+            $date = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth));
             $payment = [];
             $payment['payment'] = 'Pembayaran ' . ($i*1 + 1);
             $payment['due_date'] = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
+            $payment['sp1_date'] = $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+            $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+            $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
             $payment['installment'] = $i == $booking->installment_time ? $booking->installment + $credits : $booking->installment;
             $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
             $payments[] = $payment;
@@ -122,9 +126,13 @@ class BookingHelper
         $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
         for ($i = 1; $i <= $booking->installment_time; $i++) {
             $credits = $credits - $booking->installment;
+            $date = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth));
             $payment = [];
             $payment['payment'] = 'Cicilan ' . $i;
             $payment['due_date'] = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
+            $payment['sp1_date'] = $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+            $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+            $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
             $payment['installment'] = $i == $booking->installment_time ? $booking->installment + $credits : $booking->installment;
             $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
             $payments[] = $payment;
@@ -162,9 +170,13 @@ class BookingHelper
         $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
         for ($i = 1; $i <= $booking->installment_time; $i++) {
             $credits = $credits - $booking->installment;
+            $date = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth));
             $payment = [];
             $payment['payment'] = 'Cicilan DP ' . $i;
             $payment['due_date'] = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
+            $payment['sp1_date'] = $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+            $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+            $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
             $payment['installment'] = $i == $booking->installment_time ? $booking->installment + $credits : $booking->installment;
             $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
             $payments[] = $payment;
@@ -199,22 +211,5 @@ class BookingHelper
         }
 
         $pdf->save('public/docs/booking_docs/booking-'.$booking->hashid.'.pdf');
-    }
-
-    /**
-     *
-     * Update installment to database
-     *
-     */
-    public function updateInstallment($request)
-    {
-        foreach ($request->input('unit_installments') as $value) {
-            $payment = BookingPayment::findByHash($value['hashid']);
-            $payment->update([
-                'due_date' => $value['due_date'],
-                'installment' => str_replace('.', '', $value['installment']),
-                'credit' => str_replace('.', '', $value['credit']),
-            ]);
-        }
     }
 }

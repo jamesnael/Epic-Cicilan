@@ -199,6 +199,20 @@
 			    		</validation-provider>
 			        </v-col>
 			    </v-row>
+
+			    <validation-provider v-slot="{ errors }" name="Total komisi" rules="required|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+			    		label="Total Komisi (%)"
+			    		:error-messages="errors"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:readonly="field_state"
+			    		v-on:change="total"
+			    		:value="total">
+			    		<v-icon slot="append">mdi-percent-outline</v-icon>
+	    			</v-text-field>
+	    		</validation-provider>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
@@ -223,6 +237,7 @@
     		    </v-btn>
 	    	</form>
 	    </validation-observer>
+
     </v-card>
 
     <v-snackbar

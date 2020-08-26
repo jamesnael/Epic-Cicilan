@@ -55,7 +55,13 @@ class MainCoordinatorController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'address',
-            ]
+            ],
+            [
+                "text" => 'PPH Final',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'pph_final',
+            ],
         ];
         return view('salesagent::main-coordinator.index', [
             'page' => $this,

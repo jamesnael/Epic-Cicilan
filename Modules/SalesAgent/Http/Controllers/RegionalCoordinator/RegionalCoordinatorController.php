@@ -62,7 +62,13 @@ class RegionalCoordinatorController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'address',
-            ]
+            ],
+            [
+                "text" => 'PPH Final',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'pph_final',
+            ],
         ];
         return view('salesagent::regional-coordinator.index', [
             'page' => $this,

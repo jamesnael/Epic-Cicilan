@@ -32,7 +32,11 @@ Route::group(['namespace' => 'Unit'], function() {
 Route::group(['namespace' => 'Installment'], function() {
 	Route::get('installment/table', 'InstallementController@table')->name('installment.table');
 	Route::get('installment/{installment}/data', 'InstallementController@data')->name('installment.data');
-	Route::resource('installment', 'InstallementController')->except(['show']);
+	Route::resource('installment', 'InstallementController')->except(['show','destroy']);
+
+	Route::get('installment-unit/table', 'InstallmentUnitController@table')->name('installment-unit.table');
+	Route::get('installment-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
+	Route::resource('installment-unit', 'InstallmentUnitController')->except(['destroy', 'create', 'store']);
 });
 
 Route::group(['namespace' => 'PPJB'], function() {

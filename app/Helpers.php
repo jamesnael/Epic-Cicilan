@@ -321,6 +321,13 @@ if (! function_exists('aside_menu')) {
                 ]           
             ],
             [
+                'icon' => 'mdi-cash-multiple',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Cicilan Unit',
+                'uri' => route('installment-unit.index'),
+                'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
+            ],
+            [
                 'icon' => 'mdi-buffer',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'PPJB',
@@ -335,7 +342,7 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['akad.index','akad.create', 'akad.edit']),
             ],
             [
-                'icon' => 'mdi-cash-multiple',
+                'icon' => 'mdi-book',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'AJB (Akte Jual Beli)',
                 'uri' => route('ajb.index'),

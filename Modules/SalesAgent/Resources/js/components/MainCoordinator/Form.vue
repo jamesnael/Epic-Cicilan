@@ -40,6 +40,7 @@
             		phone_number: '',
             		email: '',
             		address: '',
+            		pph_final: '',
             	}
         	}
         },
@@ -61,6 +62,7 @@
     		            			phone_number: data.phone_number,
     		            			email: data.email,
     		            			address: data.address,
+    		            			pph_final: data.pph_final,
     		            		}
 
     			                this.field_state = false

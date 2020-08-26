@@ -106,7 +106,7 @@
 	    		          	<a :href="el.url" target="_blank">
 	    		          		@{{el.showcase}}
 	    		          	</a>
-	    		          	<div class="float-right">
+	    		          	<div v-if="el.showcase" class="float-right">
 	    		          		<v-btn icon small @click.stop="promptDeleteItem(el.file_name)">
 					              	<v-icon>mdi-close</v-icon>
 					            </v-btn>

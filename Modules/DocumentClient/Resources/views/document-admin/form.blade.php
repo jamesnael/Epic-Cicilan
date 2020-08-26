@@ -104,7 +104,7 @@
                     <a :href="el.url" target="_blank">
                       @{{el.showcase}}
                     </a>
-                    <div class="float-right">
+                    <div v-if="el.showcase" class="float-right">
                       <v-btn icon small @click.stop="promptDeleteItem(el.file_name)">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -114,7 +114,7 @@
                 </tbody>
               </template>
           </v-simple-table>
-          <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="">
+          {{-- <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="">
             <v-select
                 v-model="form_data.approval_agent"
                 label="Approval Kantor Agensi"
@@ -124,7 +124,7 @@
                 :error-messages="errors"
                 :readonly="field_state">
               </v-select>
-          </validation-provider>
+          </validation-provider> --}}
 
           <validation-provider v-slot="{ errors }" name="Approval developer" rules="">
             <v-select
