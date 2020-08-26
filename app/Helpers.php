@@ -321,6 +321,13 @@ if (! function_exists('aside_menu')) {
                 ]           
             ],
             [
+                'icon' => 'mdi-home-currency-usd',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'SPR (Surat Pemesanan Rumah)',
+                'uri' => route('spr.index'),
+                'model' => in_array(Route::currentRouteName(), ['spr.index','spr.create', 'spr.edit']),
+            ],
+            [
                 'icon' => 'mdi-buffer',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'PPJB',
@@ -335,7 +342,7 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['akad.index','akad.create', 'akad.edit']),
             ],
             [
-                'icon' => 'mdi-cash-multiple',
+                'icon' => 'mdi-text-box-check-outline',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'AJB (Akte Jual Beli)',
                 'uri' => route('ajb.index'),
@@ -363,7 +370,7 @@ if (! function_exists('aside_menu')) {
             //     'model' => in_array(Route::currentRouteName(), ['PaymentType.index','PaymentType.create', 'PaymentType.edit']),
             // ],
             [
-                'icon' => 'mdi-gift',
+                'icon' => 'mdi-certificate',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Tukar Point',
                 'uri' => route('tukar-point.index'),
