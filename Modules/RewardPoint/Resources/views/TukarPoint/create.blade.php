@@ -5,8 +5,8 @@
 	@include('components.breadcrumbs')
 
 	<tukarpoint-form inline-template
-	uri="{{ route('TukarPoint.store') }}"
-	redirect-uri="{{ route('TukarPoint.index') }}">
+	uri="{{ route('tukar-point.store') }}"
+	redirect-uri="{{ route('tukar-point.index') }}">
 		@include('rewardpoint::TukarPoint.form')
 	</tukarpoint-form>
  	

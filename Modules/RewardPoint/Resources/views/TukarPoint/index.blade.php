@@ -13,7 +13,7 @@
         ];
 	@endphp
 	<table-layout inline-template
-		uri="{{ route('TukarPoint.table') }}"
+		uri="{{ route('tukar-point.table') }}"
 		:headers='@json($page->table_headers)'
 		no-data-text="Tidak ada data ditemukan."
 		no-results-text="Tidak ada data ditemukan."
@@ -22,10 +22,10 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('TukarPoint.create') }}"
+		add-new-uri="{{ route('tukar-point.create') }}"
 		add-new-text="Tambah"
 		add-new-color="light-blue lighten-2"
-		edit-uri="TukarPoint.edit"
+		edit-uri="tukar-point.edit"
 		edit-uri-parameter="slug"
 		edit-text="Edit PaymentType"
 		>
