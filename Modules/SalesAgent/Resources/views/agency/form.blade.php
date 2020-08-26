@@ -150,6 +150,11 @@
 				            </v-select>
 	    				</validation-provider>
 			        </v-col>
+			        <v-text-field
+			           v-model="form_data.agency_commission"
+			           v-show=false
+			           name="agency_commission">
+			        </v-text-field>
 			        <v-col
 			          cols="12"
 			          md="6"
@@ -161,7 +166,8 @@
 				              	name="sales_commission"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state"
+					    		:readonly="!field_state"
+          			    		:disabled="field_state"
 				            ></<v-text-field>
 	    				</validation-provider>
 			        </v-col>
@@ -178,7 +184,8 @@
           		              	name="main_coordinator_commission"
           			    		:persistent-hint="true"
           			    		:error-messages="errors"
-          			    		:readonly="field_state"
+          			    		:readonly="!field_state"
+          			    		:disabled="field_state"
           		            ></v-text-field>
           	    		</validation-provider>
 			        </v-col>
@@ -194,12 +201,12 @@
 				              	name="regional_coordinator_commission"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state"
+					    		:readonly="!field_state"
+          			    		:disabled="field_state"
 				            ></v-text-field>
 			    		</validation-provider>
 			        </v-col>
 			    </v-row>
-
 			    <validation-provider v-slot="{ errors }" name="Total komisi" rules="required|min:0">
 		    		<v-text-field
 		    			class="mt-4"
@@ -207,9 +214,10 @@
 			    		:error-messages="errors"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:readonly="field_state"
-			    		v-on:change="total"
-			    		:value="total">
+			    		:readonly="!field_state"
+          			    :disabled="field_state"
+			    		:value="total"
+			    		>
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider>

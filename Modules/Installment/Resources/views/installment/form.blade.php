@@ -448,65 +448,66 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-        </v-row>
-        <h3 class="mt-4 mb-3">Data Cicilan Unit</h3>
-              <v-simple-table>
-                <template v-slot:default>
-                    <thead>
-                      <tr>
-                          <th class="text-center">#</th>
-                          <th class="text-center">Pembayaran</th>
-                          <th class="text-center">Tgl Jatuh Tempo</th>
-                          <th class="text-center">Total Angsuran</th>
-                          <th class="text-center">Sisa Angsuran</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(payment, idx) in unit_installments">
-                                <td class="text-center">@{{idx + 1}}</td>
-                                <td class="text-center">@{{payment.payment}}</td>
-                                <td class="text-center">
-                                  <v-menu
-                                    v-model="menu[idx]"
-                                    :close-on-content-click="true"
-                                    :nudge-right="40"
-                                    transition="scale-transition"
-                                    offset-y
-                                    min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on, attrs }">
-                                    <v-text-field
-                                        :value="reformatDateTime(payment.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-                                        readonly
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    ></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="payment.due_date" @input="menu[idx] = false"></v-date-picker>
-                                  </v-menu>
-                              </td>
-                              <td v-if="idx == 0">@{{payment.installment}}</td>
-                                <td v-else>
+          </v-row>
+          <h3 class="mt-4 mb-3">Data Cicilan Unit</h3>
+            <v-simple-table>
+              <template v-slot:default>
+                  <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Pembayaran</th>
+                        <th class="text-center">Tgl Jatuh Tempo</th>
+                        <th class="text-center">Total Angsuran</th>
+                        <th class="text-center">Sisa Angsuran</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(payment, idx) in unit_installments">
+                              <td class="text-center">@{{idx + 1}}</td>
+                              <td class="text-center">@{{payment.payment}}</td>
+                              <td class="text-center">
+                                <v-menu
+                                  v-model="menu[idx]"
+                                  :close-on-content-click="true"
+                                  :nudge-right="40"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="290px"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
                                   <v-text-field
-                                    v-model="payment.installment"
-                                    name="amount"
-                                    label=""
-                                    :disabled="field_state"
-                                    @input="regenerateInstallment()">
-                                  </v-text-field>
-                                </td>
-                                <td class="text-center">@{{payment.credit}}</td>
-                                
-                            </tr>
-                    </tbody>
-                  </template>
-              </v-simple-table>
-              <v-btn
-              class="mt-4"
-              outlined 
-              :disabled="field_state">
-                Kembali
-            </v-btn>
+                                      :value="reformatDateTime(payment.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                  ></v-text-field>
+                                  </template>
+                                  <v-date-picker v-model="payment.due_date" @input="menu[idx] = false"></v-date-picker>
+                                </v-menu>
+                            </td>
+                            <td v-if="idx == 0">@{{payment.installment}}</td>
+                              <td v-else>
+                                <v-text-field
+                                  v-model="payment.installment"
+                                  name="amount"
+                                  label=""
+                                  :disabled="field_state"
+                                  @input="regenerateInstallment()">
+                                </v-text-field>
+                              </td>
+                              <td class="text-center">@{{payment.credit}}</td>
+                              
+                          </tr>
+                  </tbody>
+                </template>
+            </v-simple-table>
+          <v-btn
+          class="mt-4"
+          outlined 
+          :href="redirectUri"
+          :disabled="field_state">
+            Kembali
+          </v-btn>
           <v-btn
             class="mt-4 mr-4 white--text"
             color="primary"

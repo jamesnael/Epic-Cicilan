@@ -43,6 +43,29 @@
 			    }
 			},			
 		},
+        computed: {
+            totalPaid: function () {
+                var calculate = 0;
+                this.unit_installments.forEach(e => {
+                    calculate += e.total_paid;
+                });
+                return calculate
+            },
+            totalFine: function () {
+                var sum = 0;
+                this.unit_installments.forEach(e => {
+                    sum += e.fine;
+                });
+                return sum
+            },
+            totalRemainingInstallment: function () {
+                var total_installment = 0;
+                this.unit_installments.forEach(e => {
+                    total_installment += e.count_installment;
+                });
+                return total_installment - this.totalPaid
+            }
+        },
 		data: function () {
             return {
 	            unit_installments: [],
@@ -151,15 +174,17 @@
     		            		} 
 
                                 _.forEach(data.payments, (value, key) => {
-                                        arr_installment.push({
-                                            id: value.id,
-                                            payment: value.payment,
-                                            payment_date: this.reformatDateTime(value.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
-                                            fine: value.fine,
-                                            due_date: this.reformatDateTime(value.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
-                                            installment: this.moneyFormat(value.installment),
-                                            credit: this.moneyFormat(value.credit)
-                                        })
+                                    arr_installment.push({
+                                        id: value.id,
+                                        payment_date: this.reformatDateTime(value.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
+                                        payment: value.payment,
+                                        fine: value.fine,
+                                        due_date: this.reformatDateTime(value.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
+                                        installment: this.moneyFormat(value.installment),
+                                        count_installment:value.installment,
+                                        credit: this.moneyFormat(value.credit),
+                                        total_paid: value.total_paid
+                                    })
                                 });
 
                                 this.unit_installments = arr_installment
@@ -180,51 +205,6 @@
     		            });
     			}
     		},
-        	submit() {
-    			this.$refs.observer.validate().then((success) => {
-    				if (!success) {
-    		          return;
-    		        }
-    		        this.postFormData()
-    			});
-        	},
-            updateInstallment() {
-                this.regenerateInstallment();
-
-                const data = new FormData(this.$refs['post-form']);
-
-                data.append('unit_installments', JSON.stringify(this.unit_installments))
-
-                if (this.dataUri) {
-                    data.append("_method", "put");
-                }
-
-                this.field_state = true
-
-                axios.post(this.uri, data)
-                    .then((response) => {
-                        if (response.data.success) {
-                            this.formAlert = true
-                            this.formAlertState = 'success'
-                            this.formAlertText = response.data.message
-
-                            setTimeout(() => {
-                                this.goto(this.redirectUri);
-                            }, 6000);
-                        } else {
-                            this.formAlert = true
-                            this.formAlertState = 'error'
-                            this.formAlertText = response.data.message
-                            this.field_state = false
-                        }
-                    })
-                    .catch((error) => {
-                        this.tableAlert = true
-                        this.tableAlertState = 'error'
-                        this.tableAlertText = 'Oops, something went wrong. Please try again later.'
-                        this.field_state = false
-                    });
-            },
             moneyFormat(number) {
                 var decimals = 0;
                 var dec_point = ',';
@@ -249,34 +229,6 @@
                 }
                 return s.join(dec);
             },
-        	regenerateInstallment () {
-                let new_installment = []
-                let credit = _.toString(this.unit_installments[0].credit).split('.').join('')
-                let unit_price = parseInt(credit)
-
-                _.forEach(this.unit_installments, (value, key) => {
-                    if (key == 0) {
-                        new_installment.push({
-                            id: value.id,
-                            payment: value.payment,
-                            due_date: value.due_date,
-                            installment: this.moneyFormat(parseInt(_.toString(value.installment).split('.').join(''))),
-                            credit: this.moneyFormat(parseInt(_.toString(value.credit).split('.').join('')))
-                        })
-                    } else {
-                        unit_price = unit_price - parseInt(_.toString(value.installment).split('.').join(''))
-                        new_installment.push({
-                            id: value.id,
-                            payment: value.payment,
-                            due_date: value.due_date,
-                            installment: key == this.form_data.installment_time ? this.moneyFormat(parseInt(_.toString(value.installment).split('.').join('')) + unit_price) : this.moneyFormat(parseInt(_.toString(value.installment).split('.').join(''))),
-                            credit: key == this.form_data.installment_time ? 0 : this.moneyFormat(unit_price)
-                        })
-                    }
-                });
-                this.unit_installments = new_installment
-            },
-
         }
 	}
 </script>

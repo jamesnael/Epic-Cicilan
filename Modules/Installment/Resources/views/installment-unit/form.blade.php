@@ -478,28 +478,27 @@
           </v-simple-table>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            name=""
+            :value="moneyFormat(totalPaid)"
             label="Total Pembayaran"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            name=""
+            :value="moneyFormat(totalRemainingInstallment)"
             label="Sisa Pembayaran"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            name=""
+            :value="moneyFormat(totalFine)"
             label="Total Denda"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            name=""
             label="Selisih Kurang/Lebih Pembayaran"
             readonly>
           </v-text-field>
@@ -507,6 +506,7 @@
         <v-btn
         class="mt-4"
         outlined 
+        :href="redirectUri"
         :disabled="field_state">
           Kembali
         </v-btn>

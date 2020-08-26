@@ -57,19 +57,23 @@
             		province: '',
             		city: '',
             		pph_final: '',
-            		id_agency_commission:'',
-            		sales_commission:'',
-            		agency_commission:'',
-            		regional_coordinator_commission:'',
-            		main_coordinator_commission:''
+            		id_agency_commission:'0',
+            		sales_commission:'0',
+            		agency_commission:'0',
+            		regional_coordinator_commission:'0',
+            		main_coordinator_commission:'0'
             	}
         	}
         },
+        watch: {
+        },
         computed: {
             total: function() {
-              return parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
-
+              	var calculate = parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission ) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
+              	
+             	return calculate
             }
+
         },
         mounted() {
             this.setData();
@@ -177,16 +181,18 @@
 		    },
 		    setSelectedAgency() {
 				let agency = _.find(this.filter_agency_commission, o => { return o.value == this.form_data.id_agency_commission})
-				console.log(agency)
 				if (_.isUndefined(agency)) {
 					this.form_data.sales_commission = ''
+					this.form_data.agency_commission = ''
 					this.form_data.main_coordinator_commission = ''
 					this.form_data.regional_coordinator_commission = ''
 				} else {
 					this.form_data.sales_commission = agency.sales_commission
+					this.form_data.agency_commission = agency.agency_commission
 					this.form_data.main_coordinator_commission = agency.main_coordinator_commission
 					this.form_data.regional_coordinator_commission = agency.regional_coordinator_commission
 				}
+
 			},
         }
 	}
