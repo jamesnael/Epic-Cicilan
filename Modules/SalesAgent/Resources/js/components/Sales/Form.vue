@@ -204,7 +204,7 @@
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
 	    		}
-	    		
+  		
 	    		this.field_state = true
 
 	    		axios.post(this.uri, data)

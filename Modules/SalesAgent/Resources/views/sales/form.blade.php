@@ -171,7 +171,7 @@
 		    		  </a>
 	    		</validation-provider>
 
-				<v-row class="mt-4">
+				{{-- <v-row class="mt-4">
 			        <v-col
 			          cols="12"
 			          md="6"
@@ -266,7 +266,7 @@
 				            ></v-text-field>
 			    		</validation-provider>
 			        </v-col>
-			    </v-row>
+			    </v-row> --}}
 
 			    
 

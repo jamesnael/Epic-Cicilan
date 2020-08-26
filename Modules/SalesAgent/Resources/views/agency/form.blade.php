@@ -102,6 +102,103 @@
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider>
+
+	    		<v-row class="mt-4">
+			        <v-col
+			          cols="12"
+			          md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="">
+				    		<v-select
+				    			v-model="form_data.id_agency_commission"
+				    			:items="filter_agency_commission" 
+				    			@input="setSelectedAgency()"
+				              	label="Komisi Agensi (%)"
+				              	name="id_agency_commission"
+				              	menu-props="auto"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            >
+				            	<template slot="selection" slot-scope="data">
+				            	    @{{ data.item.text }}
+				            	</template>
+			            	  	<template slot="item" slot-scope="data">
+			            	  		<table width="100%" border="0" class="mt-2">
+			            	  			<tr>
+			            	  				<td width="35%">Koordinator Utama</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.main_coordinator_commission }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Koordinator Wilayah</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.regional_coordinator_commission }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Agensi</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.text }} %</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Sales</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ data.item.sales_commission }} %</td>
+			            	  			</tr>
+			            	  		</table>
+			            	  	</template>
+				            </v-select>
+	    				</validation-provider>
+			        </v-col>
+			        <v-col
+			          cols="12"
+			          md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi sales" rules="">
+				    		<v-text-field
+				    			v-model="form_data.sales_commission"
+				              	label="Komisi Sales (%)"
+				              	name="sales_commission"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></<v-text-field>
+	    				</validation-provider>
+			        </v-col>
+			    </v-row>
+	    		<v-row>
+			        <v-col
+			          	cols="12"
+			          	md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator utama" rules="required">
+          		    		<v-text-field
+          		    			v-model="form_data.main_coordinator_commission" 
+          		              	label="Komisi Koordinator Utama (%)"
+          		              	name="main_coordinator_commission"
+          			    		:persistent-hint="true"
+          			    		:error-messages="errors"
+          			    		:readonly="field_state"
+          		            ></v-text-field>
+          	    		</validation-provider>
+			        </v-col>
+
+			        <v-col
+			          cols="12"
+			          md="6"
+			        >
+			          	<validation-provider v-slot="{ errors }" name="Komisi koordinator wilayah" rules="">
+				    		<v-text-field
+				    			v-model="form_data.regional_coordinator_commission"
+				              	label="Komisi Koordinator Wilayah (%)"
+				              	name="regional_coordinator_commission"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></v-text-field>
+			    		</validation-provider>
+			        </v-col>
+			    </v-row>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"

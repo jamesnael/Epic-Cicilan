@@ -8,7 +8,8 @@
 	uri="{{ route('agencies.update', [$data->slug]) }}"
 	redirect-uri="{{ route('agencies.index') }}"
 	data-uri="{{ route('agencies.data', [$data->slug]) }}"
-	:filter_regional_coordinator='@json($regional_coordinator)'>
+	:filter_regional_coordinator='@json($regional_coordinator)'
+	:filter_agency_commission='@json($agency_commission)'>
 		@include('salesagent::agency.form')
 	</salesagent-agency-form>
 

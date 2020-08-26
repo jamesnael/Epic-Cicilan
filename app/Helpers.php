@@ -355,13 +355,13 @@ if (! function_exists('aside_menu')) {
                 'uri' => route('salescommission.index'),
                 'model' => in_array(Route::currentRouteName(), ['salescommission.index','salescommission.create', 'salescommission.edit']),
             ],
-            [
-                'icon' => 'mdi-cash-multiple',
-                'icon-alt' => 'mdi-chevron-down',
-                'text' => 'Tipe Pembayaran',
-                'uri' => route('PaymentType.index'),
-                'model' => in_array(Route::currentRouteName(), ['PaymentType.index','PaymentType.create', 'PaymentType.edit']),
-            ],
+            // [
+            //     'icon' => 'mdi-cash-multiple',
+            //     'icon-alt' => 'mdi-chevron-down',
+            //     'text' => 'Tipe Pembayaran',
+            //     'uri' => route('PaymentType.index'),
+            //     'model' => in_array(Route::currentRouteName(), ['PaymentType.index','PaymentType.create', 'PaymentType.edit']),
+            // ],
             [
                 'icon' => 'mdi-gift',
                 'icon-alt' => 'mdi-chevron-down',

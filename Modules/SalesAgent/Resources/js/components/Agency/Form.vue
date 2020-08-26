@@ -33,7 +33,13 @@
 			    default: function () {
 			        return []
 			    }
-			}
+			},
+			filter_agency_commission: {
+			    type: Array,
+			    default: function () {
+			        return []
+			    }
+			},
 		},
 		data: function () {
             return {
@@ -50,6 +56,10 @@
             		province: '',
             		city: '',
             		pph_final: '',
+            		sales_commission:'',
+            		agency_commission:'',
+            		regional_coordinator_commission:'',
+            		main_coordinator_commission:''
             	}
         	}
         },
@@ -75,6 +85,11 @@
     		            			province: data.province,
     		            			city: data.city,
     		            			pph_final: data.pph_final,
+    		            			id_commission:data.value,
+    		            			sales_commission:data.sales_commission,
+    		            			agency_commission:data.agency_commission,
+    		            			regional_coordinator_commission:data.regional_coordinator_commission,
+    		            			main_coordinator_commission:data.main_coordinator_commission,
     		            		}
 
     			                this.field_state = false
@@ -112,6 +127,10 @@
 		        	province: '',
 		        	city: '',
 		        	pph_final: '',
+		        	sales_commission:'',
+            		agency_commission:'',
+            		regional_coordinator_commission:'',
+            		main_coordinator_commission:''
 		        }
 		        this.$refs.observer.reset()
 		    },
@@ -146,7 +165,22 @@
 	                    this.tableAlertText = 'Oops, something went wrong. Please try again later.'
 	    		        this.field_state = false
 	    		    });
-		    }
+		    },
+		    setSelectedAgency() {
+				let agency = _.find(this.filter_agency_commission, o => { return o.value == this.form_data.id_agency_commission})
+				console.log(agency)
+				if (_.isUndefined(agency)) {
+					this.form_data.id_commission = ''
+					this.form_data.sales_commission = ''
+					this.form_data.main_coordinator_commission = ''
+					this.form_data.regional_coordinator_commission = ''
+				} else {
+					this.form_data.id_commission = agency.value
+					this.form_data.sales_commission = agency.sales_commission
+					this.form_data.main_coordinator_commission = agency.main_coordinator_commission
+					this.form_data.regional_coordinator_commission = agency.regional_coordinator_commission
+				}
+			},
         }
 	}
 </script>

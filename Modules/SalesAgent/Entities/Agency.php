@@ -24,6 +24,14 @@ class Agency extends Model
         'province',
         'city',
         'pph_final',
+        'id_sales_commission',
+        'id_agency_commision',
+        'id_regional_coordinator_commission',
+        'id_main_coordinator_commission',
+        'sales_commission',
+        'agency_commission',
+        'regional_coordinator_commission',
+        'main_coordinator_commission',
     ];
 
     /**

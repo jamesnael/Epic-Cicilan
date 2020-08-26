@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\Agency;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
+use Modules\Commission\Entities\Commission;
+use Modules\SalesAgent\Entities\MainCoordinator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -285,7 +287,7 @@ class AgencyController extends Controller
         ]);
     }
 
-     /**
+    /**
      *
      * Return Form Helper
      *
@@ -293,7 +295,13 @@ class AgencyController extends Controller
     public function getHelper()
     {
         return [
-            'regional_coordinator' => RegionalCoordinator::select('id AS value', 'full_name AS text')->get()
+            'agency' => Agency::select('id AS value', 'agency_name AS text','regional_coordinator_id')->get(),
+            'main_coordinator' => MainCoordinator::select('id AS value', 'full_name AS text')->get(),
+            'regional_coordinator' => RegionalCoordinator::select('id AS value', 'full_name AS text')->get(),
+            'regional_coordinator_commission' => Commission::select('id AS value', 'regional_coordinator_commission AS text')->get(),
+            'main_coordinator_commission' => Commission::select('id AS value', 'main_coordinator_commission AS text')->get(),
+            'agency_commission' => Commission::select('id AS value', 'agency_commission AS text','sales_commission','agency_commission','main_coordinator_commission', 'regional_coordinator_commission')->get(),
+            'sales_commission' => Commission::select('id AS value', 'sales_commission AS text', 'agency_commission', 'main_coordinator_commission', 'regional_coordinator_commission')->get()
         ];
     }
 
