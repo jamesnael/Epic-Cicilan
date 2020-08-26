@@ -56,6 +56,7 @@
             		province: '',
             		city: '',
             		pph_final: '',
+            		id_agency_commission:'',
             		sales_commission:'',
             		agency_commission:'',
             		regional_coordinator_commission:'',
@@ -76,6 +77,7 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+    		            		console.log(data)
     		            		this.form_data = {
     		            			regional_coordinator_id: data.regional_coordinator_id,
     		            			agency_name: data.agency_name,
@@ -85,7 +87,7 @@
     		            			province: data.province,
     		            			city: data.city,
     		            			pph_final: data.pph_final,
-    		            			id_commission:data.value,
+    		            			id_agency_commission:data.id_agency_commision,
     		            			sales_commission:data.sales_commission,
     		            			agency_commission:data.agency_commission,
     		            			regional_coordinator_commission:data.regional_coordinator_commission,
@@ -170,12 +172,10 @@
 				let agency = _.find(this.filter_agency_commission, o => { return o.value == this.form_data.id_agency_commission})
 				console.log(agency)
 				if (_.isUndefined(agency)) {
-					this.form_data.id_commission = ''
 					this.form_data.sales_commission = ''
 					this.form_data.main_coordinator_commission = ''
 					this.form_data.regional_coordinator_commission = ''
 				} else {
-					this.form_data.id_commission = agency.value
 					this.form_data.sales_commission = agency.sales_commission
 					this.form_data.main_coordinator_commission = agency.main_coordinator_commission
 					this.form_data.regional_coordinator_commission = agency.regional_coordinator_commission
