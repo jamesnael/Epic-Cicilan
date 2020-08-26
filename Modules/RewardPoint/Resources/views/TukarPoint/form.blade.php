@@ -183,8 +183,8 @@
 						        <v-card-text>Point berhasil ditukarkan, Ingin menukar point lagi ?</v-card-text>
 						        <v-card-actions>
 						          <v-spacer></v-spacer>
-						          <v-btn color="blue darken-1" text @click="dialog = false">Disagree</v-btn>
-						          <v-btn color="blue darken-1" text @click="dialog = false">Agree</v-btn>
+						          <v-btn color="blue darken-1" text @click="dialog = false">Tidak</v-btn>
+						          <v-btn color="blue darken-1" text @click="dialog = false">Iya</v-btn>
 						        </v-card-actions>
 						      </v-card>
 			    </v-dialog>

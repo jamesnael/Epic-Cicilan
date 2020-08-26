@@ -366,8 +366,8 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-gift',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Tukar Point',
-                'uri' => route('TukarPoint.index'),
-                'model' => in_array(Route::currentRouteName(), ['TukarPoint.index','TukarPoint.create', 'TukarPoint.edit']),
+                'uri' => route('tukar-point.index'),
+                'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point.create', 'tukar-point.edit']),
             ],
 
 
