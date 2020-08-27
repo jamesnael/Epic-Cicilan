@@ -61,7 +61,10 @@
             		sales_commission:'0',
             		agency_commission:'0',
             		regional_coordinator_commission:'0',
-            		main_coordinator_commission:'0'
+            		main_coordinator_commission:'0',
+            		bank_name: '',
+            		rek_number: '',
+            		account_name: '',
             	}
         	}
         },
@@ -88,7 +91,6 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-    		            		console.log(data)
     		            		this.form_data = {
     		            			regional_coordinator_id: data.regional_coordinator_id,
     		            			agency_name: data.agency_name,
@@ -103,6 +105,9 @@
     		            			agency_commission:data.agency_commission,
     		            			regional_coordinator_commission:data.regional_coordinator_commission,
     		            			main_coordinator_commission:data.main_coordinator_commission,
+    		            			bank_name: data.bank_name,
+    		            			rek_number: data.rek_number,
+    		            			account_name: data.account_name,
     		            		}
 
     			                this.field_state = false
@@ -143,7 +148,11 @@
 		        	sales_commission:'',
             		agency_commission:'',
             		regional_coordinator_commission:'',
-            		main_coordinator_commission:''
+            		main_coordinator_commission:'',
+            		bank_name: '',
+            		rek_number: '',
+            		account_name: '',
+
 		        }
 		        this.$refs.observer.reset()
 		    },

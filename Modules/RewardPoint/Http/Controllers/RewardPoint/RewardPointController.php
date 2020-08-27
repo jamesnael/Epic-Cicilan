@@ -45,16 +45,28 @@ class RewardPointController extends Controller
                 "value" => 'reward_name',
             ],
             [
-                "text" => 'Redeem Point',
+                "text" => 'Redeem Point Koordinator Utama',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'redeem_point',
+                "value" => 'redeem_point_main_coordinator',
             ],
             [
-                "text" => 'Kuota',
+                "text" => 'Redeem Point Koordinator Wilayah',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'kuota',
+                "value" => 'redeem_point_regional_coordinator',
+            ],
+            [
+                "text" => 'Redeem Point Agensi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'redeem_point_agency',
+            ],
+            [
+                "text" => 'Redeem Point Sales',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'redeem_point_sales',
             ],
             [
                 "text" => 'Deskripsi',
@@ -260,8 +272,6 @@ class RewardPointController extends Controller
         return Validator::make($request->all(), [
             "category_reward_id" => "bail|required|string|max:255",
             "reward_name" => "bail|required|string|max:255",
-            "redeem_point" => "bail|required|numeric",
-            "kuota" => "bail|required|numeric",
             "description" => "bail|nullable",
         ]);
     }

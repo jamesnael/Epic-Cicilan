@@ -42,14 +42,21 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
 	            switchStatus: true,
+	            regional_coordinator: false,
+	            main_coordinator: false,
+	            agency: false,
+	            sales: false,
 	            listStatus:['Aktif', 'Tidak Aktif'],
             	form_data: {
             		category_reward_id: '',
             		reward_name: '',
-            		redeem_point: '',
             		kuota: '',
             		description: '',
             		status: '',
+            		redeem_point_main_coordinator: '0',
+            		redeem_point_regional_coordinator: '0',
+            		redeem_point_agency: '0',
+            		redeem_point_sales: '0',
             	}
         	}
         },
@@ -71,10 +78,14 @@
     		            			description: data.description,
     		            			category_reward_id: data.category_reward_id,
     		            			reward_name: data.reward_name,
-    		            			redeem_point: data.redeem_point,
-    		            			kuota: data.kuota,
+    		            			// redeem_point: data.redeem_point,
+    		            			// kuota: data.kuota,
     		            			description:data.description,
     		            			status: data.status,
+    		            			redeem_point_main_coordinator: data.redeem_point_main_coordinator,
+    		            			redeem_point_regional_coordinator: data.redeem_point_regional_coordinator,
+    		            			redeem_point_agency: data.redeem_point_agency,
+    		            			redeem_point_sales: data.redeem_point_sales,
     		            		}
 
     			                this.field_state = false
@@ -106,14 +117,17 @@
 		        this.form_data = {
 		        	category_reward_id: '',
             		reward_name: '',
-            		redeem_point: '',
-            		kuota: '',
             		description: '',
             		status: '',
+            		redeem_point_main_coordinator: '0',
+            		redeem_point_regional_coordinator: '0',
+            		redeem_point_agency: '0',
+            		redeem_point_sales: '0',
 		        }
 		        this.$refs.observer.reset()
 		    },
 		    postFormData() {
+		    	console.log('a')
 	    		const data = new FormData(this.$refs['post-form']);
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");

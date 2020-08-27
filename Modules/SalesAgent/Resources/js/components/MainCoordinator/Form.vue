@@ -41,6 +41,9 @@
             		email: '',
             		address: '',
             		pph_final: '',
+            		bank_name: '',
+            		rek_number: '',
+            		account_name: '',
             	}
         	}
         },
@@ -63,6 +66,10 @@
     		            			email: data.email,
     		            			address: data.address,
     		            			pph_final: data.pph_final,
+    		            			bank_name: data.bank_name,
+    		            			rek_number: data.rek_number,
+    		            			account_name: data.account_name,
+
     		            		}
 
     			                this.field_state = false

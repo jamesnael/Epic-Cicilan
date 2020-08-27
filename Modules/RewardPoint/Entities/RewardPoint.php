@@ -16,7 +16,11 @@ class RewardPoint extends Model
 	    'redeem_point',
 	    'kuota',
 	    'description',
-	    'status'
+	    'status',
+        'redeem_point_main_coordinator',
+        'redeem_point_regional_coordinator',
+        'redeem_point_agency',
+        'redeem_point_sales',
 	];
 
 	/**

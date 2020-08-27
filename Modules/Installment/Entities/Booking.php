@@ -43,6 +43,14 @@ class Booking extends Model
         
     ];
 
+    protected $appends = [
+        'total_cicilan',
+        'total_pembayaran',
+        'sisa_tunggakan',
+        'total_denda',
+        // 'prosentase_pembayaran',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -75,6 +83,60 @@ class Booking extends Model
     {
         return 'slug';
     }
+
+    public function getTotalCicilanAttribute()
+    {
+        $collection = collect($this->payments)->sum(function($item) {
+            if ($item->payment != 'Akad Kredit') {
+                return ($item->installment?: 0);
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
+    public function getTotalPembayaranAttribute()
+    {
+        $collection = collect($this->payments)->sum(function($item) {
+            if ($item->payment_date) {
+                return ($item->installment?: 0) + ($item->fine?: 0);
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
+    public function getTotalDendaAttribute()
+    {
+        $collection = collect($this->payments)->sum(function($item) {
+            if ($item->payment_date) {
+                return ($item->fine?: 0);
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
+    public function getSisaTunggakanAttribute()
+    {
+        $collection = collect($this->payments)->sum(function($item) {
+            if ($item->payment != 'Akad Kredit') {
+                return $item->installment;
+            }
+            return 0;
+        });
+        return $collection - $this->total_pembayaran;
+    }
+
+    // public function getProsentasePembayaranAttribute()
+    // {
+    //     \Log::info(json_encode([
+    //         'total_pembayaran' => $this->total_pembayaran,
+    //         'total_denda' => $this->total_denda,
+    //         'total_cicilan' => $this->total_cicilan,
+    //     ], JSON_PRETTY_PRINT));
+    //     return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+    // }
 
     /**
      * Get the relationship for the model.
@@ -114,5 +176,20 @@ class Booking extends Model
     public function document()
     {
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
+    }
+
+    /**
+     * Get the relations for the model.
+     */
+    public function akad_kpr()
+    {
+        return $this->hasOne('Modules\Installment\Entities\AkadKpr', 'booking_id');
+    }
+    /**
+     * Get the relations for the model.
+     */
+    public function ajb()
+    {
+        return $this->hasOne('Modules\Installment\Entities\AkteJualBeli', 'booking_id');
     }
 }
