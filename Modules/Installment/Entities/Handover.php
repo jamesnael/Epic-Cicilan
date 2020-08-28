@@ -12,7 +12,7 @@ class Handover extends Model
     protected $fillable = [
     	'booking_id',
     	'handover_date',
-        'handover_time',
+        'time',
         'location',
         'address',
         'handover_doc_file_name',
