@@ -11,6 +11,12 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+        $page->table_headers = collect($page->table_headers)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
 	@endphp
 	<table-layout inline-template
 		uri="{{ route('point.table') }}"

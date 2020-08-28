@@ -17,6 +17,7 @@
             "sortable" => false,
             "value" => 'table_index',
         ])->values();
+        
 	@endphp
 	<table-layout inline-template
 		uri="{{ route('agencies.table') }}"
