@@ -262,7 +262,7 @@ if (! function_exists('aside_menu')) {
                     ],
                     [
                         'icon' => 'mdi-wallet-giftcard',
-                        'text' => 'Reward Point',
+                        'text' => 'Reward',
                         'uri' => route('reward-point.index'),
                         'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
                     ],

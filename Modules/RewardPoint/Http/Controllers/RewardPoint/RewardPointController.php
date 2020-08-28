@@ -21,7 +21,7 @@ class RewardPointController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('users.index'), 'text' => 'Data Reward Point'],
+            ['href' => route('users.index'), 'text' => 'Data Reward'],
         ];
     }
 
@@ -111,7 +111,7 @@ class RewardPointController extends Controller
         try {
             $data = RewardPoint::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data reward point berhasil disimpan.', $data);
+            return response_json(true, null, 'Data reward berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -152,7 +152,7 @@ class RewardPointController extends Controller
         try {
             $data = $reward_point->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data reward point berhasil disimpan.', $data);
+            return response_json(true, null, 'Data reward berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -171,7 +171,7 @@ class RewardPointController extends Controller
         try {
             $reward_point->delete();
             DB::commit();
-            return response_json(true, null, 'Data reward point berhasil dihapus.');
+            return response_json(true, null, 'Data reward berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
