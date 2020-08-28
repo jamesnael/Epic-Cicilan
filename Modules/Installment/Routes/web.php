@@ -48,13 +48,13 @@ Route::group(['namespace' => 'PPJB'], function() {
 Route::group(['namespace' => 'Akad'], function() {
 	Route::get('akad/table', 'AkadController@table')->name('akad.table');
 	Route::get('akad/{akad}/data', 'AkadController@data')->name('akad.data');
-	Route::resource('akad', 'AkadController')->except(['show']);
+	Route::resource('akad', 'AkadController')->except(['show','destroy', 'create', 'store']);
 });
 
 Route::group(['namespace' => 'Ajb'], function() {
 	Route::get('ajb/table', 'AjbController@table')->name('ajb.table');
 	Route::get('ajb/{ajb}/data', 'AjbController@data')->name('ajb.data');
-	Route::resource('ajb', 'AjbController')->except(['show']);
+	Route::resource('ajb', 'AjbController')->except(['show','destroy', 'create', 'store']);
 });
 
 Route::group(['namespace' => 'HandOver'], function() {

@@ -478,27 +478,28 @@
           </v-simple-table>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            :value="moneyFormat(totalPaid)"
+            :value="moneyFormat(form_data.total_pembayaran)"
             label="Total Pembayaran"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            :value="moneyFormat(totalRemainingInstallment)"
+            :value="moneyFormat(form_data.sisa_tunggakan)"
             label="Sisa Pembayaran"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
-            :value="moneyFormat(totalFine)"
+            :value="moneyFormat(form_data.total_denda)"
             label="Total Denda"
             readonly>
           </v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
+            :value="moneyFormat(form_data.prosentase_pembayaran)"
             label="Selisih Kurang/Lebih Pembayaran"
             readonly>
           </v-text-field>

@@ -22,9 +22,9 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('akad.create') }}"
+		{{-- add-new-uri="{{ route('akad.create') }}"
 		add-new-text="Tambah"
-		add-new-color="light-blue lighten-2"
+		add-new-color="light-blue lighten-2" --}}
 		edit-uri="akad.edit"
 		edit-uri-parameter="slug"
 		edit-text="Edit Akad"

@@ -31,22 +31,9 @@
 			    type: String,
 			    default: ''
 			},
-			filter_client: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
-			},
-			filter_sales: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
-			},			
 		},
 		data: function () {
             return {
-	            unit_akad: [],
             	field_state: false,
             	formAlert: false,
 	            formAlertText: '',
@@ -63,44 +50,18 @@
                     'Approved',
                     'Pending'
                 ],
-	            unit_akad: [],
             	form_data: {
-            		unit_type:'',
-            		client_name:'',
-            		unit_number:'',
-            		surface_area:'',
-            		building_area:'',
-            		utj:'',
-            		electrical_power:'',
-            		points:'',
-            		closing_fee:'',
-            		total_amount: '',
-            		ppn: '',
-            		payment_type: '',
-            		payment_method: '',
-            		dp_amount: '',
-            		first_payment: '',
-            		principal: '',
-            		akad: '',
-            		akad_time: '',
-            		due_date: '',
-            		amount:'',
-            		credits: '',
-            		payment_method_utj: '',
-            		bank_name: '',
-            		card_number: '',
-            		point: '',
-            		client_id: '',
-            		client_name: '',
-            		client_email: '',
-            		client_phone_number: '',
-            		client_mobile_number: '',
-            		client_addres: '',
-            		sales_id:'',
-            		sales_name:'',
-            		agency_name:'',
-            		main_coordinator:'',
-            		regional_coordinator:'',
+            		booking_id: '',
+                    akad_date: '',
+                    akad_time: '',
+                    location: '',
+                    address: '',
+                    dokumen_awal: '',
+                    approval_client_status: '',
+                    approval_developer_status: '',
+                    approval_notaris_status: '',
+                    akad_sign_date: '',
+                    akad_doc_sign_file_name: '',
             	}
         	}
         },
@@ -118,58 +79,30 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                let arr_akad = []
+                                console.log(data)
     		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
-    		            			unit_block:data.unit.unit_block,
-    		            			unit_number:data.unit.unit_number,
-    		            			surface_area:data.unit.surface_area,
-    		            			building_area:data.unit.building_area,
-    		            			utj:data.unit.utj,
-    		            			electrical_power:data.unit.electrical_power,
-    		            			points:data.unit.points,
-    		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
-    		            			total_amount: this.moneyFormat(data.total_amount),
-    		            			ppn: this.moneyFormat(data.ppn),
-    		            			payment_type: data.payment_type,
-    		            			payment_method: data.payment_method,
-    		            			dp_amount: this.moneyFormat(data.dp_amount),
-    		            			first_payment: this.moneyFormat(data.first_payment),
-    		            			principal: this.moneyFormat(data.principal),
-    		            			akad: this.moneyFormat(data.akad),
-    		            			akad_time: data.akad_time,
-    		            			due_date: data.due_date,
-    		            			credits: this.moneyFormat(data.credits),
-    		            			amount: this.moneyFormat(data.amount),
-    		            			payment_method_utj: data.payment_method_utj,
-    		            			bank_name: data.bank_name,
-    		            			card_number: data.card_number,
-    		            			point: data.point,
-    		            			client_id: data.client_id,
-    		            			client_name: data.client.client_name,
-    		            			client_number: data.client.client_number,
-    		            			client_email: data.client.client_email,
-    		            			client_phone_number: data.client.client_phone_number,
-    		            			client_mobile_number: data.client.client_mobile_number,
-    		            			client_address: data.client.client_address,
-    		            			sales_id: data.sales_id,
-    		            			sales_name:data.sales.user.full_name,
-    		            			agency_name:data.agency ? data.agency.agency_name : '',
-    		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
-    		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+                                    booking_id:data.id,
+                                    client_name:data.client.client_name,
+                                    client_mobile_number:data.client.client_mobile_number,
+                                    unit_number:data.unit.unit_number + '/' + data.unit.unit_block,
+                                    unit_price: this.moneyFormat(data.total_amount),
+                                    sales_name:data.sales.user.full_name,
+                                    agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
+                                    akad_date: data.akad_kpr ? data.akad_kpr.akad_date : '',
+                                    akad_time: data.akad_kpr ? data.akad_kpr.akad_time : '',
+                                    location: data.akad_kpr ? data.akad_kpr.location : '',
+                                    address: data.akad_kpr ? data.akad_kpr.address : '',
+
+                                    dokumen_awal_akad: data.akad_kpr ? data.akad_kpr.akad_doc_file_name : '',
+                                    url_dokumen_awal: data.akad_kpr ?  data.akad_kpr.url_akad_doc_file_name : '',
+
+                                    approval_client_status: data.akad_kpr ? data.akad_kpr.approval_client_status : '',
+                                    approval_developer_status: data.akad_kpr ? data.akad_kpr.approval_developer_status : '',
+                                    approval_notaris_status: data.akad_kpr ? data.akad_kpr.approval_notaris_status : '',
+                                    akad_sign_date: data.akad_kpr ? data.akad_kpr.akad_sign_date : '',
+                                    dokumen_akhir_akad: data.akad_kpr ? data.akad_kpr.akad_doc_sign_file_name : '',
+                                    url_dokumen_akhir: data.akad_kpr ? data.akad_kpr.url_akad_doc_sign_file_name : '',
     		            		} 
-
-                                _.forEach(data.payments, (value, key) => {
-                                        arr_akad.push({
-                                            id: value.id,
-                                            payment: value.payment,
-                                            due_date: this.showFormattedDt(value.due_date),
-                                            akad: this.moneyFormat(value.akad),
-                                            credit: this.moneyFormat(value.credit)
-                                        })
-                                });
-
-                                this.unit_akad = arr_akad
 
     			                this.field_state = false
     		            	} else {
@@ -195,15 +128,14 @@
     		        this.postFormData()
     			});
         	},
-            updateAkad() {
-                this.regenerateAkad();
-
+            postFormData() {
                 const data = new FormData(this.$refs['post-form']);
-
-                data.append('unit_akad', JSON.stringify(this.unit_akad))
 
                 if (this.dataUri) {
                     data.append("_method", "put");
+                    data.append("booking_id", this.form_data.booking_id);
+                    data.append("akad_date", this.form_data.akad_date);
+                    data.append("akad_time", this.form_data.akad_time);
                 }
 
                 this.field_state = true
@@ -255,38 +187,7 @@
                     s[1] += new Array(prec - s[1].length + 1).join('0');
                 }
                 return s.join(dec);
-            },
-        	showFormattedDt(dt) {
-                return moment(dt, "YYYY-MM-DD").format("DD-MMM-YYYY")
-            },
-        	regenerateAkad () {
-                let new_akad = []
-                let credit = _.toString(this.unit_akad[0].credit).split('.').join('')
-                let unit_price = parseInt(credit)
-
-                _.forEach(this.unit_akad, (value, key) => {
-                    if (key == 0) {
-                        new_akad.push({
-                            id: value.id,
-                            payment: value.payment,
-                            due_date: value.due_date,
-                            akad: this.moneyFormat(parseInt(_.toString(value.akad).split('.').join(''))),
-                            credit: this.moneyFormat(parseInt(_.toString(value.credit).split('.').join('')))
-                        })
-                    } else {
-                        unit_price = unit_price - parseInt(_.toString(value.akad).split('.').join(''))
-                        new_akad.push({
-                            id: value.id,
-                            payment: value.payment,
-                            due_date: value.due_date,
-                            akad: key == this.form_data.akad_time ? this.moneyFormat(parseInt(_.toString(value.akad).split('.').join('')) + unit_price) : this.moneyFormat(parseInt(_.toString(value.akad).split('.').join(''))),
-                            credit: key == this.form_data.akad_time ? 0 : this.moneyFormat(unit_price)
-                        })
-                    }
-                });
-                this.unit_akad = new_akad
-            },
-
+            }
         }
 	}
 </script>

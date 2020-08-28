@@ -211,7 +211,7 @@
     		            			client_profession: data.client.profession,
     		            			unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
     		            			unit_price: this.number_format(data.total_amount),
-    		            			submission_date: data.document.submission_date,
+    		            			submission_date: data.document ? data.document.submission_date : '',
     		            		}
 
     		            		this.pairingUploadedUrl(data.document)

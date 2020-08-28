@@ -11,17 +11,28 @@ class RegionalCoordinator extends Model
 
 	use Sluggable, SoftDeletes;
 
-    protected $fillable = ['slug','main_coordinator_id' , 'full_name', 'email', 'phone_number', 'address','pph_final'];
+    protected $fillable = [
+        'slug',
+        'main_coordinator_id' , 
+        'full_name', 
+        'email', 
+        'phone_number', 
+        'address',
+        'pph_final',
+        'bank_name',
+        'rek_number',
+        'account_name'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
+
     protected $hidden = [
         
     ];
-
     /**
      * The attributes that should be cast to native types.
      *

@@ -115,6 +115,10 @@
             		agency_name:'',
             		main_coordinator:'',
             		regional_coordinator:'',
+                    total_pembayaran: 0,
+                    sisa_tunggakan: 0,
+                    total_denda: 0,
+                    prosentase_pembayaran: 0,
             	}
         	}
         },
@@ -171,6 +175,10 @@
     		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+                                    total_pembayaran:data.total_pembayaran,
+                                    sisa_tunggakan:data.sisa_tunggakan,
+                                    total_denda:data.total_denda,
+                                    prosentase_pembayaran:data.prosentase_pembayaran,
     		            		} 
 
                                 _.forEach(data.payments, (value, key) => {

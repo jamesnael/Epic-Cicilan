@@ -27,7 +27,7 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Reedem point" rules="required|numeric">
+	    		{{-- <validation-provider v-slot="{ errors }" name="Reedem point" rules="required|numeric">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.redeem_point"
@@ -39,20 +39,75 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Kuota" rules="required|numeric">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="form_data.kuota"
-		    			name="kuota"
-			    		label="Kuota"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
+	    		<v-row align="center" class="mt-4">
+			        <v-checkbox
+			          hide-details
+			          v-model="main_coordinator"
+			          class="shrink mr-2 mt-0"
+			        ></v-checkbox>
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': form_data.status_main_coordinator}">
+				        <v-text-field
+					      v-model="form_data.redeem_point_main_coordinator"
+				          label="Reedem Point Koordinator Utama"
+				          name="redeem_point_main_coordinator"
+				          :error-messages="errors"
+			    		  :readonly="field_state"
+				        >
+				        </v-text-field>
+					</validation-provider>
+				</v-row>
+	    		<v-row align="center" class="mt-4">
+			        <v-checkbox
+				        v-model="regional_coordinator"
+			          	hide-details
+			          	class="shrink mr-2 mt-0"
+			        ></v-checkbox>
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator wilayah" :rules="{'numeric': true, 'required': regional_coordinator}">
+			        <v-text-field
+			          v-model="form_data.redeem_point_regional_coordinator"
+			          label="Reedem Point Koordinator Wilayah"
+			          name="redeem_point_regional_coordinator"
+			          :error-messages="errors"
+		    		  :readonly="field_state"
+			        >
+			        </v-text-field>
+					</validation-provider>
+			    </v-row>
+	    		<v-row align="center" class="mt-4">
+			        <v-checkbox
+				        v-model="agency"
+			          	hide-details
+			          	class="shrink mr-2 mt-0"
+			        ></v-checkbox>
+					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': agency}">
+				        <v-text-field
+				          v-model="form_data.redeem_point_agency"
+				          label="Reedem Point Agensi"
+				          name="redeem_point_agency"
+				          :error-messages="errors"
+			    		  :readonly="field_state"
+				        >
+				        </v-text-field>
+					</validation-provider>
+			    </v-row>
+	    		<v-row align="center" class="mt-4">
+			        <v-checkbox
+				        v-model="sales"
+				        hide-details
+			          	class="shrink mr-2 mt-0"
+			        ></v-checkbox>
+					<validation-provider v-slot="{ errors }" name="Reedem point sales" :rules="{'numeric': true, 'required': sales}">
+				        <v-text-field
+				          v-model="form_data.redeem_point_sales"
+				          label="Reedem Point Sales"
+				          name="redeem_point_sales"
+				          :error-messages="errors"
+			    		  :readonly="field_state"
+				        >
+				        </v-text-field>
+					</validation-provider>
+			    </v-row>
 	    		<validation-provider v-slot="{ errors }" name="Keterangan" rules="">
 		    		<v-textarea
 		    			class="mt-4"

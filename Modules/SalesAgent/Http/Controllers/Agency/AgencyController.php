@@ -158,6 +158,7 @@ class AgencyController extends Controller
                 'id_regional_coordinator_commission' => $request->id_agency_commission,
                 'id_main_coordinator_commission' => $request->id_agency_commission,
             ]);
+            
             $data = $agency->update($request->all());
             DB::commit();
             return response_json(true, null, 'Data agensi berhasil disimpan.', $data);
