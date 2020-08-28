@@ -128,6 +128,11 @@ class Booking extends Model
         return $collection - $this->total_pembayaran;
     }
 
+    public function getTanggalLunasCicilanAttribute()
+    {
+        return $collection = collect($this->payments)->last()->payment_date;
+    }
+
     // public function getProsentasePembayaranAttribute()
     // {
     //     \Log::info(json_encode([
