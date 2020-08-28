@@ -99,6 +99,9 @@
     		    <span>@{{ deleteText }}</span>
     		</v-tooltip>
     	</template>
+    	<template v-slot:item.table_index="{ item }">
+    		<strong>@{{ item.table_index }}</strong>
+    	</template>
     </v-data-table>
 
     <v-dialog
