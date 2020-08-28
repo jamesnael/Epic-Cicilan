@@ -244,7 +244,7 @@
 				              	name="dokumen_awal">
 			              </v-file-input>
 			              <a :href="form_data.url_dokumen_awal" target="_blank" class="ml-8">
-			              	<small>@{{form_data.dokumen_awal_akad}}</small>
+			              	<small>@{{form_data.dokumen_awal_ajb}}</small>
 			              </a>
 			            </validation-provider>
 		          </v-col>
