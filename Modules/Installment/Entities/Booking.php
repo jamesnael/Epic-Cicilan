@@ -115,4 +115,18 @@ class Booking extends Model
     {
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
     }
+
+    /**
+     * Get the relations for the model.
+     */
+    public function spr()
+    {
+        return $this->hasOne('Modules\Installment\Entities\Spr', 'booking_id');
+    }
+
+    public function handover()
+    {
+        return $this->hasOne('Modules\Installment\Entities\Handover', 'booking_id');
+    }
+
 }

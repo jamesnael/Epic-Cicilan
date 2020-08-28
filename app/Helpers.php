@@ -323,7 +323,7 @@ if (! function_exists('aside_menu')) {
             [
                 'icon' => 'mdi-home-currency-usd',
                 'icon-alt' => 'mdi-chevron-down',
-                'text' => 'SPR (Surat Pemesanan Rumah)',
+                'text' => 'SPR',
                 'uri' => route('spr.index'),
                 'model' => in_array(Route::currentRouteName(), ['spr.index','spr.create', 'spr.edit']),
             ],
