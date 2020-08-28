@@ -65,12 +65,6 @@ class HandOverController extends Controller
                 "value" => '',
             ],
             [
-                "text" => 'Tgl Selesai Cicilan',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
                 "text" => 'Tgl AJB',
                 "align" => 'center',
                 "sortable" => true,
@@ -96,24 +90,6 @@ class HandOverController extends Controller
             ],
             [
                 "text" => 'Dokumen Awal',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Approved Pembeli',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Approved Estate',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Approved Teknik',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => '',
@@ -164,7 +140,12 @@ class HandOverController extends Controller
      */
     public function edit($id)
     {
-        return view('installment::edit');
+        $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Edit Handover Unit'];
+
+        return view('installment::handover.edit',[
+            'page' => $this,
+            'data' => $handover,
+        ])->with($this->getHelper());
     }
 
     /**
@@ -173,7 +154,7 @@ class HandOverController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Booking $handover)
     {
         //
     }
@@ -188,18 +169,128 @@ class HandOverController extends Controller
         //
     }
 
+    public function validateFormRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "booking_id" => "bail|required",
+        ]);
+    }
+
+    /**
+     *
+     * Validation Rules for Get Table Data
+     *
+     */
+    public function validateTableRequest($request)
+    {
+        return Validator::make($request->all(), [
+            "page" => "bail|required|numeric|min:1",
+            "search" => "bail|present|nullable",
+            "paginate" => "bail|required|numeric|in:5,10,15,-1",
+            "sort" => "bail|present|array",
+            "sort.*[0]" => "bail|required",
+            "sort.*[1]" => "bail|required|boolean",
+        ]);
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableData(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'handover', 'sales')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->unit_name            = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price           = 'Rp '.format_money($item->total_amount);
+            $item->payment_method       = $item->payment_method;
+            $item->received_date        = $item->handover ? ($item->handover->received_date) != null ? \Carbon\Carbon::parse($item->handover->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
+            $item->client_name          = $item->client->client_name;
+            $item->client_mobile_number = $item->client->client_mobile_number;
+            $item->sales_name           = $item->sales->user->full_name;
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function table(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Return Form Helper
+     *
+     */
     public function getHelper()
     {
         return [
-            'sales' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator')->get()->transform(function($item){
-                        $item->value = $item->id;
-                        $item->text = $item->user->full_name;
-                        $item->agency_name = $item->agency->agency_name ?? '';
-                        $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
-                        $item->main_coordinator = $item->main_coordinator->full_name ?? '';
-                        return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
-                    }),
-            'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
+            'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number','profession')->get(),
         ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Handle incoming request for specific data
+     *
+     */
+    public function data(Booking $handover)
+    {
+        $data = $handover->load('unit','client', 'handover','sales.user');
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $data);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 }
