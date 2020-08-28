@@ -128,15 +128,15 @@ class Booking extends Model
         return $collection - $this->total_pembayaran;
     }
 
-    // public function getProsentasePembayaranAttribute()
-    // {
-    //     \Log::info(json_encode([
-    //         'total_pembayaran' => $this->total_pembayaran,
-    //         'total_denda' => $this->total_denda,
-    //         'total_cicilan' => $this->total_cicilan,
-    //     ], JSON_PRETTY_PRINT));
-    //     return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
-    // }
+    public function getProsentasePembayaranAttribute()
+    {
+        \Log::info(json_encode([
+            'total_pembayaran' => $this->total_pembayaran,
+            'total_denda' => $this->total_denda,
+            'total_cicilan' => $this->total_cicilan,
+        ], JSON_PRETTY_PRINT));
+        return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+    }
 
     /**
      * Get the relationship for the model.

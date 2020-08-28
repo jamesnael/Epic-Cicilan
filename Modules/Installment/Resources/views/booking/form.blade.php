@@ -2,6 +2,7 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
+	    		<h3>Data Unit</h3>
 	    		<validation-provider v-slot="{ errors }" name="Tipe rumah" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
@@ -154,25 +155,44 @@
 			    		</validation-provider>
 			    	</v-col>
 		    	</v-row>
-		    	<v-row>
-    		        <v-col
+			    <h3 class="mt-4">Data Cicilan Unit</h3>
+			    <v-row>
+			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Total harga" rules="required|numeric|min:0">
-				    		<v-text-field
+			    		<validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
+				    		<v-select
 				    			class="mt-4"
-				    			v-model="form_data.total_amount"
-				    			name="total_amount"
-					    		label="Total Harga"
+				    			v-model="payment_type" 
+				              	:items="['Hard Cash', 'Installments', 'KPR/KPA']"
+				              	label="Tipe Pembayaran"
+				              	@change="paymentType"
+				              	name="payment_type"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></v-select>
+			    		</validation-provider>
+			    	</v-col>
+		    		<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Cara pembayaran" rules="required">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.payment_method"
+				    			name="payment_method"
+					    		label="Cara Pembayaran"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:counter="255"
+					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.total_amount ? number_format(form_data.total_amount) : 0 }}</small>
 			    		</validation-provider>
-				    </v-col>
-			    	<v-col
+			    	</v-col>
+			    	{{-- <v-col
     		          	cols="12"
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|numeric|min:0">
@@ -187,162 +207,114 @@
 					    		:readonly="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
-			    	</v-col>
+			    	</v-col> --}}
 			    </v-row>
-			    <validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
-		    		<v-select
+			   
+	    		<validation-provider v-slot="{ errors }" name="Total harga + ppn" rules="required|numeric|min:0">
+		    		<v-text-field
 		    			class="mt-4"
-		    			v-model="form_data.payment_type" 
-		              	:items="['Hard Cash', 'Installments', 'KPR']"
-		              	label="Tipe Pembayaran"
-		              	name="payment_type"
+		    			v-model="total_amount"
+		    			name="total_amount"
+			    		label="Total Harga + PPN"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		:readonly="field_state"
-		            ></v-select>
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{total_amount ? number_format(total_amount) : 0 }}</small>
 	    		</validation-provider>
-			    <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Metode Pembayaran" rules="required">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.payment_method"
-				    			name="payment_method"
-					    		label="Metode Pembayaran"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Total DP" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.dp_amount"
-				    			name="dp_amount"
-					    		label="Total DP"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.dp_amount ? number_format(form_data.dp_amount) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
-	    		<v-row>
-	    			<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.first_payment"
-				    			name="first_payment"
-					    		label="Pembayaran Pertama"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.first_payment ? number_format(form_data.first_payment) : 0 }}</small>
-			    		</validation-provider>
-			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.principal"
-				    			name="principal"
-					    		label="Principal"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.principal ? number_format(form_data.principal) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
-	    		<v-row>
-	    			<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Cicilan" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.installment"
-				    			name="installment"
-					    		label="Cicilan"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.installment ? number_format(form_data.installment) : 0 }}</small>
-			    		</validation-provider>
-			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.installment_time"
-				    			name="installment_time"
-					    		label="Lama Cicilan"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
-			    <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|between:1,31">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.due_date"
-				    			name="due_date"
-					    		label="Tanggal Jatuh Tempo"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Kredit" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.credits"
-				    			name="credits"
-					    		label="Kredit"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
+	    		<validation-provider v-slot="{ errors }" name="DP" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-if="payment_type == 'KPR/KPA'"
+		    			v-model="dp_amount"
+		    			name="dp_amount"
+			    		label="Total DP"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{dp_amount ? number_format(dp_amount) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="first_payment"
+		    			name="first_payment"
+			    		label="Pembayaran Pertama"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="principal"
+		    			name="principal"
+			    		label="Principal"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="installment_time"
+		    			name="installment_time"
+			    		label="Lama Cicilan"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|between:1,31">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.due_date"
+		    			name="due_date"
+			    		label="Tanggal Jatuh Tempo"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Cicilan per bulan" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="installment"
+		    			name="installment"
+			    		label="Cicilan Per Bulan"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ installment ? number_format(installment) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Kredit" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-if="payment_type == 'KPR/KPA'"
+		    			v-model="credits"
+		    			name="credits"
+			    		label="Kredit"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{ credits ? number_format(credits) : 0 }}</small>
+	    		</validation-provider>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -359,7 +331,6 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-
 			    		</validation-provider>
 			    	</v-col>
     		        <v-col
@@ -413,6 +384,8 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
+
+			    <h3>Data Klien</h3>
 	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
 		    		<v-select
 		    			class="mt-4"
@@ -526,6 +499,7 @@
 				    </v-col>
 			    </v-row>
 			    
+			    <h3>Data Sales</h3>
 	    		<validation-provider v-slot="{ errors }" name="Sales" rules="required">
 		    		<v-select
 		    			class="mt-4"

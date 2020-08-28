@@ -243,7 +243,7 @@ class BookingController extends Controller
             "closing_fee" => "bail|required",
             "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",
             "total_amount" => "bail|required|numeric",
-            "ppn" => "bail|required|numeric",
+            // "ppn" => "bail|required|numeric",
             "payment_type" => "bail|required|string|max:255",
             "payment_method" => "bail|required|string|max:255",
             "dp_amount" => "bail|required|numeric",
