@@ -8,10 +8,14 @@ use Illuminate\Routing\Controller;
 use Modules\Installment\Http\Controllers\Booking\BookingHelper;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
+use Modules\Installment\Entities\HandOver;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
+use Modules\SalesAgent\Entities\Agency;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Modules\Installment\Entities\BookingPayment;
 
 class HandOverController extends Controller
 {
@@ -38,49 +42,49 @@ class HandOverController extends Controller
                 "text" => 'Nama Klien',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_name',
             ],
             [
                 "text" => 'No. Handphone',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_mobile_number',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_name',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'payment_method',
             ],
             [
                 "text" => 'Tgl AJB',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'ajb_date',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'sales_name',
             ],
             [
                 "text" => 'Agent',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'agency_name',
             ],
             [
                 "text" => 'Schedule Tandatangan',
@@ -138,7 +142,7 @@ class HandOverController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Booking $handover)
     {
         $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Edit Handover Unit'];
 
@@ -156,7 +160,33 @@ class HandOverController extends Controller
      */
     public function update(Request $request, Booking $handover)
     {
-        //
+        $validator = $this->validateFormRequest($request);
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('file_upload')) {
+                $file_name = 'akad_kpr_awal-' . uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('handover/handover_doc_file_names', $request->file('file_upload'), $file_name
+                );
+                $request->merge([
+                    'handover_doc_file_name' => $file_name,
+                ]);
+            }
+            $has_handover = HandOver::where('booking_id', $request->booking_id)->first();
+            if ($has_handover) {
+                $data = $has_handover->update($request->all());
+            }else{
+                $data = HandOver::create($request->all());
+            }
+
+            DB::commit();
+            return response_json(true, null, 'Data Handover berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**
@@ -200,8 +230,8 @@ class HandOverController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'handover', 'sales')->orderBy('created_at', 'DESC');
-
+        $query = Booking::with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
+        // return BookingPayment::with('booking')->whereRaw('installment + fine', 'total_paid')->get();
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -222,8 +252,9 @@ class HandOverController extends Controller
             $item->unit_name            = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price           = 'Rp '.format_money($item->total_amount);
             $item->payment_method       = $item->payment_method;
-            $item->received_date        = $item->handover ? ($item->handover->received_date) != null ? \Carbon\Carbon::parse($item->handover->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
+            $item->ajb_date             = $item->ajb ? ($item->ajb->ajb_date) != null ? \Carbon\Carbon::parse($item->ajb->ajb_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name          = $item->client->client_name;
+            $item->agency_name          = $item->sales->agency ? $item->sales->agency->agency_name : '';
             $item->client_mobile_number = $item->client->client_mobile_number;
             $item->sales_name           = $item->sales->user->full_name;
             return $item;
@@ -286,7 +317,7 @@ class HandOverController extends Controller
      */
     public function data(Booking $handover)
     {
-        $data = $handover->load('unit','client', 'handover','sales.user');
+        $data = $handover->load('unit', 'client', 'handover', 'sales.agency', 'sales.user', 'sales.main_coordinator' , 'sales.regional_coordinator','payments', 'ajb');
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {
