@@ -14,12 +14,12 @@
 			    		:readonly="field_state"
 		            ></v-select>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama agensi" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nama sub agent" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_name"
 		    			name="agency_name"
-			    		label="Nama Agensi"
+			    		label="Nama Sub Agent"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -27,24 +27,24 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Email agensi" rules="required|email">
+	    		<validation-provider v-slot="{ errors }" name="Email sub agent" rules="required|email">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_email"
 		    			name="agency_email"
-			    		label="Email Agensi"
+			    		label="Email Sub Agent"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon agensi" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor telepon sub agent" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_phone"
 		    			name="agency_phone"
-			    		label="Nomor Telepon Agensi"
+			    		label="Nomor Telepon Sub Agent"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -52,12 +52,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Alamat agensi" rules="max:255">
+	    		<validation-provider v-slot="{ errors }" name="Alamat sub agent" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"
 		    			v-model="form_data.agency_address"
 		    			name="agency_address"
-			    		label="Alamat Agensi"
+			    		label="Alamat Sub Agent"
 			    		auto-grow
 		    			clearable
 		    			rows="1"
@@ -143,12 +143,12 @@
 			          cols="12"
 			          md="6"
 			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="">
+			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
 				    		<v-select
 				    			v-model="form_data.id_agency_commission"
 				    			:items="filter_agency_commission" 
 				    			@input="setSelectedAgency()"
-				              	label="Komisi Agensi (%)"
+				              	label="Komisi Sub Agent (%)"
 				              	name="id_agency_commission"
 				              	menu-props="auto"
 					    		:persistent-hint="true"
@@ -171,7 +171,7 @@
 			            	  				<td>@{{ data.item.regional_coordinator_commission }} %</td>
 			            	  			</tr>
 			            	  			<tr>
-			            	  				<td>Agensi</td>
+			            	  				<td>Sub Agent</td>
 			            	  				<td>:</td>
 			            	  				<td>@{{ data.item.text }} %</td>
 			            	  			</tr>

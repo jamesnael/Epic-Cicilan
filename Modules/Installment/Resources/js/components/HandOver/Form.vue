@@ -53,19 +53,28 @@
 	            formAlertState: 'info',
 	            date: new Date().toISOString().substr(0, 10),
                 menu: false,
+                time: '',
                 modal: false,
                 menu2: false,
                 menu3: false,
                 menu4: false,
                 menu5: false,
-                time: null,
 	            datepicker: false,
                 items_approval: [
                     'Approved',
                     'Pending'
                 ],
+                files: [
+                    {
+                        title: 'Surat Hand Over',
+                        file_name: 'handover_doc_file_name',
+                        url: '',
+                        showcase: ''
+                    },
+                ],
 	            unit_handover: [],
             	form_data: {
+                    handover_date: new Date().toISOString().substr(0, 10),
             		unit_type:'',
             		client_name:'',
             		unit_number:'',
@@ -83,7 +92,7 @@
             		first_payment: '',
             		principal: '',
             		handover: '',
-            		handover_time: '',
+            		time: '',
             		due_date: '',
             		amount:'',
             		credits: '',
@@ -111,6 +120,10 @@
             this.setData();
         },
         methods: {
+            setTime(time) {
+                this.$refs.menu.save(time)
+                this.form_data.time = time
+            },
     		setData() {
     			if (this.dataUri) {
     				this.field_state = true
@@ -119,26 +132,25 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+                                console.log(data);
                                 let arr_handover = []
     		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
-    		            			unit_block:data.unit.unit_block,
-    		            			unit_number:data.unit.unit_number,
-    		            			surface_area:data.unit.surface_area,
-    		            			building_area:data.unit.building_area,
-    		            			utj:data.unit.utj,
-    		            			electrical_power:data.unit.electrical_power,
-    		            			points:data.unit.points,
+                                    booking_id: data.id,
+                                    ajb_date: data.ajb ? data.ajb.ajb_date : null,
+                                    unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
+    		            			unit_type: data.unit.unit_type,
+    		            			unit_block: data.unit.unit_block,
+    		            			unit_number: data.unit.unit_number,
     		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
     		            			total_amount: this.moneyFormat(data.total_amount),
-    		            			ppn: this.moneyFormat(data.ppn),
     		            			payment_type: data.payment_type,
+                                    payment_date: data.tanggal_lunas_cicilan,
     		            			payment_method: data.payment_method,
     		            			dp_amount: this.moneyFormat(data.dp_amount),
     		            			first_payment: this.moneyFormat(data.first_payment),
     		            			principal: this.moneyFormat(data.principal),
     		            			handover: this.moneyFormat(data.handover),
-    		            			handover_time: data.handover_time,
+    		            			time: data.time,
     		            			due_date: data.due_date,
     		            			credits: this.moneyFormat(data.credits),
     		            			amount: this.moneyFormat(data.amount),
@@ -154,10 +166,15 @@
     		            			client_mobile_number: data.client.client_mobile_number,
     		            			client_address: data.client.client_address,
     		            			sales_id: data.sales_id,
-    		            			sales_name:data.sales.user.full_name,
-    		            			agency_name:data.agency ? data.agency.agency_name : '',
-    		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
+    		            			sales_name: data.sales.user.full_name,
+    		            			agency_name: data.sales.agency.agency_name,
+    		            			main_coordinator: data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+                                    handover_date: data.handover ? data.handover.handover_date : null,
+                                    time: data.handover ? this.reformatDateTime(data.handover.time, 'HH:mm:ss', 'HH:mm') : null,
+                                    location: data.handover ? data.handover.location : null,
+                                    address: data.handover ? data.handover.address : null,
+                                    handover_doc_file_name: data.handover ? data.handover.handover_doc_file_name : null,
     		            		} 
 
                                 _.forEach(data.payments, (value, key) => {
@@ -171,6 +188,8 @@
                                 });
 
                                 this.unit_handover = arr_handover
+
+                                this.time = this.reformatDateTime(data.handover.time, 'HH:mm:ss', 'HH:mm') 
 
     			                this.field_state = false
     		            	} else {
@@ -196,6 +215,41 @@
     		        this.postFormData()
     			});
         	},
+            postFormData() {
+                const data = new FormData(this.$refs['post-form']);
+                if (this.dataUri) {
+                    data.append("_method", "put");
+                    data.append("booking_id", this.form_data.booking_id);
+                    data.append("handover_date", this.form_data.handover_date);
+                    data.append("time", this.form_data.time);
+                }
+                
+                this.field_state = true
+
+                axios.post(this.uri, data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = response.data.message
+
+                            setTimeout(() => {
+                                this.goto(this.redirectUri);
+                            }, 6000);
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                            this.field_state = false
+                        }
+                    })
+                    .catch((error) => {
+                        this.tableAlert = true
+                        this.tableAlertState = 'error'
+                        this.tableAlertText = 'Oops, something went wrong. Please try again later.'
+                        this.field_state = false
+                    });
+            },
             updatehandover() {
                 this.regeneratehandover();
 
@@ -280,8 +334,8 @@
                             id: value.id,
                             payment: value.payment,
                             due_date: value.due_date,
-                            handover: key == this.form_data.handover_time ? this.moneyFormat(parseInt(_.toString(value.handover).split('.').join('')) + unit_price) : this.moneyFormat(parseInt(_.toString(value.handover).split('.').join(''))),
-                            credit: key == this.form_data.handover_time ? 0 : this.moneyFormat(unit_price)
+                            handover: key == this.form_data.time ? this.moneyFormat(parseInt(_.toString(value.handover).split('.').join('')) + unit_price) : this.moneyFormat(parseInt(_.toString(value.handover).split('.').join(''))),
+                            credit: key == this.form_data.time ? 0 : this.moneyFormat(unit_price)
                         })
                     }
                 });

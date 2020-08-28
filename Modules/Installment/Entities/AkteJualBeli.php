@@ -3,6 +3,7 @@
 namespace Modules\Installment\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class AkteJualBeli extends Model
 {
@@ -20,23 +21,32 @@ class AkteJualBeli extends Model
     	'ajb_doc_sign_file_name',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        
+    protected $appends = [
+        'url_ajb_doc_file_name',
+        'url_ajb_doc_sign_file_name',
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the model's url ktp pemohon file.
      *
-     * @var array
+     * @param  string  $value
+     * @return string
      */
-    protected $casts = [
-        
-    ];
+    public function getUrlAjbDocFileNameAttribute()
+    {
+        return $this->attributes['ajb_doc_file_name'] ? Storage::disk('public')->url('app/public/ajb/dokumen_awal/'.$this->attributes['ajb_doc_file_name']) : null;
+    }
+
+    /**
+     *
+     * Get the model's url ktp suami istri file.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlAjbDocSignFileNameAttribute()
+    {
+        return $this->attributes['ajb_doc_sign_file_name'] ? Storage::disk('public')->url('app/public/ajb/dokumen_akhir/'.$this->attributes['ajb_doc_sign_file_name']) : null;
+    }
 
     /**
      * Get the relationship for the model.

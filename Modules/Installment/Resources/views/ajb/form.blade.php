@@ -79,11 +79,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Agensi" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="">
 				    		<v-text-field
 				    			v-model="form_data.agency_name"
 					    		:error-messages="errors"
-					    		label="Nama Agensi"
+					    		label="Nama Sub Agent"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -244,7 +244,7 @@
 				              	name="dokumen_awal">
 			              </v-file-input>
 			              <a :href="form_data.url_dokumen_awal" target="_blank" class="ml-8">
-			              	<small>@{{form_data.dokumen_awal_akad}}</small>
+			              	<small>@{{form_data.dokumen_awal_ajb}}</small>
 			              </a>
 			            </validation-provider>
 		          </v-col>

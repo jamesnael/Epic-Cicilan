@@ -11,6 +11,12 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+        $page->table_headers = collect($page->table_headers)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
 	@endphp
 	<table-layout inline-template
 		uri="{{ route('spr.table') }}"
@@ -22,9 +28,6 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('spr.create') }}"
-		add-new-text="Tambah"
-		add-new-color="light-blue lighten-2"
 		edit-uri="spr.edit"
 		edit-uri-parameter="slug"
 		edit-text="Edit SPR"

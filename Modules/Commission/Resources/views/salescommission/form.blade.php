@@ -167,11 +167,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Komisi Agent" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Komisi Sub Agent" rules="required|numeric">
 				    		<v-text-field
 				    			v-model="form_data.agent_commission"
 				    			name="agent_commission"
-					    		label="Komisi Agent"
+					    		label="Komisi Sub Agent"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"

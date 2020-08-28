@@ -114,10 +114,10 @@
                 </tbody>
               </template>
           </v-simple-table>
-          {{-- <validation-provider v-slot="{ errors }" name="Approval kantor agensi" rules="">
+          {{-- <validation-provider v-slot="{ errors }" name="Approval kantor sub agent" rules="">
             <v-select
                 v-model="form_data.approval_agent"
-                label="Approval Kantor Agensi"
+                label="Approval Kantor Sub Agent"
                 :items="['Approved', 'Pending']"
                 name="approval_agent"
                 :persistent-hint="true"

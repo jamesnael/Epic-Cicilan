@@ -128,16 +128,17 @@ class Booking extends Model
         return $collection - $this->total_pembayaran;
     }
 
-    // public function getProsentasePembayaranAttribute()
-    // {
-    //     \Log::info(json_encode([
-    //         'total_pembayaran' => $this->total_pembayaran,
-    //         'total_denda' => $this->total_denda,
-    //         'total_cicilan' => $this->total_cicilan,
-    //     ], JSON_PRETTY_PRINT));
-    //     return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
-    // }
+    public function getProsentasePembayaranAttribute()
+    {
+        return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+    }
+    
+    public function getTanggalLunasCicilanAttribute()
+    {
+        return $collection = collect($this->payments)->last()->payment_date;
+    }
 
+    
     /**
      * Get the relationship for the model.
      */
@@ -178,6 +179,12 @@ class Booking extends Model
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
     }
 
+
+    public function ppjb()
+    {
+        return $this->hasOne('Modules\Installment\Entities\PPJB', 'booking_id');
+    }
+
     /**
      * Get the relations for the model.
      */
@@ -185,6 +192,7 @@ class Booking extends Model
     {
         return $this->hasOne('Modules\Installment\Entities\AkadKpr', 'booking_id');
     }
+
     /**
      * Get the relations for the model.
      */
@@ -192,4 +200,22 @@ class Booking extends Model
     {
         return $this->hasOne('Modules\Installment\Entities\AkteJualBeli', 'booking_id');
     }
+
+     /**
+     * Get the relations for the model.
+     */
+    public function spr()
+    {
+        return $this->hasOne('Modules\Installment\Entities\Spr', 'booking_id');
+    }
+
+     /**
+     * Get the relations for the model.
+     */
+    public function handover()
+    {
+        return $this->hasOne('Modules\Installment\Entities\Handover', 'booking_id');
+    }
+
+
 }

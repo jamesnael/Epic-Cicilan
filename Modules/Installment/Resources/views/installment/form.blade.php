@@ -96,7 +96,7 @@
               <validation-provider v-slot="{ errors }" name="" rules="">
                 <v-text-field
                   v-model="form_data.agency_name"
-                  label="Nama Agensi"
+                  label="Nama Sub Agent"
                   readonly>
                 </v-text-field>
               </validation-provider>

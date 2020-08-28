@@ -83,7 +83,7 @@
 					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': agency}">
 				        <v-text-field
 				          v-model="form_data.redeem_point_agency"
-				          label="Reedem Point Agensi"
+				          label="Reedem Point Sub Agent"
 				          name="redeem_point_agency"
 				          :error-messages="errors"
 			    		  :readonly="field_state"

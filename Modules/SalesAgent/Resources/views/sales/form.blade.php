@@ -25,11 +25,11 @@
 			    		:readonly="field_state"
 		            ></v-select>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Agensi" rules="">
+	    		<validation-provider v-slot="{ errors }" name="Sub Agent" rules="">
 		    		<v-select
 		    			v-model="form_data.agency_id" 
 		              	:items="computedAgency"
-		              	label="Agensi"
+		              	label="Sub Agent"
 		              	name="agency_id"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
@@ -204,7 +204,7 @@
 			            	  				<td>@{{ data.item.regional_coordinator_commission }} %</td>
 			            	  			</tr>
 			            	  			<tr>
-			            	  				<td>Agensi</td>
+			            	  				<td>Sub Agent</td>
 			            	  				<td>:</td>
 			            	  				<td>@{{ data.item.agency_commission }} %</td>
 			            	  			</tr>
@@ -222,10 +222,10 @@
 			          cols="12"
 			          md="6"
 			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="">
+			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
 				    		<v-text-field
 				    			v-model="form_data.agency_commission"
-				              	label="Komisi Agensi (%)"
+				              	label="Komisi Sub Agent (%)"
 				              	name="agency_commission"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"

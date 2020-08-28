@@ -11,6 +11,12 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+        $page->table_headers = collect($page->table_headers)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
 	@endphp
 	<table-layout inline-template
 		uri="{{ route('installment.table') }}"
@@ -22,9 +28,9 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('booking.create') }}"
-		add-new-text="Tambah"
-		add-new-color="light-blue lighten-2"
+		{{-- add-new-uri="{{ route('booking.create') }}" --}}
+		{{-- add-new-text="Tambah" --}}
+		{{-- add-new-color="light-blue lighten-2" --}}
 		edit-uri="installment.edit"
 		edit-uri-parameter="slug"
 		edit-text="Edit Cicilan"

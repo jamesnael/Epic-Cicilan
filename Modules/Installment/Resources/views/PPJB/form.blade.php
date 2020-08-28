@@ -18,6 +18,7 @@
 					    		:error-messages="errors"
 					    		readonly>
 			    			</v-text-field>
+
 			    		</validation-provider>
 			    		</v-col>
     		        <v-col
@@ -31,7 +32,7 @@
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -40,7 +41,7 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Unit" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
 				    			v-model="form_data.unit"
 				    			name="Unit"
@@ -48,7 +49,7 @@
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -63,7 +64,7 @@
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -72,8 +73,9 @@
 			    	<v-col
     		          	cols="12"
     		          	md="20">
-			    		<validation-provider v-slot="{ errors }" name="Tanggal Pengajuan" rules="required">
-				    			<v-menu
+			    
+    		          	<validation-provider v-slot="{ errors }" name="Tanggal Pengajuan" rules="">
+    		      	<v-menu
 	    		        v-model="menu2"
 	    		        :close-on-content-click="false"
 	    		        :nudge-right="40"
@@ -83,20 +85,24 @@
 	    		      >
     		        	<template v-slot:activator="{ on, attrs }">
 	    		        <v-text-field
-	    		        	:value="computedDateFormattedMomentjs"
-	    		            v-model="form_data.submission_date"
+	    		        	class="mt-4"
+	    		        	:value="reformatDateTime(form_data.ppjb_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 	    		            label="Tanggal Pengajuan"
-	    		            hint="* harus diisi"
-	    		            :persistent-hint="true"
-					    	:error-messages="errors"
-					    	:readonly="field_state"
+	    		            readonly
 	    		            v-bind="attrs"
 	    		            v-on="on"
-	    		        ></v-text-field>
+	    		            hint="* harus diisi"
+	    		            :persistent-hint="true"
+	    		            :error-messages="errors"
+	    		            :readonly="!field_state"
+	    		            :disabled="field_state">
+	    		        </v-text-field>
     		        	</template>
-    		        	<v-date-picker v-model="form_data.submission_date" @input="menu2 = false"></v-date-picker>
+    		        	<v-date-picker name="ppjb_date" v-model="form_data.ppjb_date" @input="menu2 = false" :disabled="field_state"></v-date-picker>
     		      	</v-menu>
-			    		</validation-provider>
+    		    </validation-provider>
+				
+
 			    	</v-col>
 			    </v-row>
 	    		<v-row>
@@ -104,31 +110,30 @@
     		          	cols="12"
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required">
-				    		<v-select
-			    			v-model="form_data.sales_name" 
-			    			@input="setSelectedClient()"
+				    		<v-text-field
+			    			v-model="form_data.sales_name"
 			              	:items="filter_client"
 			              	label="Nama Sales"
 			              	name="sales_name"
 			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-select>
+				    		readonly
+			            	></v-text-field>
 			    		</validation-provider>
 			    	</v-col>
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Agent" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="">
 				    		<v-text-field
 				    			v-model="form_data.agent_name"
 				    			name="agent_name"
 				    			hint="* harus diisi"
-					    		label="Nama Agent"
+					    		label="Nama Sub Agent"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -137,23 +142,27 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="required">
 				    		<v-file-input
-				    			v-model="form_data.surat_ppjb_awal"
-				    			name="surat_ppjb"
+				    			v-model="form_data.ppjb_doc_file_name"
+				    			name="ppjb_doc_file_name"
 				    			hint="* harus diisi"
 					    		label="Surat PPJB awal"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		>
 			    			</v-file-input>
+			    			<a :href="form_data.url_file_doc" target="_blank" class="ml-8">
+		    		  	<small>@{{form_data.ppjb_doc_file_name}}</small>
+		    		  </a>
 			    		</validation-provider>
 			    	</v-col>
 
 			    </v-row>
 
+
 			    <h3 class="mt-4">Schedule PPJB</h3>
 	    		
-	    		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="required">
-		    		<v-menu
+	    		<validation-provider v-slot="{ errors }" name="" rules="">
+    		      	<v-menu
 	    		        v-model="menu3"
 	    		        :close-on-content-click="false"
 	    		        :nudge-right="40"
@@ -163,21 +172,23 @@
 	    		      >
     		        	<template v-slot:activator="{ on, attrs }">
 	    		        <v-text-field
-	    		        	:value="computedDateFormattedMomentjs"
-	    		            v-model="form_data.ppjb_date"
-	    		            label="Tanggal PPJB"
-	    		            hint="* harus diisi"
-	    		            :persistent-hint="true"
-					    	:error-messages="errors"
-					    	:readonly="field_state"
+	    		        	class="mt-4"
+	    		        	:value="reformatDateTime(form_data.ppjb_sign_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+	    		            label="Tanggal Pengajuan"
+	    		            readonly
 	    		            v-bind="attrs"
 	    		            v-on="on"
-	    		        ></v-text-field>
+	    		            hint="* harus diisi"
+	    		            :persistent-hint="true"
+	    		            :error-messages="errors"
+	    		            :readonly="!field_state"
+	    		            :disabled="field_state">
+	    		        </v-text-field>
     		        	</template>
-    		        	<v-date-picker v-model="form_data.ppjb_date" @input="menu3 = false"></v-date-picker>
+    		        	<v-date-picker name="ppjb_sign_date" v-model="form_data.ppjb_sign_date" @input="menu3 = false" :disabled="field_state"></v-date-picker>
     		      	</v-menu>
-				</validation-provider>
-
+    		    </validation-provider>
+				
 	    		<v-row>
     		        <v-col>
 			    		<validation-provider v-slot="{ errors }" name="Waktu" rules="required">
@@ -194,7 +205,8 @@
 					      >
 					        <template v-slot:activator="{ on, attrs }">
 					          <v-text-field
-					            v-model="time"
+					            v-model="form_data.ppjb_time"
+					            name="ppjb_time"
 					            label="Waktu"
 					            hint="* harus diisi"
 					            :persistent-hint="true"
@@ -206,7 +218,7 @@
 					        </template>
 					        <v-time-picker
 					          v-if="menu4"
-					          v-model="time"
+					          v-model="form_data.ppjb_time"
 					          full-width
 					          @click:minute="$refs.menu.save(time)"
 					        ></v-time-picker>
@@ -222,8 +234,8 @@
     		          md="12">
 			    		<validation-provider v-slot="{ errors }" name="Tempat" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.ppjb_place"
-				    			name="ppjb_place"
+				    			v-model="form_data.location"
+				    			name="location"
 					    		label="Tempat"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
@@ -239,9 +251,14 @@
     		          md="12">
 			    		<validation-provider v-slot="{ errors }" name="Alamat Lengkap" rules="required">
 			    			 <v-textarea
-						      v-model="form_data.full_address"
-				    			name="full_address"
+			    			 	clearable
+						      v-model="form_data.address"
+				    			name="address"
 					    		label="Alamat Lengkap"
+					    		auto-grow
+					    		clearable
+					    		clear-icon="mdi-close"
+					    		rows="1"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
@@ -257,10 +274,10 @@
     		          	md="12">	
 		    		<validation-provider v-slot="{ errors }" name="Approved Pembeli" rules="required">
 		    			<v-select
-			    			v-model="form_data.approved_pembeli" 
+			    			v-model="form_data.approval_client_status" 
 			              	:items="['Pending','Approved']"
 			              	label="Approved Pembeli"
-			              	name="approved_pembeli"
+			              	name="approval_client_status"
 			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
@@ -275,10 +292,10 @@
     		          	md="12">	
 		    		<validation-provider v-slot="{ errors }" name="Approved Developer" rules="required">
 		    			<v-select
-			    			v-model="form_data.approved_developer" 
+			    			v-model="form_data.approval_developer_status" 
 			              	:items="['Pending','Approved']"
 			              	label="Approved Developer"
-			              	name="approved_developer"
+			              	name="approval_developer_status"
 			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
@@ -293,10 +310,10 @@
     		          	md="12">	
 		    		<validation-provider v-slot="{ errors }" name="Approved Notaris" rules="required">
 		    			<v-select
-			    			v-model="form_data.approved_notaris" 
+			    			v-model="form_data.approval_notaris_status" 
 			              	:items="['Pending','Approved']"
 			              	label="Approved Notaris"
-			              	name="approved_notaris"
+			              	name="approval_notaris_status"
 			              	hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
@@ -311,14 +328,17 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="required">
 				    		<v-file-input
-				    			v-model="form_data.surat_ppjb"
-				    			name="surat_ppjb"
+				    			v-model="form_data.ppjb_doc_sign_file_name"
+				    			name="ppjb_doc_sign_file_name"
 					    		label="Upload Surat PPJB"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state">
+					    		>
 			    			</v-file-input>
+			    			<a :href="form_data.url_file_doc_sign" target="_blank" class="ml-8">
+		    		  	<small>@{{form_data.ppjb_doc_sign_file_name}}</small>
+		    		  </a>
 			    		</validation-provider>
 			    	</v-col>
 
@@ -337,14 +357,15 @@
 	    		    elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="updateInstallment">
-		    		Save
+		    		@click="submit">
+		    		Simpan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
     		              	<v-icon color="white">mdi-sync</v-icon>
     		            </span>
     		        </template>
 		    	</v-btn>
+	    		
 	    	</form>
 	    </validation-observer>
     </v-card>

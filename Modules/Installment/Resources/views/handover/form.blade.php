@@ -43,7 +43,8 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Email" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.email"
+				    			v-model="form_data.client_email"
+				    			name="client_email"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -57,7 +58,8 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Data Unit" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.unit"
+				    			v-model="form_data.unit_name"
+				    			name="unit_type"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -71,9 +73,10 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Harga Unit" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Harga Unit" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.unit_price"
+				    			v-model="form_data.total_amount"
+				    			name="unit_price"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -88,6 +91,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required">
 				    		<v-text-field
 				    			v-model="form_data.payment_method"
+				    			name="payment_method"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -110,21 +114,22 @@
 	    		        min-width="290px"
 	    		      >
     		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal Lunas Cicilan" rules="required|min:1">
-			    		        <v-text-field
-			    		        	:value="computedDateFormattedMomentjs"
-			    		        	hint="* harus diisi"
-			    		        	:persistent-hint="true"
-						    		:error-messages="errors"
-			    		            v-model="form_data.clear_date"
-			    		            label="Tanggal Lunas Cicilan"
-			    		            readonly
-			    		            v-bind="attrs"
-			    		            v-on="on"
-			    		        ></v-text-field>
-		    		        	</template>
-		    		        	<v-date-picker v-model="form_data.clear_date" @input="menu3 = false"></v-date-picker>
+				    		<validation-provider v-slot="{ errors }" name="Tanggal Lunas Cicilan" rules="min:1">
+		    		        <v-text-field
+		    		        	:value="reformatDateTime(form_data.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+		    		        	hint="* harus diisi"
+			    		        v-model="menu4"
+		    		        	:persistent-hint="true"
+					    		:error-messages="errors"
+		    		            label="Tanggal Lunas Cicilan"
+		    		            v-bind="attrs"
+		    		            v-on="on"
+		    		            readonly
+		    		            disabled
+		    		        ></v-text-field>
 				    		</validation-provider>
+	    		        	</template>
+	    		        	<v-date-picker name="payment_date" v-model="form_data.payment_date" @input="menu4 = false"></v-date-picker>
 			    	</v-col>
 			    	<v-col
     		          	cols="12"
@@ -138,15 +143,15 @@
 		    		        min-width="290px"
 		    		      >
 	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal AJB" rules="required|min:1">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal AJB" rules="min:1">
 		    		        <v-text-field
-		    		        	:value="computedDateFormattedMomentjs"
 		    		        	hint="* harus diisi"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
 		    		            v-model="form_data.ajb_date"
 		    		            label="Tanggal AJB"
 		    		            readonly
+		    		            disabled
 		    		            v-bind="attrs"
 		    		            v-on="on"
 		    		        ></v-text-field>
@@ -174,14 +179,14 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Agensi" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="required">
 				    		<v-text-field
 				    			v-model="form_data.agency_name"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:counter="255"
-					    		label="Nama Agensi"
+					    		label="Nama Sub Agent"
 					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
@@ -193,7 +198,8 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Nama Korwil" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.korwil_name"
+				    			v-model="form_data.regional_coordinator"
+				    			name="regional_coordinator"
 				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
@@ -233,21 +239,20 @@
 		    		        min-width="290px"
 		    		    >
 	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal Hand Over Unit" rules="required|min:1">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal Hand Over Unit" rules="min:1">
 		    		        <v-text-field
-		    		        	:value="computedDateFormattedMomentjs"
+		    		        	:value="reformatDateTime(form_data.handover_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 		    		        	hint="* harus diisi"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
-		    		            v-model="form_data.handover_date"
 		    		            label="Tanggal Hand Over Unit"
-		    		            readonly
 		    		            v-bind="attrs"
 		    		            v-on="on"
+		    		            readonly
 		    		        ></v-text-field>
-	    		        	</template>
-	    		        	<v-date-picker v-model="form_data.handover_date" @input="menu2 = false"></v-date-picker>
 				    		</validation-provider>
+	    		        	</template>
+	    		        	<v-date-picker name="handover_date" v-model="form_data.handover_date" @input="menu2 = false"></v-date-picker>
 	    		      	</v-menu>
 			    	</v-col>
 	    		</v-row>
@@ -255,45 +260,45 @@
     		        <v-col
     		          cols="12"
     		          md="6">
-		    			<v-menu
-				        ref="menu"
-				        v-model="menu4"
-				        :close-on-content-click="false"
-				        :nudge-right="40"
-				        :return-value.sync="time"
-				        transition="scale-transition"
-				        offset-y
-				        max-width="290px"
-				        min-width="290px"
-				      >
-				        <template v-slot:activator="{ on, attrs }">
-			    		<validation-provider v-slot="{ errors }" name="Waktu" rules="required|max:255">
-				          <v-text-field
-				            v-model="time"
-				            label="Waktu"
-				            hint="* harus diisi"
-				            :persistent-hint="true"
-				    		:error-messages="errors"
-				            readonly
-				            v-bind="attrs"
-				            v-on="on"
-				          ></v-text-field>
-				        </template>
-				        <v-time-picker
-				          v-if="menu4"
-				          v-model="time"
-				          full-width
-				          @click:minute="$refs.menu.save(time)"
-				        ></v-time-picker>
+	    				<validation-provider v-slot="{ errors }" name="Waktu" rules="required">
+				    		<v-menu
+					        ref="menu"
+					        v-model="menu4"
+					        :close-on-content-click="false"
+					        :nudge-right="40"
+					        :return-value.sync="time"
+					        transition="scale-transition"
+					        offset-y
+					        max-width="290px"
+					        min-width="290px"
+					      >
+					        <template v-slot:activator="{ on, attrs }">
+					          <v-text-field
+					            v-model="time"
+					            label="Waktu"
+					            hint="* harus diisi"
+					            :persistent-hint="true"
+					    		:error-messages="errors"
+					            readonly
+					            v-bind="attrs"
+					            v-on="on"
+					          ></v-text-field>
+					        </template>
+					        <v-time-picker
+					          v-if="menu4"
+					          v-model="time"
+					          full-width
+					          @click:minute="setTime(time)"
+					        ></v-time-picker>
+					      </v-menu>
 			    		</validation-provider>
-				      </v-menu>
 			    	</v-col>
 			    	<v-col
     		          cols="12"
     		          md="6">
 			    		<validation-provider v-slot="{ errors }" name="Lokasi" rules="required|max:255">
 				    		<v-text-field
-				    			v-model="form_data.place"
+				    			v-model="form_data.location"
 				    			name="location"
 					    		label="Lokasi"
 					    		hint="* harus diisi"
@@ -301,7 +306,7 @@
 					    		:error-messages="errors"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		readonly>
+							>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -319,7 +324,7 @@
 					    		:counter="255"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		readonly>
+					    	>
 			    			</v-textarea>
 			    		</validation-provider>
 			    	</v-col>
@@ -336,12 +341,16 @@
 		    		            counter 
 		    		            multiple 
 		    		            label="Pilih Dokumen"
-		    		            v-model="form_data.dokumen_awal"
+		    		            v-model="form_data.handover_doc_file_name"
 		    		            hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="Dokumen Awal">
+				              	name="file_upload">
 			              </v-file-input>
+			              <a :href="form_data.handover_doc_file_name" target="_blank" class="ml-8">
+			              	<small>@{{form_data.handover_doc_file_name}}</small>
+			              </a>
+
 			           </validation-provider>
 		          </v-col>
 				</v-row>
@@ -350,20 +359,15 @@
     		          cols="12"
     		          md="12">
 					    <h3 class="mt-4">Approved Hand Over Unit</h3>
-			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="required">
-							<v-select
-					        v-model="model"
-					        :items="items_approval"
-					        :disabled="disabled"
-					        :readonly="readonly"
-					        :chips="chips"
-					        :multiple="multiple"
-					        :append-icon="appendIcon ? 'mdi-plus' : ''"
-					        :prepend-icon="prependIcon ? 'mdi-minus' : ''"
-					        hint="* harus diisi"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        label="Approval Pembeli"
+			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
+					      <v-select
+					        v-model="form_data.approval_client_status"
+			                label="Approval Pembeli"
+			                :items="['Approved', 'Pending']"
+			                name="approval_client_status"
+			                :persistent-hint="true"
+			                :error-messages="errors"
+			                :readonly="field_state">
 					      ></v-select>
 					</validation-provider>
 		          </v-col>
@@ -372,21 +376,15 @@
 					<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Estate" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Approval Estate" rules="">
 	    		          	<v-select
-					        v-model="model"
-					        required
-					        :items="items_approval"
-					        :disabled="disabled"
-					        :readonly="readonly"
-					        :chips="chips"
-					        :multiple="multiple"
-					        hint="* harus diisi"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        :append-icon="appendIcon ? 'mdi-plus' : ''"
-					        :prepend-icon="prependIcon ? 'mdi-minus' : ''"
-					        label="Approval Estate"
+					        v-model="form_data.approval_developer_status"
+			                label="Approval Estate"
+			                :items="['Approved', 'Pending']"
+			                name="approval_developer_status"
+			                :persistent-hint="true"
+			                :error-messages="errors"
+			                :readonly="field_state">
 					      ></v-select>
 					   </validation-provider>
     		        </v-col>
@@ -395,21 +393,15 @@
 					<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Teknik" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Approval Teknik" rules="">
 	    		          	<v-select
-					        v-model="model"
-					        required
-					        :items="items_approval"
-					        :disabled="disabled"
-					        :readonly="readonly"
-					        :chips="chips"
-					        :multiple="multiple"
-					        :append-icon="appendIcon ? 'mdi-plus' : ''"
-					        :prepend-icon="prependIcon ? 'mdi-minus' : ''"
-					        hint="* harus diisi"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        label="Approval Teknik"
+					        v-model="form_data.approval_notaris_status"
+			                label="Approval Teknik"
+			                :items="['Approved', 'Pending']"
+			                name="approval_notaris_status"
+			                :persistent-hint="true"
+			                :error-messages="errors"
+			                :readonly="field_state">
 					      ></v-select>
 					    </validation-provider>
     		        </v-col>
@@ -418,7 +410,7 @@
     		    	<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Surat Hand Over Unit yang sudah ditandatangani" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Surat Hand Over Unit yang sudah ditandatangani" rules="">
 		    		    	<v-file-input 
 		    		            show-size
 		    		            chips 

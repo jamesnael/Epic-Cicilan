@@ -17,12 +17,12 @@
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Komisi agensi" rules="required|between:0,100">
+	    		<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="required|between:0,100">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.agency_commission"
 		    			name="agency_commission"
-			    		label="Komisi Agensi"
+			    		label="Komisi Sub Agent"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"

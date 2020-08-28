@@ -170,7 +170,7 @@ export default {
                     cancelToken: call.token
                 })
                 .then(response => {
-                    this.tableItems = response.data.data.data
+                    this.setData(response.data.data.data)
                     this.totalData = response.data.data.total
                     this.fromData = response.data.data.from
                     this.toData = response.data.data.to
@@ -179,6 +179,14 @@ export default {
                 .catch(error => {
                     this.loading = false;
                 });
+        },
+        setData(data) {
+            var items = []
+            _.forEach(data, (value, key) => {
+                value.table_index = parseInt(key) + 1
+                items.push(value)
+            });
+            this.tableItems = items
         },
         promptDeleteItem(item) {
             this.promptDelete = true

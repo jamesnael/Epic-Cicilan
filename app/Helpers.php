@@ -210,12 +210,7 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Kelola Sales',
                 'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit','main-coordinator.index','main-coordinator.create','main-coordinator.edit','regional-coordinator.index','regional-coordinator.create','regional-coordinator.edit','sales.index','sales.create','sales.edit','agencies.index','agencies.create','agencies.edit']),
                 'children' => [
-                    [
-                        'icon' => 'mdi-account-cash',
-                        'text' => 'Komisi',
-                        'uri' => route('commission.index'),
-                        'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
-                    ],
+                   
                     [
                         'icon' => 'mdi-account-network',
                         'text' => 'Koordinator Utama',
@@ -240,6 +235,12 @@ if (! function_exists('aside_menu')) {
                         'uri' => route('sales.index'),
                         'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
                     ],
+                    [
+                        'icon' => 'mdi-account-cash',
+                        'text' => 'Komisi',
+                        'uri' => route('commission.index'),
+                        'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
+                    ],
                 ],
             ],
             [
@@ -262,7 +263,7 @@ if (! function_exists('aside_menu')) {
                     ],
                     [
                         'icon' => 'mdi-wallet-giftcard',
-                        'text' => 'Reward Point',
+                        'text' => 'Reward',
                         'uri' => route('reward-point.index'),
                         'model' => in_array(Route::currentRouteName(), ['reward-point.index','reward-point.create','reward-point.edit'])
                     ],
@@ -320,17 +321,10 @@ if (! function_exists('aside_menu')) {
                     ]
                 ]           
             ],
-            [
-                'icon' => 'mdi-cash-multiple',
-                'icon-alt' => 'mdi-chevron-down',
-                'text' => 'Cicilan Unit',
-                'uri' => route('installment-unit.index'),
-                'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
-            ], 
             [  
                 'icon' => 'mdi-home-currency-usd',
                 'icon-alt' => 'mdi-chevron-down',
-                'text' => 'SPR (Surat Pemesanan Rumah)',
+                'text' => 'SPR',
                 'uri' => route('spr.index'),
                 'model' => in_array(Route::currentRouteName(), ['spr.index','spr.create', 'spr.edit']),
             ],
@@ -341,6 +335,13 @@ if (! function_exists('aside_menu')) {
                 'uri' => route('PPJB.index'),
                 'model' => in_array(Route::currentRouteName(), ['PPJB.index','PPJB.create', 'PPJB.edit']),
             ],
+            [
+                'icon' => 'mdi-cash-multiple',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Cicilan Unit',
+                'uri' => route('installment-unit.index'),
+                'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
+            ], 
             [
                 'icon' => 'mdi-card-account-details-star',
                 'icon-alt' => 'mdi-chevron-down',

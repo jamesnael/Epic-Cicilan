@@ -51,7 +51,7 @@ class SalesController extends Controller
                 "value" => 'full_name',
             ],
             [
-                "text" => 'Nama Agensi',
+                "text" => 'Nama Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'agency_name',
