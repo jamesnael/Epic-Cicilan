@@ -22,12 +22,10 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('PPJB.create') }}"
-		add-new-text="Tambah"
 		add-new-color="light-blue lighten-2"
 		edit-uri="PPJB.edit"
 		edit-uri-parameter="slug"
-		edit-text="Edit Cicilan"
+		edit-text="Edit PPJB"
 		>
 		
 		@include('components.table')

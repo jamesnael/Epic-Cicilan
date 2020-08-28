@@ -64,19 +64,22 @@
                     phone_number:'',
                     unit:'',
                     unit_price:'',
-                    submission_date:'',
+                    status_ppjb: '',
+                    ppjb_sign_date:'',
                     sales_name:'',
                     agent_name:'',
-                    surat_ppjb_awal:'',
-                    ppjb_date:'',
-                    time:'',
-                    ppjb_place:'',
-                    full_address:'',
-                    approved_pembeli:'',
-                    approved_developer:'',
-                    approved_notaris:'',
-                    surat_ppjb:'',
-
+                    ppjb_date:new Date().toISOString().substr(0, 10),
+                    ppjb_time:'',
+                    location:'',
+                    address:'',
+                    approval_client_status:'',
+                    approval_developer_status:'',
+                    approval_notaris_status:'',
+                    ppjb_doc_sign_file_name:'',
+                    ppjb_doc_file_name:'',
+                    url_file_doc:'',
+                    url_file_doc_sign:'',
+                    booking_id:'',
             	}
         	}
         },
@@ -94,9 +97,28 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                let arr_installment = []
+                                console.log(data)
     		            		this.form_data = {
-    		            		} 
+                                    client_name: data.client.client_name,
+                                    phone_number: data.client.client_phone_number,
+                                    unit: data.unit.unit_name,
+                                    unit_price: data.total_amount,
+                                    sales_name: data.sales.user.full_name,
+                                    agent_name: data.sales.agency.agency_name,
+                                    booking_id: data.document.booking_id,
+                                    ppjb_doc_file_name: data.ppjb ? data.ppjb.ppjb_doc_file_name : '',
+                                    ppjb_doc_sign_file_name: data.ppjb ? data.ppjb.ppjb_doc_sign_file_name : '',
+                                    address: data.ppjb ? data.ppjb.address : '',
+                                    location: data.ppjb ? data.ppjb.location : '' ,
+                                    ppjb_time: data.ppjb ? data.ppjb.ppjb_time : '',
+                                    ppjb_date: data.ppjb ? data.ppjb.ppjb_date : '',
+                                    approval_client_status: data.ppjb ? data.ppjb.approval_client_status : '',
+                                    approval_notaris_status: data.ppjb ? data.ppjb.approval_notaris_status : '',
+                                    approval_developer_status: data.ppjb ? data.ppjb.approval_developer_status : '',
+                                    ppjb_sign_date: data.ppjb ? data.ppjb.ppjb_sign_date : '',
+    		            		    url_file_doc: data.ppjb ? data.ppjb.url_file_doc : '',
+                                    url_file_doc_sign: data.ppjb ? data.ppjb.url_file_doc_sign : '',
+                                } 
 
                                
     			                this.field_state = false
@@ -115,6 +137,7 @@
     		            });
     			}
     		},
+
         	submit() {
     			this.$refs.observer.validate().then((success) => {
     				if (!success) {
@@ -123,6 +146,64 @@
     		        this.postFormData()
     			});
         	},
+            clear () {
+                this.form_data = {
+                    ppjb_date: '',
+                    ppjb_time: '',
+                    location: '',
+                    address: '',
+                    status_ppjb: '',
+                    approval_client_status:'',
+                    approval_developer_status:'',
+                    approval_notaris_status: '',
+                    ppjb_doc_file_name: '',
+                    ppjb_doc_sign_file_name:'',
+                    ppjb_sign_date:'',
+                    booking_id:'',
+                }
+                this.$refs.observer.reset()
+            },
+            postFormData() {
+                const data = new FormData(this.$refs['post-form']);
+                data.append("booking_id", this.form_data.booking_id);
+                if (this.dataUri) {
+                    data.append("_method", "put");
+                    data.append("ppjb_sign_date", this.form_data.ppjb_sign_date);
+                    data.append("ppjb_date", this.form_data.ppjb_date);
+                }
+                
+                this.field_state = true
+
+                axios.post(this.uri, data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = response.data.message
+
+                            setTimeout(() => {
+                                this.goto(this.redirectUri);
+                            }, 6000);
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                            this.field_state = false
+                        }
+                    })
+                    .catch((error) => {
+                        this.tableAlert = true
+                        this.tableAlertState = 'error'
+                        this.tableAlertText = 'Oops, something went wrong. Please try again later.'
+                        this.field_state = false
+                    });
+            },
+
+
+
+
+
+
             moneyFormat(number) {
                 var decimals = 0;
                 var dec_point = ',';

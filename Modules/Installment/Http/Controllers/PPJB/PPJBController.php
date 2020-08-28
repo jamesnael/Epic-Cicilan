@@ -7,12 +7,13 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Installment\Http\Controllers\Booking\BookingHelper;
 use Modules\Installment\Entities\Booking;
+use Modules\Installment\Entities\PPJB;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 class PPJBController extends Controller
 {
@@ -36,73 +37,67 @@ class PPJBController extends Controller
                 "text" => 'Nama Klien',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_name',
             ],
             [
                 "text" => 'Data Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'payment_method',
             ],
             [
                 "text" => 'Tanggal Pengajuan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'ppjb_date',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'sales_name',
             ],
             [
                 "text" => 'Agent',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'agency_name',
             ],
             [
                 "text" => 'Tanggal Tanda tangan',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Dokumen Awal',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "value" => 'ppjb_sign_date',
             ],
             [
                 "text" => 'Approved Pembeli',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'approval_client_status',
             ],
             [
                 "text" => 'Approved Developer',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'approval_developer_status',
             ],
             [
                 "text" => 'Approved Notaris',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'approval_notaris_status',
             ],
         ];
         return view('installment::PPJB.index', [
@@ -130,8 +125,9 @@ class PPJBController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     
     }
+
 
     /**
      * Show the specified resource.
@@ -148,10 +144,19 @@ class PPJBController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
-    {
+    
 
+    public function edit(Booking $PPJB)
+    {
+        $this->breadcrumbs[] = ['href' => route('PPJB.index'), 'text' => 'Edit PPJB'];
+
+        return view('installment::PPJB.edit',[
+            'page' => $this,
+            'data' => $PPJB,
+        ])->with($this->getHelper());
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -159,9 +164,54 @@ class PPJBController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Booking $PPJB)
+    { 
+
+        $validator = $this->validateFormRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        DB::beginTransaction();
+        try {
+
+
+            $request->merge([
+                'ppjb_sign_date' => $request->ppjb_sign_date ? \Carbon\Carbon::parse($request->ppjb_sign_date)->format('Y-m-d') : '',
+                
+            ]);            
+
+            $has_ppjb = PPJB::where('booking_id', $request->booking_id)->first();
+
+            $has_ppjb->update($request->all());
+
+            if ($request->hasFile('ppjb_doc_file_name')) {
+                $file_name_doc = 'ppjbDocument-'.uniqid().'.'.$request->file('ppjb_doc_file_name')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBAwal', $request->file('ppjb_doc_file_name'), $file_name_doc
+                );
+                 $has_ppjb->ppjb_doc_file_name = $file_name_doc;
+                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
+          }
+           
+           if ($request->hasFile('ppjb_doc_sign_file_name')) {
+                $file_name_doc_sign = 'ppjbDocumentSigned-'.uniqid().'.'.$request->file('ppjb_doc_sign_file_name')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBSigned', $request->file('ppjb_doc_sign_file_name'), $file_name_doc_sign
+                );
+                 $has_ppjb->ppjb_doc_sign_file_name = $file_name_doc_sign;
+                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
+          }
+
+
+            $has_ppjb->save();
+            DB::commit();
+            return response_json(true, null, 'Data PPJB berhasil disimpan.', $has_ppjb);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+
+
     }
 
     /**
@@ -174,13 +224,109 @@ class PPJBController extends Controller
         //
     }
 
+    public function validateTableRequest($request)
+    {
+        return Validator::make($request->all(), [
+            "page" => "bail|required|numeric|min:1",
+            "search" => "bail|present|nullable",
+            "paginate" => "bail|required|numeric|in:5,10,15,-1",
+            "sort" => "bail|present|array",
+            "sort.*[0]" => "bail|required",
+            "sort.*[1]" => "bail|required|boolean",
+        ]);
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableData(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency->agency_name ?? '';
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->approval_client_status = $item->ppjb->approval_client_status ?? '' ;
+            $item->ppjb_sign_date = $item->ppjb ? \Carbon\Carbon::parse($item->ppjb->ppjb_sign_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->approval_notaris_status = $item->ppjb->approval_notaris_status ?? '' ;
+            $item->approval_developer_status = $item->ppjb->approval_developer_status ?? '' ;
+            $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;
+            return $item;
+        });
+        return $data;
+    }
+
+    public function validateFormRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "booking_id" => "bail|required",
+        ]);
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function table(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+    public function data(Booking $PPJB)
+    {
+        $data = $PPJB->load('unit','client','sales.user','sales.agency','document','ppjb');
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $data);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
     public function getHelper()
         {
             return [
                 'sales' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator')->get()->transform(function($item){
                             $item->value = $item->id;
                             $item->text = $item->user->full_name;
-                            $item->agency_name = $item->agency->agency_name ?? '';
+                            $item->agency_name = $item->sales->agency->agency_name ?? '';
                             $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
                             $item->main_coordinator = $item->main_coordinator->full_name ?? '';
                             return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);

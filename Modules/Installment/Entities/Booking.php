@@ -115,4 +115,9 @@ class Booking extends Model
     {
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
     }
+
+    public function ppjb()
+    {
+        return $this->hasOne('Modules\Installment\Entities\PPJB', 'booking_id');
+    }
 }

@@ -4,11 +4,11 @@
 
 	@include('components.breadcrumbs')
 
-	<installment-form inline-template
-	uri="{{ route('installment.update', [$data->slug]) }}"
-	redirect-uri="{{ route('installment.index') }}"
-	data-uri="{{ route('installment.data', [$data->slug]) }}">
-		@include('installment::installment.form')
-	</installment-form>
+	<ppjb-form inline-template
+	uri="{{ route('PPJB.update', [$data->slug]) }}"
+	redirect-uri="{{ route('PPJB.index') }}"
+	data-uri="{{ route('PPJB.data', [$data->slug]) }}">
+		@include('installment::PPJB.form')
+	</ppjb-form>
 
 @endsection
