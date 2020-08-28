@@ -534,7 +534,7 @@
 	            	  				<td>@{{ data.item.regional_coordinator }}</td>
 	            	  			</tr>
 	            	  			<tr>
-	            	  				<td>Agensi</td>
+	            	  				<td>Sub Agent</td>
 	            	  				<td>:</td>
 	            	  				<td>@{{ data.item.agency_name }}</td>
 	            	  			</tr>
@@ -566,7 +566,7 @@
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.agency_name"
-					    		label="Nama Agensi"
+					    		label="Nama Sub Agent"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"

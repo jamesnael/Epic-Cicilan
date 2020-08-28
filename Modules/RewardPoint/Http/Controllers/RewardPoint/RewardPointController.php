@@ -57,7 +57,7 @@ class RewardPointController extends Controller
                 "value" => 'redeem_point_regional_coordinator',
             ],
             [
-                "text" => 'Redeem Point Agensi',
+                "text" => 'Redeem Point Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'redeem_point_agency',

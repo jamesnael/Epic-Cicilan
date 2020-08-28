@@ -125,12 +125,12 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Agent" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="">
 				    		<v-text-field
 				    			v-model="form_data.agent_name"
 				    			name="agent_name"
 				    			hint="* harus diisi"
-					    		label="Nama Agent"
+					    		label="Nama Sub Agent"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		readonly>

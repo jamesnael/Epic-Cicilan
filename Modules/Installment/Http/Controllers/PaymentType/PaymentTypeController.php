@@ -75,7 +75,7 @@ class PaymentTypeController extends Controller
                 "value" => '',
             ],
             [
-                "text" => 'Agent',
+                "text" => 'Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => '',

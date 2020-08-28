@@ -23,7 +23,7 @@ class AgencyController extends Controller
     {
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('agencies.index'), 'text' => 'Data Agensi'],
+            ['href' => route('agencies.index'), 'text' => 'Data Sub Agent'],
         ];
     }
 
@@ -41,13 +41,13 @@ class AgencyController extends Controller
                 "value" => 'regional_coordinator.full_name',
             ],
             [
-                "text" => 'Nama Agensi',
+                "text" => 'Nama Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'agency_name',
             ],
             [
-                "text" => 'Email Agensi',
+                "text" => 'Email Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'agency_email',
@@ -82,7 +82,7 @@ class AgencyController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('agencies.index'), 'text' => 'Tambah Agensi'];
+        $this->breadcrumbs[] = ['href' => route('agencies.index'), 'text' => 'Tambah Sub Agent'];
 
         return view('salesagent::agency.create', [
             'page' => $this,
@@ -114,7 +114,7 @@ class AgencyController extends Controller
 
             $data = Agency::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil disimpan.', $data);
+            return response_json(true, null, 'Data sub agent berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -128,7 +128,7 @@ class AgencyController extends Controller
      */
     public function edit(Agency $agency)
     {
-        $this->breadcrumbs[] = ['href' => route('agencies.edit', [$agency->slug]), 'text' => 'Edit Agensi ' . $agency->agency_name];
+        $this->breadcrumbs[] = ['href' => route('agencies.edit', [$agency->slug]), 'text' => 'Edit Sub Agent ' . $agency->agency_name];
 
         return view('salesagent::agency.edit', [
             'page' => $this,
@@ -161,7 +161,7 @@ class AgencyController extends Controller
             
             $data = $agency->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil disimpan.', $data);
+            return response_json(true, null, 'Data sub agent berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -180,7 +180,7 @@ class AgencyController extends Controller
         try {
             $agency->delete();
             DB::commit();
-            return response_json(true, null, 'Data agensi berhasil dihapus.');
+            return response_json(true, null, 'Data sub agent berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

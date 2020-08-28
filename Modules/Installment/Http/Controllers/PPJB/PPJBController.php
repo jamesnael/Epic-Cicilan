@@ -70,7 +70,7 @@ class PPJBController extends Controller
                 "value" => 'sales_name',
             ],
             [
-                "text" => 'Agent',
+                "text" => 'Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'agency_name',

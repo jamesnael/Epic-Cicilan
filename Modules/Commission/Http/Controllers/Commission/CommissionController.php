@@ -38,7 +38,7 @@ class CommissionController extends Controller
                 "value" => 'sales_commission',
             ],
             [
-                "text" => 'Komisi Agent',
+                "text" => 'Komisi Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'agency_commission',
