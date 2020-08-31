@@ -4,6 +4,7 @@ namespace Modules\Installment\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Storage;
 
 class Handover extends Model
 {
@@ -22,4 +23,31 @@ class Handover extends Model
         'handover_doc_sign_name',
         'handover_sign_date',
     ];
+
+    protected $appends = [
+        'url_doc_file_name',
+        'url_doc_sign_file_name',
+    ];
+
+    /**
+     * Get the model's url ktp pemohon file.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlDocFileNameAttribute()
+    {
+        return $this->attributes['handover_doc_file_name'] ? Storage::disk('public')->url('app/public/handover/handover_doc_file_names/'.$this->attributes['handover_doc_file_name']) : null;
+    }
+
+    /**
+     *
+     * Get the model's url ktp suami istri file.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlDocSignFileNameAttribute()
+    {
+        return $this->attributes['handover_doc_sign_name'] ? Storage::disk('public')->url('app/public/handover/handover_doc_sign_names/'.$this->attributes['handover_doc_sign_name']) : null;
+    }
 }

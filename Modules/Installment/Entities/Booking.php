@@ -48,6 +48,7 @@ class Booking extends Model
         'total_pembayaran',
         'sisa_tunggakan',
         'total_denda',
+        'tanggal_lunas_cicilan',
         // 'prosentase_pembayaran',
     ];
 
@@ -135,7 +136,14 @@ class Booking extends Model
     
     public function getTanggalLunasCicilanAttribute()
     {
-        return $collection = collect($this->payments)->last()->payment_date;
+        // return $collection = collect($this->payments)->last();
+        $collection = collect($this->payments)->last(function($item) {
+            if ($item->payment != 'Akad Kredit') {
+                return $item;
+            }
+            return 0;
+        });
+        return $collection;
     }
 
     
