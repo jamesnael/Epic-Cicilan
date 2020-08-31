@@ -285,7 +285,7 @@ class PPJBController extends Controller
             $item->unit_price = 'Rp '.format_money($item->total_amount);
             $item->approval_client_status = $item->ppjb->approval_client_status ?? '' ;
             $item->ppjb_sign_date = $item->ppjb ? \Carbon\Carbon::parse($item->ppjb->ppjb_sign_date)->locale('id')->translatedFormat('d F Y') : '';
-            $item->ppjb_date = $item->ppjb ? \Carbon\Carbon::parse($item->ppjb->ppjb_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->ppjb_date = $item->document ? \Carbon\Carbon::parse($item->document->submission_date)->locale('id')->translatedFormat('d F Y') : '';
             $item->approval_notaris_status = $item->ppjb->approval_notaris_status ?? '' ;
             $item->approval_developer_status = $item->ppjb->approval_developer_status ?? '' ;
             $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;

@@ -239,7 +239,9 @@
 			    	</v-col>
 
 		    	</v-row>
-		    	 <h3 class="mt-4">Approved PPJB</h3>
+		    	 <h3 class="mt-4"
+		    	 v-if="form_data.ppjb_sign_date !== ''"
+		    	 >Approved PPJB</h3>
 		    		
 		    		<v-col
     		          	cols="12"
@@ -250,6 +252,8 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Pembeli"
 			              	name="approval_client_status"
+			              	v-on="on"
+			              	v-if="form_data.ppjb_sign_date !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -267,6 +271,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Developer"
 			              	name="approval_developer_status"
+			              	v-if="form_data.ppjb_sign_date !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -284,6 +289,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approved Notaris"
 			              	name="approval_notaris_status"
+			              	v-if="form_data.ppjb_sign_date !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -300,6 +306,7 @@
 				    			v-model="form_data.ppjb_doc_sign_file_name"
 				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
+					    		v-if="form_data.ppjb_sign_date !== ''"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		>
