@@ -236,7 +236,7 @@ class SprController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales')->where('booking_status', 'spr')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'spr', 'sales')->bookingStatus('spr')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

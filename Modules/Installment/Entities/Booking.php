@@ -147,6 +147,51 @@ class Booking extends Model
         return $collection;
     }
 
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCash($query)
+    {
+        return $query->where('payment_type', 'Hard Cash');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInstallment($query)
+    {
+        return $query->where('payment_type', 'Installments');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeKprKpa($query)
+    {
+        return $query->where('payment_type', 'KPR/KPA');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeBookingStatus($query, $status)
+    {
+        return $query->where('booking_status', $status);
+    }
+
     
     /**
      * Get the relationship for the model.
