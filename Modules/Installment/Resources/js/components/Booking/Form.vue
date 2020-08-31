@@ -117,7 +117,9 @@
             	if(this.principal == '' && this.installment_time == ''){
             		return '0';
             	}
-            	return parseInt(this.principal) / parseInt(this.installment_time).toFixed(0);
+            	let result = parseInt(this.principal) / parseInt(this.installment_time);
+
+                return result.toFixed();
             },
         }, 
         mounted() {
@@ -280,8 +282,8 @@
 			paymentType() {
                     this.total_amount = '0';
                     this.first_payment = '0';
-                    this.downPayment = '0';
-                    this.installment_time = '0';
+                    this.dp_amount = '0';
+                    this.installment_time = '1';
                     this.due_date = '0';
                     this.credits = '0';
             },

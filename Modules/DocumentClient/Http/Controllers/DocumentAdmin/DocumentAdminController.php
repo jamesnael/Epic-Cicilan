@@ -95,6 +95,7 @@ class DocumentAdminController extends Controller
     {
         return Validator::make($request->all(), [
             "booking_id" => "bail|required",
+            "submission_date" => "bail|required|date_format:Y-m-d",
         ]);
     }
 
@@ -159,7 +160,6 @@ class DocumentAdminController extends Controller
      */
     public function update(Request $request, Booking $document_admin)
     {
-
         $validator = $this->validateFormRequest($request);
 
         if ($validator->fails()) {
@@ -168,6 +168,11 @@ class DocumentAdminController extends Controller
 
         DB::beginTransaction();
         try {
+
+            if ($request->has('approval_developer') && $request->input('approval_developer') == 'Approved' && $document_admin->booking_status == 'dokumen') {
+                $document_admin->booking_status = 'spr';
+                $document_admin->save();
+            }
 
             foreach ($request->file('files') ?? [] as $key => $file) {
                 foreach ($file as $file_name => $input) {
@@ -185,16 +190,22 @@ class DocumentAdminController extends Controller
                 'submission_date' => $request->submission_date ? \Carbon\Carbon::parse($request->submission_date)->format('Y-m-d') : '',
             ]);
 
-            $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
+            $document_admin
+                ->document()
+                ->updateOrCreate([
+                    'booking_id' => $request->input('booking_id')
+                ], $request->all());
 
-            if ($has_document) {
-                 $data = $has_document->update($request->all());
-            }else{
-                $data = DocumentClient::create($request->all());
-            }
+            // $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
+
+            // if ($has_document) {
+            //      $data = $has_document->update($request->all());
+            // }else{
+            //     $data = DocumentClient::create($request->all());
+            // }
 
             DB::commit();
-            return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $data);
+            return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $document_admin);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

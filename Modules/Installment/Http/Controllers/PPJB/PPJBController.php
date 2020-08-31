@@ -82,19 +82,19 @@ class PPJBController extends Controller
                 "value" => 'ppjb_sign_date',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_client_status',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_developer_status',
             ],
             [
-                "text" => 'Approved Notaris',
+                "text" => 'Approval Notaris',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_notaris_status',
@@ -215,10 +215,9 @@ class PPJBController extends Controller
                 $PPJB->booking_status = 'cicilan';
                 $PPJB->save();
             }
-           
-
-
+            
             DB::commit();
+
             return response_json(true, null, 'Data PPJB berhasil disimpan.', $has_ppjb);
         } catch (\Exception $e) {
             DB::rollback();
@@ -257,7 +256,7 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

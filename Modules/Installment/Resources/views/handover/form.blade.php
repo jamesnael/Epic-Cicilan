@@ -8,13 +8,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Klien" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Nama Klien" rules="">
 				    		<v-text-field
 				    			v-model="form_data.client_name"
 				    			name="client_name"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
-					    		:counter="255"
 					    		:error-messages="errors"
 					    		label="Nama Klien"
 					    		readonly>
@@ -24,11 +22,10 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nomor Handphone" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Nomor Handphone" rules="|numeric">
 				    		<v-text-field
 				    			v-model="form_data.client_mobile_number"
 				    			name="client_mobile_number"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Nomor Handphone"
@@ -41,11 +38,10 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Email" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Email" rules="">
 				    		<v-text-field
 				    			v-model="form_data.client_email"
 				    			name="client_email"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Email"
@@ -56,11 +52,10 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Data Unit" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Data Unit" rules="">
 				    		<v-text-field
 				    			v-model="form_data.unit_name"
 				    			name="unit_type"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Data Unit"
@@ -73,11 +68,10 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Harga Unit" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Harga Unit" rules="">
 				    		<v-text-field
 				    			v-model="form_data.total_amount"
 				    			name="unit_price"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Harga Unit"
@@ -88,11 +82,10 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="">
 				    		<v-text-field
 				    			v-model="form_data.payment_method"
 				    			name="payment_method"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Cara Bayar"
@@ -117,7 +110,6 @@
 			    		<validation-provider v-slot="{ errors }" name="Tanggal Lunas Cicilan" rules="min:1">
 	    		        <v-text-field
 	    		        	:value="reformatDateTime(form_data.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"
 	    		            label="Tanggal Lunas Cicilan"
@@ -145,7 +137,6 @@
 				    		<validation-provider v-slot="{ errors }" name="Tanggal AJB" rules="min:1">
 		    		        <v-text-field
 		    		        	:value="reformatDateTime(form_data.ajb_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-		    		        	hint="* harus diisi"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
 		    		            label="Tanggal AJB"
@@ -163,13 +154,11 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="">
 				    		<v-text-field
 				    			v-model="form_data.sales_name"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:counter="255"
 					    		label="Nama Sales"
 					    		readonly>
 			    			</v-text-field>
@@ -178,13 +167,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="">
 				    		<v-text-field
 				    			v-model="form_data.agency_name"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:counter="255"
 					    		label="Nama Sub Agent"
 					    		readonly>
 			    			</v-text-field>
@@ -195,14 +182,12 @@
 			    	<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Korwil" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama Korwil" rules="">
 				    		<v-text-field
 				    			v-model="form_data.regional_coordinator"
 				    			name="regional_coordinator"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:counter="255"
 					    		label="Nama Korwil"
 					    		readonly>
 			    			</v-text-field>
@@ -211,12 +196,10 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Koordinator Utama" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Koordinator Utama" rules="">
 				    		<v-text-field
 				    			v-model="form_data.main_coordinator"
-				    			hint="* harus diisi"
 				    			:persistent-hint="true"
-				    			:counter="255"
 					    		:error-messages="errors"
 					    		label="Koordinator Utama"
 					    		readonly>
@@ -356,7 +339,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approved Hand Over Unit</h3>
+					    <h3 class="mt-4">Approval Hand Over Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 					      <v-select
 					        v-model="form_data.approval_client_status"

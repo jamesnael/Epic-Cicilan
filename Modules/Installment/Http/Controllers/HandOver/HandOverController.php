@@ -227,7 +227,7 @@ class HandOverController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('ajb')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
+        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 

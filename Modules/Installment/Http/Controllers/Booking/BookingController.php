@@ -237,7 +237,7 @@ class BookingController extends Controller
             "unit_number" => "bail|required",
             "surface_area" => "bail|required|numeric",
             "building_area" => "bail|required|numeric",
-            "utj" => "bail|required",
+            // "utj" => "bail|required",
             "electrical_power" => "bail|required|numeric",
             "points" => "bail|required|numeric",
             "closing_fee" => "bail|required",
