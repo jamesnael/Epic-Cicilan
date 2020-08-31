@@ -206,6 +206,7 @@ class PPJBController extends Controller
                 $data = PPJB::create($request->all());
             }
 
+        
             DB::commit();
             return response_json(true, null, 'Data PPJB berhasil disimpan.', $has_ppjb);
         } catch (\Exception $e) {
@@ -245,7 +246,7 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
