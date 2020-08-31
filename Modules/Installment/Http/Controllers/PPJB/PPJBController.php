@@ -82,19 +82,19 @@ class PPJBController extends Controller
                 "value" => 'ppjb_sign_date',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_client_status',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_developer_status',
             ],
             [
-                "text" => 'Approved Notaris',
+                "text" => 'Approval Notaris',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approval_notaris_status',

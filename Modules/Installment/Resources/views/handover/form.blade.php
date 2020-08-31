@@ -339,7 +339,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approved Hand Over Unit</h3>
+					    <h3 class="mt-4">Approval Hand Over Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 					      <v-select
 					        v-model="form_data.approval_client_status"

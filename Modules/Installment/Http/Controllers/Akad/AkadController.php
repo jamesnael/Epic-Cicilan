@@ -76,19 +76,19 @@ class AkadController extends Controller
                 "value" => 'agency_name',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_client',
             ],
             [
-                "text" => 'Approved Bank',
+                "text" => 'Approval Bank',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_bank',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_developer',
