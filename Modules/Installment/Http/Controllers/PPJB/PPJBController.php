@@ -176,35 +176,36 @@ class PPJBController extends Controller
         DB::beginTransaction();
         try {
 
+           if ($request->hasFile('file_upload')) {
+                $file_name_doc = 'ppjbDocument-'.uniqid().'.'.$request->file('file_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBAwal', $request->file('file_upload'), $file_name_doc
+                );
+                $request->merge([
+                    'ppjb_doc_file_name' => $file_name_doc,
+                ]);
+          }
+           
+           if ($request->hasFile('sign_upload')) {
+                $file_name_doc_sign = 'ppjbDocumentSigned-'.uniqid().'.'.$request->file('sign_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBSigned', $request->file('sign_upload'), $file_name_doc_sign
+                );
+                 $request->merge([
+                    'ppjb_doc_sign_file_name' => $file_name_doc_sign,
+                ]);
+          }
 
             $request->merge([
                 'ppjb_sign_date' => $request->ppjb_sign_date ? \Carbon\Carbon::parse($request->ppjb_sign_date)->format('Y-m-d') : '',
                 'ppjb_date' => $request->ppjb_date ? \Carbon\Carbon::parse($request->ppjb_date)->format('Y-m-d') : '',
-           
             ]);            
 
             $has_ppjb = PPJB::where('booking_id', $request->booking_id)->first();
+            if ($has_ppjb) {
+                $data = $has_ppjb->update($request->all());
+            }else{
+                $data = PPJB::create($request->all());
+            }
 
-            $has_ppjb->update($request->all());
-
-            if ($request->hasFile('ppjb_doc_file_name')) {
-                $file_name_doc = 'ppjbDocument-'.uniqid().'.'.$request->file('ppjb_doc_file_name')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('ppjb/suratPPJBAwal', $request->file('ppjb_doc_file_name'), $file_name_doc
-                );
-                 $has_ppjb->ppjb_doc_file_name = $file_name_doc;
-                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
-          }
-           
-           if ($request->hasFile('ppjb_doc_sign_file_name')) {
-                $file_name_doc_sign = 'ppjbDocumentSigned-'.uniqid().'.'.$request->file('ppjb_doc_sign_file_name')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('ppjb/suratPPJBSigned', $request->file('ppjb_doc_sign_file_name'), $file_name_doc_sign
-                );
-                 $has_ppjb->ppjb_doc_sign_file_name = $file_name_doc_sign;
-                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
-          }
-
-
-            $has_ppjb->save();
             DB::commit();
             return response_json(true, null, 'Data PPJB berhasil disimpan.', $has_ppjb);
         } catch (\Exception $e) {
@@ -276,6 +277,7 @@ class PPJBController extends Controller
             $item->approval_notaris_status = $item->ppjb->approval_notaris_status ?? '' ;
             $item->approval_developer_status = $item->ppjb->approval_developer_status ?? '' ;
             $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;
+
             return $item;
         });
         return $data;
