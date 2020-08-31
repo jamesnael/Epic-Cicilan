@@ -12,7 +12,6 @@
 				    		<v-text-field
 				    			v-model="form_data.client_name"
 				    			name="client_name"
-					    		hint="* harus diisi"
 					    		label="Nama Klien"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
@@ -29,7 +28,6 @@
 				    			v-model="form_data.phone_number"
 				    			name="phone_number"
 					    		label="Nomor Handphone"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		readonly>
@@ -46,7 +44,6 @@
 				    			v-model="form_data.unit"
 				    			name="Unit"
 					    		label="Unit"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		readonly>
@@ -61,7 +58,6 @@
 				    			v-model="form_data.unit_price"
 				    			name="unit_price"
 					    		label="Harga Unit"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		readonly>
@@ -72,35 +68,18 @@
 			    <v-row>
 			    	<v-col
     		          	cols="12"
-    		          	md="20">
+    		          	md="12">
 			    
-    		          	<validation-provider v-slot="{ errors }" name="Tanggal Pengajuan" rules="">
-    		      	<v-menu
-	    		        v-model="menu2"
-	    		        :close-on-content-click="false"
-	    		        :nudge-right="40"
-	    		        transition="scale-transition"
-	    		        offset-y
-	    		        min-width="290px"
-	    		      >
-    		        	<template v-slot:activator="{ on, attrs }">
-	    		        <v-text-field
-	    		        	class="mt-4"
-	    		        	:value="reformatDateTime(form_data.ppjb_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-	    		            label="Tanggal Pengajuan"
-	    		            readonly
-	    		            v-bind="attrs"
-	    		            v-on="on"
-	    		            hint="* harus diisi"
-	    		            :persistent-hint="true"
-	    		            :error-messages="errors"
-	    		            :readonly="!field_state"
-	    		            :disabled="field_state">
-	    		        </v-text-field>
-    		        	</template>
-    		        	<v-date-picker name="ppjb_date" v-model="form_data.ppjb_date" @input="menu2 = false" :disabled="field_state"></v-date-picker>
-    		      	</v-menu>
-    		    </validation-provider>
+    		          	<validation-provider v-slot="{ errors }" name="Tanggal Pengajuan" rules="required">
+				    		<v-text-field
+				    			:value="reformatDateTime(form_data.ppjb_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+				    			name="ppjb_date"
+					    		label="Tanggal Pengajuan"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		readonly>
+			    			</v-text-field>
+			    		</validation-provider>
 				
 
 			    	</v-col>
@@ -115,8 +94,7 @@
 			              	:items="filter_client"
 			              	label="Nama Sales"
 			              	name="sales_name"
-			              	hint="* harus diisi"
-				    		:persistent-hint="true"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		readonly
 			            	></v-text-field>
@@ -129,33 +107,13 @@
 				    		<v-text-field
 				    			v-model="form_data.agent_name"
 				    			name="agent_name"
-				    			hint="* harus diisi"
-					    		label="Nama Sub Agent"
+				    			label="Nama Sub Agent"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		readonly>
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
-				    <v-col
-    		          	cols="12"
-    		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB Awal" rules="required">
-				    		<v-file-input
-				    			v-model="form_data.ppjb_doc_file_name"
-				    			name="ppjb_doc_file_name"
-				    			hint="* harus diisi"
-					    		label="Surat PPJB awal"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		>
-			    			</v-file-input>
-			    			<a :href="form_data.url_file_doc" target="_blank" class="ml-8">
-		    		  	<small>@{{form_data.ppjb_doc_file_name}}</small>
-		    		  </a>
-			    		</validation-provider>
-			    	</v-col>
-
 			    </v-row>
 
 
@@ -174,11 +132,10 @@
 	    		        <v-text-field
 	    		        	class="mt-4"
 	    		        	:value="reformatDateTime(form_data.ppjb_sign_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-	    		            label="Tanggal Pengajuan"
+	    		            label="Tanggal PPJB"
 	    		            readonly
 	    		            v-bind="attrs"
 	    		            v-on="on"
-	    		            hint="* harus diisi"
 	    		            :persistent-hint="true"
 	    		            :error-messages="errors"
 	    		            :readonly="!field_state"
@@ -208,7 +165,6 @@
 					            v-model="form_data.ppjb_time"
 					            name="ppjb_time"
 					            label="Waktu"
-					            hint="* harus diisi"
 					            :persistent-hint="true"
 					    		:error-messages="errors"
 					            readonly
@@ -237,7 +193,6 @@
 				    			v-model="form_data.location"
 				    			name="location"
 					    		label="Tempat"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
@@ -259,13 +214,30 @@
 					    		clearable
 					    		clear-icon="mdi-close"
 					    		rows="1"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 						    ></v-textarea>
 			    		</validation-provider>
 			    	</v-col>	
+			    	<v-col
+    		          	cols="12"
+    		          	md="12">
+			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB Awal" rules="required">
+				    		<v-file-input
+				    			v-model="form_data.ppjb_doc_file_name"
+				    			name="file_upload"
+				    			label="Surat PPJB awal"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		>
+			    			</v-file-input>
+			    			<a :href="form_data.url_file_doc" target="_blank" class="ml-8">
+		    		  	<small>@{{form_data.ppjb_doc_file_name}}</small>
+		    		  </a>
+			    		</validation-provider>
+			    	</v-col>
+
 		    	</v-row>
 		    	 <h3 class="mt-4">Approval PPJB</h3>
 		    		
@@ -278,8 +250,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approval Pembeli"
 			              	name="approval_client_status"
-			              	hint="* harus diisi"
-				    		:persistent-hint="true"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	></v-select>
@@ -296,8 +267,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approval Developer"
 			              	name="approval_developer_status"
-			              	hint="* harus diisi"
-				    		:persistent-hint="true"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	></v-select>
@@ -314,8 +284,7 @@
 			              	:items="['Pending','Approved']"
 			              	label="Approval Notaris"
 			              	name="approval_notaris_status"
-			              	hint="* harus diisi"
-				    		:persistent-hint="true"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	></v-select>
@@ -329,9 +298,8 @@
 			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="required">
 				    		<v-file-input
 				    			v-model="form_data.ppjb_doc_sign_file_name"
-				    			name="ppjb_doc_sign_file_name"
+				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		>
