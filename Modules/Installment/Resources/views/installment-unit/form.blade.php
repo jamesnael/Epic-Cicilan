@@ -486,7 +486,7 @@
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
             :value="moneyFormat(form_data.sisa_tunggakan)"
-            label="Sisa Pembayaran"
+            label="Sisa Tunggalan"
             readonly>
           </v-text-field>
         </validation-provider>
@@ -500,7 +500,7 @@
         <validation-provider v-slot="{ errors }" name="" rules="">
           <v-text-field
             :value="moneyFormat(form_data.prosentase_pembayaran)"
-            label="Selisih Kurang/Lebih Pembayaran"
+            label="Prosentase Pembayaran"
             readonly>
           </v-text-field>
         </validation-provider>

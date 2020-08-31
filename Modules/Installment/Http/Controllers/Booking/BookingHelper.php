@@ -68,7 +68,7 @@ class BookingHelper
         $payment['credit'] = $booking->principal;
         $payment['installment'] =$booking->installment;
         $payment['credit']= $booking->credits;
-        $payment['payment_status']= 'Upaid';
+        $payment['payment_status']= 'Unpaid';
         $payment['payment_date']= \Carbon\Carbon::now()->format('Y-m-d');
         $payment['payment_method']= $booking->payment_method;
         $payment['va_number']= 0;
@@ -113,7 +113,7 @@ class BookingHelper
         $payment['credit'] = $booking->principal;
         $payment['installment'] =$booking->installment;
         $payment['credit']= $booking->credits;
-        $payment['payment_status']= 'Upaid';
+        $payment['payment_status']= 'Unpaid';
         $payment['payment_date']= \Carbon\Carbon::now()->format('Y-m-d');
         $payment['payment_method']= $booking->payment_method;
         $payment['va_number']= 0;
@@ -157,7 +157,7 @@ class BookingHelper
         $payment['credit'] = $booking->principal;
         $payment['installment'] =$booking->installment;
         $payment['credit']= $booking->credits;
-        $payment['payment_status']= 'Upaid';
+        $payment['payment_status']= 'Unpaid';
         $payment['payment_date']= \Carbon\Carbon::now()->format('Y-m-d');
         $payment['payment_method']= $booking->payment_method;
         $payment['va_number']= 0;

@@ -68,34 +68,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    {{-- <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="12">
-			    			<v-menu
-		    		        v-model="menu3"
-		    		        :close-on-content-click="false"
-		    		        :nudge-right="40"
-		    		        transition="scale-transition"
-		    		        offset-y
-		    		        min-width="290px"
-		    		      >
-	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="required|min:1">
-			    		        <v-text-field
-			    		        	:persistent-hint="true"
-						    		:error-messages="errors"
-			    		            v-model="form_data.ppjb_date"
-			    		            label="Tanggal PPJB"
-			    		            readonly
-			    		            v-bind="attrs"
-			    		            v-on="on"
-			    		        ></v-text-field>
-				    		</validation-provider>
-	    		        	</template>
-	    		        	<v-date-picker v-model="form_data.ppjb_date" @input="menu3 = false"></v-date-picker>
-			    	</v-col>
-			    </v-row> --}}
+			    
 	    		<v-row>
 			    	<v-col
     		          	cols="12"
@@ -126,6 +99,16 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
+        		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="">
+    	    		<v-text-field
+    	    			v-model="form_data.ppjb_date"
+    	    			:persistent-hint="true"
+    		    		:error-messages="errors"
+    		    		label="Tanggal PPJB"
+    		    		:readonly="!field_state"
+    		    		:disabled="field_state">
+        			</v-text-field>
+        		</validation-provider>
 			    <h3 class="mt-4">Schedule Akad KPR</h3>
 	    		<v-row>
 	    			<v-col

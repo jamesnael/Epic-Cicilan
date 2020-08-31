@@ -174,6 +174,15 @@ class Booking extends Model
     /**
      * Get the relations for the model.
      */
+    public function unpaid_payments()
+    {
+        return $this->hasMany('Modules\Installment\Entities\BookingPayment', 'booking_id')
+        ->whereNull('payment_date');
+    }
+
+    /**
+     * Get the relations for the model.
+     */
     public function document()
     {
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
