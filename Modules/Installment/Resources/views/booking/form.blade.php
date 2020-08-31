@@ -86,7 +86,7 @@
 			    	</v-col>
 		    	</v-row>
 		    	<v-row>
-		    		<v-col
+		    		{{-- <v-col
     		          cols="12"
     		          md="6">
 			    		<validation-provider v-slot="{ errors }" name="UTJ" rules="required|numeric|min:0">
@@ -102,7 +102,7 @@
 			    			</v-text-field>
 			    			<small class="form-text text-muted">Rp @{{ form_data.utj ? number_format(form_data.utj) : 0 }}</small>
 			    		</validation-provider>
-			    	</v-col>
+			    	</v-col> --}}
 			    	<v-col
     		          cols="12"
     		          md="6">
@@ -119,8 +119,6 @@
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
-		    	</v-row>
-		    	<v-row>
 		    		<v-col
     		          cols="12"
     		          md="6">
@@ -137,6 +135,8 @@
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
+		    	</v-row>
+		    	<v-row>
 			    	<v-col
     		          cols="12"
     		          md="6">
@@ -336,12 +336,12 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Total" rules="required|numeric|min:0">
+			    		<validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.amount"
 				    			name="amount"
-					    		label="Total"
+					    		label="Total UTJ"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
