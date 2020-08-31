@@ -56,13 +56,28 @@
                 menu4: false,
                 time: null,
                 datepicker: false,
-            	form_data: {
+            	
+                files: [
+                    {
+                        title: 'Document PPJB',
+                        file_name: 'ppjb_doc_file_name',
+                        url: '',
+                        showcase: ''
+                    },
+                    {
+                        title: 'Document PPJB Sudah Ditandatangani',
+                        file_name: 'ppjb_doc_sign_name',
+                        url: '',
+                        showcase: ''
+                    },
+                ],
+                form_data: {
             		client_name:'',
                     phone_number:'',
                     unit:'',
                     unit_price:'',
                     status_ppjb: '',
-                    ppjb_sign_date:'',
+                    ppjb_sign_date:new Date().toISOString().substr(0, 10),
                     sales_name:'',
                     agent_name:'',
                     ppjb_date:new Date().toISOString().substr(0, 10),
@@ -72,8 +87,6 @@
                     approval_client_status:'',
                     approval_developer_status:'',
                     approval_notaris_status:'',
-                    ppjb_doc_sign_file_name:'',
-                    ppjb_doc_file_name:'',
                     url_file_doc:'',
                     url_file_doc_sign:'',
                     booking_id:'',
