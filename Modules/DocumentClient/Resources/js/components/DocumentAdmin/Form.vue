@@ -211,9 +211,9 @@
     		            			client_profession: data.client.profession,
     		            			unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
     		            			unit_price: this.number_format(data.total_amount),
-    		            			submission_date: data.document.submission_date,
-    		            			approval_agent: data.document.approval_agent,
-    		            			approval_developer: data.document.approval_developer,
+    		            		    submission_date: data.document ? data.document.submission_date : '',
+    		            			approval_agent: data.document ? data.document.approval_agent : '',
+    		            			approval_developer: data.document ? data.document.approval_developer : '',
     		            		}
 
     		            		this.pairingUploadedUrl(data.document)
