@@ -140,7 +140,7 @@
 				    <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB Awal" rules="required">
 				    		<v-file-input
 				    			v-model="form_data.ppjb_doc_file_name"
 				    			name="ppjb_doc_file_name"
