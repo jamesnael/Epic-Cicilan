@@ -164,7 +164,8 @@
 				</v-row>
 	            <v-btn
 		      		class="mt-4"
-		      		outlined 
+		      		outlined
+		      		:href="redirectUri"
 		      		:disabled="field_state">
     		      	Kembali
     		    </v-btn>
