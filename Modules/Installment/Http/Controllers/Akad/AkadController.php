@@ -238,7 +238,7 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
