@@ -3,8 +3,6 @@
 	import { required, email, max, min, numeric, between } from 'vee-validate/dist/rules'
 	import id from 'vee-validate/dist/locale/id.json'
 
-    var moment = require('moment')
-
 	extend('required', required)
 	extend('email', email)
 	extend('max', max)
@@ -50,7 +48,6 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
-	            date: new Date().toISOString().substr(0, 10),
                 menu: false,
                 modal: false,
                 modal2: false,
@@ -83,8 +80,7 @@
             	}
         	}
         },
-        computed:{
-        },
+
         mounted() {
             this.setData();
         },
@@ -160,6 +156,9 @@
                     ppjb_doc_sign_file_name:'',
                     ppjb_sign_date:'',
                     booking_id:'',
+                    url_file_doc:'',
+                    url_file_doc_sign:'',
+                    
                 }
                 this.$refs.observer.reset()
             },
@@ -200,34 +199,6 @@
             },
 
 
-
-
-
-
-            moneyFormat(number) {
-                var decimals = 0;
-                var dec_point = ',';
-                var thousands_sep = '.';
-
-                var n = !isFinite(+number) ? 0 : +number, 
-                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                    toFixedFix = function (n, prec) {
-                        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                        var k = Math.pow(10, prec);
-                        return Math.round(n * k) / k;
-                    },
-                    s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
-                if (s[0].length > 3) {
-                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-                }
-                if ((s[1] || '').length < prec) {
-                    s[1] = s[1] || '';
-                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                }
-                return s.join(dec);
-            },
         	showFormattedDt(dt) {
                 return moment(dt, "YYYY-MM-DD").format("DD-MMM-YYYY")
             },
