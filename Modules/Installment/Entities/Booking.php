@@ -31,7 +31,8 @@ class Booking extends Model
     	'payment_method_utj',
     	'bank_name',
     	'card_number',
-    	'point'
+    	'point',
+        'booking_status',
     ];
 
      /**
@@ -49,7 +50,7 @@ class Booking extends Model
         'sisa_tunggakan',
         'total_denda',
         'tanggal_lunas_cicilan',
-        // 'prosentase_pembayaran',
+        'prosentase_pembayaran',
     ];
 
     /**
@@ -144,6 +145,51 @@ class Booking extends Model
             return 0;
         });
         return $collection;
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCash($query)
+    {
+        return $query->where('payment_type', 'Hard Cash');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInstallment($query)
+    {
+        return $query->where('payment_type', 'Installments');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeKprKpa($query)
+    {
+        return $query->where('payment_type', 'KPR/KPA');
+    }
+
+    /**
+     * Scope a query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeBookingStatus($query, $status)
+    {
+        return $query->where('booking_status', $status);
     }
 
     

@@ -56,13 +56,28 @@
                 menu4: false,
                 time: null,
                 datepicker: false,
-            	form_data: {
+            	
+                files: [
+                    {
+                        title: 'Document PPJB',
+                        file_name: 'ppjb_doc_file_name',
+                        url: '',
+                        showcase: ''
+                    },
+                    {
+                        title: 'Document PPJB Sudah Ditandatangani',
+                        file_name: 'ppjb_doc_sign_name',
+                        url: '',
+                        showcase: ''
+                    },
+                ],
+                form_data: {
             		client_name:'',
                     phone_number:'',
                     unit:'',
                     unit_price:'',
                     status_ppjb: '',
-                    ppjb_sign_date:'',
+                    ppjb_sign_date:new Date().toISOString().substr(0, 10),
                     sales_name:'',
                     agent_name:'',
                     ppjb_date:new Date().toISOString().substr(0, 10),
@@ -72,8 +87,6 @@
                     approval_client_status:'',
                     approval_developer_status:'',
                     approval_notaris_status:'',
-                    ppjb_doc_sign_file_name:'',
-                    ppjb_doc_file_name:'',
                     url_file_doc:'',
                     url_file_doc_sign:'',
                     booking_id:'',
@@ -97,17 +110,17 @@
     		            		this.form_data = {
                                     client_name: data.client.client_name,
                                     phone_number: data.client.client_phone_number,
-                                    unit: data.unit.unit_name,
+                                    unit: data.unit.unit_number + '/' + data.unit.unit_block,
                                     unit_price: data.total_amount,
                                     sales_name: data.sales.user.full_name,
                                     agent_name: data.sales.agency.agency_name,
                                     booking_id: data.document.booking_id,
+                                    ppjb_date: data.document.submission_date,
                                     ppjb_doc_file_name: data.ppjb ? data.ppjb.ppjb_doc_file_name : '',
                                     ppjb_doc_sign_file_name: data.ppjb ? data.ppjb.ppjb_doc_sign_file_name : '',
                                     address: data.ppjb ? data.ppjb.address : '',
                                     location: data.ppjb ? data.ppjb.location : '' ,
                                     ppjb_time: data.ppjb ? data.ppjb.ppjb_time : '',
-                                    ppjb_date: data.ppjb ? data.ppjb.ppjb_date : '',
                                     approval_client_status: data.ppjb ? data.ppjb.approval_client_status : '',
                                     approval_notaris_status: data.ppjb ? data.ppjb.approval_notaris_status : '',
                                     approval_developer_status: data.ppjb ? data.ppjb.approval_developer_status : '',
