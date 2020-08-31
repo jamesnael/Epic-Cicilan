@@ -31,7 +31,8 @@ class Booking extends Model
     	'payment_method_utj',
     	'bank_name',
     	'card_number',
-    	'point'
+    	'point',
+        'booking_status',
     ];
 
      /**
@@ -49,7 +50,7 @@ class Booking extends Model
         'sisa_tunggakan',
         'total_denda',
         'tanggal_lunas_cicilan',
-        // 'prosentase_pembayaran',
+        'prosentase_pembayaran',
     ];
 
     /**
