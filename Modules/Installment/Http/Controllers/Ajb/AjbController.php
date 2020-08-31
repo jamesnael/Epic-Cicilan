@@ -74,19 +74,19 @@ class AjbController extends Controller
                 "value" => 'agency_name',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_client',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_developer',
             ],
             [
-                "text" => 'Approved Notaris',
+                "text" => 'Approval Notaris',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_bank',
