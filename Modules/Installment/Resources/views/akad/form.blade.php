@@ -3,7 +3,6 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
     		<h3>Input Schedule Proses Akad KPR</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		</v-row>
 	    		<v-row>
     		        <v-col
     		          	cols="12"
@@ -68,34 +67,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    {{-- <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="12">
-			    			<v-menu
-		    		        v-model="menu3"
-		    		        :close-on-content-click="false"
-		    		        :nudge-right="40"
-		    		        transition="scale-transition"
-		    		        offset-y
-		    		        min-width="290px"
-		    		      >
-	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="required|min:1">
-			    		        <v-text-field
-			    		        	:persistent-hint="true"
-						    		:error-messages="errors"
-			    		            v-model="form_data.ppjb_date"
-			    		            label="Tanggal PPJB"
-			    		            readonly
-			    		            v-bind="attrs"
-			    		            v-on="on"
-			    		        ></v-text-field>
-				    		</validation-provider>
-	    		        	</template>
-	    		        	<v-date-picker v-model="form_data.ppjb_date" @input="menu3 = false"></v-date-picker>
-			    	</v-col>
-			    </v-row> --}}
+			    
 	    		<v-row>
 			    	<v-col
     		          	cols="12"
@@ -126,7 +98,18 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <h3 class="mt-4">Schedule Akad KPR</h3>
+        		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="">
+    	    		<v-text-field
+    	    			v-model="form_data.ppjb_date"
+    	    			:persistent-hint="true"
+    		    		:error-messages="errors"
+    		    		label="Tanggal PPJB"
+    		    		:readonly="!field_state"
+    		    		:disabled="field_state">
+        			</v-text-field>
+        		</validation-provider>
+			    
+				</v-row><h3 class="mt-4">Schedule Akad KPR</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -212,6 +195,7 @@
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
+
 			    <v-row>
 			    	<v-col
     		          cols="12"
@@ -235,6 +219,7 @@
 			    		</validation-provider>
 			    	</v-col>
 		    	</v-row>
+		    	
 				<v-row>
 					<v-col
     		          cols="12"
@@ -244,7 +229,6 @@
 							<v-file-input 
 		    		            show-size
 		    		            chips 
-		    		            counter 
 		    		            label="Pilih Dokumen"
 		    		            v-model="form_data.dokumen_awal"
 					    		:persistent-hint="true"
@@ -256,17 +240,17 @@
 			              </a>
 			            </validation-provider>
 		          </v-col>
-				</v-row>
+		        </v-row>
 
 				<v-row>
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approved Akad</h3>
+					    <h3 class="mt-4">Approval Akad</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 							<v-select
 					        v-model="form_data.approval_client_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Pembeli"
@@ -282,7 +266,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
 	    		          	<v-select
 					        v-model="form_data.approval_notaris_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Bank"
@@ -298,7 +282,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
 	    		          	<v-select
 					        v-model="form_data.approval_developer_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Developer"

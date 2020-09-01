@@ -98,7 +98,6 @@
     		        	<template v-slot:activator="{ on, attrs }">
 			    		<validation-provider v-slot="{ errors }" name="Tanggal Transaksi" rules="required">
 	    		        <v-text-field
-	    		        	:value="computedDateFormattedMomentjs"
 	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"
@@ -210,7 +209,6 @@
     		        	<template v-slot:activator="{ on, attrs }">
 			    		<validation-provider v-slot="{ errors }" name="Tanggal Pembayaran" rules="required">
 	    		        <v-text-field
-	    		        	:value="computedDateFormattedMomentjs"
 	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"
@@ -274,7 +272,6 @@
     		        	<template v-slot:activator="{ on, attrs }">
 			    		<validation-provider v-slot="{ errors }" name="Tanggal Pembayaran" rules="required">
 	    		        <v-text-field
-	    		        	:value="computedDateFormattedMomentjs"
 	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"

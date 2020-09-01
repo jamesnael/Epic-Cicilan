@@ -200,9 +200,9 @@ class InstallementController extends Controller
                 $data = BookingPayment::find($value['id']);
                 $data->update([
                     'due_date' => date('Y-m-d', strtotime($value['due_date'])),
-                    'sp1_date' => date('Y-m-d', strtotime($value['sp1_date'])),
-                    'sp2_date' => date('Y-m-d', strtotime($value['sp2_date'])),
-                    'sp3_date' => date('Y-m-d', strtotime($value['sp3_date'])),
+                    'sp1_date' => date('Y-m-d', strtotime($value['sp1_date'] ?? '')),
+                    'sp2_date' => date('Y-m-d', strtotime($value['sp2_date'] ?? '')),
+                    'sp3_date' => date('Y-m-d', strtotime($value['sp3_date'] ?? '')),
                     'installment' => str_replace('.', '', $value['installment']),
                     'credit' => str_replace('.', '', $value['credit']),
                 ]);

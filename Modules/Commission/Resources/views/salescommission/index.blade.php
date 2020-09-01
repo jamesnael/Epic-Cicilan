@@ -28,17 +28,17 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		add-new-uri="{{ route('salescommission.create') }}"
+		{{-- add-new-uri="{{ route('salescommission.create') }}"
 		add-new-text="Tambah"
-		add-new-color="light-blue lighten-2"
+		add-new-color="light-blue lighten-2" --}}
 		edit-uri="salescommission.edit"
 		edit-uri-parameter="slug"
 		edit-text="Ubah"
-		delete-uri="salescommission.destroy"
+		{{-- delete-uri="salescommission.destroy"
 		delete-uri-parameter="slug"
 		delete-text="Hapus"
 		delete-confirmation-text="Apakah Anda yakin untuk menghapus data ini ?"
-		delete-cancel-text="Batal"
+		delete-cancel-text="Batal" --}}
 		>
 		
 		@include('components.table')

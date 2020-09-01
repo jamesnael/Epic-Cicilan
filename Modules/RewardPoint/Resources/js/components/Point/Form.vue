@@ -36,6 +36,7 @@
             	form_data: {
             		building_type: '',
             		point: '',
+            		closing_fee:''
             	}
         	}
         },
@@ -55,6 +56,7 @@
     		            		this.form_data = {
     		            			building_type: data.building_type,
     		            			point: data.point,
+    		            			closing_fee: data.closing_fee,
     		            		}
 
     			                this.field_state = false

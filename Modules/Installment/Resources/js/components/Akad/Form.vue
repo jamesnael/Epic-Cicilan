@@ -92,6 +92,7 @@
                                     akad_time: data.akad_kpr ? data.akad_kpr.akad_time : '',
                                     location: data.akad_kpr ? data.akad_kpr.location : '',
                                     address: data.akad_kpr ? data.akad_kpr.address : '',
+                                    ppjb_date: data.ppjb ? data.ppjb.ppjb_date : '',
 
                                     dokumen_awal_akad: data.akad_kpr ? data.akad_kpr.akad_doc_file_name : '',
                                     url_dokumen_awal: data.akad_kpr ?  data.akad_kpr.url_akad_doc_file_name : '',

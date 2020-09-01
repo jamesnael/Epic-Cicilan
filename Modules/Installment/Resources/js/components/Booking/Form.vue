@@ -40,7 +40,13 @@
 			    default: function () {
 			        return []
 			    }
-			},			
+			},
+            filter_unit_type: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
 		},
 		data: function () {
             return {
@@ -50,6 +56,7 @@
 	            formAlertState: 'info',
 	            date: new Date().toISOString().substr(0, 10),
 	            menu: false,
+                menu2: false,
 			    modal: false,
 	            datepicker: false,
             	form_data: {
@@ -89,6 +96,12 @@
             		agency_name:'',
             		main_coordinator:'',
             		regional_coordinator:'',
+                    nup_amount: '',
+                    utj_amount: '',
+                    payment_method_nup: '',
+                    nup_date: '',
+                    utj_date: '',
+                    id_unit_type: ''
             	},
             	total_amount: '0',
                 first_payment: '0',
@@ -117,7 +130,9 @@
             	if(this.principal == '' && this.installment_time == ''){
             		return '0';
             	}
-            	return parseInt(this.principal) / parseInt(this.installment_time).toFixed(0);
+            	let result = parseInt(this.principal) / parseInt(this.installment_time);
+
+                return result.toFixed();
             },
         }, 
         mounted() {
@@ -134,7 +149,8 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
+    		            			id_unit_type:data.unit.id_unit_type,
+                                    unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
     		            			unit_number:data.unit.unit_number,
     		            			surface_area:data.unit.surface_area,
@@ -166,11 +182,18 @@
     		            			client_phone_number: data.client.client_phone_number,
     		            			client_mobile_number: data.client.client_mobile_number,
     		            			client_address: data.client.client_address,
-    		            			sales_id: data.sales_id,
+    		            			sales_id: data.sales.id,
     		            			sales_name:data.sales.user.full_name,
-    		            			agency_name:data.agency ? data.agency.agency_name : '',
+
+    		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+
+                                    nup_amount: data.nup_amount,
+                                    utj_amount: data.utj_amount,
+                                    payment_method_nup: data.payment_method_nup,
+                                    nup_date: data.nup_date,
+                                    utj_date: data.utj_date,
     		            		},
     		            		this.total_amount = data.total_amount
     		            		this.first_payment = data.first_payment
@@ -217,6 +240,8 @@
 	    		const data = new FormData(this.$refs['post-form']);
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
+                    data.append("utj_date", this.form_data.utj_date);
+                    data.append("nup_date", this.form_data.nup_date);
 	    		}
 	    		
 	    		this.field_state = true
@@ -277,11 +302,23 @@
 					this.form_data.regional_coordinator = sales.regional_coordinator
 				}
 			},
+            setSelectedUnitType() {
+                let unit = _.find(this.filter_unit_type, o => { return o.value == this.form_data.id_unit_type})
+                if (_.isUndefined(unit)) {
+                    this.form_data.closing_fee = ''
+                    this.form_data.unit_type = ''
+                    this.form_data.points = ''
+                } else {
+                    this.form_data.unit_type = unit.text
+                    this.form_data.closing_fee = unit.closing_fee
+                    this.form_data.points = unit.point
+                }
+            },
 			paymentType() {
                     this.total_amount = '0';
                     this.first_payment = '0';
-                    this.downPayment = '0';
-                    this.installment_time = '0';
+                    this.dp_amount = '0';
+                    this.installment_time = '1';
                     this.due_date = '0';
                     this.credits = '0';
             },

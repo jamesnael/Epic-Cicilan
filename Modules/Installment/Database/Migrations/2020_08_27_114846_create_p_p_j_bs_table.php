@@ -27,8 +27,8 @@ class CreatePPJBsTable extends Migration
             $table->string('ppjb_doc_file_name');
             $table->string('ppjb_doc_sign_file_name');
             $table->date('ppjb_sign_date');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

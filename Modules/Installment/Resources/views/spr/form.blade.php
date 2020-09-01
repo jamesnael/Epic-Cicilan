@@ -7,13 +7,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Klien" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Nama Klien" rules="">
 				    		<v-text-field
 				    			v-model="form_data.client_name"
 				    			name="client_name"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
-					    		:counter="255"
 					    		:error-messages="errors"
 					    		label="Nama Klien"
 					    		readonly>
@@ -25,13 +23,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Unit" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
 				    			v-model="form_data.unit_name"
 				    			name="unit_name"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
-					    		:counter="255"
 					    		:error-messages="errors"
 					    		label="Unit"
 					    		readonly>
@@ -43,13 +39,11 @@
     		        <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="">
 				    		<v-text-field
 				    			v-model="form_data.sales_name"
 				    			name="sales_name"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
-					    		:counter="255"
 					    		:error-messages="errors"
 					    		label="Nama Sales"
 					    		readonly>
@@ -164,7 +158,8 @@
 				</v-row>
 	            <v-btn
 		      		class="mt-4"
-		      		outlined 
+		      		outlined
+		      		:href="redirectUri"
 		      		:disabled="field_state">
     		      	Kembali
     		    </v-btn>

@@ -145,11 +145,11 @@
 			        >
 			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
 				    		<v-select
-				    			v-model="form_data.id_agency_commission"
+				    			v-model="form_data.id_commission"
 				    			:items="filter_agency_commission" 
 				    			@input="setSelectedAgency()"
 				              	label="Komisi Sub Agent (%)"
-				              	name="id_agency_commission"
+				              	name="id_commission"
 				              	menu-props="auto"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"

@@ -32,6 +32,6 @@ mix.webpackConfig({
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     output: {
-        chunkFilename: mix.inProduction() ? 'public/dist/[name].[chunkhash].js' : 'public/chunks/[name].[chunkhash].js',
+        chunkFilename: mix.inProduction() ? 'public/dist/[name].[chunkhash].js' : 'public/chunks/[name].js',
     }
 });

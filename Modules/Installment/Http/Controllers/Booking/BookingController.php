@@ -10,6 +10,7 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
+use Modules\RewardPoint\Entities\Point;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -185,7 +186,6 @@ class BookingController extends Controller
 
         DB::beginTransaction();
         try {
-
             $unit = Unit::where('id', $booking->unit_id)->first();
             $unit->update($request->all());
 
@@ -237,7 +237,7 @@ class BookingController extends Controller
             "unit_number" => "bail|required",
             "surface_area" => "bail|required|numeric",
             "building_area" => "bail|required|numeric",
-            "utj" => "bail|required",
+            // "utj" => "bail|required",
             "electrical_power" => "bail|required|numeric",
             "points" => "bail|required|numeric",
             "closing_fee" => "bail|required",
@@ -246,13 +246,13 @@ class BookingController extends Controller
             // "ppn" => "bail|required|numeric",
             "payment_type" => "bail|required|string|max:255",
             "payment_method" => "bail|required|string|max:255",
-            "dp_amount" => "bail|required|numeric",
+            "dp_amount" => "bail|nullable|numeric",
             "first_payment" => "bail|required",
             "principal" => "bail|required",
             "installment" => "bail|required|numeric",
             "installment_time" => "bail|required",
             "due_date" => "bail|required",
-            "credits" => "bail|required|numeric",
+            "credits" => "bail|nullable|numeric",
             "payment_method_utj" => "bail|required|string|max:255",
             "bank_name" => "bail|required|string|max:255",
             "card_number" => "bail|required|string|max:255",
@@ -283,7 +283,7 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->with('client','unit','payments')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -369,6 +369,7 @@ class BookingController extends Controller
                         return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
+            'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->get(),
         ];
     }
 

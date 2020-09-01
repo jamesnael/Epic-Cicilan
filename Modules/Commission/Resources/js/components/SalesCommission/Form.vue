@@ -37,6 +37,7 @@
 	            formAlertState: 'info',
                 menu2: false,
                 menu3: false,
+                menu4: false,
                 time: null,
 	            datepicker: false,
             	form_data: {

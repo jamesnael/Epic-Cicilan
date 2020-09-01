@@ -176,34 +176,48 @@ class PPJBController extends Controller
         DB::beginTransaction();
         try {
 
+              if ($request->hasFile('file_upload')) {
+                $file_name_doc = 'ppjbDocument-'.uniqid().'.'.$request->file('file_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBAwal', $request->file('file_upload'), $file_name_doc
+                );
+                $request->merge([
+                    'ppjb_doc_file_name' => $file_name_doc,
+                ]);
+          }
+           
+           if ($request->hasFile('sign_upload')) {
+                $file_name_doc_sign = 'ppjbDocumentSigned-'.uniqid().'.'.$request->file('sign_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('ppjb/suratPPJBSigned', $request->file('sign_upload'), $file_name_doc_sign
+                );
+                 $request->merge([
+                    'ppjb_doc_sign_file_name' => $file_name_doc_sign,
+                ]);
+          }
+
 
             $request->merge([
                 'ppjb_sign_date' => $request->ppjb_sign_date ? \Carbon\Carbon::parse($request->ppjb_sign_date)->format('Y-m-d') : '',
-                
+                'ppjb_date' => $request->ppjb_date ? \Carbon\Carbon::parse($request->ppjb_date)->format('Y-m-d') : '',
+           
             ]);            
 
-            $has_ppjb = PPJB::where('booking_id', $request->booking_id)->first();
 
-            $has_ppjb->update($request->all());
+             $has_ppjb = PPJB::where('booking_id', $request->booking_id)->first();
+            if ($has_ppjb) {
+                $data = $has_ppjb->update($request->all());
+            }else{
+                $data = PPJB::create($request->all());
+            }
 
-            if ($request->hasFile('ppjb_doc_file_name')) {
-                $file_name_doc = 'ppjbDocument-'.uniqid().'.'.$request->file('ppjb_doc_file_name')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('ppjb/suratPPJBAwal', $request->file('ppjb_doc_file_name'), $file_name_doc
-                );
-                 $has_ppjb->ppjb_doc_file_name = $file_name_doc;
-                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
-          }
+            if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Approved'
+                && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Approved'
+                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved') {
+                $PPJB->booking_status = 'cicilan';
+                $PPJB->save();
+            }
            
-           if ($request->hasFile('ppjb_doc_sign_file_name')) {
-                $file_name_doc_sign = 'ppjbDocumentSigned-'.uniqid().'.'.$request->file('ppjb_doc_sign_file_name')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('ppjb/suratPPJBSigned', $request->file('ppjb_doc_sign_file_name'), $file_name_doc_sign
-                );
-                 $has_ppjb->ppjb_doc_sign_file_name = $file_name_doc_sign;
-                // $request->merge([ 'ppjb_doc_file_name' =>  $file_name_doc ]);
-          }
 
 
-            $has_ppjb->save();
             DB::commit();
             return response_json(true, null, 'Data PPJB berhasil disimpan.', $has_ppjb);
         } catch (\Exception $e) {
@@ -243,7 +257,7 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -271,6 +285,7 @@ class PPJBController extends Controller
             $item->unit_price = 'Rp '.format_money($item->total_amount);
             $item->approval_client_status = $item->ppjb->approval_client_status ?? '' ;
             $item->ppjb_sign_date = $item->ppjb ? \Carbon\Carbon::parse($item->ppjb->ppjb_sign_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->ppjb_date = $item->document ? \Carbon\Carbon::parse($item->document->submission_date)->locale('id')->translatedFormat('d F Y') : '';
             $item->approval_notaris_status = $item->ppjb->approval_notaris_status ?? '' ;
             $item->approval_developer_status = $item->ppjb->approval_developer_status ?? '' ;
             $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;

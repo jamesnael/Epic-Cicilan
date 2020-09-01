@@ -59,6 +59,7 @@
                 menu3: false,
                 menu4: false,
                 menu5: false,
+                menu6: false,
 	            datepicker: false,
                 items_approval: [
                     'Approved',
@@ -71,10 +72,17 @@
                         url: '',
                         showcase: ''
                     },
+                    {
+                        title: 'Surat Hand Over Yang Sudah ditandatangani',
+                        file_name: 'handover_doc_sign_name',
+                        url: '',
+                        showcase: ''
+                    },
                 ],
 	            unit_handover: [],
             	form_data: {
                     handover_date: new Date().toISOString().substr(0, 10),
+                    payment_date: new Date().toISOString().substr(0, 10),
             		unit_type:'',
             		client_name:'',
             		unit_number:'',
@@ -144,7 +152,7 @@
     		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
     		            			total_amount: this.moneyFormat(data.total_amount),
     		            			payment_type: data.payment_type,
-                                    payment_date: data.tanggal_lunas_cicilan,
+                                    payment_date: data.tanggal_lunas_cicilan.payment_date,
     		            			payment_method: data.payment_method,
     		            			dp_amount: this.moneyFormat(data.dp_amount),
     		            			first_payment: this.moneyFormat(data.first_payment),
@@ -175,7 +183,13 @@
                                     location: data.handover ? data.handover.location : null,
                                     address: data.handover ? data.handover.address : null,
                                     handover_doc_file_name: data.handover ? data.handover.handover_doc_file_name : null,
-    		            		} 
+                                    handover_doc_sign_name: data.handover ? data.handover.handover_doc_sign_name : null,
+                                    sign_upload: data.handover ?  data.handover.url_doc_file_name : '',
+                                    file_upload: data.handover ? data.handover.url_doc_sign_file_name : '',
+                                    approval_client_status: data.handover ? data.handover.approval_client_status : null,
+                                    approval_developer_status: data.handover ? data.handover.approval_developer_status : null,
+                                    approval_notaris_status: data.handover ? data.handover.approval_notaris_status : null,
+                                } 
 
                                 _.forEach(data.payments, (value, key) => {
                                         arr_handover.push({

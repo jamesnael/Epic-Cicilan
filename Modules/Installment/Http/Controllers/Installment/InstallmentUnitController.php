@@ -177,7 +177,7 @@ class InstallmentUnitController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit','payments','sales.user')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client','unit','payments','sales.user')->bookingStatus('cicilan')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

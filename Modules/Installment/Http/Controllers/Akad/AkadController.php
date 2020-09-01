@@ -76,19 +76,19 @@ class AkadController extends Controller
                 "value" => 'agency_name',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_client',
             ],
             [
-                "text" => 'Approved Bank',
+                "text" => 'Approval Bank',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_bank',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'approved_developer',
@@ -238,7 +238,7 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'sales', 'akad_kpr')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -266,6 +266,7 @@ class AkadController extends Controller
             $item->approved_client = $item->akad_kpr->approval_client_status ?? '';
             $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? '';
             $item->approved_developer = $item->akad_kpr->approval_developer_status ?? '';
+            $item->sisa_tunggakan = $item->sisa_tunggakan;
             
             return $item;
         });

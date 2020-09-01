@@ -86,18 +86,6 @@ class HandOverController extends Controller
                 "sortable" => true,
                 "value" => 'agency_name',
             ],
-            [
-                "text" => 'Schedule Tandatangan',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Dokumen Awal',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
         ];
         return view('installment::handover.index', [
             'page' => $this,
@@ -167,11 +155,20 @@ class HandOverController extends Controller
         DB::beginTransaction();
         try {
             if ($request->hasFile('file_upload')) {
-                $file_name = 'akad_kpr_awal-' . uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+                $file_name = 'first_handover-' . uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs('handover/handover_doc_file_names', $request->file('file_upload'), $file_name
                 );
                 $request->merge([
                     'handover_doc_file_name' => $file_name,
+                ]);
+            }
+
+            if ($request->hasFile('sign_upload')) {
+                $file_name = 'signed_handover-' . uniqid() . '.' . $request->file('sign_upload')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('handover/handover_doc_sign_names', $request->file('sign_upload'), $file_name
+                );
+                $request->merge([
+                    'handover_doc_sign_name' => $file_name,
                 ]);
             }
             $has_handover = HandOver::where('booking_id', $request->booking_id)->first();
@@ -230,8 +227,7 @@ class HandOverController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
-        // return BookingPayment::with('booking')->whereRaw('installment + fine', 'total_paid')->get();
+        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 

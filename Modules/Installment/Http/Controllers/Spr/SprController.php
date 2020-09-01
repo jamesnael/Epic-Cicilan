@@ -157,6 +157,10 @@ class SprController extends Controller
         }
         DB::beginTransaction();
         try {
+            if ($request->has('approval_status') && $request->input('approval_status') == 'Approved' && $spr->booking_status == 'spr') {
+                $spr->booking_status = 'ppjb';
+                $spr->save();
+            }
 
             $has_spr = Spr::where('booking_id', $request->booking_id)->first();
 
@@ -232,7 +236,7 @@ class SprController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'spr', 'sales')->bookingStatus('spr')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

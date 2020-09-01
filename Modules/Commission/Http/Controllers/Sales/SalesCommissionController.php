@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Commission\Entities\Commission;
+use Modules\Installment\Entities\Booking;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -34,25 +35,25 @@ class SalesCommissionController extends Controller
                 "text" => 'Nama Sales',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'agency_name',
             ],
             [
                 "text" => 'Koordinator Wilayah',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'korwil_name',
             ],
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'client_name',
             ],
             [
                 "text" => 'Tanggal Transaksi',
@@ -166,13 +167,18 @@ class SalesCommissionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the specified resource.
      * @param int $id
-     * @return Renderable
+     * @return Response
      */
-    public function edit($id)
+    public function edit(Booking $salescommission)
     {
-        return view('commission::edit');
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sales'];
+
+        return view('commission::salescommission.edit',[
+            'page' => $this,
+            'data' => $salescommission,
+        ]);
     }
 
     /**
@@ -181,18 +187,88 @@ class SalesCommissionController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Booking $salescommission)
     {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+     *
+     * Validation Rules for Get Table Data
+     *
      */
-    public function destroy($id)
+    public function validateTableRequest($request)
     {
-        //
+        return Validator::make($request->all(), [
+            "page" => "bail|required|numeric|min:1",
+            "search" => "bail|present|nullable",
+            "paginate" => "bail|required|numeric|in:5,10,15,-1",
+            "sort" => "bail|present|array",
+            "sort.*[0]" => "bail|required",
+            "sort.*[1]" => "bail|required|boolean",
+        ]);
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableData(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'document', 'sales')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->korwil_name = $item->sales->regional_coordinator ? $item->sales->regional_coordinator->full_name : '';
+            $item->korut_name = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
+            $item->client_name = $item->client->client_name;
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function table(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 }

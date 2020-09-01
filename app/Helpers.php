@@ -225,7 +225,7 @@ if (! function_exists('aside_menu')) {
                     ],
                     [
                         'icon' => 'mdi-contacts',
-                        'text' => 'Agensi',
+                        'text' => 'Sub Agent',
                         'uri' => route('agencies.index'),
                         'model' => in_array(Route::currentRouteName(), ['agencies.index','agencies.create','agencies.edit'])
                     ],
