@@ -186,7 +186,6 @@ class BookingController extends Controller
 
         DB::beginTransaction();
         try {
-
             $unit = Unit::where('id', $booking->unit_id)->first();
             $unit->update($request->all());
 

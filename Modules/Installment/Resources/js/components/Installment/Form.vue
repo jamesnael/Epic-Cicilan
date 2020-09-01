@@ -166,8 +166,8 @@
                                             id: value.id,
                                             payment: value.payment,
                                             due_date: value.due_date,
-                                            installment: this.moneyFormat(value.installment),
-                                            credit: this.moneyFormat(value.credit)
+                                            installment: value.installment,
+                                            credit: value.credit
                                         })
                                 });
 
@@ -259,27 +259,28 @@
                 return s.join(dec);
             },
         	regenerateInstallment () {
-                let new_installment = []
-                let credit = _.toString(this.unit_installments[0].credit).split('.').join('')
-                let unit_price = parseInt(credit)
+                var new_installment = []
+                var credit = this.unit_installments[0].credit
+                var unit_price = parseInt(credit)
 
                 _.forEach(this.unit_installments, (value, key) => {
-                    if (key == 0) {
+                    if (key == 0 || (key == parseInt(this.form_data.installment_time) + 1 && this.form_data.payment_type == 'KPR/KPA')) {
+                        console.log(key)
                         new_installment.push({
                             id: value.id,
                             payment: value.payment,
                             due_date: value.due_date,
-                            installment: this.moneyFormat(parseInt(_.toString(value.installment).split('.').join(''))),
-                            credit: this.moneyFormat(parseInt(_.toString(value.credit).split('.').join('')))
+                            installment: parseInt(value.installment),
+                            credit: parseInt(value.credit)
                         })
                     } else {
-                        unit_price = unit_price - parseInt(_.toString(value.installment).split('.').join(''))
+                        unit_price = parseInt(unit_price) - parseInt(value.installment)
                         new_installment.push({
                             id: value.id,
                             payment: value.payment,
                             due_date: value.due_date,
-                            installment: key == this.form_data.installment_time ? this.moneyFormat(parseInt(_.toString(value.installment).split('.').join('')) + unit_price) : this.moneyFormat(parseInt(_.toString(value.installment).split('.').join(''))),
-                            credit: key == this.form_data.installment_time ? 0 : this.moneyFormat(unit_price)
+                            installment: key == this.form_data.installment_time ? parseInt(value.installment) + parseInt(unit_price) : parseInt(value.installment),
+                            credit: key == this.form_data.installment_time ? 0 : parseInt(unit_price)
                         })
                     }
                 });
