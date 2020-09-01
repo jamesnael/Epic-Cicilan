@@ -244,8 +244,6 @@
 		    	 v-if="form_data.ppjb_sign_date !== ''"
 		    	 >Approved PPJB</h3>
 
-		    	 <h3 class="mt-4">Approval PPJB</h3>
-
 		    		
 		    		<v-col
     		          	cols="12"
