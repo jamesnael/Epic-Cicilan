@@ -377,9 +377,12 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
+          </v-row>
+
+          <v-row>
             <v-col
-                cols="12"
-                md="6">
+              cols="12"
+              md="6">
               <validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
                 <v-text-field
                   class="mt-4"
@@ -392,8 +395,6 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-          </v-row>
-          <v-row>
             <v-col
               cols="12"
               md="6">
@@ -409,9 +410,11 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-             <v-col
+          </v-row>
+          <v-row>
+            <v-col
               cols="12"
-              md="6">
+              md="4">
               <validation-provider v-slot="{ errors }" name="" rules="">
                 <v-text-field
                   class="mt-4"
@@ -424,13 +427,12 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-          </v-row>
-          <v-row>
             <v-col
-                cols="12"
-                md="6">
+              cols="12"
+              md="4">
               <validation-provider v-slot="{ errors }" name="Nama bank" rules="required">
                 <v-text-field
+                  class="mt-4"
                   v-model="form_data.bank_name"
                   name="bank_name"
                   label="Nama Bank"
@@ -440,11 +442,12 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-                <v-col
-                cols="12"
-                md="6">
+            <v-col
+              cols="12"
+              md="4">
               <validation-provider v-slot="{ errors }" name="Nomor rekening" rules="required|numeric">
                 <v-text-field
+                  class="mt-4"
                   v-model="form_data.card_number"
                   name="card_number"
                   label="Nomor Rekening"
@@ -454,7 +457,7 @@
             </v-col>
           </v-row>
           
-          <h3>Data Sales</h3>
+          <h3 class="mt-4">Data Sales</h3>
           <v-row>
             <v-col
               cols="12"

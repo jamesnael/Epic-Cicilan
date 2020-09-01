@@ -384,6 +384,8 @@
 	    		        	<v-date-picker name="nup_date" v-model="form_data.nup_date" @input="menu2 = false"></v-date-picker>
 	    		      	</v-menu>
 			    	</v-col>
+			    </v-row>
+			    <v-row>
 			    	<v-col
     		          	cols="12"
     		          	md="6">
@@ -401,8 +403,6 @@
 			    			<small class="form-text text-muted">Rp @{{ form_data.utj_amount ? number_format(form_data.utj_amount) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
-				</v-row>
-	    		<v-row>
 	    			<v-col
     		          	cols="12"
     		          	md="6">
@@ -420,9 +420,11 @@
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
+			    </v-row>
+			    <v-row>
 				    <v-col
-    		          	cols="6"
-    		          	md="6">
+    		          	cols="12"
+    		          	md="4">
 				    		<v-menu
 		    		        v-model="menu"
 		    		        :close-on-content-click="false"
@@ -434,6 +436,7 @@
 	    		        	<template v-slot:activator="{ on, attrs }">
 				    		<validation-provider v-slot="{ errors }" name="Tanggal Pembayaran UTJ" rules="required">
 			    		        <v-text-field
+			    		        	class="mt-4"
 			    		        	:value="reformatDateTime(form_data.utj_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 			    		        	hint="* harus diisi"
 			    		        	:persistent-hint="true"
@@ -448,11 +451,9 @@
 	    		        	<v-date-picker name="utj_date" v-model="form_data.utj_date" @input="menu = false"></v-date-picker>
 	    		      	</v-menu>
 			    	</v-col>
-			    </v-row>
-			    <v-row>
 			    	<v-col
     		          	cols="12"
-    		          	md="6">
+    		          	md="4">
 			    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="">
 				    		<v-text-field
 				    			class="mt-4"
@@ -468,7 +469,7 @@
 			    	</v-col>
     		        <v-col
     		          	cols="12"
-    		          	md="6">
+    		          	md="4">
 			    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="numeric">
 				    		<v-text-field
 				    			class="mt-4"
