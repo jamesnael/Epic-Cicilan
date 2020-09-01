@@ -3,7 +3,6 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
     		<h3>Input Schedule Proses Akad KPR</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		</v-row>
 	    		<v-row>
     		        <v-col
     		          	cols="12"
@@ -109,7 +108,8 @@
     		    		:disabled="field_state">
         			</v-text-field>
         		</validation-provider>
-			    <h3 class="mt-4">Schedule Akad KPR</h3>
+			    
+				</v-row><h3 class="mt-4">Schedule Akad KPR</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -195,6 +195,7 @@
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
+
 			    <v-row>
 			    	<v-col
     		          cols="12"
@@ -218,6 +219,7 @@
 			    		</validation-provider>
 			    	</v-col>
 		    	</v-row>
+		    	
 				<v-row>
 					<v-col
     		          cols="12"
@@ -227,7 +229,6 @@
 							<v-file-input 
 		    		            show-size
 		    		            chips 
-		    		            counter 
 		    		            label="Pilih Dokumen"
 		    		            v-model="form_data.dokumen_awal"
 					    		:persistent-hint="true"
@@ -239,7 +240,7 @@
 			              </a>
 			            </validation-provider>
 		          </v-col>
-				</v-row>
+		        </v-row>
 
 				<v-row>
 					<v-col
@@ -249,7 +250,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 							<v-select
 					        v-model="form_data.approval_client_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Pembeli"
@@ -265,7 +266,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
 	    		          	<v-select
 					        v-model="form_data.approval_notaris_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Bank"
@@ -281,7 +282,7 @@
 			    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
 	    		          	<v-select
 					        v-model="form_data.approval_developer_status"
-					        :items="items_approval"
+					        :items="['Pending', 'Approved']"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 					        label="Approval Developer"

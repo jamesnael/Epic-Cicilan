@@ -33,6 +33,11 @@ class Booking extends Model
     	'card_number',
     	'point',
         'booking_status',
+        'nup_amount',
+        'utj_amount',
+        'payment_method_nup',
+        'nup_date',
+        'utj_date',
     ];
 
      /**
@@ -132,7 +137,9 @@ class Booking extends Model
 
     public function getProsentasePembayaranAttribute()
     {
-        return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+        if ($this->total_pembayaran && $this->total_denda) {
+            return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+        }
     }
     
     public function getTanggalLunasCicilanAttribute()

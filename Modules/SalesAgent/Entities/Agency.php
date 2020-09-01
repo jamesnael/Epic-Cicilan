@@ -27,6 +27,7 @@ class Agency extends Model
         'rek_number',
         'account_name',
         'pph_final',
+        'id_commission',
         'id_sales_commission',
         'id_agency_commision',
         'id_regional_coordinator_commission',

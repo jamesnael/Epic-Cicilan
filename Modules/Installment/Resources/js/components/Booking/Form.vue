@@ -50,6 +50,7 @@
 	            formAlertState: 'info',
 	            date: new Date().toISOString().substr(0, 10),
 	            menu: false,
+                menu2: false,
 			    modal: false,
 	            datepicker: false,
             	form_data: {
@@ -89,6 +90,11 @@
             		agency_name:'',
             		main_coordinator:'',
             		regional_coordinator:'',
+                    nup_amount: '',
+                    utj_amount: '',
+                    payment_method_nup: '',
+                    nup_date: '',
+                    utj_date: '',
             	},
             	total_amount: '0',
                 first_payment: '0',
@@ -170,9 +176,16 @@
     		            			client_address: data.client.client_address,
     		            			sales_id: data.sales_id,
     		            			sales_name:data.sales.user.full_name,
-    		            			agency_name:data.agency ? data.agency.agency_name : '',
+
+    		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+
+                                    nup_amount: data.nup_amount,
+                                    utj_amount: data.utj_amount,
+                                    payment_method_nup: data.payment_method_nup,
+                                    nup_date: data.nup_date,
+                                    utj_date: data.utj_date,
     		            		},
     		            		this.total_amount = data.total_amount
     		            		this.first_payment = data.first_payment
@@ -219,6 +232,8 @@
 	    		const data = new FormData(this.$refs['post-form']);
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
+                    data.append("utj_date", this.form_data.utj_date);
+                    data.append("nup_date", this.form_data.nup_date);
 	    		}
 	    		
 	    		this.field_state = true

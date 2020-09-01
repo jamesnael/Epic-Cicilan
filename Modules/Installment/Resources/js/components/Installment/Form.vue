@@ -51,7 +51,7 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
                 modal: false,
-                idx:false,
+                menu2:false,
                 menu:false,
 	            datepicker: false,
 	            unit_installments: [],
@@ -92,6 +92,11 @@
             		agency_name:'',
             		main_coordinator:'',
             		regional_coordinator:'',
+                    nup_amount: '',
+                    utj_amount: '',
+                    payment_method_nup: '',
+                    nup_date: '',
+                    utj_date: '',
             	}
         	}
         },
@@ -107,8 +112,8 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                console.log(data)
                                 let arr_installment = []
+                                
     		            		this.form_data = {
     		            			unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
@@ -144,6 +149,12 @@
     		            			client_address: data.client.client_address,
     		            			sales_id: data.sales_id,
     		            			sales_name:data.sales.user.full_name,
+
+                                    nup_amount: data.nup_amount,
+                                    utj_amount: data.utj_amount,
+                                    payment_method_nup: data.payment_method_nup,
+                                    nup_date: data.nup_date,
+                                    utj_date: data.utj_date,
 
     		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',

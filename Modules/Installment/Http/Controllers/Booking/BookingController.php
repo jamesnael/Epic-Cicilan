@@ -246,13 +246,13 @@ class BookingController extends Controller
             // "ppn" => "bail|required|numeric",
             "payment_type" => "bail|required|string|max:255",
             "payment_method" => "bail|required|string|max:255",
-            "dp_amount" => "bail|required|numeric",
+            "dp_amount" => "bail|nullable|numeric",
             "first_payment" => "bail|required",
             "principal" => "bail|required",
             "installment" => "bail|required|numeric",
             "installment_time" => "bail|required",
             "due_date" => "bail|required",
-            "credits" => "bail|required|numeric",
+            "credits" => "bail|nullable|numeric",
             "payment_method_utj" => "bail|required|string|max:255",
             "bank_name" => "bail|required|string|max:255",
             "card_number" => "bail|required|string|max:255",
@@ -283,7 +283,7 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->with('client','unit','payments')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
