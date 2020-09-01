@@ -14,6 +14,7 @@ class Point extends Model
 	    'slug',
 	    'building_type',
 	    'point',
+        'closing_fee',
 	];
 
 	/**

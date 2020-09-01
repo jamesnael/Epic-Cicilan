@@ -40,7 +40,13 @@
 			    default: function () {
 			        return []
 			    }
-			},			
+			},
+            filter_unit_type: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
 		},
 		data: function () {
             return {
@@ -95,6 +101,7 @@
                     payment_method_nup: '',
                     nup_date: '',
                     utj_date: '',
+                    id_unit_type: ''
             	},
             	total_amount: '0',
                 first_payment: '0',
@@ -142,7 +149,8 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
+    		            			id_unit_type:data.unit.id_unit_type,
+                                    unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
     		            			unit_number:data.unit.unit_number,
     		            			surface_area:data.unit.surface_area,
@@ -174,7 +182,7 @@
     		            			client_phone_number: data.client.client_phone_number,
     		            			client_mobile_number: data.client.client_mobile_number,
     		            			client_address: data.client.client_address,
-    		            			sales_id: data.sales_id,
+    		            			sales_id: data.sales.id,
     		            			sales_name:data.sales.user.full_name,
 
     		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
@@ -294,6 +302,18 @@
 					this.form_data.regional_coordinator = sales.regional_coordinator
 				}
 			},
+            setSelectedUnitType() {
+                let unit = _.find(this.filter_unit_type, o => { return o.value == this.form_data.id_unit_type})
+                if (_.isUndefined(unit)) {
+                    this.form_data.closing_fee = ''
+                    this.form_data.unit_type = ''
+                    this.form_data.points = ''
+                } else {
+                    this.form_data.unit_type = unit.text
+                    this.form_data.closing_fee = unit.closing_fee
+                    this.form_data.points = unit.point
+                }
+            },
 			paymentType() {
                     this.total_amount = '0';
                     this.first_payment = '0';
