@@ -246,7 +246,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approved Akad</h3>
+					    <h3 class="mt-4">Approval Akad</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 							<v-select
 					        v-model="form_data.approval_client_status"
