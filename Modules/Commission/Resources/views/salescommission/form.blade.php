@@ -7,14 +7,14 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Klien" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
 				    			v-model="form_data.client_name"
 				    			name="client_name"
-					    		hint="* harus diisi"
 					    		:persistent-hint="true"
-					    		:counter="255"
 					    		:error-messages="errors"
+					    		:readonly="!field_state"
+					    		:disabled="field_state"
 					    		label="Nama Klien">
 			    			</v-text-field>
 			    		</validation-provider>
@@ -22,68 +22,88 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tipe Rumah" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.home_type"
-				    			name="home_type"
+				    			v-model="form_data.unit_type"
 					    		label="Tipe Rumah"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="!field_state"
+					    		:disabled="field_state"
+					    	>
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+			    </v-row>
+			    <v-row>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
+				    		<v-text-field
+				    			v-model="form_data.unit_number"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		label="Nomor Unit"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+				    <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
+				    		<v-text-field
+				    			v-model="form_data.unit_price"
+				    			name="unit_price"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		label="Harga Unit + PPN"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
+			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{form_data.unit_price ? number_format(form_data.unit_price) : 0 }}</small>
+			    		</validation-provider>
+				    </v-col>
+			    </v-row>
+			    <v-row>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required|max:255">
+				    		<v-text-field
+				    			v-model="form_data.payment_method"
+				    			name="payment_method"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:counter="255"
 					    		:error-messages="errors"
-					    		:readonly="field_state"
-					    		placeholder>
+					    		label="Cara Bayar"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required|max:255">
+				    		<v-text-field
+				    			v-model="form_data.sales_name"
+				    			name="sales_name"
+					    		label="Nama Sales"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:counter="255"
+					    		:error-messages="errors"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
 			    <v-row>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Blok" rules="required">
-				    		<v-text-field
-				    			v-model="form_data.blok"
-				    			name="blok"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		label="Blok">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="No Blok" rules="required|numeric">
-				    		<v-text-field
-				    			v-model="form_data.no_blok"
-				    			name="no_blok"
-					    		label="No Blok"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state"
-					    		placeholder>
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
-			    <v-row>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Harga Unit + PPN" rules="required|numeric">
-				    		<v-text-field
-				    			v-model="form_data.unit_price"
-				    			name="unit_price"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		label="Harga Unit + PPN">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
     		        <v-col
     		          	cols="12"
     		          	md="6">
@@ -112,70 +132,65 @@
     		        	<v-date-picker v-model="form_data.transaction_date" @input="menu2 = false"></v-date-picker>
 				    </v-col>
 			    </v-row>
-			    <v-row>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Cara Bayar" rules="required|max:255">
-				    		<v-text-field
-				    			v-model="form_data.payment_method"
-				    			name="payment_method"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		label="Cara Bayar">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required|max:255">
-				    		<v-text-field
-				    			v-model="form_data.sales_name"
-				    			name="sales_name"
-					    		label="Nama Sales"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state"
-					    		placeholder>
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    </v-row>
     			<h3 class="mt-5">Pembayaran Komisi Sub Agent</h3>
     			<v-row>
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sub Agent" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.sub_agent_name"
-				    			name="sub_agent_name"
-					    		hint="* harus diisi"
-					    		:counter="255"
+				    			v-model="form_data.agency_name"
+				    			name="agency_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Nama Sub Agent">
+					    		label="Nama Sub Agent"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Komisi Sub Agent" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Komisi Sub Agent" rules="">
 				    		<v-text-field
-				    			v-model="form_data.agent_commission"
-				    			name="agent_commission"
-					    		label="Komisi Sub Agent"
-					    		hint="* harus diisi"
+				    			v-model="form_data.agency_commission"
+				    			name="agency_commission"
+					    		label="Komisi Sub Agent (%)"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		:readonly="field_state"
-					    		placeholder>
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+			    </v-row>
+			    <v-row>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
+				    		<v-text-field
+				    			v-model="form_data.pph_final"
+				    			name="pph_final"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
+				    		<v-text-field
+				    			:value="pph21"
+					    		label="PPH 21 (%)"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -186,13 +201,15 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Pencairan 1 Komisi (50%)" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.pencairan_1_komisi"
-				    			name="pencairan_1_komisi"
-					    		hint="* harus diisi"
+				    			v-model="commission_1"
+				    			name="commission_1"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Pencairan 1 Komisi (50%)">
+					    		label="Pencairan 1 Komisi (50%)"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{commission_1 ? number_format(commission_1) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
     		        <v-col
@@ -212,7 +229,7 @@
 	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"
-	    		            v-model="form_data.buy_date"
+	    		            v-model="form_data.payment_date_1"
 	    		            label="Tanggal Pembayaran"
 	    		            readonly
 	    		            v-bind="attrs"
@@ -220,7 +237,7 @@
 	    		        ></v-text-field>
 			    		</validation-provider>
     		        	</template>
-    		        	<v-date-picker v-model="form_data.buy_date" @input="menu3 = false"></v-date-picker>
+    		        	<v-date-picker name="" v-model="form_data.payment_date_1" @input="menu3 = false"></v-date-picker>
 				    </v-col>
 			    </v-row>
 			    <v-row>
@@ -234,11 +251,11 @@
 		    		            counter 
 		    		            multiple 
 		    		            label="Upload Bukti Pembayaran"
-		    		            v-model="form_data.evidence"
+		    		            v-model="form_data.payment_proof_1"
 		    		            hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="evidence">
+				              	name="payment_proof_1">
 			              </v-file-input>
 			           </validation-provider>
 		          </v-col>
@@ -249,13 +266,15 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Pencairan 2 Komisi (50%)" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.pencairan_2_komisi"
-				    			name="pencairan_2_komisi"
-					    		hint="* harus diisi"
+				    			v-model="commission_2"
+				    			name="commission_2"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Pencairan 2 Komisi (50%)">
+					    		label="Pencairan 2 Komisi (50%)"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{commission_2 ? number_format(commission_2) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
     		        <v-col
@@ -275,15 +294,15 @@
 	    		        	hint="* harus diisi"
 	    		        	:persistent-hint="true"
 				    		:error-messages="errors"
-	    		            v-model="form_data.buy_date2"
+	    		            v-model="form_data.payment_date_1"
 	    		            label="Tanggal Pembayaran"
-	    		            readonly
 	    		            v-bind="attrs"
 	    		            v-on="on"
+	    		            readonly
 	    		        ></v-text-field>
 			    		</validation-provider>
     		        	</template>
-    		        	<v-date-picker v-model="form_data.buy_date2" @input="menu4 = false"></v-date-picker>
+    		        	<v-date-picker v-model="form_data.payment_date_1" @input="menu4 = false"></v-date-picker>
 				    </v-col>
 			    </v-row>
 			    <v-row>
@@ -311,30 +330,32 @@
     		        <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Closing Fee Unit" rules="required|numeric">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_unit"
-				    			name="closing_fee_unit"
-					    		hint="* harus diisi"
+				    			v-model="form_data.closing_fee"
+				    			name="closing_fee"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Closing Fee Unit">
+					    		label="Closing Fee Unit"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
-			    		</validation-provider>
+			    			<small class="form-text text-muted">Rp @{{form_data.closing_fee ? number_format(form_data.closing_fee) : 0 }}</small>
 				    </v-col>
 			    </v-row>
 			    <v-row>
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Closing Fee Sales" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_sales"
-				    			name="closing_fee_sales"
-					    		hint="* harus diisi"
+				    			v-model="form_data.sales_name"
+				    			name="sales_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Closing Fee Sales">
+					    		label="Closing Fee Sales"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -343,13 +364,14 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Sales" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_sales_price"
-				    			name="closing_fee_sales_price"
+				    			v-model="form_data.commission_sales"
+				    			name="commission_sales"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		placeholder="Rp">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{form_data.commission_sales ? number_format(form_data.commission_sales) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -359,12 +381,13 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Sub Agent" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_sub_agent"
-				    			name="closing_fee_sub_agent"
-					    		hint="* harus diisi"
+				    			v-model="form_data.agency_name"
+				    			name="agency_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Closing Fee Sub Agent">
+					    		label="Closing Fee Sub Agent"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -373,13 +396,14 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Sub Agent" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_sub_agent_price"
-				    			name="closing_fee_sub_agent_price"
+				    			v-model="form_data.commission_agency"
+				    			name="commission_agency"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		placeholder="Rp">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{form_data.commission_agency ? number_format(form_data.commission_agency) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -389,12 +413,13 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Korwil" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_korwil"
-				    			name="closing_fee_korwil"
-					    		hint="* harus diisi"
+				    			v-model="form_data.korwil_name"
+				    			name="korwil_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Closing Fee Korwil">
+					    		label="Closing Fee Korwil"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -403,13 +428,14 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Korwil" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_korwil_price"
-				    			name="closing_fee_korwil_price"
+				    			v-model="form_data.commission_korwil"
+				    			name="commission_korwil"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		placeholder="Rp">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{form_data.commission_korwil ? number_format(form_data.commission_korwil) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -419,12 +445,13 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Koordinator Utama" rules="required">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_main_koordinator"
-				    			name="closing_fee_main_koordinator"
-					    		hint="* harus diisi"
+				    			v-model="form_data.korut_name"
+				    			name="korut_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		label="Closing Fee Koordinator Utama">
+					    		label="Closing Fee Koordinator Utama"
+					    		:readonly="!field_state"
+					    		:disabled="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
@@ -433,13 +460,14 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Closing Fee Koordinator Utama" rules="required|numeric">
 				    		<v-text-field
-				    			v-model="form_data.closing_fee_main_koordinator_price"
-				    			name="closing_fee_main_koordinator_price"
+				    			v-model="form_data.commission_korut"
+				    			name="commission_korut"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		placeholder="Rp">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{form_data.commission_korut ? number_format(form_data.commission_korut) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>

@@ -27,6 +27,10 @@
 			dataUri: {
 			    type: String,
 			    default: ''
+			},
+			pph21: {
+			    type: String,
+			    default: ''
 			}
 		},
 		data: function () {
@@ -35,26 +39,35 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
-                menu2: false,
-                menu3: false,
-                menu4: false,
-                time: null,
 	            datepicker: false,
-            	form_data: {
-            		sales_commission: "0",
-            		agency_commission: "0",
-            		regional_coordinator_commission: "0",
-            		main_coordinator_commission: "0",
-            		total_commission:''
-            	}
+	            menu4: false,
+	            menu3: false,
+	            menu2: false,
+	            form_data: {
+        			client_name: '',
+        			unit_type: '',
+        		}
+
         	}
         },
-        computed: {
-            total: function() {
-              return parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
-
-            }
-        },
+        computed:{
+            commission_1: function() {
+            	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
+                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
+                let result = commission - pph_final_result - pph_21
+                return result.toFixed();  
+            },
+            commission_2: function() {
+            	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
+                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
+                let result = commission - pph_final_result - pph_21
+                return result.toFixed();  
+            },
+        }, 
         mounted() {
             this.setData();
         },
@@ -68,11 +81,20 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+    		            		console.log(data)
     		            		this.form_data = {
-    		            			sales_commission: data.sales_commission,
-    		            			agency_commission: data.agency_commission,
-    		            			regional_coordinator_commission: data.regional_coordinator_commission,
-    		            			main_coordinator_commission: data.main_coordinator_commission,
+    		            			client_name: data.client.client_name,
+    		            			unit_type: data.unit.unit_type,
+    		            			unit_number: data.unit.unit_number +' / '+ data.unit.unit_block,
+    		            			sales_name: data.sales.user.full_name,
+    		            			unit_price: data.total_amount,
+    		            			payment_method: data.payment_method,
+    		            			agency_name: data.sales.agency.agency_name,
+    		            			agency_commission: data.sales.agency.agency_commission,
+    		            			closing_fee: data.unit.closing_fee,
+    		            			korut_name: data.sales.main_coordinator.full_name,
+    		            			korwil_name: data.sales.regional_coordinator.full_name,
+    		            			pph_final: data.sales.agency.pph_final,
     		            		}
 
     			                this.field_state = false
@@ -109,6 +131,30 @@
 		        }
 		        this.$refs.observer.reset()
 		    },
+		    moneyFormat(number) {
+                var decimals = 0;
+                var dec_point = ',';
+                var thousands_sep = '.';
+
+                var n = !isFinite(+number) ? 0 : +number, 
+                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                    toFixedFix = function (n, prec) {
+                        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                        var k = Math.pow(10, prec);
+                        return Math.round(n * k) / k;
+                    },
+                    s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || '').length < prec) {
+                    s[1] = s[1] || '';
+                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                }
+                return s.join(dec);
+            },
 		    postFormData() {
 	    		const data = new FormData(this.$refs['post-form']);
 	    		if (this.dataUri) {

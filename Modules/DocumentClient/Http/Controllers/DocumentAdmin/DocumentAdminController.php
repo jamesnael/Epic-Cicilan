@@ -137,7 +137,7 @@ class DocumentAdminController extends Controller
         return view('document::show');
     }
 
-     /**
+    /**
      * Show the specified resource.
      * @param int $id
      * @return Response
