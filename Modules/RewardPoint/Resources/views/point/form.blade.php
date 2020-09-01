@@ -15,6 +15,19 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Closing fee" rules="required|numeric">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.closing_fee"
+		    			name="closing_fee"
+			    		label="Closing Fee"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ form_data.closing_fee ? number_format(form_data.closing_fee) : 0 }}</small>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Point" rules="required|numeric">
 		    		<v-text-field
 		    			class="mt-4"
@@ -27,6 +40,7 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"

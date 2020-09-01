@@ -5,7 +5,7 @@ namespace Modules\RewardPoint\Http\Controllers\Point;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Point\Entities\Point;
+use Modules\RewardPoint\Entities\Point;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -42,6 +42,12 @@ class PointController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'point',
+            ],
+            [
+                "text" => 'Closing Fee',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'closing_fee',
             ],
         ];
         return view('rewardpoint::point.index', [
@@ -188,6 +194,7 @@ class PointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $item->closing_fee = 'Rp '.format_money($item->closing_fee);
             return $item;
         });
         return $data;
@@ -239,6 +246,7 @@ class PointController extends Controller
         return Validator::make($request->all(), [
             "building_type" => "bail|required|string|max:255",
             "point" => "bail|required|numeric",
+            "closing_fee" => "bail|required|numeric",
         ]);
     }
 
