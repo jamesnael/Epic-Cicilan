@@ -10,6 +10,7 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
+use Modules\RewardPoint\Entities\Point;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -368,6 +369,7 @@ class BookingController extends Controller
                         return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
+            'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->get(),
         ];
     }
 

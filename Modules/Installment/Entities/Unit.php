@@ -24,6 +24,7 @@ class Unit extends Model
     	'utj',
     	'closing_fee',
     	'available',
+        'id_unit_type'
     ];
 
      /**
