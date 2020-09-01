@@ -150,8 +150,8 @@
     		            			sales_id: data.sales_id,
     		            			sales_name:data.sales.user.full_name,
 
-                                    nup_amount: data.nup_amount,
-                                    utj_amount: data.utj_amount,
+                                    nup_amount: this.moneyFormat(data.nup_amount),
+                                    utj_amount: this.moneyFormat(data.utj_amount),
                                     payment_method_nup: data.payment_method_nup,
                                     nup_date: data.nup_date,
                                     utj_date: data.utj_date,

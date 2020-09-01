@@ -315,6 +315,8 @@
 	    			</v-text-field>
 	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{ credits ? number_format(credits) : 0 }}</small>
 	    		</validation-provider>
+
+	    		<h3 class="mt-6">Data NUP & UTJ</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
