@@ -86,7 +86,6 @@
               name="unit_type"
               label="Tipe Rumah"
               :persistent-hint="true"
-              :counter="255"
               :error-messages="errors"
               readonly>
             </v-text-field>
@@ -113,7 +112,6 @@
                   name="unit_number"
                   label="Nomor Unit"
                   :persistent-hint="true"
-                  :counter="255"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
@@ -200,7 +198,6 @@
                   name="payment_method"
                   label="Metode Pembayaran"
                   :persistent-hint="true"
-                  :counter="255"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
@@ -342,7 +339,6 @@
                   v-model="form_data.nup_amount"
                   name="nup_amount"
                   label="Total NUP"
-                  hint="* harus diisi"
                   :persistent-hint="true"
                   :error-messages="errors"
                   readonly>
@@ -358,9 +354,7 @@
                   v-model="form_data.payment_method_nup"
                   name="payment_method_nup"
                   label="Metode Pembayaran NUP"
-                  hint="* harus diisi"
                   :persistent-hint="true"
-                  :counter="255"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
@@ -392,7 +386,6 @@
                   v-model="form_data.utj_amount"
                   name="utj_amount"
                   label="Total UTJ"
-                  hint="* harus diisi"
                   :persistent-hint="true"
                   :error-messages="errors"
                   readonly>
@@ -410,9 +403,7 @@
                   v-model="form_data.payment_method_utj"
                   name="payment_method_utj"
                   label="Metode Pembayaran UTJ"
-                  hint="* harus diisi"
                   :persistent-hint="true"
-                  :counter="255"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
@@ -444,7 +435,6 @@
                   name="bank_name"
                   label="Nama Bank"
                   :persistent-hint="true"
-                  :counter="255"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
