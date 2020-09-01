@@ -146,54 +146,7 @@
               </validation-provider>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col
-              cols="12"
-              md="6">
-              <validation-provider v-slot="{ errors }" name="" rules="">
-                <v-text-field
-                  v-model="form_data.sales_name"
-                  label="Nama Sales"
-                  readonly>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col
-              cols="12"
-              md="6">
-              <validation-provider v-slot="{ errors }" name="" rules="">
-                <v-text-field
-                  v-model="form_data.agency_name"
-                  label="Nama Sub Agent"
-                  readonly>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col
-                cols="12"
-                md="6">
-              <validation-provider v-slot="{ errors }" name="" rules="">
-                <v-text-field
-                  v-model="form_data.main_coordinator"
-                  label="Koordinator Utama"
-                  readonly>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-                <v-col
-                cols="12"
-                md="6">
-              <validation-provider v-slot="{ errors }" name="" rules="">
-                <v-text-field
-                  v-model="form_data.regional_coordinator"
-                  label="Koordinator Wilayah"
-                  readonly>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
+          
           <v-row>
             <v-col
               cols="12"
@@ -378,7 +331,24 @@
             </v-col>
           </v-row>
 
+          <h3 class="mt-4">Data NUP & UTJ</h3>
           <v-row>
+            <v-col
+              cols="12"
+              md="6">
+              <validation-provider v-slot="{ errors }" name="Total NUP" rules="required|numeric|min:0">
+                <v-text-field
+                  class="mt-4"
+                  v-model="form_data.nup_amount"
+                  name="nup_amount"
+                  label="Total NUP"
+                  hint="* harus diisi"
+                  :persistent-hint="true"
+                  :error-messages="errors"
+                  readonly>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
             <v-col
               cols="12"
               md="6">
@@ -391,22 +361,6 @@
                   hint="* harus diisi"
                   :persistent-hint="true"
                   :counter="255"
-                  :error-messages="errors"
-                  readonly>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-            <v-col
-              cols="12"
-              md="6">
-              <validation-provider v-slot="{ errors }" name="Total NUP" rules="required|numeric|min:0">
-                <v-text-field
-                  class="mt-4"
-                  v-model="form_data.nup_amount"
-                  name="nup_amount"
-                  label="Total NUP"
-                  hint="* harus diisi"
-                  :persistent-hint="true"
                   :error-messages="errors"
                   readonly>
                 </v-text-field>
@@ -430,14 +384,15 @@
               </validation-provider>
             </v-col>
             <v-col
-              cols="12"
-              md="6">
-              <validation-provider v-slot="{ errors }" name="" rules="">
+                cols="12"
+                md="6">
+              <validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
                 <v-text-field
                   class="mt-4"
-                  :value="reformatDateTime(form_data.utj_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-                  name="nup_amount"
-                  label="Tanggal Pembayaran UTJ"
+                  v-model="form_data.utj_amount"
+                  name="utj_amount"
+                  label="Total UTJ"
+                  hint="* harus diisi"
                   :persistent-hint="true"
                   :error-messages="errors"
                   readonly>
@@ -463,16 +418,15 @@
                 </v-text-field>
               </validation-provider>
             </v-col>
-                <v-col
-                    cols="12"
-                    md="6">
-              <validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
+             <v-col
+              cols="12"
+              md="6">
+              <validation-provider v-slot="{ errors }" name="" rules="">
                 <v-text-field
                   class="mt-4"
-                  v-model="form_data.utj_amount"
-                  name="utj_amount"
-                  label="Total UTJ"
-                  hint="* harus diisi"
+                  :value="reformatDateTime(form_data.utj_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+                  name="nup_amount"
+                  label="Tanggal Pembayaran UTJ"
                   :persistent-hint="true"
                   :error-messages="errors"
                   readonly>
@@ -504,6 +458,56 @@
                   v-model="form_data.card_number"
                   name="card_number"
                   label="Nomor Rekening"
+                  readonly>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
+          </v-row>
+          
+          <h3>Data Sales</h3>
+          <v-row>
+            <v-col
+              cols="12"
+              md="6">
+              <validation-provider v-slot="{ errors }" name="" rules="">
+                <v-text-field
+                  v-model="form_data.sales_name"
+                  label="Nama Sales"
+                  readonly>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6">
+              <validation-provider v-slot="{ errors }" name="" rules="">
+                <v-text-field
+                  v-model="form_data.agency_name"
+                  label="Nama Sub Agent"
+                  readonly>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+                cols="12"
+                md="6">
+              <validation-provider v-slot="{ errors }" name="" rules="">
+                <v-text-field
+                  v-model="form_data.main_coordinator"
+                  label="Koordinator Utama"
+                  readonly>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
+                <v-col
+                cols="12"
+                md="6">
+              <validation-provider v-slot="{ errors }" name="" rules="">
+                <v-text-field
+                  v-model="form_data.regional_coordinator"
+                  label="Koordinator Wilayah"
                   readonly>
                 </v-text-field>
               </validation-provider>

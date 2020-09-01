@@ -297,7 +297,8 @@
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		:readonly="field_state">
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ installment ? number_format(installment) : 0 }}</small>
 	    		</validation-provider>
@@ -311,13 +312,31 @@
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		:readonly="field_state">
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
 	    			</v-text-field>
 	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{ credits ? number_format(credits) : 0 }}</small>
 	    		</validation-provider>
 
 	    		<h3 class="mt-6">Data NUP & UTJ</h3>
 	    		<v-row>
+	    			<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Total NUP" rules="required|numeric|min:0">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.nup_amount"
+				    			name="nup_amount"
+					    		label="Total NUP"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.nup_amount ? number_format(form_data.nup_amount) : 0 }}</small>
+			    		</validation-provider>
+				    </v-col>
 	    			<v-col
     		          	cols="12"
     		          	md="6">
@@ -335,23 +354,6 @@
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Total NUP" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.nup_amount"
-				    			name="nup_amount"
-					    		label="Total NUP"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.nup_amount ? number_format(form_data.nup_amount) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
 			    </v-row>
 			    <v-row>
 			    	<v-col
@@ -383,6 +385,42 @@
 	    		      	</v-menu>
 			    	</v-col>
 			    	<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.utj_amount"
+				    			name="utj_amount"
+					    		label="Total UTJ"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{ form_data.utj_amount ? number_format(form_data.utj_amount) : 0 }}</small>
+			    		</validation-provider>
+				    </v-col>
+				</v-row>
+	    		<v-row>
+	    			<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Metode pembayaran UTJ" rules="required">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.payment_method_utj"
+				    			name="payment_method_utj"
+					    		label="Metode Pembayaran UTJ"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:counter="255"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+			    	</v-col>
+				    <v-col
     		          	cols="6"
     		          	md="6">
 				    		<v-menu
@@ -410,42 +448,6 @@
 	    		        	<v-date-picker name="utj_date" v-model="form_data.utj_date" @input="menu = false"></v-date-picker>
 	    		      	</v-menu>
 			    	</v-col>
-				</v-row>
-	    		<v-row>
-	    			<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Metode pembayaran UTJ" rules="required">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.payment_method_utj"
-				    			name="payment_method_utj"
-					    		label="Metode Pembayaran UTJ"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Total UTJ" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.utj_amount"
-				    			name="utj_amount"
-					    		label="Total UTJ"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{ form_data.utj_amount ? number_format(form_data.utj_amount) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
 			    </v-row>
 			    <v-row>
 			    	<v-col
