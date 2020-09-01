@@ -178,7 +178,7 @@ class SalesCommissionController extends Controller
         return view('commission::salescommission.edit',[
             'page' => $this,
             'data' => $salescommission,
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -267,6 +267,47 @@ class SalesCommissionController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Handle incoming request for specific data
+     *
+     */
+    public function data(Booking $salescommission)
+    {
+        $data = $salescommission->load('unit','client','sales','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $data);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Return Form Helper
+     *
+     */
+    public function getHelper()
+    {
+        return [
+            'pph_21' => json_decode(option('pph_21', json_encode([]))),
+        ];
+    }
+
+    /**
+     *
+     * Handle incoming request for form helper
+     *
+     */
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
