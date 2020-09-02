@@ -42,6 +42,9 @@ class RegionalCoordinator extends Model
         
     ];
 
+    protected $appends = [
+        'total_point'
+    ];
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -66,6 +69,17 @@ class RegionalCoordinator extends Model
         return 'slug';
     }
 
+    public function getTotalPointAttribute()
+    {
+        $collection = collect($this->point)->sum(function($item) {
+            if (!empty($item->point)) {
+                return $item->point;
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
     /**
      * Get the relationship for the model.
      */
@@ -80,6 +94,13 @@ class RegionalCoordinator extends Model
     public function agency()
     {
         return $this->hasMany('Modules\SalesAgent\Entities\Agency', 'regional_coordinator_id');
+    }
+    /**
+     * Get the relationship for the model.
+     */
+    public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\KoorWilayahPoint', 'koordinator_wilayah_id');
     }
     
 }

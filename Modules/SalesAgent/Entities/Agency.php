@@ -56,6 +56,10 @@ class Agency extends Model
         
     ];
 
+    protected $appends = [
+        'total_point',
+    ];
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -80,6 +84,17 @@ class Agency extends Model
         return 'slug';
     }
 
+    public function getTotalPointAttribute()
+    {
+        $collection = collect($this->point)->sum(function($item) {
+            if (!empty($item->point)) {
+                return $item->point;
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
     /**
      * Get the relationship for the model.
      */
@@ -94,5 +109,13 @@ class Agency extends Model
     public function regional_coordinator()
     {
         return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coordinator_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\SubAgentPoint', 'sub_agent_id');
     }
 }

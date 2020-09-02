@@ -29,7 +29,8 @@ class Sales extends Model
 
     protected $appends = [
         'url_file_ktp',
-        'url_file_npwp'
+        'url_file_npwp',
+        'total_point'
     ];
 
     /**
@@ -52,6 +53,17 @@ class Sales extends Model
     public function getUrlFileNpwpAttribute()
     {
         return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/sales/npwp/'.$this->attributes['file_npwp']) : null;
+    }
+
+    public function getTotalPointAttribute()
+    {
+        $collection = collect($this->point)->sum(function($item) {
+            if (!empty($item->point)) {
+                return $item->point;
+            }
+            return 0;
+        });
+        return $collection;
     }
 
     /**
@@ -86,4 +98,11 @@ class Sales extends Model
         return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coordinator_id');
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\SalesPoint');
+    }
 }

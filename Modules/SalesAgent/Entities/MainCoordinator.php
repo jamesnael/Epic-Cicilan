@@ -41,6 +41,9 @@ class MainCoordinator extends Model
         
     ];
 
+    protected $appends = [
+        'total_point'
+    ];
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -65,6 +68,17 @@ class MainCoordinator extends Model
         return 'slug';
     }
 
+    public function getTotalPointAttribute()
+    {
+        $collection = collect($this->point)->sum(function($item) {
+            if (!empty($item->point)) {
+                return $item->point;
+            }
+            return 0;
+        });
+        return $collection;
+    }
+
     /**
      * Get the relationship for the model.
      */
@@ -81,4 +95,11 @@ class MainCoordinator extends Model
         return $this->hasMany('Modules\SalesAgent\Entities\Sales', 'main_coordinator_id');
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\KoorUmumPoint', 'koordinator_umum_id');
+    }
 }
