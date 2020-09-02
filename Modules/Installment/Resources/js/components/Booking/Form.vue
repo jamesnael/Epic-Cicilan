@@ -243,6 +243,9 @@
                     data.append("utj_date", this.form_data.utj_date);
                     data.append("nup_date", this.form_data.nup_date);
 	    		}
+
+                data.append("utj_date", this.form_data.utj_date);
+                data.append("nup_date", this.form_data.nup_date);
 	    		
 	    		this.field_state = true
 

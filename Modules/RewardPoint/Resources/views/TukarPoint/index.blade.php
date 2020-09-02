@@ -29,7 +29,7 @@
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
 		add-new-uri="{{ route('tukar-point.create') }}"
-		add-new-text="Tambah"
+		add-new-text="Tukar Point"
 		add-new-color="light-blue lighten-2"
 		edit-uri="tukar-point.edit"
 		edit-uri-parameter="slug"

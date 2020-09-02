@@ -242,8 +242,22 @@
 			    </v-row>
 			    <v-row>
 			    	<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="No invoice" rules="required|numeric">
+				    		<v-text-field
+				    		 	v-model="form_data.invoice_commission_1"
+					    		label="No Rekening"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+			    	<v-col
     		          cols="12"
-    		          md="12">
+    		          md="6">
 			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="required">
 							<v-file-input 
 		    		            show-size
@@ -307,8 +321,22 @@
 			    </v-row>
 			    <v-row>
 			    	<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="No invoice" rules="required|numeric">
+				    		<v-text-field
+				    		 	v-model="form_data.invoice_commission_2"
+					    		label="No Rekening"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+				    </v-col>
+			    	<v-col
     		          cols="12"
-    		          md="12">
+    		          md="6">
 			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="required">
 							<v-file-input 
 		    		            show-size
