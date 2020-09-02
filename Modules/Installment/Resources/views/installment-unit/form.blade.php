@@ -305,7 +305,7 @@
               md="6">
               <validation-provider v-slot="{ errors }" name="Total DP" rules="required|numeric|min:0">
                 <v-text-field
-                  v-if="payment_type == 'KPR/KPA'"
+                  v-if="form_data.payment_type == 'KPR/KPA'"
                   v-model="form_data.dp_amount"
                   name="dp_amount"
                   label="Total DP"
@@ -318,7 +318,7 @@
               md="6">
               <validation-provider v-slot="{ errors }" name="Kredit" rules="required|numeric|min:0">
                 <v-text-field
-                  v-if="payment_type == 'KPR/KPA'"
+                  v-if="form_data.payment_type == 'KPR/KPA'"
                   v-model="form_data.credits"
                   name="credits"
                   label="Kredit"
