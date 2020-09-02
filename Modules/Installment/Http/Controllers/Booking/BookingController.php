@@ -254,8 +254,8 @@ class BookingController extends Controller
             "due_date" => "bail|required",
             "credits" => "bail|nullable|numeric",
             "payment_method_utj" => "bail|required|string|max:255",
-            "bank_name" => "bail|required|string|max:255",
-            "card_number" => "bail|required|string|max:255",
+            "bank_name" => "bail|nullable|string|max:255",
+            "card_number" => "bail|nullable|string|max:255",
         ]);
     }
 
