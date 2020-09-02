@@ -287,5 +287,15 @@ class Booking extends Model
         return $this->hasOne('Modules\Installment\Entities\Handover', 'booking_id');
     }
 
+    public function salespoint()
+    {
+        return $this->hasOne('Modules\RewardPoint\Entities\SalesPoint', 'booking_id');
+    }
+
+    public function subagentpoint()
+    {
+        return $this->hasOne('Modules\RewardPoint\Entities\SubAgentPoint', 'booking_id');
+    }
+
 
 }
