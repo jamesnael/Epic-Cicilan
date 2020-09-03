@@ -43,7 +43,9 @@ class RegionalCoordinator extends Model
     ];
 
     protected $appends = [
-        'total_point'
+        'total_point',
+        'allowed_point',
+        'exchanged_point'
     ];
     /**
      * Return the sluggable configuration array for this model.
@@ -84,6 +86,32 @@ class RegionalCoordinator extends Model
         return $collection;
     }
 
+    public function getAllowedPointAttribute()
+    {
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->komisi_status == 'Pembayaran 2' || $item->komisi_status == 'Closing Fee'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
+            }
+        });
+        return $collection;
+    }
+
+    public function getExchangedPointAttribute()
+    {
+        $collection = collect($this->exchange)->sum(function($item) {
+            if (!empty($item->exchange_point)) {
+                return $item->exchange_point;
+            }
+            return 0;
+        });
+
+        return $collection;
+    }
     /**
      * Get the relationship for the model.
      */
@@ -115,4 +143,11 @@ class RegionalCoordinator extends Model
         return $this->hasMany('Modules\Installment\Entities\Booking', 'regional_coor_id');
     }
     
+    /**
+     * Get the relationship for the model.
+     */
+    public function exchange()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorWilayah', 'koordinator_wilayah_point_id');
+    }
 }
