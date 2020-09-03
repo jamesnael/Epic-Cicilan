@@ -65,13 +65,13 @@ class TukarPointController extends Controller
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'allowed_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'sisa_point',
             ],
         ];
 
@@ -98,13 +98,13 @@ class TukarPointController extends Controller
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'allowed_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'sisa_point',
             ],
         ];
 
@@ -131,13 +131,13 @@ class TukarPointController extends Controller
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'allowed_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'sisa_point',
             ],
         ];
 
@@ -158,13 +158,13 @@ class TukarPointController extends Controller
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'allowed_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'total_point',
+                "value" => 'sisa_point',
             ],
         ];
 
@@ -420,6 +420,7 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->sisa_point = $item->allowed_point - $item->exchanged_point;
             return $item;
         });
         return $data;
@@ -471,6 +472,7 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->sisa_point = $item->allowed_point - $item->exchanged_point;
             return $item;
         });
         return $data;
@@ -522,6 +524,7 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->sisa_point = $item->allowed_point - $item->exchanged_point;
             return $item;
         });
         return $data;
@@ -573,6 +576,7 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->sisa_point = $item->allowed_point - $item->exchanged_point;
             return $item;
         });
         return $data;
@@ -619,6 +623,7 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->sisa_point = $item->allowed_point - $item->exchanged_point;
             return $item;
         });
         return $data;
