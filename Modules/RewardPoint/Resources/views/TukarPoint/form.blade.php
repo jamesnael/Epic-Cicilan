@@ -1,75 +1,46 @@
 <v-container fluid>
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
-    		<h3>Tukar Point</h3>
+    		<h3>Data Tukar Point</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		</v-row>
 	    		<v-row>
-    		       <v-col
+    		      <v-col
     		          	cols="12"
-    		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="">
-				    		<v-select
-			    			v-model="form_data.sales_name" 
-			    			label="Nama Sales"
-				    		:persistent-hint="true"
+    		          	md="12">		
+		    		<validation-provider v-slot="{ errors }" name="Level Sales" rules="required">
+		    			<v-select
+			    			v-model="form_data.sales_level" 
+			              	:items="['Sales','Agent','Korwil','Korut']"
+			              	label="Level Sales"
+			              	name="sales_level"
+			              	v-on="on"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	></v-select>
-			    		</validation-provider>
+					</validation-provider>
 			    	</v-col>
 			    </v-row>
 			    
 			  	<v-row>
     		       <v-col
     		          	cols="12"
-    		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Sub Agent" rules="">
-				    		<v-text-field
-			    			v-model="form_data.sub_agent"
-			              	label="Sub Agent"
-			              	name="sub_agent"
+    		          	md="12">		
+		    		<validation-provider v-slot="{ errors }" name="Nama User" rules="required">
+		    			<v-select
+			    			v-model="form_data.user_name" 
+			              	label="Nama User"
+			              	name="user_name"
+			              	v-on="on"
+			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
-			            	></v-text-field>
-			    		</validation-provider>
+			            	></v-select>
+					</validation-provider>
 			    	</v-col>
 			    </v-row>
-
-
-			  	<v-row>
-    		       <v-col
-    		          	cols="12"
-    		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Koordinator Wilayah" rules="">
-				    		<v-text-field
-			    			v-model="form_data.koordinator_wilayah"
-			              	label="Koordinator Wilayah"
-			              	name="koordinator_wilayah"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    </v-row>
-			    
-			    
-			  	<v-row>
-    		       <v-col
-    		          	cols="12"
-    		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Koordinator Utama" rules="">
-				    		<v-text-field
-			    			v-model="form_data.koordinator_utama"
-			              	label="Koordinator Utama"
-			              	name="koordinator_utama"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    </v-row>
-			    
+			  	
 			    <h3 class="mt-4">Tukar Point</h3>
 
 			    
@@ -93,11 +64,11 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Sisa Point" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Point Yang Bisa Ditukar" rules="">
 				    		<v-text-field
-			    			v-model="form_data.sisa_point"
-			              	label="Sisa Point"
-			              	name="sisa_point"
+			    			v-model="form_data.exchange_point"
+			              	label="Point Yang Bisa Ditukar"
+			              	name="exchange_point"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	></v-text-field>
@@ -109,16 +80,18 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Kategori Reward" rules="">
-				    		<v-select
-			    			v-model="form_data.reward_category" 
-			    			label="Kategori Reward"
-			    			name="reward_category"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-select>
-			    		</validation-provider>
+			    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required">
+		    		<v-select
+		    			v-model="form_data.category_reward_id" 
+		              	:items="filter_category"
+		              	label="Kategori Reward"
+		              	name="category_reward_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-select>
+	    		</validation-provider>
 			    	</v-col>
 			    </v-row>
 
@@ -128,9 +101,10 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="">
 				    		<v-select
-			    			v-model="form_data.nama_reward_point" 
+			    			v-model="form_data.reward_points"
+			    			:items="computedCategoryName" 
 			    			label="Nama Reward Point"
-			    			name="nama_reward_point"
+			    			name="reward_points"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"

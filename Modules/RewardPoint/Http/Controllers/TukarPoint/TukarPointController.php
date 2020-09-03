@@ -76,6 +76,17 @@ class TukarPointController extends Controller
         ])->with($this->getHelper());
     }
 
+
+
+   public function data(RewardPoint $tukar_point)
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $tukar_point);
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
      /**
      * Store a newly created resource in storage.
      *
@@ -83,10 +94,12 @@ class TukarPointController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function getHelper()
+   public function getHelper()
     {
         return [
-            'category' => RewardCategory::select('id AS value', 'category_name AS text')->get()
+            'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
+            'reward_name' => RewardPoint::select('category_reward_id AS value', 'reward_name AS text')->get()
+       
         ];
     }
 
