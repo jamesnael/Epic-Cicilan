@@ -1,0 +1,1 @@
+Vue.component('payment-form', () => import('./components/Payment/Form.vue'));
