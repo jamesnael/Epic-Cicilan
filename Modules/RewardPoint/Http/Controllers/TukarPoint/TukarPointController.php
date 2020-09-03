@@ -7,6 +7,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\RewardPoint\Entities\RewardCategory;
 use Modules\RewardPoint\Entities\RewardPoint;
+use Modules\RewardPoint\Entities\SalesPoint;
+use Modules\RewardPoint\Entities\ExchangePointSales;
+use Modules\RewardPoint\Entities\ExchangePointSubAgent;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\SalesAgent\Entities\Agency;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
@@ -239,8 +242,55 @@ class TukarPointController extends Controller
         }
     }
 
+
+    public function store(Request $request)
+    {
+        $validator = $this->validateFormRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        DB::beginTransaction();
+        try {
+
+             if ($request->has('level') && $request->input('level') == 'Sales') {
+
+            $data = ExchangePointSales::create([
+                'sales_point_id'=> $request->user_name,
+                'reward_point_id'=> $request->reward_point_id,                
+                'exchange_point'=> $request->exchange_point,
+            ]);
+            }
+            if ($request->has('level') && $request->input('level') == 'Agent') {
+
+            $data = ExchangePointSubAgent::create([
+                'agent_point_id'=> $request->user_name,
+                'reward_point_id'=> $request->reward_point_id,                
+                'exchange_point'=> $request->exchange_point,
+            ]);
+
+            }
+
+
+
+            DB::commit();
+            return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    public function validateFormRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "reward_point_id" => "bail|required",
+        ]);
+    }
+
+
     /**
->>>>>>> dev-test
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -248,10 +298,34 @@ class TukarPointController extends Controller
      */
     public function getHelper()
     {
-        return [
+        return [        
             'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
-            'reward_name' => RewardPoint::select('category_reward_id AS value', 'reward_name AS text')->get()
-       
+            'reward_name' => RewardPoint::select('category_reward_id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator')->get(),
+            'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','point')->get()->transform(function($item){
+                        $item->value = $item->id;
+                        $item->text = $item->user->full_name;
+                        $item->agency_name = $item->agency->agency_name ?? '';
+                        $item->total_point = $item->total_point ?? '';
+                        return $item;
+                    }),
+            'agency_name' => Agency::with('point','regional_coordinator')->get()->transform(function($item){
+                        $item->value = $item->id;
+                        $item->text = $item->agency_name;
+                        $item->regional = $item->regional_coordinator->full_name ?? '';
+                        $item->total_point = $item->total_point ?? '';
+                        return $item;
+                    }),
+            'korut_name' => MainCoordinator::select('id AS value', 'full_name AS text')->get(),
+            'korwil_name' => RegionalCoordinator::with('point','main_coordinator')->get()->transform(function($item){
+
+                        $item->value = $item->id;
+                        $item->text = $item->full_name;
+                        $item->maincoor = $item->main_coordinator->full_name ?? '';
+                        $item->total_point = $item->total_point ?? '';
+                        return $item;
+
+            })
+            
         ];
     }
 
@@ -467,6 +541,8 @@ class TukarPointController extends Controller
         });
         return $data;
     }
+
+     
 
     /**
      *
