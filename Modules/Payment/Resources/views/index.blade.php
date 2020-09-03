@@ -334,6 +334,7 @@
             		<v-data-table
             		    :headers='@json($table_headers)'
             		    :items="form_data.payments"
+            		    :items-per-page="1000"
         		        hide-default-footer
             		    class="elevation-5"
             		>
