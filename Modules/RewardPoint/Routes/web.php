@@ -30,7 +30,10 @@ Route::group(['namespace' => 'RewardCategory'], function() {
 });
 
 Route::group(['namespace' => 'TukarPoint'], function() {
-	Route::get('tukar-point/table', 'TukarPointController@table')->name('tukar-point.table');
-	Route::get('tukar-point/{tukar-point}/data', 'TukarPointController@data')->name('tukar-point.data');
+	Route::get('tukar-point/table-sales', 'TukarPointController@tableSales')->name('tukar-point-sales.table');
+	Route::get('tukar-point/table-agent', 'TukarPointController@tableAgent')->name('tukar-point-agent.table');
+	Route::get('tukar-point/table-korwil', 'TukarPointController@tableKorwil')->name('tukar-point-korwil.table');
+	Route::get('tukar-point/table-korut', 'TukarPointController@tableKorut')->name('tukar-point-korut.table');
+	Route::get('tukar-point/{tukar_point}/data', 'TukarPointController@data')->name('tukar-point.data');
 	Route::resource('tukar-point', 'TukarPointController')->except(['show']);
 });

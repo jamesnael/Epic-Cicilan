@@ -14,4 +14,12 @@ class KoorUmumPoint extends Model
     	'booking_id',
     	'point',
     ];
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function main_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'koordinator_umum_id');
+    }
 }

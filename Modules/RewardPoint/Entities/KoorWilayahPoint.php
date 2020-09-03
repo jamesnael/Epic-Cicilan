@@ -14,4 +14,12 @@ class KoorWilayahPoint extends Model
     	'booking_id',
     	'point',
     ];
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function regional_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'koordinator_wilayah_id');
+    }
 }
