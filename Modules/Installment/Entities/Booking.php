@@ -316,7 +316,7 @@ public function salespoint()
     public function subagentpoint()
     {
         return $this->hasOne('Modules\RewardPoint\Entities\SubAgentPoint', 'booking_id');
-
+    }
     /**
      * Get the relations for the model.
      */
