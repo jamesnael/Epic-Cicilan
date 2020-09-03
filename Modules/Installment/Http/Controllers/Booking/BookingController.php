@@ -70,6 +70,12 @@ class BookingController extends Controller
                 "value" => 'installment',
             ],
             [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'payment_type',
+            ],
+            [
                 "text" => 'Tanggal Jatuh Tempo',
                 "align" => 'center',
                 "sortable" => true,

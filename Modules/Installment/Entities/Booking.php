@@ -279,12 +279,20 @@ class Booking extends Model
         return $this->hasOne('Modules\Installment\Entities\Spr', 'booking_id');
     }
 
-     /**
+    /**
      * Get the relations for the model.
      */
     public function handover()
     {
         return $this->hasOne('Modules\Installment\Entities\Handover', 'booking_id');
+    }
+
+    /**
+     * Get the relations for the model.
+     */
+    public function commission()
+    {
+        return $this->hasOne('Modules\Commission\Entities\SalesCommission', 'booking_id');
     }
 
 

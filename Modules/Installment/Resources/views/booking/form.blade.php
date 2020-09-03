@@ -3,7 +3,7 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<h3>Data Unit</h3>
-	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Tipe unit" rules="required">
 		    		<v-select
 		    			class="mt-4"
 		    			v-model="form_data.id_unit_type" 

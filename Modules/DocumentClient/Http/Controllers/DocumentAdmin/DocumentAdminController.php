@@ -196,14 +196,6 @@ class DocumentAdminController extends Controller
                     'booking_id' => $request->input('booking_id')
                 ], $request->all());
 
-            // $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
-
-            // if ($has_document) {
-            //      $data = $has_document->update($request->all());
-            // }else{
-            //     $data = DocumentClient::create($request->all());
-            // }
-
             DB::commit();
             return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $document_admin);
         } catch (\Exception $e) {
