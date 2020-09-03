@@ -197,7 +197,7 @@
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required" 
-		    			 v-if="form_data.level !== ''">
+		    			 >
 		    		<v-select
 		    			v-model="form_data.category_reward_id" 
 		              	:items="filter_category"
@@ -216,8 +216,7 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="" 
-		    	 		v-if="form_data.ppjb_sign_date !== ''">
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="" >
 				    		<v-select
 			    			v-model="form_data.reward_points"
 			    			@input="setRewardPoint()"

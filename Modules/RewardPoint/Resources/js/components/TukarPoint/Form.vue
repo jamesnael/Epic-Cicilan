@@ -95,18 +95,14 @@
         },
 
         computed: {
+
             computedCategoryName: function () {
                 if (this.form_data.category_reward_id) {
-                    return _.filter(this.filter_reward, (o) => { return o.value == this.form_data.category_reward_id })
+                    return _.filter(this.filter_reward, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
                 }
                 return []
-            },
-            computedRedeemPoint: function () {
-                if (this.form_data.reward_points) {
-                    return _.filter(this.filter_reward_point, (o) => { return o.value == this.form_data.reward_points })
-                }
-                return []
-            },
+            }
+           
         },
         mounted() {
             this.setData();
