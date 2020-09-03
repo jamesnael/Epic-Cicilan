@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\RewardPoint\Entities\RewardCategory;
+use Modules\RewardPoint\Entities\ExchangePointSales;
 use Modules\RewardPoint\Entities\RewardPoint;
 use Modules\RewardPoint\Entities\SalesPoint;
 use Modules\RewardPoint\Entities\ExchangePointSales;
@@ -206,12 +207,137 @@ class TukarPointController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function editSales($id)
     {
-        // $tukar_point = Sales::findOrFail($id);
-        $this->breadcrumbs[] = ['href' => '', 'text' => 'History'];
+        $this->table_headers = [
+            [
+                "text" => 'Category Reward',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'reward_point.category.category_name',
+            ],
+            [
+                "text" => 'Rewards',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'reward_point.reward_name',
+            ],
+            [
+                "text" => 'Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'exchange_point',
+            ],
+            [
+                "text" => 'Sisa Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sales.total_point',
+            ],
+        ];
+        return view('rewardpoint::TukarPoint.history-sales', [
+            'page' => $this,
 
-        return view('rewardpoint::TukarPoint.history', [
+        ])->with($this->getHelper());
+    }
+
+    public function editAgent($id)
+    {
+        $this->table_headers = [
+            [
+                "text" => 'Category Reward',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'category.category_name',
+            ],
+            [
+                "text" => 'Rewards',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'reward_name',
+            ],
+            [
+                "text" => 'Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+            [
+                "text" => 'Sisa Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+        ];
+        return view('rewardpoint::TukarPoint.history-agent', [
+            'page' => $this,
+
+        ])->with($this->getHelper());
+    }
+
+    public function editKorwil($id)
+    {
+        $this->table_headers = [
+            [
+                "text" => 'Category Reward',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'category.category_name',
+            ],
+            [
+                "text" => 'Rewards',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'reward_name',
+            ],
+            [
+                "text" => 'Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+            [
+                "text" => 'Sisa Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+        ];
+        return view('rewardpoint::TukarPoint.history-korwil', [
+            'page' => $this,
+
+        ])->with($this->getHelper());
+    }
+
+    public function editKorut($id)
+    {
+        $this->table_headers = [
+            [
+                "text" => 'Category Reward',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'category.category_name',
+            ],
+            [
+                "text" => 'Rewards',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'reward_name',
+            ],
+            [
+                "text" => 'Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+            [
+                "text" => 'Sisa Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'total_point',
+            ],
+        ];
+        return view('rewardpoint::TukarPoint.history-korut', [
             'page' => $this,
 
         ])->with($this->getHelper());
@@ -367,7 +493,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataSales(Request $request)
     {
-        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point')->orderBy('created_at', 'DESC');
+        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -561,6 +687,205 @@ class TukarPointController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataKorut($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+     public function getTableDataSalesHistory(Request $request)
+    {
+        $query = ExchangePointSales::with('sales_point', 'reward_point', 'reward_point.category', 'sales_point.sales')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableSalesHistory(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataSalesHistory($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataAgentHistory(Request $request)
+    {
+        $query = Agency::with('regional_coordinator', 'point')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableAgentHistory(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataAgentHistory($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataKorwilHistory(Request $request)
+    {
+        $query = RegionalCoordinator::with('main_coordinator', 'agency')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableKorwilHistory(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataKorwilHistory($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataKorutHistory(Request $request)
+    {
+        $query = MainCoordinator::with('regional_coordinators', 'point')->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableKorutHistory(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataKorutHistory($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

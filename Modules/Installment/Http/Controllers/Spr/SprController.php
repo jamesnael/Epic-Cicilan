@@ -160,6 +160,9 @@ class SprController extends Controller
             if ($request->has('approval_status') && $request->input('approval_status') == 'Approved' && $spr->booking_status == 'spr') {
                 $spr->booking_status = 'ppjb';
                 $spr->save();
+
+                //Insert Point
+                
             }
 
             $has_spr = Spr::where('booking_id', $request->booking_id)->first();

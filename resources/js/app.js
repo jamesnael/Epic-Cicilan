@@ -23,6 +23,7 @@ require('./../../Modules/RewardPoint/Resources/js/app');
 require('./../../Modules/Commission/Resources/js/app');
 require('./../../Modules/Installment/Resources/js/app');
 require('./../../Modules/DocumentClient/Resources/js/app');
+require('./../../Modules/Payment/Resources/js/app');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

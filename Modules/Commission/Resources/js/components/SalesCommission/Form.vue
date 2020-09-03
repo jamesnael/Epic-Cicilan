@@ -40,14 +40,45 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
 	            datepicker: false,
-	            menu4: false,
-	            menu3: false,
 	            menu2: false,
+	            menu3: false,
+	            menu4: false,
+	            menu5: false,
+	            menu6: false,
+	            menu7: false,
+	            menu8: false,
 	            form_data: {
-        			client_name: '',
-        			unit_type: '',
+		           	// sales_name: '',
+        			// agency_commission: '',
+		         //    commission_1: '',
+		         //    payment_date_1: '',
+		         //   	invoice_commission_1: '',
+		         //    commission_2: '',
+		         //    payment_date_2: '',
+		         //   	invoice_commission_2: '',
+		         //    sales_id: '',
+		         //    closing_fee_sales: '',
+		         //   	sales_bank_name: '',
+		         //   	sales_no_rek: '',
+		         //   	sales_bank_account: '',
+		         //    sales_payment_date: '',
+		         //   	sales_invoice: '',
+		         //    agency_id: '',
+		         //   	agency_name: '',
+		         //    closing_fee_agency: '',
+		         //    agency_payment_date: '',
+		         //   	agency_invoice: '',
+		         //    korwil_id: '',
+		         //   	korwil_name: '',
+		         //    closing_fee_korwil: '',
+		         //    korwil_payment_date: '',
+		         //   	korwil_invoice: '',
+		         //    korut_id: '',
+		         //   	korut_name: '',
+		         //    closing_fee_korut: '',
+		         //    korut_payment_date: '',
+		         //   	korut_invoice: '',
         		}
-
         	}
         },
         computed:{
@@ -56,7 +87,7 @@
                 let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
                 let pph_21 = commission * parseInt(this.pph21) / 100;
                 let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
-                let result = commission - pph_final_result - pph_21
+                let result = (commission - pph_final_result - pph_21) / 2 ;
                 return result.toFixed();  
             },
             commission_2: function() {
@@ -64,7 +95,15 @@
                 let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
                 let pph_21 = commission * parseInt(this.pph21) / 100;
                 let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
-                let result = commission - pph_final_result - pph_21
+                let result = (commission - pph_final_result - pph_21) / 2 ;
+                return result.toFixed();  
+            },
+            bruto_commission: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
+                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
+                let result = commission - pph_final_result - pph_21;
                 return result.toFixed();  
             },
         }, 
@@ -81,8 +120,9 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-    		            		console.log(data)
+                                console.log(data)
     		            		this.form_data = {
+    		            			booking_id: data.id,
     		            			client_name: data.client.client_name,
     		            			unit_type: data.unit.unit_type,
     		            			unit_number: data.unit.unit_number +' / '+ data.unit.unit_block,
@@ -95,7 +135,47 @@
     		            			korut_name: data.sales.main_coordinator.full_name,
     		            			korwil_name: data.sales.regional_coordinator.full_name,
     		            			pph_final: data.sales.agency.pph_final,
+
+    		            			agency_id: data.sales.agency_id,
+    		            			sales_id: data.sales_id,
+    		            			korwil_id: data.sales.regional_coordinator_id,
+    		            			korut_id: data.sales.main_coordinator_id,
+    					            payment_date_1: data.commission ? data.commission.payment_date_1 : '',
+    					           	invoice_commission_1: data.commission ? data.commission.invoice_commission_1 : '',
+    					            payment_date_2: data.commission ? data.commission.payment_date_2 : '',
+    					           	invoice_commission_2: data.commission ? data.commission.invoice_commission_2 : '',
+    					           	sales_bank_name: data.commission ? data.commission.sales_bank_name : '',
+    					            closing_fee_sales: data.commission ? data.commission.closing_fee_sales : '',
+    					           	sales_no_rek: data.commission ? data.commission.sales_no_rek : '',
+    					           	sales_bank_account: data.commission ? data.commission.sales_bank_account : '',
+    					            sales_payment_date: data.commission ? data.commission.sales_payment_date : '',
+    					           	sales_invoice: data.commission ? data.commission.sales_invoice : '',
+    					            closing_fee_agency: data.commission ? data.commission.closing_fee_agency : '',
+    					            agency_payment_date: data.commission ? data.commission.agency_payment_date : '',
+    					           	agency_invoice: data.commission ? data.commission.agency_invoice : '',
+    					            closing_fee_korwil: data.commission ? data.commission.closing_fee_korwil : '',
+    					            korwil_payment_date: data.commission ? data.commission.korwil_payment_date : '',
+    					           	korwil_invoice: data.commission ? data.commission.korwil_invoice : '',
+    					            closing_fee_korut: data.commission ? data.commission.closing_fee_korut : '',
+    					            korut_payment_date: data.commission ? data.commission.korut_payment_date : '',
+    					           	korut_invoice: data.commission ? data.commission.korut_invoice : '',
+
+    					           	payment_proof_1: data.commission ? data.commission.payment_proof_1 : '',
+    					           	payment_proof_2: data.commission ? data.commission.payment_proof_2 : '',
+    					           	sales_evidence: data.commission ? data.commission.sales_evidence : '',
+    					           	agency_evidence: data.commission ? data.commission.agency_evidence : '',
+    					           	korwil_evidence: data.commission ? data.commission.korwil_evidence : '',
+                                    korut_evidence: data.commission ? data.commission.korut_evidence : '',
+
+                                    url_payment_proof_1: data.commission ? data.commission.url_payment_proof_1 : '',
+                                    url_payment_proof_2: data.commission ? data.commission.url_payment_proof_2 : '',
+                                    url_sales_evidence: data.commission ? data.commission.url_sales_evidence : '',
+                                    url_agency_evidence: data.commission ? data.commission.url_agency_evidence : '',
+                                    url_korwil_evidence: data.commission ? data.commission.url_korwil_evidence : '',
+                                    url_korut_evidence: data.commission ? data.commission.url_korut_evidence : '',
     		            		}
+
+
 
     			                this.field_state = false
     		            	} else {
@@ -124,10 +204,7 @@
         	},
         	clear () {
 		        this.form_data = {
-		        	sales_commission: '',
-            		agency_commission: '',
-            		regional_coordinator_commission: '',
-            		main_coordinator_commission: '',
+
 		        }
 		        this.$refs.observer.reset()
 		    },
@@ -159,6 +236,15 @@
 	    		const data = new FormData(this.$refs['post-form']);
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
+	    		    data.append("booking_id", this.form_data.booking_id);
+	    		    data.append("agency_id", this.form_data.agency_id);
+                    data.append("sales_id", this.form_data.sales_id);
+                    data.append("payment_date_1", this.form_data.payment_date_1);
+                    data.append("payment_date_2", this.form_data.payment_date_2);
+                    data.append("sales_payment_date", this.form_data.sales_payment_date);
+                    data.append("agency_payment_date", this.form_data.agency_payment_date);
+                    data.append("korwil_payment_date", this.form_data.korwil_payment_date);
+                    data.append("korut_payment_date", this.form_data.korut_payment_date);
 	    		}
 	    		
 	    		this.field_state = true
