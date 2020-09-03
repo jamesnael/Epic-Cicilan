@@ -17,7 +17,7 @@ class AddColumnBooking extends Migration
             $table->integer('main_coor_id')->nullable();
             $table->integer('regional_coor_id')->nullable();
             $table->integer('agent_id')->nullable();
-            $table->integer('komisi_status')->nullable();
+            $table->string('komisi_status')->nullable();
         });
     }
 

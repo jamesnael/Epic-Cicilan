@@ -216,6 +216,27 @@ class SalesCommissionController extends Controller
         DB::beginTransaction();
         try {
 
+            if ($request->has('commission_1') && $request->has('payment_date_1')) {
+
+                $salescommission->komisi_status = 'Pembayaran 1';
+                $salescommission->save();
+
+            }
+
+            if ($request->has('commission_2') && $request->has('payment_date_2')) {
+
+                $salescommission->komisi_status = 'Pembayaran 2';
+                $salescommission->save();
+
+            }
+
+            if ($request->has('closing_fee_sales') && $request->has('sales_payment_date') && $request->has('closing_fee_agency') && $request->has('agency_payment_date') && $request->has('closing_fee_korwil') && $request->has('korwil_payment_date') && $request->has('korut_name') && $request->has('korut_payment_date')) {
+
+                $salescommission->komisi_status = 'Closing Fee';
+                $salescommission->save();
+
+            }
+
             if ($request->hasFile('payment_proof1')) {
                 $file_name_agent = 'komisi-agent-1-' . uniqid() . '.' . $request->file('payment_proof1')->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof1'), $file_name_agent

@@ -38,6 +38,10 @@ class Booking extends Model
         'payment_method_nup',
         'nup_date',
         'utj_date',
+        'main_coor_id',
+        'regional_coor_id',
+        'agent_id',
+        'komisi_status',
     ];
 
      /**

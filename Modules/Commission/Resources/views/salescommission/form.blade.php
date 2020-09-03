@@ -406,7 +406,8 @@
 				    			name="closing_fee_sales"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		placeholder="Rp">
+					    		placeholder="Rp"
+					    		:readonly="field_state">
 			    			</v-text-field>
 			    			<small class="form-text text-muted">Rp @{{form_data.closing_fee_sales ? number_format(form_data.closing_fee_sales) : 0 }}</small>
 			    		</validation-provider>
@@ -481,6 +482,7 @@
 		    		            v-on="on"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
+					    		:readonly="field_state"
 		    		        ></v-text-field>
 				    		</validation-provider>
 	    		        	</template>
@@ -516,7 +518,8 @@
 		    		            label="Upload Bukti Pembayaran"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="sales_evidence_cf">
+				              	name="sales_evidence_cf"
+				              	:readonly="field_state">
 			              </v-file-input>
 			              <a :href="form_data.url_sales_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.sales_evidence}}</small>
@@ -551,7 +554,8 @@
 				    			name="closing_fee_agency"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		placeholder="Rp">
+					    		placeholder="Rp"
+					    		:readonly="field_state">
 			    			</v-text-field>
 			    			<small class="form-text text-muted">Rp @{{form_data.closing_fee_agency ? number_format(form_data.closing_fee_agency) : 0 }}</small>
 			    		</validation-provider>
@@ -579,6 +583,7 @@
 		    		            v-on="on"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
+					    		:readonly="field_state"
 		    		        ></v-text-field>
 				    		</validation-provider>
 	    		        	</template>
@@ -613,7 +618,8 @@
 		    		            label="Upload Bukti Pembayaran"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="agency_evidence_cf">
+				              	name="agency_evidence_cf"
+				              	:readonly="field_state">
 			              </v-file-input>
 			              <a :href="form_data.url_agency_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.agency_evidence}}</small>
@@ -648,7 +654,8 @@
 				    			name="closing_fee_korwil"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		placeholder="Rp">
+					    		placeholder="Rp"
+					    		:readonly="field_state">
 			    			</v-text-field>
 			    			<small class="form-text text-muted">Rp @{{form_data.closing_fee_korwil ? number_format(form_data.closing_fee_korwil) : 0 }}</small>
 			    		</validation-provider>
@@ -676,6 +683,7 @@
 		    		            v-on="on"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
+					    		:readonly="field_state"
 		    		        ></v-text-field>
 				    		</validation-provider>
 	    		        	</template>
@@ -710,7 +718,8 @@
 		    		            label="Upload Bukti Pembayaran"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="korwil_evidence_cf">
+				              	name="korwil_evidence_cf"
+				              	:readonly="field_state">
 			              </v-file-input>
 			              <a :href="form_data.url_korwil_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.korwil_evidence}}</small>
@@ -745,7 +754,8 @@
 				    			name="closing_fee_korut"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		placeholder="Rp">
+					    		placeholder="Rp"
+					    		:readonly="field_state">
 			    			</v-text-field>
 			    			<small class="form-text text-muted">Rp @{{form_data.closing_fee_korut ? number_format(form_data.closing_fee_korut) : 0 }}</small>
 			    		</validation-provider>
@@ -774,6 +784,7 @@
 		    		            v-on="on"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
+					    		:readonly="field_state"
 		    		        ></v-text-field>
 				    		</validation-provider>
 	    		        	</template>
@@ -808,7 +819,8 @@
 		    		            label="Upload Bukti Pembayaran"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="korut_evidence_cf">
+				              	name="korut_evidence_cf"
+				              	:readonly="field_state">
 			              </v-file-input>
 			              <a :href="form_data.url_korut_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.korut_evidence}}</small>
