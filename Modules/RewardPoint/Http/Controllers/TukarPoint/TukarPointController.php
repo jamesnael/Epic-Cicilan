@@ -403,7 +403,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataSales(Request $request)
     {
-        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point')->orderBy('created_at', 'DESC');
+        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

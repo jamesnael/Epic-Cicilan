@@ -71,11 +71,15 @@ class RegionalCoordinator extends Model
 
     public function getTotalPointAttribute()
     {
-        $collection = collect($this->point)->sum(function($item) {
-            if (!empty($item->point)) {
-                return $item->point;
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->booking_status != 'dokumen' && $item->booking_status != 'spr'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
             }
-            return 0;
         });
         return $collection;
     }
@@ -101,6 +105,14 @@ class RegionalCoordinator extends Model
     public function point()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\KoorWilayahPoint', 'koordinator_wilayah_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function booking()
+    {
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'regional_coor_id');
     }
     
 }
