@@ -86325,22 +86325,22 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-history-sales.table": {
-      "uri": "tukar-point\/table-sales-history",
+      "uri": "tukar-point\/table-sales-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-agent.table": {
-      "uri": "tukar-point\/table-agent-history",
+      "uri": "tukar-point\/table-agent-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korwil.table": {
-      "uri": "tukar-point\/table-korwil-history",
+      "uri": "tukar-point\/table-korwil-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korut.table": {
-      "uri": "tukar-point\/table-korut-history",
+      "uri": "tukar-point\/table-korut-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },

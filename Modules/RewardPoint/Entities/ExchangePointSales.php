@@ -15,6 +15,11 @@ class ExchangePointSales extends Model
     	'exchange_point'
     ];
 
+    public function sales()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\Sales', 'sales_id');
+    }
+
     public function sales_point()
     {
         return $this->belongsTo('Modules\RewardPoint\Entities\SalesPoint', 'sales_id');

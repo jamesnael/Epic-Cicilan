@@ -12,10 +12,9 @@
             "value" => 'table_index',
         ])->values();
 	@endphp
-	<h3><u>History Agent</u></h3>
-	<h5>Sisa Point : -</h5>
+	<h3><u>History Penukaran Agent</u></h3>
 	<table-layout inline-template
-		uri="{{ route('tukar-point-agent.table') }}"
+		uri="{{ route('tukar-point-history-agent.table', $page->id) }}"
 		:headers='@json($page->table_headers)'
 		no-data-text="Tidak ada data ditemukan."
 		no-results-text="Tidak ada data ditemukan."
