@@ -355,10 +355,52 @@
     		      	Kembali
     		    </v-btn>
 	    		<v-btn
-	    		v-if="form_data.sisa_point >= form_data.redeem_point_sales,
-		    			  form_data.sisa_point >= form_data.redeem_point_agency,
-		    			  form_data.sisa_point >= form_data.redeem_point_regional_coordinator,
-		    			  form_data.sisa_point >= form_data.redeem_point_main_coordinator"
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_sales && form_data.level == 'Sales'"
+		    		class="mt-4 mr-4 white--text"
+		    		color="primary"
+		    		elevation="5"
+		    		:disabled="field_state"
+		    		:loading="field_state"
+		    		@click="submit">
+		    		Simpan
+	    		    <template v-slot:loader>
+    		            <span class="custom-loader">
+    		              	<v-icon color="white">mdi-sync</v-icon>
+    		            </span>
+    		        </template>
+		    	</v-btn>
+		    	<v-btn
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_agency && form_data.level == 'Agent'"
+		    		class="mt-4 mr-4 white--text"
+		    		color="primary"
+		    		elevation="5"
+		    		:disabled="field_state"
+		    		:loading="field_state"
+		    		@click="submit">
+		    		Simpan
+	    		    <template v-slot:loader>
+    		            <span class="custom-loader">
+    		              	<v-icon color="white">mdi-sync</v-icon>
+    		            </span>
+    		        </template>
+		    	</v-btn>
+		    	<v-btn
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_regional_coordinator && form_data.level == 'Korwil'"
+		    		class="mt-4 mr-4 white--text"
+		    		color="primary"
+		    		elevation="5"
+		    		:disabled="field_state"
+		    		:loading="field_state"
+		    		@click="submit">
+		    		Simpan
+	    		    <template v-slot:loader>
+    		            <span class="custom-loader">
+    		              	<v-icon color="white">mdi-sync</v-icon>
+    		            </span>
+    		        </template>
+		    	</v-btn>
+		    	<v-btn
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_main_coordinator  && form_data.level == 'Korut'"
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
 		    		elevation="5"
