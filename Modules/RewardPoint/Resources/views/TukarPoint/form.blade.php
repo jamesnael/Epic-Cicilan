@@ -33,7 +33,7 @@
 		    			v-model="form_data.user_name" 
 		    			@input="setSelectedSales()"
 		              	:items="filter_sales"
-		              	label="Sales"
+		              	label="Nama Sales"
 		              	name="user_name"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
@@ -217,17 +217,18 @@
 			    	</v-col>
 			    </v-row>
 			  	
-			    <h3 class="mt-4">Tukar Point</h3>
+			    <h3 class="mt-4"
+			    	v-if="form_data.user_name !== ''">Jumlah Point</h3>
 
 			    
-			  	<v-row>
+			  	<v-row v-if="form_data.user_name !== ''">
     		       <v-col
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Total Point" rules="">
 				    		<v-text-field
 			    			v-model="form_data.total_point"
-			              	label="Total Point"
+			    			label="Total Point"
 			              	name="total_point"
 				    		:error-messages="errors"
 				    		:readonly="!field_state"
@@ -237,7 +238,7 @@
 			    	</v-col>
 			    </v-row>
 
-			    <v-row>
+			    <v-row v-if="form_data.user_name !== ''">
     		       <v-col
     		          	cols="12"
     		          	md="12">
@@ -253,15 +254,18 @@
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
+			    <h3 class="mt-4"
+			    	v-if="form_data.user_name !== ''">Pilih Reward</h3>
 
-			    <v-row>
+
+			    <v-row v-if="form_data.user_name !== ''">
     		       <v-col
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required" 
 		    			 >
 		    		<v-select
-		    			v-model="form_data.category_reward_id" 
+		    			v-model="form_data.category_reward_id"
 		              	:items="filter_category"
 		              	label="Kategori Reward"
 		              	name="category_reward_id"
@@ -274,7 +278,7 @@
 			    	</v-col>
 			    </v-row>
 
-			    <v-row>
+			    <v-row v-if="form_data.user_name !== ''">
     		       <v-col
     		          	cols="12"
     		          	md="12">
@@ -297,7 +301,7 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Sales'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Sales' ">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_sales" 
 			    			label="Redeem Point"
@@ -308,7 +312,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Agent'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Agent'">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_agency" 
 			    			label="Redeem Point"
@@ -319,7 +323,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Korwil'"> 
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Korwil'"> 
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_regional_coordinator" 
 			    			label="Redeem Point"
@@ -330,7 +334,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Korut'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Korut'">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_main_coordinator" 
 			    			label="Redeem Point"
@@ -343,7 +347,6 @@
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
-			    <br>
 			    <v-btn
 		      		class="mt-4"
 		      		outlined 
