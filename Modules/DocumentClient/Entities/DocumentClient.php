@@ -107,7 +107,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileKtpPemohonAttribute()
     {
-        return $this->attributes['file_ktp_pemohon'] ? Storage::disk('public')->url('app/public/document/ktp_pemohon/'.$this->attributes['file_ktp_pemohon']) : null;
+        return $this->attributes['file_ktp_pemohon'] ? Storage::disk('public')->url('app/public/document/file_ktp_pemohon/'.$this->attributes['file_ktp_pemohon']) : null;
     }
 
     /**
@@ -118,7 +118,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileKtpSuamiIstriAttribute()
     {
-        return $this->attributes['file_ktp_suami_istri'] ? Storage::disk('public')->url('app/public/document/ktp_suami_istri/'.$this->attributes['file_ktp_suami_istri']) : null;
+        return $this->attributes['file_ktp_suami_istri'] ? Storage::disk('public')->url('app/public/document/file_ktp_suami_istri/'.$this->attributes['file_ktp_suami_istri']) : null;
     }
 
     /**
@@ -129,7 +129,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileKkAttribute()
     {
-        return $this->attributes['file_kk'] ? Storage::disk('public')->url('app/public/document/kk/'.$this->attributes['file_kk']) : null;
+        return $this->attributes['file_kk'] ? Storage::disk('public')->url('app/public/document/file_kk/'.$this->attributes['file_kk']) : null;
     }
 
     /**
@@ -140,7 +140,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSuratNikahAttribute()
     {
-        return $this->attributes['file_surat_nikah'] ? Storage::disk('public')->url('app/public/document/surat_nikah/'.$this->attributes['file_surat_nikah']) : null;
+        return $this->attributes['file_surat_nikah'] ? Storage::disk('public')->url('app/public/document/file_surat_nikah/'.$this->attributes['file_surat_nikah']) : null;
     }
 
     /**
@@ -151,7 +151,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileNpwpAttribute()
     {
-        return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/document/npwp/'.$this->attributes['file_npwp']) : null;
+        return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/document/file_npwp/'.$this->attributes['file_npwp']) : null;
     }
 
     /**
@@ -162,7 +162,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSiupAttribute()
     {
-        return $this->attributes['file_siup'] ? Storage::disk('public')->url('app/public/document/siup/'.$this->attributes['file_siup']) : null;
+        return $this->attributes['file_siup'] ? Storage::disk('public')->url('app/public/document/file_siup/'.$this->attributes['file_siup']) : null;
     }
 
     /**
@@ -173,7 +173,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileTdpAttribute()
     {
-        return $this->attributes['file_tdp'] ? Storage::disk('public')->url('app/public/document/tdp/'.$this->attributes['file_tdp']) : null;
+        return $this->attributes['file_tdp'] ? Storage::disk('public')->url('app/public/document/file_tdp/'.$this->attributes['file_tdp']) : null;
     }
 
     /**
@@ -184,7 +184,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileAktaAttribute()
     {
-        return $this->attributes['file_akta'] ? Storage::disk('public')->url('app/public/document/akta/'.$this->attributes['file_akta']) : null;
+        return $this->attributes['file_akta'] ? Storage::disk('public')->url('app/public/document/file_akta/'.$this->attributes['file_akta']) : null;
     }
 
     /**
@@ -195,7 +195,7 @@ class DocumentClient extends Model
      */
     public function getUrlFilePengesahanAttribute()
     {
-        return $this->attributes['file_pengesahan'] ? Storage::disk('public')->url('app/public/document/pengesahan/'.$this->attributes['file_pengesahan']) : null;
+        return $this->attributes['file_pengesahan'] ? Storage::disk('public')->url('app/public/document/file_pengesahan/'.$this->attributes['file_pengesahan']) : null;
     }
 
     /**
@@ -206,7 +206,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileIzinPraktekAttribute()
     {
-        return $this->attributes['file_izin_praktek'] ? Storage::disk('public')->url('app/public/document/izin_praktek/'.$this->attributes['file_izin_praktek']) : null;
+        return $this->attributes['file_izin_praktek'] ? Storage::disk('public')->url('app/public/document/file_izin_praktek/'.$this->attributes['file_izin_praktek']) : null;
     }
 
     /**
@@ -217,7 +217,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSlipGajiAttribute()
     {
-        return $this->attributes['file_slip_gaji'] ? Storage::disk('public')->url('app/public/document/slip_gaji/'.$this->attributes['file_slip_gaji']) : null;
+        return $this->attributes['file_slip_gaji'] ? Storage::disk('public')->url('app/public/document/file_slip_gaji/'.$this->attributes['file_slip_gaji']) : null;
     }
 
     /**
@@ -228,7 +228,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileRekeningTabunganAttribute()
     {
-        return $this->attributes['file_rekening_tabungan'] ? Storage::disk('public')->url('app/public/document/rekening_tabungan/'.$this->attributes['file_rekening_tabungan']) : null;
+        return $this->attributes['file_rekening_tabungan'] ? Storage::disk('public')->url('app/public/document/file_rekening_tabungan/'.$this->attributes['file_rekening_tabungan']) : null;
     }
 
 
@@ -240,7 +240,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileRekeningKoranAttribute()
     {
-        return $this->attributes['file_rekening_koran'] ? Storage::disk('public')->url('app/public/document/rekening_koran/'.$this->attributes['file_rekening_koran']) : null;
+        return $this->attributes['file_rekening_koran'] ? Storage::disk('public')->url('app/public/document/file_rekening_koran/'.$this->attributes['file_rekening_koran']) : null;
     }
 
     /**
@@ -251,7 +251,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSuratRekomendasiAttribute()
     {
-        return $this->attributes['file_surat_rekomendasi'] ? Storage::disk('public')->url('app/public/document/surat_rekomendasi/'.$this->attributes['file_surat_rekomendasi']) : null;
+        return $this->attributes['file_surat_rekomendasi'] ? Storage::disk('public')->url('app/public/document/file_surat_rekomendasi/'.$this->attributes['file_surat_rekomendasi']) : null;
     }
 
     /**
@@ -262,7 +262,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSkDomisiliAttribute()
     {
-        return $this->attributes['file_sk_domisili'] ? Storage::disk('public')->url('app/public/document/sk_domisili/'.$this->attributes['file_sk_domisili']) : null;
+        return $this->attributes['file_sk_domisili'] ? Storage::disk('public')->url('app/public/document/file_sk_domisili/'.$this->attributes['file_sk_domisili']) : null;
     }
 
     /**
@@ -273,7 +273,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileKeteranganUsahaAttribute()
     {
-        return $this->attributes['file_keterangan_usaha'] ? Storage::disk('public')->url('app/public/document/keterangan_usaha/'.$this->attributes['file_keterangan_usaha']) : null;
+        return $this->attributes['file_keterangan_usaha'] ? Storage::disk('public')->url('app/public/document/file_keterangan_usaha/'.$this->attributes['file_keterangan_usaha']) : null;
     }
 
     /**
@@ -284,7 +284,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileSptAttribute()
     {
-        return $this->attributes['file_spt'] ? Storage::disk('public')->url('app/public/document/spt/'.$this->attributes['file_spt']) : null;
+        return $this->attributes['file_spt'] ? Storage::disk('public')->url('app/public/document/file_spt/'.$this->attributes['file_spt']) : null;
     }
 
     /**
@@ -295,7 +295,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileKeteranganKerjaAttribute()
     {
-        return $this->attributes['file_keterangan_kerja'] ? Storage::disk('public')->url('app/public/document/keterangan_kerja/'.$this->attributes['file_keterangan_kerja']) : null;
+        return $this->attributes['file_keterangan_kerja'] ? Storage::disk('public')->url('app/public/document/file_keterangan_kerja/'.$this->attributes['file_keterangan_kerja']) : null;
     }
 
     /**
@@ -306,7 +306,7 @@ class DocumentClient extends Model
      */
     public function getUrlFileTabungan3BulanTerakhirAttribute()
     {
-        return $this->attributes['file_tabungan_3_bulan_terakhir'] ? Storage::disk('public')->url('app/public/document/tabungan_3_bulan_terakhir/'.$this->attributes['file_tabungan_3_bulan_terakhir']) : null;
+        return $this->attributes['file_tabungan_3_bulan_terakhir'] ? Storage::disk('public')->url('app/public/document/file_tabungan_3_bulan_terakhir/'.$this->attributes['file_tabungan_3_bulan_terakhir']) : null;
     }
 
 

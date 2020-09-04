@@ -29,7 +29,10 @@ class Sales extends Model
 
     protected $appends = [
         'url_file_ktp',
-        'url_file_npwp'
+        'url_file_npwp',
+        'total_point',
+        'allowed_point',
+        'exchanged_point',
     ];
 
     /**
@@ -54,6 +57,48 @@ class Sales extends Model
         return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/sales/npwp/'.$this->attributes['file_npwp']) : null;
     }
 
+    public function getTotalPointAttribute()
+    {
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->booking_status != 'dokumen' && $item->booking_status != 'spr'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
+            }
+        });
+        return $collection;
+    }
+
+    public function getAllowedPointAttribute()
+    {
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->komisi_status == 'Pembayaran 2' || $item->komisi_status == 'Closing Fee'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
+            }
+        });
+        return $collection;
+    }
+
+    public function getExchangedPointAttribute()
+    {
+        $collection = collect($this->exchange)->sum(function($item) {
+            if (!empty($item->exchange_point)) {
+                return $item->exchange_point;
+            }
+            return 0;
+        });
+
+        return $collection;
+    }
+
     /**
      * Get the relationship for the model.
      */
@@ -73,6 +118,22 @@ class Sales extends Model
     /**
      * Get the relationship for the model.
      */
+    public function booking()
+    {
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'sales_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function exchange()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSales', 'sales_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
     public function main_coordinator()
     {
         return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coordinator_id');
@@ -86,4 +147,11 @@ class Sales extends Model
         return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coordinator_id');
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\SalesPoint');
+    }
 }

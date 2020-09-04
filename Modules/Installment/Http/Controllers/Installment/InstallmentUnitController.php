@@ -96,11 +96,57 @@ class InstallmentUnitController extends Controller
      */
     public function edit(Booking $installment_unit)
     {
+        $table_headers = [
+            [
+                "text" => '#',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'table_index',
+            ],
+            [
+                "text" => 'Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment',
+            ],
+            [
+                "text" => 'Jatuh Tempo',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'due_date',
+            ],
+            [
+                "text" => 'Total Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'installment',
+            ],
+            [
+                "text" => 'Tanggal Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_date',
+            ],
+            [
+                "text" => 'Denda',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'fine',
+            ],
+            [
+                "text" => 'Sisa Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'credit',
+            ],
+        ];
+        
         $this->breadcrumbs[] = ['href' => route('installment-unit.index'), 'text' => 'Detail Cicilan'];
 
         return view('installment::installment-unit.edit',[
             'page' => $this,
             'data' => $installment_unit,
+            'table_headers' => $table_headers,
         ])->with($this->getHelper());
     }
 

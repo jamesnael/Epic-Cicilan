@@ -195,6 +195,14 @@ class PPJBController extends Controller
           }
 
 
+
+            if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Approved'
+                && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Approved'
+                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved') {
+                $PPJB->booking_status = 'cicilan';
+                $PPJB->save();
+            }
+
             $request->merge([
                 'ppjb_sign_date' => $request->ppjb_sign_date ? \Carbon\Carbon::parse($request->ppjb_sign_date)->format('Y-m-d') : '',
                 'ppjb_date' => $request->ppjb_date ? \Carbon\Carbon::parse($request->ppjb_date)->format('Y-m-d') : '',
@@ -209,12 +217,6 @@ class PPJBController extends Controller
                 $data = PPJB::create($request->all());
             }
 
-            if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Approved'
-                && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Approved'
-                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved') {
-                $PPJB->booking_status = 'cicilan';
-                $PPJB->save();
-            }
            
 
 

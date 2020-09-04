@@ -38,6 +38,10 @@ class Booking extends Model
         'payment_method_nup',
         'nup_date',
         'utj_date',
+        'main_coor_id',
+        'regional_coor_id',
+        'agent_id',
+        'komisi_status',
     ];
 
      /**
@@ -56,6 +60,7 @@ class Booking extends Model
         'total_denda',
         'tanggal_lunas_cicilan',
         'prosentase_pembayaran',
+        // 'total_point',
     ];
 
     /**
@@ -153,6 +158,22 @@ class Booking extends Model
         });
         return $collection;
     }
+
+    // public function getTotalPointAttribute()
+    // {
+    //     if($this->booking_status != 'dokumen' || $this->booking_status != 'spr')
+    //     {
+    //         $collection = collect($this->unit)->sum(function($item) {
+    //             if (!empty($item->points)) {
+    //                 return $item->points;
+    //             }
+    //             return 0;
+    //         });
+    //         return $collection;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 
     /**
      * Scope a query.
@@ -279,12 +300,29 @@ class Booking extends Model
         return $this->hasOne('Modules\Installment\Entities\Spr', 'booking_id');
     }
 
-     /**
+    /**
      * Get the relations for the model.
      */
     public function handover()
     {
         return $this->hasOne('Modules\Installment\Entities\Handover', 'booking_id');
+    }
+
+public function salespoint()
+    {
+        return $this->hasOne('Modules\RewardPoint\Entities\SalesPoint', 'booking_id');
+    }
+
+    public function subagentpoint()
+    {
+        return $this->hasOne('Modules\RewardPoint\Entities\SubAgentPoint', 'booking_id');
+    }
+    /**
+     * Get the relations for the model.
+     */
+    public function commission()
+    {
+        return $this->hasOne('Modules\Commission\Entities\SalesCommission', 'booking_id');
     }
 
 

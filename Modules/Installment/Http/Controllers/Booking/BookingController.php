@@ -70,6 +70,12 @@ class BookingController extends Controller
                 "value" => 'installment',
             ],
             [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'payment_type',
+            ],
+            [
                 "text" => 'Tanggal Jatuh Tempo',
                 "align" => 'center',
                 "sortable" => true,
@@ -254,8 +260,8 @@ class BookingController extends Controller
             "due_date" => "bail|required",
             "credits" => "bail|nullable|numeric",
             "payment_method_utj" => "bail|required|string|max:255",
-            "bank_name" => "bail|required|string|max:255",
-            "card_number" => "bail|required|string|max:255",
+            "bank_name" => "bail|nullable|string|max:255",
+            "card_number" => "bail|nullable|string|max:255",
         ]);
     }
 
@@ -366,7 +372,8 @@ class BookingController extends Controller
                         $item->agency_name = $item->agency->agency_name ?? '';
                         $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
                         $item->main_coordinator = $item->main_coordinator->full_name ?? '';
-                        return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
+
+                        return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator', 'main_coordinator_id','regional_coordinator_id', 'agency_id']);
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
             'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->get(),

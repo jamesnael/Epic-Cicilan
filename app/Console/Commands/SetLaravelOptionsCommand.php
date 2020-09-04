@@ -45,7 +45,7 @@ class SetLaravelOptionsCommand extends Command
 
         $bar->start();
 
-        option(['pph_21' => '0']);
+        option(['pph_21' => 3]);
 
         $bar->advance();
         usleep(300000);

@@ -3,7 +3,7 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<h3>Data Unit</h3>
-	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
+	    		<validation-provider v-slot="{ errors }" name="Tipe unit" rules="required">
 		    		<v-select
 		    			class="mt-4"
 		    			v-model="form_data.id_unit_type" 
@@ -19,10 +19,10 @@
 		            ></v-select>
 	    		</validation-provider>
 	    		<v-text-field
-			           v-model="form_data.unit_type"
-			           v-show=false
-			           name="unit_type">
-			        </v-text-field>
+		           v-model="form_data.unit_type"
+		           v-show=false
+		           name="unit_type">
+		        </v-text-field>
 	    		{{-- <validation-provider v-slot="{ errors }" name="Tipe rumah" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
@@ -80,11 +80,13 @@
 				    			class="mt-4"
 				    			v-model="form_data.surface_area"
 				    			name="surface_area"
-					    		label="Luas Kavling (m2)"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
+					    		<template slot="label">
+					    		    <span v-html="'Luas Kavling (m<sup>2</sup>)'"></span>
+					    		</template>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -96,11 +98,13 @@
 				    			class="mt-4"
 				    			v-model="form_data.building_area"
 				    			name="building_area"
-					    		label="Luas Bangunan (m2)"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
+					    		<template slot="label">
+					    		    <span v-html="'Luas Bangunan (m<sup>2</sup>)'"></span>
+					    		</template>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -286,7 +290,7 @@
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:1">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="installment_time"
@@ -727,6 +731,21 @@
 			    			</v-text-field>
 			    		</validation-provider>
 				    </v-col>
+	        		<v-text-field
+	    	           v-model="form_data.agent_id"
+	    	           v-show=false
+	    	           name="agent_id">
+	    	        </v-text-field>
+	    	        <v-text-field
+	    	           v-model="form_data.main_coor_id"
+	    	           v-show=false
+	    	           name="main_coor_id">
+	    	        </v-text-field>
+	    	        <v-text-field
+	    	           v-model="form_data.regional_coor_id"
+	    	           v-show=false
+	    	           name="regional_coor_id">
+	    	        </v-text-field>
 			    </v-row>
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
