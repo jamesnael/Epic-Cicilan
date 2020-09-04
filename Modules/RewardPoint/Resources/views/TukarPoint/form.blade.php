@@ -351,6 +351,7 @@
 		      		class="mt-4"
 		      		outlined 
 		      		:disabled="field_state"
+		      		:href="redirectUri"
 		      		>
     		      	Kembali
     		    </v-btn>
@@ -361,7 +362,8 @@
 		    		elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="submit">
+		    		@click="submit"
+		    		@click.stop="dialog = true">
 		    		Simpan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
@@ -369,14 +371,48 @@
     		            </span>
     		        </template>
 		    	</v-btn>
-		    	<v-btn
+		    	<v-dialog
+      				v-model="dialog"
+      				max-width="290">
+				      <v-card>
+					        <v-card-title class="headline">Warning</v-card-title>
+
+					        <v-card-text>
+					        Tukar point berhasil dilakukan, apakah ingin menukar point lagi ?
+					        </v-card-text>
+
+					        <v-card-actions>
+					          <v-spacer></v-spacer>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="redirectUri"
+					          >
+					           Tidak
+					          </v-btn>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="createUri"
+					          >
+					            Ya
+					          </v-btn>
+					        </v-card-actions>
+				      </v-card>
+    			</v-dialog>
+
+
+    			<v-btn
 	    		v-if="form_data.sisa_point >= form_data.redeem_point_agency && form_data.level == 'Agent'"
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
 		    		elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="submit">
+		    		@click="submit"
+		    		@click.stop="dialog = true">
 		    		Simpan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
@@ -384,14 +420,49 @@
     		            </span>
     		        </template>
 		    	</v-btn>
-		    	<v-btn
+		    	<v-dialog
+      				v-model="dialog"
+      				max-width="290">
+				      <v-card>
+					        <v-card-title class="headline">Warning</v-card-title>
+
+					        <v-card-text>
+					        Tukar point berhasil dilakukan, apakah ingin menukar point lagi ?
+					        </v-card-text>
+
+					        <v-card-actions>
+					          <v-spacer></v-spacer>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="redirectUri"
+					          >
+					           Tidak
+					          </v-btn>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="createUri"
+					          >
+					            Ya
+					          </v-btn>
+					        </v-card-actions>
+				      </v-card>
+    			</v-dialog>
+
+
+
+    			<v-btn
 	    		v-if="form_data.sisa_point >= form_data.redeem_point_regional_coordinator && form_data.level == 'Korwil'"
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
 		    		elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="submit">
+		    		@click="submit"
+		    		@click.stop="dialog = true">
 		    		Simpan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
@@ -399,14 +470,48 @@
     		            </span>
     		        </template>
 		    	</v-btn>
-		    	<v-btn
-	    		v-if="form_data.sisa_point >= form_data.redeem_point_main_coordinator  && form_data.level == 'Korut'"
+		    	<v-dialog
+      				v-model="dialog"
+      				max-width="290">
+				      <v-card>
+					        <v-card-title class="headline">Warning</v-card-title>
+
+					        <v-card-text>
+					        Tukar point berhasil dilakukan, apakah ingin menukar point lagi ?
+					        </v-card-text>
+
+					        <v-card-actions>
+					          <v-spacer></v-spacer>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="redirectUri"
+					          >
+					           Tidak
+					          </v-btn>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="createUri"
+					          >
+					            Ya
+					          </v-btn>
+					        </v-card-actions>
+				      </v-card>
+    			</v-dialog>
+
+
+    			<v-btn
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_main_coordinator && form_data.level == 'Korut'"
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
 		    		elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
-		    		@click="submit">
+		    		@click="submit"
+		    		@click.stop="dialog = true">
 		    		Simpan
 	    		    <template v-slot:loader>
     		            <span class="custom-loader">
@@ -414,7 +519,41 @@
     		            </span>
     		        </template>
 		    	</v-btn>
-	    		
+		    	<v-dialog
+      				v-model="dialog"
+      				max-width="290">
+				      <v-card>
+					        <v-card-title class="headline">Warning</v-card-title>
+
+					        <v-card-text>
+					        Tukar point berhasil dilakukan, apakah ingin menukar point lagi ?
+					        </v-card-text>
+
+					        <v-card-actions>
+					          <v-spacer></v-spacer>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="redirectUri"
+					          >
+					           Tidak
+					          </v-btn>
+
+					          <v-btn
+					            color="blue darken-1"
+					            text
+					            :href="createUri"
+					          >
+					            Ya
+					          </v-btn>
+					        </v-card-actions>
+				      </v-card>
+    			</v-dialog>
+
+
+				</template>
+		    	
 	    	</form>
 	    </validation-observer>
     </v-card>

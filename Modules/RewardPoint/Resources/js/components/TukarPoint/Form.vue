@@ -24,6 +24,10 @@
                 type: String,
                 required: true
             },
+            createUri: {
+                type: String,
+                required: true
+            },
             dataUri: {
                 type: String,
                 default: ''

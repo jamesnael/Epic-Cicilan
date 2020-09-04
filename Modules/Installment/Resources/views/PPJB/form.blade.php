@@ -325,7 +325,8 @@
 	            <v-btn
 		      		class="mt-4"
 		      		outlined 
-		      		:disabled="field_state">
+		      		:disabled="field_state"
+		      		:href="redirectUri">
     		      	Kembali
     		    </v-btn>
 	    		<v-btn
