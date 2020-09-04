@@ -45,7 +45,6 @@
 		},
 		data: function () {
             return {
-	            unit_installments: [],
             	field_state: false,
             	formAlert: false,
 	            formAlertText: '',
@@ -53,6 +52,7 @@
                 modal: false,
                 menu2:false,
                 menu:false,
+                
 	            datepicker: false,
 	            unit_installments: [],
             	form_data: {
@@ -112,34 +112,48 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                let arr_installment = []
+
+                                // let arr_installment = []
+
+                                var items = []
+                                _.forEach(data.payments, (value, key) => {
+                                    value.table_index = parseInt(key) + 1
+                                    items.push(value)
+                                });
                                 
     		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
-    		            			unit_block:data.unit.unit_block,
-    		            			unit_number:data.unit.unit_number,
-    		            			surface_area:data.unit.surface_area,
-    		            			building_area:data.unit.building_area,
-    		            			utj:this.moneyFormat(data.unit.utj),
-    		            			electrical_power:data.unit.electrical_power,
+                                    client_number: data.client.client_number,
+                                    client_name: data.client.client_name,
+                                    client_mobile_number: data.client.client_mobile_number,
+                                    client_email: data.client.client_email,
+                                    client_address: data.client.client_address,
+                                    sales_name: data.sales.user.full_name,
+                                    unit_type: data.unit.unit_type,
+                                    unit_block: data.unit.unit_block,
+                                    unit_number: data.unit.unit_number,
+                                    surface_area: data.unit.surface_area,
+                                    building_area: data.unit.building_area,
+                                    electrical_power: data.unit.electrical_power,
+                                    nup_amount: data.nup_amount,
+                                    payment_method_nup: data.payment_method_nup,
+                                    nup_date: data.nup_date,
+                                    utj_amount: data.utj_amount,
+                                    payment_method_utj: data.payment_method_utj,
+                                    utj_date: data.utj_date,
+                                    payment_type: data.payment_type,
+                                    total_amount: data.total_amount,
+                                    first_payment: data.first_payment,
+                                    principal: data.principal,
+                                    installment: data.installment,
+                                    installment_time: data.installment_time,
+                                    total_pembayaran: data.total_pembayaran,
+                                    sisa_tunggakan: data.sisa_tunggakan,
+                                    total_denda: data.total_denda,
     		            			points:data.unit.points,
     		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
-    		            			total_amount: this.moneyFormat(data.total_amount),
-    		            			ppn: this.moneyFormat(data.ppn),
-    		            			payment_type: data.payment_type,
-    		            			payment_method: data.payment_method,
-    		            			dp_amount: this.moneyFormat(data.dp_amount),
-    		            			first_payment: this.moneyFormat(data.first_payment),
-    		            			principal: this.moneyFormat(data.principal),
-    		            			installment: this.moneyFormat(data.installment),
-    		            			installment_time: data.installment_time,
-    		            			due_date: data.due_date,
-    		            			credits: this.moneyFormat(data.credits),
-    		            			amount: this.moneyFormat(data.amount),
-    		            			payment_method_utj: data.payment_method_utj,
     		            			bank_name: data.bank_name,
     		            			card_number: data.card_number,
-    		            			point: data.point,
+
     		            			client_id: data.client_id,
     		            			client_name: data.client.client_name,
     		            			client_number: data.client.client_number,
@@ -149,29 +163,24 @@
     		            			client_address: data.client.client_address,
     		            			sales_id: data.sales_id,
     		            			sales_name:data.sales.user.full_name,
-
-                                    nup_amount: this.moneyFormat(data.nup_amount),
-                                    utj_amount: this.moneyFormat(data.utj_amount),
-                                    payment_method_nup: data.payment_method_nup,
-                                    nup_date: data.nup_date,
-                                    utj_date: data.utj_date,
-
     		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+
+                                    payments: items
     		            		} 
 
-                                _.forEach(data.payments, (value, key) => {
-                                        arr_installment.push({
-                                            id: value.id,
-                                            payment: value.payment,
-                                            due_date: value.due_date,
-                                            installment: value.installment,
-                                            credit: value.credit
-                                        })
-                                });
+                                // _.forEach(data.payments, (value, key) => {
+                                //     arr_installment.push({
+                                //         id: value.id,
+                                //         payment: value.payment,
+                                //         due_date: value.due_date,
+                                //         installment: value.installment,
+                                //         credit: value.credit
+                                //     })
+                                // });
 
-                                this.unit_installments = arr_installment
+                                // this.unit_installments = arr_installment
 
     			                this.field_state = false
     		            	} else {
@@ -202,7 +211,7 @@
 
                 const data = new FormData(this.$refs['post-form']);
 
-                data.append('unit_installments', JSON.stringify(this.unit_installments))
+                data.append('unit_installments', JSON.stringify(this.form_data.payments))
 
                 if (this.dataUri) {
                     data.append("_method", "put");
@@ -258,14 +267,13 @@
                 }
                 return s.join(dec);
             },
-        	regenerateInstallment () {
+            regenerateInstallment () {
                 var new_installment = []
-                var credit = this.unit_installments[0].credit
+                var credit = this.form_data.payments[0].credit
                 var unit_price = parseInt(credit)
 
-                _.forEach(this.unit_installments, (value, key) => {
+                _.forEach(this.form_data.payments, (value, key) => {
                     if (key == 0 || (key == parseInt(this.form_data.installment_time) + 1 && this.form_data.payment_type == 'KPR/KPA')) {
-                        console.log(key)
                         new_installment.push({
                             id: value.id,
                             payment: value.payment,
@@ -284,8 +292,37 @@
                         })
                     }
                 });
-                this.unit_installments = new_installment
+                this.form_data.payments = new_installment
             },
+
+        	// regenerateInstallment () {
+         //        var new_installment = []
+         //        var credit = this.unit_installments[0].credit
+         //        var unit_price = parseInt(credit)
+
+         //        _.forEach(this.unit_installments, (value, key) => {
+         //            if (key == 0 || (key == parseInt(this.form_data.installment_time) + 1 && this.form_data.payment_type == 'KPR/KPA')) {
+         //                console.log(key)
+         //                new_installment.push({
+         //                    id: value.id,
+         //                    payment: value.payment,
+         //                    due_date: value.due_date,
+         //                    installment: parseInt(value.installment),
+         //                    credit: parseInt(value.credit)
+         //                })
+         //            } else {
+         //                unit_price = parseInt(unit_price) - parseInt(value.installment)
+         //                new_installment.push({
+         //                    id: value.id,
+         //                    payment: value.payment,
+         //                    due_date: value.due_date,
+         //                    installment: key == this.form_data.installment_time ? parseInt(value.installment) + parseInt(unit_price) : parseInt(value.installment),
+         //                    credit: key == this.form_data.installment_time ? 0 : parseInt(unit_price)
+         //                })
+         //            }
+         //        });
+         //        this.unit_installments = new_installment
+         //    },
 
         }
 	}

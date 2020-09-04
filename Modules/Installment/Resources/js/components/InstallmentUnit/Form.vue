@@ -30,44 +30,11 @@
 			    type: String,
 			    default: ''
 			},
-			filter_client: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
-			},
-			filter_sales: {
-			    type: Array,
-			    default: function () {
-			        return []
-			    }
-			},			
 		},
-        computed: {
-            totalPaid: function () {
-                var calculate = 0;
-                this.unit_installments.forEach(e => {
-                    calculate += e.total_paid;
-                });
-                return calculate
-            },
-            totalFine: function () {
-                var sum = 0;
-                this.unit_installments.forEach(e => {
-                    sum += e.fine;
-                });
-                return sum
-            },
-            totalRemainingInstallment: function () {
-                var total_installment = 0;
-                this.unit_installments.forEach(e => {
-                    total_installment += e.count_installment;
-                });
-                return total_installment - this.totalPaid
-            }
-        },
 		data: function () {
             return {
+                overlay: false,
+                progressText: 'Mohon Menunggu.',
 	            unit_installments: [],
             	field_state: false,
             	formAlert: false,
@@ -77,7 +44,6 @@
                 idx:false,
                 menu:false,
 	            datepicker: false,
-	            unit_installments: [],
             	form_data: {
             		unit_type:'',
             		client_name:'',
@@ -119,6 +85,8 @@
                     sisa_tunggakan: 0,
                     total_denda: 0,
                     prosentase_pembayaran: 0,
+
+                    payments: []
             	}
         	}
         },
@@ -134,75 +102,51 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                console.log(data)
-                                let arr_installment = []
-    		            		this.form_data = {
-    		            			unit_type:data.unit.unit_type,
-    		            			unit_block:data.unit.unit_block,
-    		            			unit_number:data.unit.unit_number,
-    		            			surface_area:data.unit.surface_area,
-    		            			building_area:data.unit.building_area,
-    		            			utj:this.moneyFormat(data.unit.utj),
-    		            			electrical_power:data.unit.electrical_power,
-    		            			points:data.unit.points,
-    		            			closing_fee:this.moneyFormat(data.unit.closing_fee),
-    		            			total_amount: this.moneyFormat(data.total_amount),
-    		            			ppn: this.moneyFormat(data.ppn),
-    		            			payment_type: data.payment_type,
-    		            			payment_method: data.payment_method,
-    		            			dp_amount: this.moneyFormat(data.dp_amount),
-    		            			first_payment: this.moneyFormat(data.first_payment),
-    		            			principal: this.moneyFormat(data.principal),
-    		            			installment: this.moneyFormat(data.installment),
-    		            			installment_time: data.installment_time,
-    		            			due_date: this.reformatDateTime(data.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
-    		            			credits: this.moneyFormat(data.credits),
-    		            			amount: this.moneyFormat(data.amount),
-    		            			payment_method_utj: data.payment_method_utj,
-    		            			bank_name: data.bank_name,
-    		            			card_number: data.card_number,
-    		            			point: data.point,
-    		            			client_id: data.client_id,
-    		            			client_name: data.client.client_name,
-    		            			client_number: data.client.client_number,
-    		            			client_email: data.client.client_email,
-    		            			client_phone_number: data.client.client_phone_number,
-    		            			client_mobile_number: data.client.client_mobile_number,
-    		            			client_address: data.client.client_address,
-    		            			sales_id: data.sales_id,
-    		            			sales_name:data.sales.user.full_name,
 
-                                    nup_amount: this.moneyFormat(data.nup_amount),
-                                    utj_amount: this.moneyFormat(data.utj_amount),
-                                    payment_method_nup: data.payment_method_nup,
-                                    nup_date: data.nup_date,
-                                    utj_date: data.utj_date,
-
-
-    		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
-    		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
-    		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
-                                    total_pembayaran:data.total_pembayaran,
-                                    sisa_tunggakan:data.sisa_tunggakan,
-                                    total_denda:data.total_denda,
-                                    prosentase_pembayaran:data.prosentase_pembayaran,
-    		            		} 
-
+                                var items = []
                                 _.forEach(data.payments, (value, key) => {
-                                    arr_installment.push({
-                                        id: value.id,
-                                        payment_date: this.reformatDateTime(value.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
-                                        payment: value.payment,
-                                        fine: value.fine,
-                                        due_date: this.reformatDateTime(value.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY'),
-                                        installment: this.moneyFormat(value.installment),
-                                        count_installment:value.installment,
-                                        credit: this.moneyFormat(value.credit),
-                                        total_paid: value.total_paid
-                                    })
+                                    value.table_index = parseInt(key) + 1
+                                    items.push(value)
                                 });
 
-                                this.unit_installments = arr_installment
+    		            		this.form_data = {
+    		            			client_number: data.client.client_number,
+                                    client_name: data.client.client_name,
+                                    client_mobile_number: data.client.client_mobile_number,
+                                    client_email: data.client.client_email,
+                                    client_address: data.client.client_address,
+                                    sales_name: data.sales.user.full_name,
+                                    unit_type: data.unit.unit_type,
+                                    unit_block: data.unit.unit_block,
+                                    unit_number: data.unit.unit_number,
+                                    surface_area: data.unit.surface_area,
+                                    building_area: data.unit.building_area,
+                                    electrical_power: data.unit.electrical_power,
+                                    nup_amount: data.nup_amount,
+                                    payment_method_nup: data.payment_method_nup,
+                                    nup_date: data.nup_date,
+                                    utj_amount: data.utj_amount,
+                                    payment_method_utj: data.payment_method_utj,
+                                    utj_date: data.utj_date,
+                                    payment_type: data.payment_type,
+                                    total_amount: data.total_amount,
+                                    first_payment: data.first_payment,
+                                    principal: data.principal,
+                                    installment: data.installment,
+                                    installment_time: data.installment_time,
+                                    total_pembayaran: data.total_pembayaran,
+                                    sisa_tunggakan: data.sisa_tunggakan,
+                                    total_denda: data.total_denda,
+                                    prosentase_pembayaran: data.prosentase_pembayaran,
+
+                                    sales_id: data.sales_id,
+                                    sales_name:data.sales.user.full_name,
+                                    agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
+                                    main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
+                                    regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+
+                                    payments: items
+    		            		} 
 
     			                this.field_state = false
     		            	} else {

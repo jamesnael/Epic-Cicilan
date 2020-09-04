@@ -66,7 +66,7 @@ class InstallementController extends Controller
                 "value" => 'payment_type',
             ],
             [
-                "text" => 'Total Bayar',
+                "text" => 'Cicilan',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'installment',
@@ -125,11 +125,45 @@ class InstallementController extends Controller
      */
     public function edit(Booking $installment)
     {
+        $table_headers = [
+            [
+                "text" => '#',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'table_index',
+            ],
+            [
+                "text" => 'Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment',
+            ],
+            [
+                "text" => 'Jatuh Tempo',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'due_date',
+            ],
+            [
+                "text" => 'Total Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'installment',
+            ],
+            [
+                "text" => 'Sisa Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'credit',
+            ],
+        ];
+        
         $this->breadcrumbs[] = ['href' => route('installment.index'), 'text' => 'Edit Cicilan'];
 
         return view('installment::booking.show',[
             'page' => $this,
             'data' => $installment,
+            'table_headers' => $table_headers,
         ])->with($this->getHelper());
     }
 

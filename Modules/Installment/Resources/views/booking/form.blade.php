@@ -80,11 +80,13 @@
 				    			class="mt-4"
 				    			v-model="form_data.surface_area"
 				    			name="surface_area"
-					    		label="Luas Kavling (m2)"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
+					    		<template slot="label">
+					    		    <span v-html="'Luas Kavling (m<sup>2</sup>)'"></span>
+					    		</template>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -96,11 +98,13 @@
 				    			class="mt-4"
 				    			v-model="form_data.building_area"
 				    			name="building_area"
-					    		label="Luas Bangunan (m2)"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state">
+					    		<template slot="label">
+					    		    <span v-html="'Luas Bangunan (m<sup>2</sup>)'"></span>
+					    		</template>
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -286,7 +290,7 @@
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:1">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="installment_time"
