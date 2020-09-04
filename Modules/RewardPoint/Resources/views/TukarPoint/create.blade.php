@@ -7,6 +7,7 @@
 	<tukarpoint-form inline-template
 	uri="{{ route('tukar-point.store') }}"
 	redirect-uri="{{ route('tukar-point.index') }}"
+	create-uri="{{ route('tukar-point.create') }}"
 	:filter_category='@json($category)'
 	:filter_reward='@json($reward_name)'
 	:filter_sales='@json($sales_name)'

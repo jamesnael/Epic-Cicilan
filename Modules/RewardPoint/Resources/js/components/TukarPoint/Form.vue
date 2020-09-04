@@ -24,6 +24,10 @@
                 type: String,
                 required: true
             },
+            createUri: {
+                type: String,
+                required: true
+            },
             dataUri: {
                 type: String,
                 default: ''
@@ -83,6 +87,7 @@
                 agency: false,
                 sales: false,
                 dialog:false,
+                dialog1:false,
                 listStatus:['Aktif', 'Tidak Aktif'],
                 form_data: {
                     category_reward_id: '',
@@ -177,13 +182,8 @@
                 axios.post(this.uri, data)
                     .then((response) => {
                         if (response.data.success) {
-                            this.formAlert = true
-                            this.formAlertState = 'success'
-                            this.formAlertText = response.data.message
+                            this.formAlert = false
 
-                            setTimeout(() => {
-                                this.goto(this.redirectUri);
-                            }, 6000);
                         } else {
                             this.formAlert = true
                             this.formAlertState = 'error'
