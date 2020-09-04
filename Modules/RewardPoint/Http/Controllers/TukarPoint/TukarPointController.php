@@ -10,6 +10,8 @@ use Modules\RewardPoint\Entities\RewardPoint;
 use Modules\RewardPoint\Entities\SalesPoint;
 use Modules\RewardPoint\Entities\ExchangePointSales;
 use Modules\RewardPoint\Entities\ExchangePointSubAgent;
+use Modules\RewardPoint\Entities\ExchangePointKoorUmum;
+use Modules\RewardPoint\Entities\ExchangePointKoorWilayah;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\SalesAgent\Entities\Agency;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
@@ -382,17 +384,36 @@ class TukarPointController extends Controller
              if ($request->has('level') && $request->input('level') == 'Sales') {
 
             $data = ExchangePointSales::create([
-                'sales_point_id'=> $request->user_name,
+                'sales_id'=> $request->user_name,
                 'reward_point_id'=> $request->reward_point_id,                
-                'exchange_point'=> $request->exchange_point,
+                'exchange_point'=> $request->redeem_point,
             ]);
             }
             if ($request->has('level') && $request->input('level') == 'Agent') {
 
             $data = ExchangePointSubAgent::create([
-                'agent_point_id'=> $request->user_name,
+                'agency_id'=> $request->user_name,
                 'reward_point_id'=> $request->reward_point_id,                
-                'exchange_point'=> $request->exchange_point,
+                'exchange_point'=> $request->redeem_point,
+            ]);
+
+            }
+            if ($request->has('level') && $request->input('level') == 'Korwil') {
+
+            $data = ExchangePointKoorWilayah::create([
+                'regional_coordinator_id'=> $request->user_name,
+                'reward_point_id'=> $request->reward_point_id,                
+                'exchange_point'=> $request->redeem_point,
+            ]);
+
+            }
+
+            if ($request->has('level') && $request->input('level') == 'Korut') {
+
+            $data = ExchangePointKoorUmum::create([
+                'main_coordinator_id'=> $request->user_name,
+                'reward_point_id'=> $request->reward_point_id,                
+                'exchange_point'=> $request->redeem_point,
             ]);
 
             }
@@ -400,7 +421,7 @@ class TukarPointController extends Controller
 
 
             DB::commit();
-            return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
+            return response_json(true, null, 'Tukar point berhasil dilakukan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -425,7 +446,7 @@ class TukarPointController extends Controller
     {
         return [        
             'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
-            'reward_name' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id')->get(),
+            'reward_name' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->get(),
             'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
                         $item->value = $item->id;
                         $item->text = $item->user->full_name;

@@ -227,7 +227,8 @@
 			              	label="Point Yang Bisa Ditukar"
 			              	name="exchange_point"
 				    		:error-messages="errors"
-				    		:readonly="field_state"
+				    		:readonly="!field_state"
+				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
 			    	</v-col>
@@ -257,7 +258,7 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="" >
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" >
 				    		<v-select
 			    			v-model="form_data.reward_points"
 			    			@input="setRewardPoint()"
@@ -276,7 +277,7 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="" v-if="form_data.level == 'Sales'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Sales'">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_sales" 
 			    			label="Redeem Point"
@@ -287,7 +288,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="" v-if="form_data.level == 'Agent'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Agent'">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_agency" 
 			    			label="Redeem Point"
@@ -298,7 +299,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="" v-if="form_data.level == 'Korwil'"> 
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Korwil'"> 
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_regional_coordinator" 
 			    			label="Redeem Point"
@@ -309,7 +310,7 @@
 				    		:disabled="field_state"
 			            	></v-text-field>
 			    		</validation-provider>
-			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="" v-if="form_data.level == 'Korut'">
+			    		<validation-provider v-slot="{ errors }" name="Redeem Point" rules="required" v-if="form_data.level == 'Korut'">
 				    		<v-text-field
 			    			v-model="form_data.redeem_point_main_coordinator" 
 			    			label="Redeem Point"
@@ -322,7 +323,8 @@
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
-				 <v-btn
+			    <br>
+			    <v-btn
 		      		class="mt-4"
 		      		outlined 
 		      		:disabled="field_state">
@@ -331,7 +333,7 @@
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"
-	    		    elevation="5"
+		    		elevation="5"
 		    		:disabled="field_state"
 		    		:loading="field_state"
 		    		@click="submit">
