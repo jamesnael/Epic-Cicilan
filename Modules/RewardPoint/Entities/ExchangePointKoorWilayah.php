@@ -11,7 +11,7 @@ class ExchangePointKoorWilayah extends Model
 
     protected $fillable = [
     	'reward_point_id',
-    	'koordinator_wilayah_point_id',
+    	'regional_coordinator_id',
     	'exchange_point',
     ];
 }

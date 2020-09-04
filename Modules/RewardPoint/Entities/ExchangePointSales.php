@@ -10,14 +10,14 @@ class ExchangePointSales extends Model
 	use SoftDeletes;
 
     protected $fillable = [
-    	'sales_point_id',
+    	'sales_id',
     	'reward_point_id',
     	'exchange_point'
     ];
 
     public function sales_point()
     {
-        return $this->belongsTo('Modules\RewardPoint\Entities\SalesPoint', 'sales_point_id');
+        return $this->belongsTo('Modules\RewardPoint\Entities\SalesPoint', 'sales_id');
     }
 
     public function reward_point()

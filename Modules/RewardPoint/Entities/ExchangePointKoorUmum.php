@@ -11,7 +11,7 @@ class ExchangePointKoorUmum extends Model
 
     protected $fillable = [
     	'reward_point_id',
-    	'koordinator_umum_point_id',
+    	'main_coordinator_id',
     	'exchange_point',
     ];
 }
