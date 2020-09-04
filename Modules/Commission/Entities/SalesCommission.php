@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class SalesCommission extends Model
 {
     protected $fillable = [
-	    	'booking_id',
+	    'booking_id',
         'agency_commission',
         'commission_1',
         'payment_date_1',
@@ -48,8 +48,8 @@ class SalesCommission extends Model
     ];
 
     protected $appends = [
-        'url_payment_proof_1',
-        'url_payment_proof_2',
+        'url_payment_proof_one',
+        'url_payment_proof_two',
         'url_sales_evidence',
         'url_agency_evidence',
         'url_korwil_evidence',
@@ -70,9 +70,9 @@ class SalesCommission extends Model
      * @param  string  $value
      * @return string
      */
-    public function getUrlPaymentProof1Attribute()
+    public function getUrlPaymentProofOneAttribute()
     {
-        return $this->attributes['payment_proof_1'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_1']) : null;
+        return $this->attributes['payment_proof_1'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_1']) : '';
     }
 
     /**
@@ -81,9 +81,9 @@ class SalesCommission extends Model
      * @param  string  $value
      * @return string
      */
-    public function getUrlPaymentProof2Attribute()
+    public function getUrlPaymentProofTwoAttribute()
     {
-        return $this->attributes['payment_proof_2'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_2']) : null;
+        return $this->attributes['payment_proof_2'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_2']) : '';
     }
 
     /**
