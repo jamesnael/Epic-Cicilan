@@ -13,7 +13,10 @@ class ChangeTableRewardPoint extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('reward_points', function (Blueprint $table) {
+            \DB::select("ALTER TABLE `reward_points` CHANGE `redeem_point` `redeem_point` INT(11) NULL;");
+            \DB::select("ALTER TABLE `reward_points` CHANGE `kuota` `kuota` INT(11) NULL;");
+        });
     }
 
     /**
