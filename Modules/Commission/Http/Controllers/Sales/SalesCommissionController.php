@@ -216,86 +216,25 @@ class SalesCommissionController extends Controller
         DB::beginTransaction();
         try {
 
-            if ($request->has('commission_1') && $request->has('payment_date_1')) {
+            if ($request->input('commission_1') && $request->input('payment_date_1')) {
 
                 $salescommission->komisi_status = 'Pembayaran 1';
                 $salescommission->save();
 
             }
 
-            if ($request->has('commission_2') && $request->has('payment_date_2')) {
+            if ($request->input('commission_2') && $request->input('payment_date_2')) {
 
                 $salescommission->komisi_status = 'Pembayaran 2';
                 $salescommission->save();
 
             }
 
-            if ($request->has('closing_fee_sales') && $request->has('sales_payment_date') && $request->has('closing_fee_agency') && $request->has('agency_payment_date') && $request->has('closing_fee_korwil') && $request->has('korwil_payment_date') && $request->has('korut_name') && $request->has('korut_payment_date')) {
+            if ($request->input('closing_fee_sales') && $request->input('sales_payment_date') && $request->input('closing_fee_agency') && $request->input('agency_payment_date') && $request->input('closing_fee_korwil') && $request->input('korwil_payment_date') && $request->input('korut_name') && $request->input('korut_payment_date')) {
 
                 $salescommission->komisi_status = 'Closing Fee';
                 $salescommission->save();
 
-            }
-
-            if ($request->hasFile('payment_proof1')) {
-                $file_name_agent = 'komisi-agent-1-' . uniqid() . '.' . $request->file('payment_proof1')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof1'), $file_name_agent
-                );
-
-                $request->merge([
-                    'payment_proof_1' => $file_name_agent
-                ]);
-
-            }
-
-            if ($request->hasFile('payment_proof2')) {
-                $file_name = 'komisi-agen-2-' . uniqid() . '.' . $request->file('payment_proof2')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof2'), $file_name
-                );
-
-                $request->merge([
-                    'payment_proof_2' => $file_name
-                ]);
-            }
-
-            if ($request->hasFile('sales_evidence_cf')) {
-                $file_name = 'sales-closing-fee-' . uniqid() . '.' . $request->file('sales_evidence_cf')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('sales_evidence_cf'), $file_name
-                );
-
-                $request->merge([
-                    'sales_evidence' => $file_name
-                ]);
-            }
-
-            if ($request->hasFile('agency_evidence_cf')) {
-                $file_name = 'agent-closing-fee-' . uniqid() . '.' . $request->file('agency_evidence_cf')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('agency_evidence_cf'), $file_name
-                );
-
-                $request->merge([
-                    'agency_evidence' => $file_name
-                ]);
-            }
-
-            if ($request->hasFile('korwil_evidence_cf')) {
-                $file_name = 'korwil-evidence-fee-' . uniqid() . '.' . $request->file('korwil_evidence_cf')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('korwil_evidence_cf'), $file_name
-                );
-
-                $request->merge([
-                    'korwil_evidence' => $file_name
-                ]);
-            }
-
-            if ($request->hasFile('korut_evidence_cf')) {
-                $file_name = 'korut-evidence-fee-' . uniqid() . '.' . $request->file('korut_evidence_cf')->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('Komisi', $request->file('korut_evidence_cf'), $file_name
-                );
-
-                $request->merge([
-                    'korut_evidence' => $file_name
-                ]);
             }
 
             $data = $salescommission
@@ -303,6 +242,56 @@ class SalesCommissionController extends Controller
                     ->updateOrCreate([
                         'booking_id' => $request->input('booking_id')
                     ], $request->all());
+
+            if ($request->hasFile('payment_proof1')) {
+                $file_name = 'komisi-agent-1-' . uniqid() . '.' . $request->file('payment_proof1')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof1'), $file_name
+                );
+
+                $data->payment_proof_1 = $file_name;
+            }
+
+            if ($request->hasFile('payment_proof2')) {
+                $file_name = 'komisi-agen-2-' . uniqid() . '.' . $request->file('payment_proof2')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof2'), $file_name
+                );
+
+                 $data->payment_proof_2 = $file_name;
+            }
+
+            if ($request->hasFile('sales_evidence_cf')) {
+                $file_name = 'sales-closing-fee-' . uniqid() . '.' . $request->file('sales_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('sales_evidence_cf'), $file_name
+                );
+
+                $data->sales_evidence = $file_name;
+            }
+
+            if ($request->hasFile('agency_evidence_cf')) {
+                $file_name = 'agent-closing-fee-' . uniqid() . '.' . $request->file('agency_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('agency_evidence_cf'), $file_name
+                );
+
+                $data->agency_evidence = $file_name;
+            }
+
+            if ($request->hasFile('korwil_evidence_cf')) {
+                $file_name = 'korwil-evidence-fee-' . uniqid() . '.' . $request->file('korwil_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korwil_evidence_cf'), $file_name
+                );
+
+                $data->korwil_evidence = $file_name;
+            }
+
+            if ($request->hasFile('korut_evidence_cf')) {
+                $file_name = 'korut-evidence-fee-' . uniqid() . '.' . $request->file('korut_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korut_evidence_cf'), $file_name
+                );
+
+                $data->korut_evidence = $file_name;
+            }
+
+            $data->save();
 
             DB::commit();
             return response_json(true, null, 'Data komisi sales berhasil disimpan.', $data);

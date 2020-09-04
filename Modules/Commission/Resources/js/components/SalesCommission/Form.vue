@@ -48,35 +48,35 @@
 	            menu7: false,
 	            menu8: false,
 	            form_data: {
+		            payment_date_1: '',
+		            payment_date_2: '',
+		            sales_payment_date: '',
+		            agency_payment_date: '',
+		            korwil_payment_date: '',
+		            korut_payment_date: '',
 		           	// sales_name: '',
         			// agency_commission: '',
 		         //    commission_1: '',
-		         //    payment_date_1: '',
 		         //   	invoice_commission_1: '',
 		         //    commission_2: '',
-		         //    payment_date_2: '',
 		         //   	invoice_commission_2: '',
 		         //    sales_id: '',
 		         //    closing_fee_sales: '',
 		         //   	sales_bank_name: '',
 		         //   	sales_no_rek: '',
 		         //   	sales_bank_account: '',
-		         //    sales_payment_date: '',
 		         //   	sales_invoice: '',
 		         //    agency_id: '',
 		         //   	agency_name: '',
 		         //    closing_fee_agency: '',
-		         //    agency_payment_date: '',
 		         //   	agency_invoice: '',
 		         //    korwil_id: '',
 		         //   	korwil_name: '',
 		         //    closing_fee_korwil: '',
-		         //    korwil_payment_date: '',
 		         //   	korwil_invoice: '',
 		         //    korut_id: '',
 		         //   	korut_name: '',
 		         //    closing_fee_korut: '',
-		         //    korut_payment_date: '',
 		         //   	korut_invoice: '',
         		}
         	}
@@ -167,8 +167,8 @@
     					           	korwil_evidence: data.commission ? data.commission.korwil_evidence : '',
                                     korut_evidence: data.commission ? data.commission.korut_evidence : '',
 
-                                    url_payment_proof_1: data.commission ? data.commission.url_payment_proof_1 : '',
-                                    url_payment_proof_2: data.commission ? data.commission.url_payment_proof_2 : '',
+                                    url_payment_proof_one: data.commission ? data.commission.url_payment_proof_one : '',
+                                    url_payment_proof_two: data.commission ? data.commission.url_payment_proof_two : '',
                                     url_sales_evidence: data.commission ? data.commission.url_sales_evidence : '',
                                     url_agency_evidence: data.commission ? data.commission.url_agency_evidence : '',
                                     url_korwil_evidence: data.commission ? data.commission.url_korwil_evidence : '',
@@ -239,12 +239,12 @@
 	    		    data.append("booking_id", this.form_data.booking_id);
 	    		    data.append("agency_id", this.form_data.agency_id);
                     data.append("sales_id", this.form_data.sales_id);
-                    data.append("payment_date_1", this.form_data.payment_date_1);
-                    data.append("payment_date_2", this.form_data.payment_date_2);
-                    data.append("sales_payment_date", this.form_data.sales_payment_date);
-                    data.append("agency_payment_date", this.form_data.agency_payment_date);
-                    data.append("korwil_payment_date", this.form_data.korwil_payment_date);
-                    data.append("korut_payment_date", this.form_data.korut_payment_date);
+                    data.append("payment_date_1", this.form_data.payment_date_1 ? this.form_data.payment_date_1 : '' );
+                    data.append("payment_date_2", this.form_data.payment_date_2 ? this.form_data.payment_date_2 : '');
+                    data.append("sales_payment_date", this.form_data.sales_payment_date ? this.form_data.sales_payment_date : '');
+                    data.append("agency_payment_date", this.form_data.agency_payment_date ? this.form_data.agency_payment_date : '');
+                    data.append("korwil_payment_date", this.form_data.korwil_payment_date  ? this.form_data.korwil_payment_date : '');
+                    data.append("korut_payment_date", this.form_data.korut_payment_date ? this.form_data.korut_payment_date : '');
 	    		}
 	    		
 	    		this.field_state = true
