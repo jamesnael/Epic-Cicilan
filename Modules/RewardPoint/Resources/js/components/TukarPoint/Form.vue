@@ -204,11 +204,13 @@
                     this.form_data.sales_name = ''
                     this.form_data.agency_name = ''
                     this.form_data.total_point = ''
+                    this.form_data.allowed_point = ''
                 } else {
                     this.form_data.sales_name = sales.text
                     this.form_data.agency_name = sales.agency_name
                     this.form_data.total_point = sales.total_point
-                    
+                    this.form_data.allowed_point = sales.allowed_point
+                       
                 }
             },
 
@@ -218,28 +220,49 @@
                     this.form_data.agency_name = ''
                     this.form_data.regional = ''
                     this.form_data.total_point = ''
+                    this.form_data.allowed_point = ''
                 } else {
                     this.form_data.agency_name = agency.text
                     this.form_data.regional = agency.regional
                     this.form_data.total_point = agency.total_point
+                    this.form_data.allowed_point = agency.allowed_point
                     
                 }
             },
 
 
             setSelectedKorwil() {
-                let main_coordinator = _.find(this.filter_korwil, o => { return o.value == this.form_data.user_name})
-                if (_.isUndefined(main_coordinator)) {
+                let regional_coordinator = _.find(this.filter_korwil, o => { return o.value == this.form_data.user_name})
+                if (_.isUndefined(regional_coordinator)) {
                     this.form_data.korwil_name = ''
                     this.form_data.maincoor = ''
                     this.form_data.total_point = ''
+                    this.form_data.allowed_point = ''
                 } else {
-                    this.form_data.korwil_name = main_coordinator.text
-                    this.form_data.maincoor = main_coordinator.maincoor
-                    this.form_data.total_point = main_coordinator.total_point
+                    this.form_data.korwil_name = regional_coordinator.text
+                    this.form_data.maincoor = regional_coordinator.maincoor
+                    this.form_data.total_point = regional_coordinator.total_point
+                    this.form_data.allowed_point = regional_coordinator.allowed_point
                     
                 }
             },
+
+            setSelectedKorut() {
+                let main_coordinator = _.find(this.filter_korut, o => { return o.value == this.form_data.user_name})
+                if (_.isUndefined(main_coordinator)) {
+                    this.form_data.korut_name = ''
+                    this.form_data.total_point = ''
+                    this.form_data.allowed_point = ''
+                } else {
+                    this.form_data.korut_name = main_coordinator.text
+                    this.form_data.total_point = main_coordinator.total_point
+                    this.form_data.allowed_point = main_coordinator.allowed_point
+                    
+                }
+            },
+
+
+
 
             setRewardPoint() {
                 let reward = _.find(this.computedCategoryName, o => { return o.value == this.form_data.reward_points})

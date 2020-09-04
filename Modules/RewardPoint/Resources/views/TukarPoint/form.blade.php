@@ -60,6 +60,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.total_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Allowed Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.allowed_point }}</td>
+	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -97,6 +102,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.total_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Allowed Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.allowed_point }}</td>
+	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -115,7 +125,7 @@
 				    		:error-messages="errors"
 				    		:readonly="field_state"
 			            	>
-			            			<template slot="selection" slot-scope="data">
+			            <template slot="selection" slot-scope="data">
 		            	    @{{ data.item.text }}
 		            	</template>
 	            	  	<template slot="item" slot-scope="data">
@@ -135,6 +145,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.total_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Allowed Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.allowed_point }}</td>
+	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -143,7 +158,8 @@
 					</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Korut" rules="required" v-if="form_data.level == 'Korut'">
 		    			<v-select
-			    			v-model="form_data.user_name" 
+			    			v-model="form_data.user_name"
+			              	@input="setSelectedKorut()" 
 			              	label="Nama Korut"
 			              	:items="filter_korut"
 			              	name="user_name"
@@ -151,7 +167,32 @@
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
-			            	></v-select>
+			            	>
+			            	<template slot="selection" slot-scope="data">
+		            	    @{{ data.item.text }}
+		            	</template>
+	            	  	<template slot="item" slot-scope="data">
+	            	  		<table width="100%" class="mt-2">
+	            	  			<tr>
+	            	  				<td>Koordinator Utama</td>
+	            	  				<td>:</td>
+	            	  				<td>@{{ data.item.text }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Total Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.total_point }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Allowed Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.allowed_point }}</td>
+	            	  			</tr>
+	            	  		</table>
+	            	  	</template>
+            	  		<v-divider></v-divider>
+
+			            	</v-select>
 					</validation-provider>
 			    	</v-col>
 			    </v-row>
@@ -182,7 +223,7 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Point Yang Bisa Ditukar" rules="">
 				    		<v-text-field
-			    			v-model="form_data.exchange_point"
+			    			v-model="form_data.allowed_point"
 			              	label="Point Yang Bisa Ditukar"
 			              	name="exchange_point"
 				    		:error-messages="errors"
