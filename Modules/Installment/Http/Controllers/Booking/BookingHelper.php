@@ -33,6 +33,8 @@ class BookingHelper
         $payment['credit'] = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount : $booking->total_amount;
         $payment['payment_status']= 'Paid';
         $payment['payment_date']= \Carbon\Carbon::parse($booking->utj_date)->format('Y-m-d');
+        $payment['payment_method'] = $booking->payment_method_utj;
+        $payment['total_paid'] = $booking->nup_amount + $booking->utj_amount;
 
         $payments[] = $payment;
 
@@ -58,7 +60,11 @@ class BookingHelper
                 $payment['number_of_delays'] = $booking->payments[$i]->number_of_delays;
                 $payment['fine'] = $booking->payments[$i]->fine;
                 $payments[] = $payment;
+                $mth++;
             } else {
+                if (!isset($booking->payments[$i])) {
+                    $mth++;
+                }
                 if ($i == 1) {
                     $credits = $credits - $booking->first_payment;
                 } else {
@@ -73,16 +79,19 @@ class BookingHelper
                 } else {
                     $payment['payment'] = 'Cicilan ' . $i;
                 }
-                $payment['due_date'] = \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
-                $payment['sp1_date'] = $date->addDays(option('sp1_date', 14))->format('Y-m-d');
-                $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
-                $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
+                $payment['due_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->due_date : \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
+                $payment['sp1_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp1_date : $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+                $payment['sp2_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp2_date : $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+                $payment['sp3_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp3_date : $date->addDays(option('sp3_date', 28))->format('Y-m-d');
                 $payment['installment'] = $i == 1 ? $booking->first_payment : ($i == $booking->installment_time ? $booking->installment + $credits : $booking->installment);
                 $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
                 $payment['payment_status'] = 'Unpaid';
+
+                $payment['number_of_delays'] = isset($booking->payments[$i]) ? $booking->payments[$i]->number_of_delays : null;
+                $payment['fine'] = isset($booking->payments[$i]) ? $booking->payments[$i]->fine : null;
                 $payments[] = $payment;
             }
-            $mth++;
+            
         }
 
         if ($booking->payment_type == 'KPR/KPA') {
