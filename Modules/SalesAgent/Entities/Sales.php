@@ -128,7 +128,7 @@ class Sales extends Model
      */
     public function exchange()
     {
-        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSales', 'sales_point_id');
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSales', 'sales_id');
     }
 
     /**

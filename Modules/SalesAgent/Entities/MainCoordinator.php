@@ -149,6 +149,6 @@ class MainCoordinator extends Model
      */
     public function exchange()
     {
-        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorUmum', 'koordinator_umum_point_id');
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorUmum', 'main_coordinator_id');
     }
 }

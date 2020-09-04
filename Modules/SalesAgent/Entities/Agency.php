@@ -164,6 +164,6 @@ class Agency extends Model
      */
     public function exchange()
     {
-        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSubAgent', 'sub_agent_point_id');
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSubAgent', 'agency_id');
     }
 }

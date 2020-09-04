@@ -148,6 +148,6 @@ class RegionalCoordinator extends Model
      */
     public function exchange()
     {
-        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorWilayah', 'koordinator_wilayah_point_id');
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorWilayah', 'regional_coordinator_id');
     }
 }
