@@ -214,9 +214,7 @@ class TukarPointController extends Controller
         ])->with($this->getHelper());
     }
 
-
-
-   public function data(RewardPoint $tukar_point)
+    public function data(RewardPoint $tukar_point)
     {
         try {
             return response_json(true, null, 'Sukses mengambil data.', $tukar_point);
@@ -225,8 +223,62 @@ class TukarPointController extends Controller
         }
     }
 
-     /**
-=======
+    public function cancelSales($id)
+    {
+        DB::beginTransaction();
+        try {
+            $exchange_sales = ExchangePointSales::findOrFail($id);
+            $exchange_sales->delete();
+            DB::commit();
+            return response_json(true, null, 'Penukaran point berhasil dicancel.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    public function cancelAgent($id)
+    {
+        DB::beginTransaction();
+        try {
+            $exchange_agent = ExchangePointSubAgent::findOrFail($id);
+            $exchange_agent->delete();
+            DB::commit();
+            return response_json(true, null, 'Penukaran point berhasil dicancel.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    public function cancelKorwil($id)
+    {
+        DB::beginTransaction();
+        try {
+            $exchange_korwil = ExchangePointKoorWilayah::findOrFail($id);
+            $exchange_korwil->delete();
+            DB::commit();
+            return response_json(true, null, 'Penukaran point berhasil dicancel.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    public function cancelKorut($id)
+    {
+        DB::beginTransaction();
+        try {
+            $exchange_korut = ExchangePointKoorUmum::findOrFail($id);
+            $exchange_korut->delete();
+            DB::commit();
+            return response_json(true, null, 'Penukaran point berhasil dicancel.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -237,13 +289,19 @@ class TukarPointController extends Controller
         $this->breadcrumbs[] = ['href' => route('tukar-point-sales.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
-                "text" => 'Date',
+                "text" => 'Tanggal Penukaran',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
             ],
             [
-                "text" => 'Category Reward',
+                "text" => 'Tanggal Cancel',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'date_deleted',
+            ],
+            [
+                "text" => 'Category Rewards',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'reward_point.category.category_name',
@@ -274,13 +332,19 @@ class TukarPointController extends Controller
         $this->breadcrumbs[] = ['href' => route('tukar-point-agent.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
-                "text" => 'Date',
+                "text" => 'Tanggal Penukaran',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
             ],
             [
-                "text" => 'Category Reward',
+                "text" => 'Tanggal Cancel',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'date_deleted',
+            ],
+            [
+                "text" => 'Category Rewards',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'reward_point.category.category_name',
@@ -311,13 +375,19 @@ class TukarPointController extends Controller
         $this->breadcrumbs[] = ['href' => route('tukar-point-korwil.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
-                "text" => 'Date',
+                "text" => 'Tanggal Penukaran',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
             ],
             [
-                "text" => 'Category Reward',
+                "text" => 'Tanggal Cancel',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'date_deleted',
+            ],
+            [
+                "text" => 'Category Rewards',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'reward_point.category.category_name',
@@ -348,13 +418,19 @@ class TukarPointController extends Controller
         $this->breadcrumbs[] = ['href' => route('tukar-point-korut.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
-                "text" => 'Date',
+                "text" => 'Tanggal Penukaran',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
             ],
             [
-                "text" => 'Category Reward',
+                "text" => 'Tanggal Cancel',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'date_deleted',
+            ],
+            [
+                "text" => 'Category Rewards',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'reward_point.category.category_name',
@@ -421,7 +497,7 @@ class TukarPointController extends Controller
 
             $data = ExchangePointSales::create([
                 'sales_id'=> $request->user_name,
-                'reward_point_id'=> $request->reward_point_id,                
+                'reward_point_id'=> $request->reward_point_id,
                 'exchange_point'=> $request->redeem_point,
             ]);
             }
@@ -429,7 +505,7 @@ class TukarPointController extends Controller
 
             $data = ExchangePointSubAgent::create([
                 'agency_id'=> $request->user_name,
-                'reward_point_id'=> $request->reward_point_id,                
+                'reward_point_id'=> $request->reward_point_id,
                 'exchange_point'=> $request->redeem_point,
             ]);
 
@@ -438,7 +514,7 @@ class TukarPointController extends Controller
 
             $data = ExchangePointKoorWilayah::create([
                 'regional_coordinator_id'=> $request->user_name,
-                'reward_point_id'=> $request->reward_point_id,                
+                'reward_point_id'=> $request->reward_point_id,
                 'exchange_point'=> $request->redeem_point,
             ]);
 
@@ -448,7 +524,7 @@ class TukarPointController extends Controller
 
             $data = ExchangePointKoorUmum::create([
                 'main_coordinator_id'=> $request->user_name,
-                'reward_point_id'=> $request->reward_point_id,                
+                'reward_point_id'=> $request->reward_point_id,
                 'exchange_point'=> $request->redeem_point,
             ]);
 
@@ -480,7 +556,7 @@ class TukarPointController extends Controller
      */
     public function getHelper()
     {
-        return [        
+        return [
             'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
             'reward_name' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->get(),
             'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
@@ -518,7 +594,7 @@ class TukarPointController extends Controller
                         return $item;
 
             })
-            
+
         ];
     }
 
@@ -739,7 +815,7 @@ class TukarPointController extends Controller
         return $data;
     }
 
-     
+
 
     /**
      *
@@ -765,7 +841,7 @@ class TukarPointController extends Controller
 
     public function getTableDataSalesHistory(Request $request, $id)
     {
-        $query = ExchangePointSales::with('sales', 'reward_point', 'reward_point.category')->where('sales_id', $id)->orderBy('created_at', 'DESC');
+        $query = ExchangePointSales::with('sales', 'reward_point', 'reward_point.category')->where('sales_id', $id)->withTrashed()->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -785,6 +861,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->sales ? $item->sales->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
+            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -819,7 +896,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataAgentHistory(Request $request, $id)
     {
-        $query = ExchangePointSubAgent::with('agency', 'reward_point', 'reward_point.category')->where('agency_id', $id)->orderBy('created_at', 'DESC');
+        $query = ExchangePointSubAgent::with('agency', 'reward_point', 'reward_point.category')->where('agency_id', $id)->withTrashed()->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -839,6 +916,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->agency ? $item->agency->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
+            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -873,7 +951,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorwilHistory(Request $request, $id)
     {
-        $query = ExchangePointKoorWilayah::with('regional_coordinator', 'reward_point', 'reward_point.category')->where('regional_coordinator_id', $id)->orderBy('created_at', 'DESC');
+        $query = ExchangePointKoorWilayah::with('regional_coordinator', 'reward_point', 'reward_point.category')->where('regional_coordinator_id', $id)->withTrashed()->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -893,6 +971,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->regional_coordinator ? $item->regional_coordinator->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
+            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -927,7 +1006,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorutHistory(Request $request, $id)
     {
-        $query = ExchangePointKoorUmum::with('main_coordinator', 'reward_point', 'reward_point.category')->where('main_coordinator_id', $id)->orderBy('created_at', 'DESC');
+        $query = ExchangePointKoorUmum::with('main_coordinator', 'reward_point', 'reward_point.category')->where('main_coordinator_id', $id)->withTrashed()->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -947,6 +1026,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->main_coordinator ? $item->main_coordinator->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
+            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;

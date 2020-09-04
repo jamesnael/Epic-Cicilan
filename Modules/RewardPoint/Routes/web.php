@@ -43,5 +43,9 @@ Route::group(['namespace' => 'TukarPoint'], function() {
 	Route::get('tukar-point/{tukar_point}/history_agent', 'TukarPointController@historyAgent')->name('tukar-point-agent.history');
 	Route::get('tukar-point/{tukar_point}/history_korwil', 'TukarPointController@historyKorwil')->name('tukar-point-korwil.history');
 	Route::get('tukar-point/{tukar_point}/history_korut', 'TukarPointController@historyKorut')->name('tukar-point-korut.history');
-	Route::resource('tukar-point', 'TukarPointController')->except(['show', 'edit']);
+	Route::delete('tukar-point/{tukar_point}/cancel_sales', 'TukarPointController@cancelSales')->name('tukar-point-sales.destroy');
+	Route::delete('tukar-point/{tukar_point}/cancel_agent', 'TukarPointController@cancelAgent')->name('tukar-point-agent.destroy');
+	Route::delete('tukar-point/{tukar_point}/cancel_korwil', 'TukarPointController@cancelKorwil')->name('tukar-point-korwil.destroy');
+	Route::delete('tukar-point/{tukar_point}/cancel_korut', 'TukarPointController@cancelKorut')->name('tukar-point-korut.destroy');
+	Route::resource('tukar-point', 'TukarPointController')->except(['show', 'edit', 'destroy']);
 });
