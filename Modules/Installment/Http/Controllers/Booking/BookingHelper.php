@@ -28,7 +28,7 @@ class BookingHelper
         $payments = [];
         $payment = [];
         $payment['payment'] = 'Uang Tanda Jadi';
-        $payment['due_date'] = null;
+        $payment['due_date'] = \Carbon\Carbon::parse($booking->utj_date)->format('Y-m-d');
         $payment['installment'] = $booking->nup_amount + $booking->utj_amount;
         $payment['credit'] = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount : $booking->total_amount;
         $payment['payment_status']= 'Paid';
