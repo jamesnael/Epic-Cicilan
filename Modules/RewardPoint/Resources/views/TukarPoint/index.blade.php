@@ -75,7 +75,7 @@
 		add-new-uri="{{ route('tukar-point.create') }}"
 		add-new-text="Tukar Point"
 		add-new-color="light-blue lighten-2"
-		edit-uri="tukar-point-sales.edit"
+		edit-uri="tukar-point-sales.history"
 		edit-uri-parameter="id"
 		edit-text="History"
 		>
@@ -93,7 +93,7 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		edit-uri="tukar-point-agent.edit"
+		edit-uri="tukar-point-agent.history"
 		edit-uri-parameter="id"
 		edit-text="History"
 		>
@@ -111,7 +111,7 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		edit-uri="tukar-point-korwil.edit"
+		edit-uri="tukar-point-korwil.history"
 		edit-uri-parameter="id"
 		edit-text="History"
 		>
@@ -129,7 +129,7 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		edit-uri="tukar-point-korut.edit"
+		edit-uri="tukar-point-korut.history"
 		edit-uri-parameter="id"
 		edit-text="History"
 		>

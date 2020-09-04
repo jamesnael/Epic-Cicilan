@@ -232,8 +232,9 @@ class TukarPointController extends Controller
      * @param int $id
      * @return Response
      */
-    public function editSales($id)
+    public function historySales($id)
     {
+        $this->breadcrumbs[] = ['href' => route('tukar-point-sales.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
                 "text" => 'Date',
@@ -268,8 +269,9 @@ class TukarPointController extends Controller
         ])->with($this->getHelper());
     }
 
-    public function editAgent($id)
+    public function historyAgent($id)
     {
+        $this->breadcrumbs[] = ['href' => route('tukar-point-agent.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
                 "text" => 'Date',
@@ -304,8 +306,9 @@ class TukarPointController extends Controller
         ])->with($this->getHelper());
     }
 
-    public function editKorwil($id)
+    public function historyKorwil($id)
     {
+        $this->breadcrumbs[] = ['href' => route('tukar-point-korwil.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
                 "text" => 'Date',
@@ -340,8 +343,9 @@ class TukarPointController extends Controller
         ])->with($this->getHelper());
     }
 
-    public function editKorut($id)
+    public function historyKorut($id)
     {
+        $this->breadcrumbs[] = ['href' => route('tukar-point-korut.history', $id), 'text' => 'History'];
         $this->table_headers = [
             [
                 "text" => 'Date',

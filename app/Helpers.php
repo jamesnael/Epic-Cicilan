@@ -382,7 +382,7 @@ if (! function_exists('aside_menu')) {
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Tukar Point',
                 'uri' => route('tukar-point.index'),
-                'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point.create', 'tukar-point-agent.edit', 'tukar-point-korut.edit', 'tukar-point-korwil.edit', 'tukar-point-sales.edit']),
+                'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point.create', 'tukar-point-agent.history', 'tukar-point-korut.history', 'tukar-point-korwil.history', 'tukar-point-sales.history']),
             ],
         ];
     }

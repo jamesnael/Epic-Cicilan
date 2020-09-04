@@ -39,9 +39,9 @@ Route::group(['namespace' => 'TukarPoint'], function() {
 	Route::get('tukar-point/table-korwil-history/{id}', 'TukarPointController@tableKorwilHistory')->name('tukar-point-history-korwil.table');
 	Route::get('tukar-point/table-korut-history/{id}', 'TukarPointController@tableKorutHistory')->name('tukar-point-history-korut.table');
 	Route::get('tukar-point/{tukar_point}/data', 'TukarPointController@data')->name('tukar-point.data');
-	Route::get('tukar-point/{tukar_point}/history_sales', 'TukarPointController@editSales')->name('tukar-point-sales.edit');
-	Route::get('tukar-point/{tukar_point}/history_agent', 'TukarPointController@editAgent')->name('tukar-point-agent.edit');
-	Route::get('tukar-point/{tukar_point}/history_korwil', 'TukarPointController@editKorwil')->name('tukar-point-korwil.edit');
-	Route::get('tukar-point/{tukar_point}/history_korut', 'TukarPointController@editKorut')->name('tukar-point-korut.edit');
+	Route::get('tukar-point/{tukar_point}/history_sales', 'TukarPointController@historySales')->name('tukar-point-sales.history');
+	Route::get('tukar-point/{tukar_point}/history_agent', 'TukarPointController@historyAgent')->name('tukar-point-agent.history');
+	Route::get('tukar-point/{tukar_point}/history_korwil', 'TukarPointController@historyKorwil')->name('tukar-point-korwil.history');
+	Route::get('tukar-point/{tukar_point}/history_korut', 'TukarPointController@historyKorut')->name('tukar-point-korut.history');
 	Route::resource('tukar-point', 'TukarPointController')->except(['show', 'edit']);
 });
