@@ -33,6 +33,8 @@ class BookingHelper
         $payment['credit'] = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount : $booking->total_amount;
         $payment['payment_status']= 'Paid';
         $payment['payment_date']= \Carbon\Carbon::parse($booking->utj_date)->format('Y-m-d');
+        $payment['payment_method'] = $booking->payment_method_utj;
+        $payment['total_paid'] = $booking->nup_amount + $booking->utj_amount;
 
         $payments[] = $payment;
 
@@ -84,6 +86,9 @@ class BookingHelper
                 $payment['installment'] = $i == 1 ? $booking->first_payment : ($i == $booking->installment_time ? $booking->installment + $credits : $booking->installment);
                 $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
                 $payment['payment_status'] = 'Unpaid';
+
+                $payment['number_of_delays'] = isset($booking->payments[$i]) ? $booking->payments[$i]->number_of_delays : null;
+                $payment['fine'] = isset($booking->payments[$i]) ? $booking->payments[$i]->fine : null;
                 $payments[] = $payment;
             }
             
