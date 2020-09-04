@@ -101,7 +101,10 @@
                     payment_method_nup: '',
                     nup_date: '',
                     utj_date: '',
-                    id_unit_type: ''
+                    id_unit_type: '',
+                    main_coor_id:'',
+                    regional_coor_id:'',
+                    agent_id:'',
             	},
             	total_amount: '0',
                 first_payment: '0',
@@ -182,7 +185,7 @@
     		            			client_phone_number: data.client.client_phone_number,
     		            			client_mobile_number: data.client.client_mobile_number,
     		            			client_address: data.client.client_address,
-    		            			sales_id: data.sales.id,
+
     		            			sales_name:data.sales.user.full_name,
 
     		            			agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
@@ -194,15 +197,20 @@
                                     payment_method_nup: data.payment_method_nup,
                                     nup_date: data.nup_date,
                                     utj_date: data.utj_date,
+
+    		            			sales_id: data.sales.id,
+                                    main_coor_id:data.sales.main_coordinator_id,
+                                    regional_coor_id:data.sales.regional_coordinator_id,
+                                    agent_id:data.sales.agency_id,
     		            		},
     		            		this.total_amount = data.total_amount
     		            		this.first_payment = data.first_payment
     		            		this.dp_amount = data.dp_amount
     		            		this.dp_percent = data.dp_percent
-    		            		this.installment_time =data.installment_time
-    		            		this.due_date =data.due_date
-    		            		this.payment_method =data.payment_method
-    		            		this.payment_type =data.payment_type
+    		            		this.installment_time = data.installment_time
+    		            		this.due_date = data.due_date
+    		            		this.payment_method = data.payment_method
+    		            		this.payment_type = data.payment_type
     		            		this.credits = data.credits
 
     			                this.field_state = false
@@ -242,7 +250,7 @@
 	    		    data.append("_method", "put");
                     data.append("utj_date", this.form_data.utj_date);
                     data.append("nup_date", this.form_data.nup_date);
-	    		}
+                } 
 
                 data.append("utj_date", this.form_data.utj_date);
                 data.append("nup_date", this.form_data.nup_date);
@@ -298,9 +306,15 @@
 					this.form_data.agency_name = ''
 					this.form_data.main_coordinator = ''
 					this.form_data.regional_coordinator = ''
+                    this.form_data.main_coor_id = ''
+                    this.form_data.regional_coor_id = ''
+                    this.form_data.agent_id = ''
 				} else {
 					this.form_data.sales_name = sales.text
-					this.form_data.agency_name = sales.agency_name
+					this.form_data.main_coor_id = sales.main_coordinator_id
+                    this.form_data.regional_coor_id = sales.regional_coordinator_id
+                    this.form_data.agent_id = sales.agency_id
+                    this.form_data.agency_name = sales.agency_name
 					this.form_data.main_coordinator = sales.main_coordinator
 					this.form_data.regional_coordinator = sales.regional_coordinator
 				}

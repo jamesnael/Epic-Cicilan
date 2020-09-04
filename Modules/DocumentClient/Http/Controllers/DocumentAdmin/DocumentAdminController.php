@@ -174,18 +174,6 @@ class DocumentAdminController extends Controller
                 $document_admin->save();
             }
 
-            foreach ($request->file('files') ?? [] as $key => $file) {
-                foreach ($file as $file_name => $input) {
-                    $uploaded_file_name = $request->input('booking_id').'_'.uniqid() . '.' . $input->getClientOriginalExtension();
-                    Storage::disk('public')->putFileAs(
-                        'document/'.$file_name, $input, $uploaded_file_name
-                    );
-                    $request->merge([
-                        $file_name => $uploaded_file_name,
-                    ]);
-                }
-            }
-
             $request->merge([
                 'submission_date' => $request->submission_date ? \Carbon\Carbon::parse($request->submission_date)->format('Y-m-d') : '',
             ]);
@@ -196,13 +184,17 @@ class DocumentAdminController extends Controller
                     'booking_id' => $request->input('booking_id')
                 ], $request->all());
 
-            // $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
+            foreach ($request->file('files') ?? [] as $key => $file) {
+                foreach ($file as $file_name => $input) {
+                    $uploaded_file_name = $request->input('booking_id').'_'.uniqid() . '.' . $input->getClientOriginalExtension();
+                    Storage::disk('public')->putFileAs(
+                        'document/'.$file_name, $input, $uploaded_file_name
+                    );
 
-            // if ($has_document) {
-            //      $data = $has_document->update($request->all());
-            // }else{
-            //     $data = DocumentClient::create($request->all());
-            // }
+                    $document_admin->document->$file_name = $uploaded_file_name;
+                    $document_admin->document->save();
+                }
+            }
 
             DB::commit();
             return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $document_admin);

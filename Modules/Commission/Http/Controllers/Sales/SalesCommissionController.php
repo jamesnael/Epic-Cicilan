@@ -9,6 +9,7 @@ use Modules\Commission\Entities\Commission;
 use Modules\Installment\Entities\Booking;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SalesCommissionController extends Controller
 {
@@ -55,77 +56,77 @@ class SalesCommissionController extends Controller
                 "sortable" => true,
                 "value" => 'client_name',
             ],
-            [
-                "text" => 'Tanggal Transaksi',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
+            // [
+            //     "text" => 'Tanggal Transaksi',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => '',
+            // ],
             [
                 "text" => 'Data Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Pricelist',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'payment_method',
             ],
-            [
-                "text" => 'Type Komisi',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Komisi Koordinator Utama',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Komisi Bruto Korwil',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Total Komisi(PPH Final + PPH 21)',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
+            // [
+            //     "text" => 'Type Komisi',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => '',
+            // ],
+            // [
+            //     "text" => 'Komisi Koordinator Utama',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => '',
+            // ],
+            // [
+            //     "text" => 'Komisi Bruto Korwil',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => '',
+            // ],
+            // [
+            //     "text" => 'Total Komisi(PPH Final + PPH 21)',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => '',
+            // ],
             [
                 "text" => 'Komisi Bruto Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'bruto',
             ],
             [
                 "text" => 'Total Komisi Sub Agent (PPH Final + PPH 21)',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'final',
             ],
             [
                 "text" => 'Pencairan 1 (50%)',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'payment_1',
             ],
             [
                 "text" => 'Pencairan 2 (50%)',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => '',
+                "value" => 'payment_2',
             ],
         ];
         return view('commission::salescommission.index', [
@@ -182,14 +183,122 @@ class SalesCommissionController extends Controller
     }
 
     /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "closing_fee" => "bail|nullable|numeric",
+            "agency_commission" => "bail|nullable|numeric",
+            "closing_fee_sales" => "bail|nullable|numeric",
+            "closing_fee_korwil" => "bail|nullable|numeric",
+            "closing_fee_korut" => "bail|nullable|numeric",
+            "closing_fee_agency" => "bail|nullable|numeric",
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
+     * @return Response
      */
     public function update(Request $request, Booking $salescommission)
     {
-        //
+        $validator = $this->validateFormRequest($request, $salescommission->id);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        DB::beginTransaction();
+        try {
+
+            if ($request->input('commission_1') && $request->input('payment_date_1')) {
+
+                $salescommission->komisi_status = 'Pembayaran 1';
+                $salescommission->save();
+
+            }
+
+            if ($request->input('commission_2') && $request->input('payment_date_2')) {
+
+                $salescommission->komisi_status = 'Pembayaran 2';
+                $salescommission->save();
+
+            }
+
+            if ($request->input('closing_fee_sales') && $request->input('sales_payment_date') && $request->input('closing_fee_agency') && $request->input('agency_payment_date') && $request->input('closing_fee_korwil') && $request->input('korwil_payment_date') && $request->input('korut_name') && $request->input('korut_payment_date')) {
+
+                $salescommission->komisi_status = 'Closing Fee';
+                $salescommission->save();
+
+            }
+
+            $data = $salescommission
+                    ->commission()
+                    ->updateOrCreate([
+                        'booking_id' => $request->input('booking_id')
+                    ], $request->all());
+
+            if ($request->hasFile('payment_proof1')) {
+                $file_name = 'komisi-agent-1-' . uniqid() . '.' . $request->file('payment_proof1')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof1'), $file_name
+                );
+
+                $data->payment_proof_1 = $file_name;
+            }
+
+            if ($request->hasFile('payment_proof2')) {
+                $file_name = 'komisi-agen-2-' . uniqid() . '.' . $request->file('payment_proof2')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('payment_proof2'), $file_name
+                );
+
+                 $data->payment_proof_2 = $file_name;
+            }
+
+            if ($request->hasFile('sales_evidence_cf')) {
+                $file_name = 'sales-closing-fee-' . uniqid() . '.' . $request->file('sales_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('sales_evidence_cf'), $file_name
+                );
+
+                $data->sales_evidence = $file_name;
+            }
+
+            if ($request->hasFile('agency_evidence_cf')) {
+                $file_name = 'agent-closing-fee-' . uniqid() . '.' . $request->file('agency_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('agency_evidence_cf'), $file_name
+                );
+
+                $data->agency_evidence = $file_name;
+            }
+
+            if ($request->hasFile('korwil_evidence_cf')) {
+                $file_name = 'korwil-evidence-fee-' . uniqid() . '.' . $request->file('korwil_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korwil_evidence_cf'), $file_name
+                );
+
+                $data->korwil_evidence = $file_name;
+            }
+
+            if ($request->hasFile('korut_evidence_cf')) {
+                $file_name = 'korut-evidence-fee-' . uniqid() . '.' . $request->file('korut_evidence_cf')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korut_evidence_cf'), $file_name
+                );
+
+                $data->korut_evidence = $file_name;
+            }
+
+            $data->save();
+
+            DB::commit();
+            return response_json(true, null, 'Data komisi sales berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**
@@ -216,7 +325,7 @@ class SalesCommissionController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -244,7 +353,18 @@ class SalesCommissionController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
-            
+            $item->pph_21 = $this->getHelper()['pph_21'];
+            $item->pph_final = $item->sales->agency->pph_final;
+            $item->commission_agent = $item->sales->agency->agency_commission;
+
+            $item->komisi_bruto = ($item->total_amount * $item->commission_agent) /100;
+            $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - (($item->komisi_bruto * $item->pph_21) /100);
+            $item->bruto ='Rp '.format_money($item->komisi_bruto); 
+            $item->final ='Rp '.format_money($item->komisi_final); 
+            $item->payment_1 = 'Rp '.format_money($item->komisi_final / 2);
+            $item->payment_2 = 'Rp '.format_money($item->komisi_final / 2);
+
+             
             return $item;
         });
         return $data;
@@ -279,7 +399,7 @@ class SalesCommissionController extends Controller
      */
     public function data(Booking $salescommission)
     {
-        $data = $salescommission->load('unit','client','sales','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
+        $data = $salescommission->load('unit','client','sales','commission','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {

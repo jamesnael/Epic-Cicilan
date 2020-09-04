@@ -152,32 +152,41 @@ class DocumentClientController extends Controller
         DB::beginTransaction();
         try {
 
+
+            $request->merge([
+                'submission_date' => $request->submission_date ? \Carbon\Carbon::parse($request->submission_date)->format('Y-m-d') : '',
+            ]);
+
+            $document
+                ->document()
+                ->updateOrCreate([
+                    'booking_id' => $request->input('booking_id')
+                ], $request->all());
+
             foreach ($request->file('files') ?? [] as $key => $file) {
                 foreach ($file as $file_name => $input) {
                     $uploaded_file_name = $request->input('booking_id').'_'.uniqid() . '.' . $input->getClientOriginalExtension();
                     Storage::disk('public')->putFileAs(
                         'document/'.$file_name, $input, $uploaded_file_name
                     );
-                    $request->merge([
-                        $file_name => $uploaded_file_name,
-                    ]);
+
+                    $document->document->$file_name = $uploaded_file_name;
+                    $document->document->save();
+                    // $request->merge([
+                    //     $file_name => $uploaded_file_name,
+                    // ]);
                 }
             }
+            // $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
 
-            $request->merge([
-                'submission_date' => $request->submission_date ? \Carbon\Carbon::parse($request->submission_date)->format('Y-m-d') : '',
-            ]);
-
-            $has_document = DocumentClient::where('booking_id', $request->booking_id)->first();
-
-            if ($has_document) {
-                 $data = $has_document->update($request->all());
-            }else{
-                $data = DocumentClient::create($request->all());
-            }
+            // if ($has_document) {
+            //      $data = $has_document->update($request->all());
+            // }else{
+            //     $data = DocumentClient::create($request->all());
+            // }
 
             DB::commit();
-            return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $data);
+            return response_json(true, null, 'Data dokumen klien berhasil disimpan.', $document);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

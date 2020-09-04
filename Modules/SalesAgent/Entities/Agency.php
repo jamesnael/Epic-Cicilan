@@ -58,6 +58,8 @@ class Agency extends Model
 
     protected $appends = [
         'total_point',
+        'allowed_point',
+        'exchanged_point',
     ];
 
     /**
@@ -86,15 +88,45 @@ class Agency extends Model
 
     public function getTotalPointAttribute()
     {
-        $collection = collect($this->point)->sum(function($item) {
-            if (!empty($item->point)) {
-                return $item->point;
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->booking_status != 'dokumen' && $item->booking_status != 'spr'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
             }
-            return 0;
         });
         return $collection;
     }
 
+    public function getAllowedPointAttribute()
+    {
+        $collection = collect($this->booking)->sum(function($item) {
+            if($item->komisi_status == 'Pembayaran 2' || $item->komisi_status == 'Closing Fee'){
+                if (!empty($item->unit->points)) {
+                    return $item->unit->points;
+                }
+                return 0;
+            } else {
+                return 0;
+            }
+        });
+        return $collection;
+    }
+
+    public function getExchangedPointAttribute()
+    {
+        $collection = collect($this->exchange)->sum(function($item) {
+            if (!empty($item->exchange_point)) {
+                return $item->exchange_point;
+            }
+            return 0;
+        });
+
+        return $collection;
+    }
     /**
      * Get the relationship for the model.
      */
@@ -117,5 +149,21 @@ class Agency extends Model
     public function point()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\SubAgentPoint', 'sub_agent_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function booking()
+    {
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'agent_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function exchange()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSubAgent', 'agency_id');
     }
 }

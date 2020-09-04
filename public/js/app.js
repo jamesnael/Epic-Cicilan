@@ -85655,7 +85655,7 @@ var Ziggy = {
       "domain": null
     },
     "salescommission.data": {
-      "uri": "salescommission\/{sales}\/data",
+      "uri": "salescommission\/{salescommission}\/data",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -86174,6 +86174,16 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+    "pembayaran.cicilan.index": {
+      "uri": "pembayaran\/cicilan\/{booking}",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "pembayaran.cicilan.data": {
+      "uri": "pembayaran\/cicilan\/{booking}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
     "point.table": {
       "uri": "point\/table",
       "methods": ["GET", "HEAD"],
@@ -86294,14 +86304,89 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
-    "tukar-point.table": {
-      "uri": "tukar-point\/table",
+    "tukar-point-sales.table": {
+      "uri": "tukar-point\/table-sales",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-agent.table": {
+      "uri": "tukar-point\/table-agent",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-korwil.table": {
+      "uri": "tukar-point\/table-korwil",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-korut.table": {
+      "uri": "tukar-point\/table-korut",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-history-sales.table": {
+      "uri": "tukar-point\/table-sales-history\/{id}",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-history-agent.table": {
+      "uri": "tukar-point\/table-agent-history\/{id}",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-history-korwil.table": {
+      "uri": "tukar-point\/table-korwil-history\/{id}",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-history-korut.table": {
+      "uri": "tukar-point\/table-korut-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point.data": {
-      "uri": "tukar-point\/{tukar-point}\/data",
+      "uri": "tukar-point\/{tukar_point}\/data",
       "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-sales.history": {
+      "uri": "tukar-point\/{tukar_point}\/history_sales",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-agent.history": {
+      "uri": "tukar-point\/{tukar_point}\/history_agent",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-korwil.history": {
+      "uri": "tukar-point\/{tukar_point}\/history_korwil",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-korut.history": {
+      "uri": "tukar-point\/{tukar_point}\/history_korut",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "tukar-point-sales.destroy": {
+      "uri": "tukar-point\/{tukar_point}\/cancel_sales",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+    "tukar-point-agent.destroy": {
+      "uri": "tukar-point\/{tukar_point}\/cancel_agent",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+    "tukar-point-korwil.destroy": {
+      "uri": "tukar-point\/{tukar_point}\/cancel_korwil",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+    "tukar-point-korut.destroy": {
+      "uri": "tukar-point\/{tukar_point}\/cancel_korut",
+      "methods": ["DELETE"],
       "domain": null
     },
     "tukar-point.index": {
@@ -86319,19 +86404,9 @@ var Ziggy = {
       "methods": ["POST"],
       "domain": null
     },
-    "tukar-point.edit": {
-      "uri": "tukar-point\/{tukar_point}\/edit",
-      "methods": ["GET", "HEAD"],
-      "domain": null
-    },
     "tukar-point.update": {
       "uri": "tukar-point\/{tukar_point}",
       "methods": ["PUT", "PATCH"],
-      "domain": null
-    },
-    "tukar-point.destroy": {
-      "uri": "tukar-point\/{tukar_point}",
-      "methods": ["DELETE"],
       "domain": null
     },
     "agencies.table": {
@@ -86495,9 +86570,9 @@ var Ziggy = {
       "domain": null
     }
   },
-  baseUrl: 'http://epic-cicilan.test/',
+  baseUrl: 'http://localhost/',
   baseProtocol: 'http',
-  baseDomain: 'epic-cicilan.test',
+  baseDomain: 'localhost',
   basePort: false,
   defaultParameters: []
 };
@@ -86852,8 +86927,8 @@ function route(name, params, absolute, customZiggy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\epic_2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laragon\www\epic_2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

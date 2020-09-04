@@ -11,7 +11,17 @@ class ExchangePointKoorUmum extends Model
 
     protected $fillable = [
     	'reward_point_id',
-    	'koordinator_umum_point_id',
+    	'main_coordinator_id',
     	'exchange_point',
     ];
+
+    public function main_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coordinator_id');
+    }
+
+    public function reward_point()
+    {
+        return $this->belongsTo('Modules\RewardPoint\Entities\RewardPoint', 'reward_point_id');
+    }
 }
