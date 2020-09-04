@@ -96,7 +96,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <v-row class="mt-4">
+			   {{--  <v-row class="mt-4">
     		        <v-col
     		          	cols="12"
     		          	md="6">
@@ -124,7 +124,7 @@
 	    		        	</v-date-picker>
 	    		        </v-menu>
 				    </v-col>
-			    </v-row>
+			    </v-row> --}}
     			<h3 class="mt-5">Pembayaran Komisi Sub Agent</h3>
     			<v-row class="mt-4">
     		        <v-col
@@ -185,7 +185,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <v-row>
+			    <v-row class="mt-4">
 			    	<v-col
     		          	cols="12"
     		          	md="6">
@@ -519,7 +519,7 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="sales_evidence_cf"
-				              	:readonly="field_state">
+				            >
 			              </v-file-input>
 			              <a :href="form_data.url_sales_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.sales_evidence}}</small>
@@ -619,7 +619,7 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="agency_evidence_cf"
-				              	:readonly="field_state">
+				            >
 			              </v-file-input>
 			              <a :href="form_data.url_agency_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.agency_evidence}}</small>
@@ -719,7 +719,7 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="korwil_evidence_cf"
-				              	:readonly="field_state">
+				            >
 			              </v-file-input>
 			              <a :href="form_data.url_korwil_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.korwil_evidence}}</small>
@@ -820,7 +820,7 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="korut_evidence_cf"
-				              	:readonly="field_state">
+				            >
 			              </v-file-input>
 			              <a :href="form_data.url_korut_evidence" target="_blank" class="ml-8">
 			              	<small>@{{form_data.korut_evidence}}</small>
