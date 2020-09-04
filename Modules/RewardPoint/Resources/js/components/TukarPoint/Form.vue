@@ -82,6 +82,7 @@
                 main_coordinator: false,
                 agency: false,
                 sales: false,
+                dialog:false,
                 listStatus:['Aktif', 'Tidak Aktif'],
                 form_data: {
                     category_reward_id: '',

@@ -327,11 +327,16 @@
 			    <v-btn
 		      		class="mt-4"
 		      		outlined 
-		      		:disabled="field_state">
+		      		:disabled="field_state"
+		      		>
     		      	Kembali
     		    </v-btn>
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
+		    		v-if="form_data.exchange_point >= form_data.redeem_point_sales,
+		    			  form_data.exchange_point >= form_data.redeem_point_agency,
+		    			  form_data.exchange_point >= form_data.redeem_point_regional_coordinator,
+		    			  form_data.exchange_point >= form_data.redeem_point_main_coordinator"
 		    		color="primary"
 		    		elevation="5"
 		    		:disabled="field_state"
