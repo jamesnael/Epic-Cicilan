@@ -206,11 +206,13 @@
                     this.form_data.agency_name = ''
                     this.form_data.total_point = ''
                     this.form_data.allowed_point = ''
+                    this.form_data.sisa_point = ''
                 } else {
                     this.form_data.sales_name = sales.text
                     this.form_data.agency_name = sales.agency_name
                     this.form_data.total_point = sales.total_point
                     this.form_data.allowed_point = sales.allowed_point
+                    this.form_data.sisa_point = sales.sisa_point
                        
                 }
             },
@@ -222,11 +224,13 @@
                     this.form_data.regional = ''
                     this.form_data.total_point = ''
                     this.form_data.allowed_point = ''
+                    this.form_data.sisa_point = ''
                 } else {
                     this.form_data.agency_name = agency.text
                     this.form_data.regional = agency.regional
                     this.form_data.total_point = agency.total_point
                     this.form_data.allowed_point = agency.allowed_point
+                    this.form_data.sisa_point = agency.sisa_point
                     
                 }
             },
@@ -239,11 +243,13 @@
                     this.form_data.maincoor = ''
                     this.form_data.total_point = ''
                     this.form_data.allowed_point = ''
+                    this.form_data.sisa_point = ''
                 } else {
                     this.form_data.korwil_name = regional_coordinator.text
                     this.form_data.maincoor = regional_coordinator.maincoor
                     this.form_data.total_point = regional_coordinator.total_point
                     this.form_data.allowed_point = regional_coordinator.allowed_point
+                    this.form_data.sisa_point = regional_coordinator.sisa_point
                     
                 }
             },
@@ -254,10 +260,12 @@
                     this.form_data.korut_name = ''
                     this.form_data.total_point = ''
                     this.form_data.allowed_point = ''
+                    this.form_data.sisa_point = ''
                 } else {
                     this.form_data.korut_name = main_coordinator.text
                     this.form_data.total_point = main_coordinator.total_point
                     this.form_data.allowed_point = main_coordinator.allowed_point
+                    this.form_data.sisa_point = main_coordinator.sisa_point
                     
                 }
             },

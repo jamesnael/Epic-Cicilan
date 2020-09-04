@@ -65,6 +65,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.allowed_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Sisa Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.sisa_point }}</td>
+	            	  			</tr>	
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -106,6 +111,11 @@
 	            	  				<td width="25%">Allowed Point</td>
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.allowed_point }}</td>
+	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Sisa Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.sisa_point }}</td>
 	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
@@ -150,6 +160,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.allowed_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Sisa Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.sisa_point }}</td>
+	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -188,6 +203,11 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.allowed_point }}</td>
 	            	  			</tr>
+	            	  			<tr>
+	            	  				<td width="25%">Sisa Point</td>
+	            	  				<td width="25%">:</td>
+	            	  				<td>@{{ data.item.sisa_point }}</td>
+	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -223,7 +243,7 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Point Yang Bisa Ditukar" rules="">
 				    		<v-text-field
-			    			v-model="form_data.allowed_point"
+			    			v-model="form_data.sisa_point"
 			              	label="Point Yang Bisa Ditukar"
 			              	name="exchange_point"
 				    		:error-messages="errors"
@@ -332,11 +352,11 @@
     		      	Kembali
     		    </v-btn>
 	    		<v-btn
+	    		v-if="form_data.sisa_point >= form_data.redeem_point_sales,
+		    			  form_data.sisa_point >= form_data.redeem_point_agency,
+		    			  form_data.sisa_point >= form_data.redeem_point_regional_coordinator,
+		    			  form_data.sisa_point >= form_data.redeem_point_main_coordinator"
 		    		class="mt-4 mr-4 white--text"
-		    		v-if="form_data.exchange_point >= form_data.redeem_point_sales,
-		    			  form_data.exchange_point >= form_data.redeem_point_agency,
-		    			  form_data.exchange_point >= form_data.redeem_point_regional_coordinator,
-		    			  form_data.exchange_point >= form_data.redeem_point_main_coordinator"
 		    		color="primary"
 		    		elevation="5"
 		    		:disabled="field_state"

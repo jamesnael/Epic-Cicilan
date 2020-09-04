@@ -489,6 +489,8 @@ class TukarPointController extends Controller
                         $item->agency_name = $item->agency->agency_name ?? '';
                         $item->total_point = $item->total_point ?? '';
                         $item->allowed_point = $item->allowed_point ?? '';
+                        $item->sisa_point = $item->allowed_point - $item->exchanged_point;
+
                         return $item;
                     }),
             'agency_name' => Agency::with('booking','regional_coordinator')->get()->transform(function($item){
@@ -497,6 +499,8 @@ class TukarPointController extends Controller
                         $item->regional = $item->regional_coordinator->full_name ?? '';
                         $item->total_point = $item->total_point ?? '';
                         $item->allowed_point = $item->allowed_point ?? '';
+                        $item->sisa_point = $item->allowed_point - $item->exchanged_point;
+
                         return $item;
                     }),
             'korwil_name' => RegionalCoordinator::with('booking','main_coordinator')->get()->transform(function($item){
@@ -506,6 +510,8 @@ class TukarPointController extends Controller
                         $item->maincoor = $item->main_coordinator->full_name ?? '';
                         $item->total_point = $item->total_point ?? '';
                         $item->allowed_point = $item->allowed_point ?? '';
+                        $item->sisa_point = $item->allowed_point - $item->exchanged_point;
+
                         return $item;
 
             }),
@@ -515,6 +521,8 @@ class TukarPointController extends Controller
                         $item->text = $item->full_name;
                         $item->total_point = $item->total_point ?? '';
                         $item->allowed_point = $item->allowed_point ?? '';
+                        $item->sisa_point = $item->allowed_point - $item->exchanged_point;
+ 
                         return $item;
 
             })
