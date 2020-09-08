@@ -35,9 +35,13 @@ Route::group(['namespace' => 'TukarPoint'], function() {
 	Route::get('tukar-point/table-korwil', 'TukarPointController@tableKorwil')->name('tukar-point-korwil.table');
 	Route::get('tukar-point/table-korut', 'TukarPointController@tableKorut')->name('tukar-point-korut.table');
 	Route::get('tukar-point/table-sales-history/{id}', 'TukarPointController@tableSalesHistory')->name('tukar-point-history-sales.table');
+	Route::get('tukar-point/table-sales-history-get-point/{id}', 'TukarPointController@tableSalesHistoryGetPoint')->name('tukar-point-history-sales-get-point.table');
 	Route::get('tukar-point/table-agent-history/{id}', 'TukarPointController@tableAgentHistory')->name('tukar-point-history-agent.table');
+	Route::get('tukar-point/table-agent-history-get-point/{id}', 'TukarPointController@tableAgentHistoryGetPoint')->name('tukar-point-history-agent-get-point.table');
 	Route::get('tukar-point/table-korwil-history/{id}', 'TukarPointController@tableKorwilHistory')->name('tukar-point-history-korwil.table');
+	Route::get('tukar-point/table-korwil-history-get-point/{id}', 'TukarPointController@tableKorwilHistoryGetPoint')->name('tukar-point-history-korwil-get-point.table');
 	Route::get('tukar-point/table-korut-history/{id}', 'TukarPointController@tableKorutHistory')->name('tukar-point-history-korut.table');
+	Route::get('tukar-point/table-korut-history-get-point/{id}', 'TukarPointController@tableKorutHistoryGetPoint')->name('tukar-point-history-korut-get-point.table');
 	Route::get('tukar-point/{tukar_point}/data', 'TukarPointController@data')->name('tukar-point.data');
 	Route::get('tukar-point/{tukar_point}/history_sales', 'TukarPointController@historySales')->name('tukar-point-sales.history');
 	Route::get('tukar-point/{tukar_point}/history_agent', 'TukarPointController@historyAgent')->name('tukar-point-agent.history');
