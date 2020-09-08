@@ -59,6 +59,12 @@ class BookingHelper
                 $payment['total_paid'] = $booking->payments[$i]->total_paid;
                 $payment['number_of_delays'] = $booking->payments[$i]->number_of_delays;
                 $payment['fine'] = $booking->payments[$i]->fine;
+                $payment['notification_mail_7'] = $booking->payments[$i]->notification_mail_7;
+                $payment['notification_mail_1'] = $booking->payments[$i]->notification_mail_1;
+                $payment['notification_mail_sp1'] = $booking->payments[$i]->notification_mail_sp1;
+                $payment['notification_mail_sp2'] = $booking->payments[$i]->notification_mail_sp2;
+                $payment['notification_mail_sp3'] = $booking->payments[$i]->notification_mail_sp3;
+                $payment['pg_number'] = $booking->payments[$i]->pg_number;
                 $payments[] = $payment;
                 $mth++;
             } else {
@@ -89,6 +95,14 @@ class BookingHelper
 
                 $payment['number_of_delays'] = isset($booking->payments[$i]) ? $booking->payments[$i]->number_of_delays : null;
                 $payment['fine'] = isset($booking->payments[$i]) ? $booking->payments[$i]->fine : null;
+
+                $payment['notification_mail_7'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_7 : null;
+                $payment['notification_mail_1'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_1 : null;
+                $payment['notification_mail_sp1'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp1 : null;
+                $payment['notification_mail_sp2'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp2 : null;
+                $payment['notification_mail_sp3'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp3 : null;
+                $payment['pg_number'] = isset($booking->payments[$i]) ? $booking->payments[$i]->pg_number : null;
+
                 $payments[] = $payment;
             }
             

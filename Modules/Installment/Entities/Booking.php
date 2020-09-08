@@ -121,9 +121,9 @@ class Booking extends Model
     public function getTotalDendaAttribute()
     {
         $collection = collect($this->payments)->sum(function($item) {
-            if ($item->payment_date) {
+            // if ($item->payment_date) {
                 return (($item->fine?: 0) * ($item->number_of_delays?: 0));
-            }
+            // }
             return 0;
         });
         return $collection;

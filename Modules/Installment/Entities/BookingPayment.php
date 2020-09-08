@@ -27,6 +27,8 @@ class BookingPayment extends Model
     	'number_of_delays',
     	'fine',
 
+        'pg_number',
+        'paid_mail',
         'notification_mail_7',
         'notification_mail_1',
         'notification_mail_sp1',

@@ -11,8 +11,10 @@
 			}			
 		},
 		data: () => ({
-        	field_state: false,
-        	overlay: false,
+        	loader: null,
+            field_state: false,
+        	card_overlay: false,
+            overlay: false,
         	progressText: 'Mohon Menunggu.',
         	formAlert: false,
             formAlertText: '',
@@ -45,6 +47,7 @@
         		total_pembayaran: '',
         		sisa_tunggakan: '',
         		total_denda: '',
+                slug: '',
         		payments: []
         	}
         }),
@@ -96,6 +99,7 @@
 					        		total_pembayaran: data.total_pembayaran,
 					        		sisa_tunggakan: data.sisa_tunggakan,
 					        		total_denda: data.total_denda,
+                                    slug: data.slug,
 					        		payments: items
 					        	}
 
@@ -111,13 +115,36 @@
     		            })
     		            .catch(error => {
 		    		        this.overlay = false
-    	            		this.tableAlert = true
-		                    this.tableAlertState = 'error'
-		                    this.tableAlertText = 'Oops, something went wrong. Please try again later.'
+    	            		this.formAlert = true
+		                    this.formAlertState = 'error'
+		                    this.formAlertText = 'Oops, something went wrong. Please try again later.'
 		    		        this.field_state = false
     		            });
     			}
     		},
+            postPayment(item) {
+                const data = new FormData();
+
+                this.field_state = true
+
+                axios.post(this.base_url() + this.ziggy('pembayaran.cicilan.payment', [this.form_data.slug, item.slug]).url(), data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.goto(response.data.data.redirect_url);
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                            this.field_state = false
+                        }
+                    })
+                    .catch((error) => {
+                        this.formAlert = true
+                        this.formAlertState = 'error'
+                        this.formAlertText = 'Oops, something went wrong. Please try again later.'
+                        this.field_state = false
+                    });
+            }
     	}
 	}
 </script>
