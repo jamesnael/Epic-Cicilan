@@ -26,6 +26,12 @@ class BookingPayment extends Model
     	'total_paid',
     	'number_of_delays',
     	'fine',
+
+        'notification_mail_7',
+        'notification_mail_1',
+        'notification_mail_sp1',
+        'notification_mail_sp2',
+        'notification_mail_sp3',
     ];
 
      /**
