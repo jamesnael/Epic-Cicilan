@@ -135,7 +135,12 @@ class PaymentController extends Controller
             ]
         ];
 
-        return response_json(true, null, 'Sukses mengambil data.', json_decode($this->getSNAPToken($postfields), true));
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', json_decode($this->getSNAPToken($postfields), true));
+        } catch (\Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+
     }
 
     /**
@@ -177,6 +182,7 @@ class PaymentController extends Controller
      */
     public function handleMidtransNotification(Request $request)
     {
+        \Log::info(json_encode($request->all(), JSON_PRETTY_PRINT));
         DB::beginTransaction();
         try {
             if ($request->input('transaction_status') == 'settlement' || $request->input('transaction_status') == 'capture' ) {
