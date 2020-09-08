@@ -16,6 +16,7 @@ class CreateRecordPointsTable extends Migration
         Schema::create('record_points', function (Blueprint $table) {
             $table->id();
             $table->integer('booking_id');
+            $table->enum('point_status', ['T', 'F'])->default('F');
             $table->timestamps();
             $table->softDeletes();
         });

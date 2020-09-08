@@ -324,7 +324,7 @@ class TukarPointController extends Controller
 
         $this->table_headers_sales_get_point = [
             [
-                "text" => 'Tanggal Pendapatan Point',
+                "text" => 'Tanggal Closing',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
@@ -340,6 +340,18 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'booking.unit.points',
+            ],
+            [
+                "text" => 'Status Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'status',
+            ],
+            [
+                "text" => 'Tanggal Pelunasan Komisi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'updated_date',
             ],
         ];
 
@@ -384,11 +396,12 @@ class TukarPointController extends Controller
                 "sortable" => true,
                 "value" => 'exchange_point',
             ],
+
         ];
 
         $this->table_headers_agent_get_point = [
             [
-                "text" => 'Tanggal Pendapatan Point',
+                "text" => 'Tanggal Closing',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
@@ -404,6 +417,18 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'booking.unit.points',
+            ],
+            [
+                "text" => 'Status Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'status',
+            ],
+            [
+                "text" => 'Tanggal Pelunasan Komisi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'updated_date',
             ],
         ];
         $this->id = $id;
@@ -451,7 +476,7 @@ class TukarPointController extends Controller
 
         $this->table_headers_korwil_get_point = [
             [
-                "text" => 'Tanggal Pendapatan Point',
+                "text" => 'Tanggal Closing',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
@@ -467,6 +492,18 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'booking.unit.points',
+            ],
+            [
+                "text" => 'Status Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'status',
+            ],
+            [
+                "text" => 'Tanggal Pelunasan Komisi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'updated_date',
             ],
         ];
 
@@ -515,7 +552,7 @@ class TukarPointController extends Controller
 
         $this->table_headers_korut_get_point = [
             [
-                "text" => 'Tanggal Pendapatan Point',
+                "text" => 'Tanggal Closing',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'date',
@@ -531,6 +568,18 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'booking.unit.points',
+            ],
+            [
+                "text" => 'Status Point',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'status',
+            ],
+            [
+                "text" => 'Tanggal Pelunasan Komisi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'updated_date',
             ],
         ];
 
@@ -973,7 +1022,7 @@ class TukarPointController extends Controller
 
     public function getTableDataSalesHistoryGetPoint(Request $request, $id)
     {
-        $query = RecordPoint::with('booking', 'booking.sales', 'booking.sales.user', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.sales_id', $id)->select('*','record_points.created_at AS created_date')->orderBy('record_points.created_at', 'DESC');
+        $query = RecordPoint::with('booking', 'booking.sales', 'booking.sales.user', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.sales_id', $id)->select('*','record_points.created_at AS created_date', 'record_points.updated_at AS updated_date')->orderBy('record_points.created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -989,8 +1038,10 @@ class TukarPointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->date            = date('d F Y', strtotime($item->created_date));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
+            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
             return $item;
         });
         return $data;
@@ -1075,7 +1126,7 @@ class TukarPointController extends Controller
 
     public function getTableDataAgentHistoryGetPoint(Request $request, $id)
     {
-        $query = RecordPoint::with('booking', 'booking.agency', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.agent_id', $id)->select('*','record_points.created_at AS created_date')->orderBy('record_points.created_at', 'DESC');
+        $query = RecordPoint::with('booking', 'booking.agency', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.agent_id', $id)->select('*','record_points.created_at AS created_date', 'record_points.updated_at AS updated_date')->orderBy('record_points.created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1091,8 +1142,11 @@ class TukarPointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->date            = date('d F Y', strtotime($item->created_date));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
+            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+
             return $item;
         });
         return $data;
@@ -1177,7 +1231,7 @@ class TukarPointController extends Controller
 
     public function getTableDataKorwilHistoryGetPoint(Request $request, $id)
     {
-        $query = RecordPoint::with('booking', 'booking.regional_coordinator', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.regional_coor_id', $id)->select('*','record_points.created_at AS created_date')->orderBy('record_points.created_at', 'DESC');
+        $query = RecordPoint::with('booking', 'booking.regional_coordinator', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.regional_coor_id', $id)->select('*','record_points.created_at AS created_date', 'record_points.updated_at AS updated_date')->orderBy('record_points.created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1193,8 +1247,11 @@ class TukarPointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->date            = date('d F Y', strtotime($item->created_date));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
+            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+
             return $item;
         });
         return $data;
@@ -1279,7 +1336,7 @@ class TukarPointController extends Controller
 
     public function getTableDataKorutHistoryGetPoint(Request $request, $id)
     {
-        $query = RecordPoint::with('booking', 'booking.main_coordinator', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.main_coor_id', $id)->select('*','record_points.created_at AS created_date')->orderBy('record_points.created_at', 'DESC');
+        $query = RecordPoint::with('booking', 'booking.main_coordinator', 'booking.unit')->join('bookings', 'bookings.id', '=', 'record_points.booking_id')->where('bookings.main_coor_id', $id)->select('*','record_points.created_at AS created_date', 'record_points.updated_at AS updated_date')->orderBy('record_points.created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1295,8 +1352,11 @@ class TukarPointController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->date            = date('d F Y', strtotime($item->created_date));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
+            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+
             return $item;
         });
         return $data;

@@ -164,7 +164,8 @@ class SprController extends Controller
 
                 //Insert Point
                 $record = RecordPoint::Create([
-                    'booking_id'      => $request->booking_id,
+                    'booking_id'   => $request->booking_id,
+                    'point_status' => 'F',
                 ]);
             }
 
