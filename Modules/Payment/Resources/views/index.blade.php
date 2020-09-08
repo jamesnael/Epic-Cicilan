@@ -359,9 +359,12 @@
 		    	    	<template v-slot:item.installment="{ item }">
 		    	    		@{{number_format(item.installment)}}
 		    	    	</template>
-		    	    	<template v-slot:item.fine="{ item }">
-		    	    		@{{number_format(item.fine)}}
+		    	    	<template v-slot:item.number_of_delays="{ item }">
+		    	    		@{{item.number_of_delays}}
 		    	    	</template>
+                        <template v-slot:item.fine="{ item }">
+                            @{{number_format(item.fine * item.number_of_delays)}}
+                        </template>
 		    	    	<template v-slot:item.credit="{ item }">
 		    	    		@{{number_format(item.credit)}}
 		    	    	</template>

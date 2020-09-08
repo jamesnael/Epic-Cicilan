@@ -76,7 +76,7 @@ class SendMailUpdateFine extends Command
                 if ($diff > 0) {
                     // Update Fine
                     $installment->number_of_delays = $diff;
-                    $installment->fine = 0.0001 * $booking->total_amount;
+                    $installment->fine = option('persen_denda', 0.0001) * $booking->total_amount;
                     $installment->save();
                 }
                 

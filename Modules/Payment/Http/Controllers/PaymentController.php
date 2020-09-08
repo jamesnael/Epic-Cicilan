@@ -35,7 +35,7 @@ class PaymentController extends Controller
                 "value" => 'due_date',
             ],
             [
-                "text" => 'Total Angsuran',
+                "text" => 'Angsuran',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'installment',
@@ -45,6 +45,12 @@ class PaymentController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'payment_date',
+            ],
+            [
+                "text" => 'Telat (hari)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'number_of_delays',
             ],
             [
                 "text" => 'Denda',
