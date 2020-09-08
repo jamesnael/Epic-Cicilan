@@ -101,7 +101,7 @@ class PaymentController extends Controller
      */
     public function payment(Request $request, Booking $booking, BookingPayment $payment)
     {
-        $order_number = 'INST'.\Carbon\Carbon::now()->locale('id')->format('ymd').sprintf("%08d", $payment->id);
+        $order_number = 'EPICADM'.\Carbon\Carbon::now()->locale('id')->format('Ym').sprintf("%06d", $payment->id);
         $postfields = [
             'transaction_details' => [
                 'order_id' => $order_number,
@@ -136,7 +136,12 @@ class PaymentController extends Controller
         ];
 
         try {
-            return response_json(true, null, 'Sukses mengambil data.', json_decode($this->getSNAPToken($postfields), true));
+            $response = json_decode($this->getSNAPToken($postfields), true);
+            if (isset($response['redirect_url'])) {
+                $payment->update(['pg_number' => $order_number]);
+                return response_json(true, null, 'Sukses mengambil data.', $response);
+            }
+            return response_json(false, null, 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.', $response);
         } catch (\Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
@@ -185,8 +190,8 @@ class PaymentController extends Controller
         \Log::info(json_encode($request->all(), JSON_PRETTY_PRINT));
         DB::beginTransaction();
         try {
+            $installment = BookingPayment::where('pg_number', $request->input('order_id'))->firstOrFail();
             if ($request->input('transaction_status') == 'settlement' || $request->input('transaction_status') == 'capture' ) {
-                $installment = BookingPayment::where('pg_number', $request->input('order_id'))->firstOrFail();
                 $installment->update([
                     'payment_status' => 'Paid',
                     'payment_date' => $request->input('settlement_time'),
@@ -199,9 +204,9 @@ class PaymentController extends Controller
                 DB::commit();
                 return response_json(true, null, 'Notification Received.', $request->all());
             } else {
-                $installment = SalesOrder::where('order_number', $request->input('order_id'))->firstOrFail();
                 if (!$installment->pending_mail) {
                     $order->update([
+                        'payment_method' => $request->input('payment_type'),
                         'va_number' => $request->input('va_numbers')[0]['va_number'] ?? $request->input('permata_va_number'),
                         'pending_mail' => true,
                     ]);

@@ -29,6 +29,7 @@ class BookingPayment extends Model
 
         'pg_number',
         'paid_mail',
+        'pending_mail',
         'notification_mail_7',
         'notification_mail_1',
         'notification_mail_sp1',
@@ -51,7 +52,8 @@ class BookingPayment extends Model
      * @var array
      */
     protected $casts = [
-        
+        'paid_mail' => 'boolean',
+        'pending_mail' => 'boolean',
     ];
 
     /**
