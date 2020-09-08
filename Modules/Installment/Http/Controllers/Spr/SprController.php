@@ -10,6 +10,7 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\Installment\Entities\Spr;
+use Modules\RewardPoint\Entities\RecordPoint;
 use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -162,7 +163,9 @@ class SprController extends Controller
                 $spr->save();
 
                 //Insert Point
-                
+                $record = RecordPoint::Create([
+                    'booking_id'      => $request->booking_id,
+                ]);
             }
 
             $has_spr = Spr::where('booking_id', $request->booking_id)->first();
