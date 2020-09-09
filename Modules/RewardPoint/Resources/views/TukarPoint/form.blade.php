@@ -54,21 +54,6 @@
 	            	  				<td width="25%">Sub Agent</td>
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.agency_name }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
 	            	  			</tr>	
 	            	  		</table>
 	            	  	</template>
@@ -101,21 +86,6 @@
 	            	  				<td width="25%">Koordinator Wilayah</td>
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.regional }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
 	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
@@ -150,21 +120,6 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.maincoor }}</td>
 	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
-	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
@@ -193,22 +148,7 @@
 	            	  				<td>:</td>
 	            	  				<td>@{{ data.item.text }}</td>
 	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
-	            	  			</tr>
-	            	  		</table>
+	            	  			</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
 
