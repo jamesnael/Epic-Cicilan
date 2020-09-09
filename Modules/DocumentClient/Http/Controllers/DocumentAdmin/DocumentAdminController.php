@@ -12,6 +12,7 @@ use Modules\DocumentClient\Entities\DocumentClient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DocumentAdminController extends Controller
 {
@@ -22,6 +23,7 @@ class DocumentAdminController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('document-admin.index'), 'text' => 'Data Dokumen Admin'],
@@ -266,7 +268,7 @@ class DocumentAdminController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');

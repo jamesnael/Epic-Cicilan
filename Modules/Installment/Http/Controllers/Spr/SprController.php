@@ -23,6 +23,7 @@ class SprController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('spr.index'), 'text' => 'Data SPR'],

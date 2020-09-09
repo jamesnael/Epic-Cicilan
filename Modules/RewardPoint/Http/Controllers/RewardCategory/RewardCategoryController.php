@@ -18,6 +18,7 @@ class RewardCategoryController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('users.index'), 'text' => 'Data Reward Category'],
@@ -171,13 +172,13 @@ class RewardCategoryController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RewardCategory::query();
+        $query = RewardCategory::with('reward');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('reward_category.category_name', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('description', 'LIKE', '%' . $generalSearch . '%');
             });
         }
