@@ -176,6 +176,11 @@ class AkadController extends Controller
                 $data = AkadKpr::create($request->all());
             }
 
+            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+                $akad->booking_status = 'ajb_handover';
+                $akad->save();
+            }
+
 
             DB::commit();
             return response_json(true, null, 'Data Akad KPR berhasil disimpan.', $data);
