@@ -27,7 +27,7 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">		
-		    		<validation-provider v-slot="{ errors }" name="Username" rules="required" v-if="form_data.level == 'Sales'">
+		    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required" v-if="form_data.level == 'Sales'">
 		    		<v-select
 		    			class="mt-4"
 		    			v-model="form_data.user_name" 
@@ -144,8 +144,6 @@
 	            	  	<template slot="item" slot-scope="data">
 	            	  		<table width="100%" class="mt-2">
 	            	  			<tr>
-	            	  				<td>Koordinator Utama</td>
-	            	  				<td>:</td>
 	            	  				<td>@{{ data.item.text }}</td>
 	            	  			</tr>
 	            	  			</table>
