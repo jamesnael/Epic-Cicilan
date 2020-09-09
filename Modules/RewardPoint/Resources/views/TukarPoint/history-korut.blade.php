@@ -42,6 +42,7 @@
 		delete-text="Cancel"
 		delete-confirmation-text="Apakah Anda yakin untuk mengcancel penukaran point berikut ini ?"
 		delete-cancel-text="Tidak"
+		delete-icon="mdi-cancel"
 		>
 		@include('components.table')
 	</table-layout>
