@@ -2,7 +2,7 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Komisi sales" rules="required|between:0,100">
+	    		{{-- <validation-provider v-slot="{ errors }" name="Komisi sales" rules="required|between:0,100">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.sales_commission"
@@ -16,7 +16,7 @@
 			    		placeholder>
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
 	    		<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="required|between:0,100">
 		    		<v-text-field
 		    			class="mt-4"

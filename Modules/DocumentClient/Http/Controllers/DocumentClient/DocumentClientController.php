@@ -23,6 +23,7 @@ class DocumentClientController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('document.index'), 'text' => 'Data Dokumen Klien'],
@@ -233,7 +234,7 @@ class DocumentClientController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
                 // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');

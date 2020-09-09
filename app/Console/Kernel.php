@@ -24,7 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('installments:process')
+                ->daily()
+                ->timezone('Asia/Jakarta')
+                ->after(function () {
+                    \Log::info('Processing installments completed.');
+                });
     }
 
     /**

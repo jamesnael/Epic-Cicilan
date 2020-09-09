@@ -24,6 +24,7 @@ class AkadController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('akad.index'), 'text' => 'Data Akad'],
@@ -173,6 +174,11 @@ class AkadController extends Controller
                 $data = AkadKpr::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'akad_date', 'akad_time', 'location', 'address','akad_doc_file_name','akad_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status']));
             }else{
                 $data = AkadKpr::create($request->all());
+            }
+
+            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+                $akad->booking_status = 'ajb_handover';
+                $akad->save();
             }
 
 

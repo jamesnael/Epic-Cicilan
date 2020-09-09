@@ -111,7 +111,7 @@ class Booking extends Model
     {
         $collection = collect($this->payments)->sum(function($item) {
             if ($item->payment_date) {
-                return ($item->installment?: 0) + ($item->fine?: 0);
+                return ($item->installment?: 0) + (($item->fine?: 0) * ($item->number_of_delays?: 0));
             }
             return 0;
         });
@@ -121,9 +121,9 @@ class Booking extends Model
     public function getTotalDendaAttribute()
     {
         $collection = collect($this->payments)->sum(function($item) {
-            if ($item->payment_date) {
-                return ($item->fine?: 0);
-            }
+            // if ($item->payment_date) {
+                return (($item->fine?: 0) * ($item->number_of_delays?: 0));
+            // }
             return 0;
         });
         return $collection;
@@ -283,6 +283,7 @@ class Booking extends Model
     public function unpaid_payments()
     {
         return $this->hasMany('Modules\Installment\Entities\BookingPayment', 'booking_id')
+        ->where('payment_status', 'Unpaid')
         ->whereNull('payment_date');
     }
 

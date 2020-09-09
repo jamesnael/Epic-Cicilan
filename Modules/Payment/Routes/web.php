@@ -15,5 +15,6 @@ Route::prefix('pembayaran')->name('pembayaran.')->group(function() {
 	Route::prefix('cicilan')->name('cicilan.')->group(function() {
 	    Route::get('{booking}', 'PaymentController@index')->name('index');
 	    Route::get('{booking}/data', 'PaymentController@data')->name('data');
+	    Route::post('{booking}/{payment}/paid', 'PaymentController@payment')->name('payment');
 	});
 });

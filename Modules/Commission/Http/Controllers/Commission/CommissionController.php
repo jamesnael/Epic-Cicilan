@@ -18,6 +18,7 @@ class CommissionController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('commission.index'), 'text' => 'Data Komisi'],
@@ -31,12 +32,12 @@ class CommissionController extends Controller
     public function index()
     {
         $this->table_headers = [
-            [
-                "text" => 'Komisi Sales',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => 'sales_commission',
-            ],
+            // [
+            //     "text" => 'Komisi Sales',
+            //     "align" => 'center',
+            //     "sortable" => true,
+            //     "value" => 'sales_commission',
+            // ],
             [
                 "text" => 'Komisi Sub Agent',
                 "align" => 'center',
