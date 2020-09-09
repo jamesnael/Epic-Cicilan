@@ -4,19 +4,18 @@
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<h3>Data Unit</h3>
 	    		<validation-provider v-slot="{ errors }" name="Tipe unit" rules="required">
-		    		<v-select
+		    		 <v-autocomplete
 		    			class="mt-4"
 		    			v-model="form_data.id_unit_type" 
 		    			@input="setSelectedUnitType()"
 		              	:items="filter_unit_type"
-		              	:reduce="point => point.id" 
 		              	label="Tipe Rumah"
 		              	name="id_unit_type"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<v-text-field
 		           v-model="form_data.unit_type"
@@ -187,7 +186,7 @@
     		          	cols="12"
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
-				    		<v-select
+				    		<v-autocomplete
 				    			class="mt-4"
 				    			v-model="payment_type" 
 				              	:items="['Hard Cash', 'Installments', 'KPR/KPA']"
@@ -198,7 +197,7 @@
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state"
-				            ></v-select>
+				            ></v-autocomplete>
 			    		</validation-provider>
 			    	</v-col>
 		    		<v-col
@@ -512,7 +511,7 @@
 
 			    <h3>Data Klien</h3>
 	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			class="mt-4"
 		    			v-model="form_data.client_id" 
 		    			@input="setSelectedClient()"
@@ -523,7 +522,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<v-row>
 			    	<v-col
@@ -626,7 +625,7 @@
 			    
 			    <h3>Data Sales</h3>
 	    		<validation-provider v-slot="{ errors }" name="Sales" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			class="mt-4"
 		    			v-model="form_data.sales_id" 
 		    			@input="setSelectedSales()"
@@ -666,7 +665,7 @@
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
-		            </v-select>
+		            </v-autocomplete>
 	    		</validation-provider>
 	    		<v-row>
 			    	<v-col
