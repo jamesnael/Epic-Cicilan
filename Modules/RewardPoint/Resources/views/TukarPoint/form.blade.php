@@ -14,7 +14,6 @@
 			              	:items="['Sales','Agent','Korwil','Korut']"
 			              	label="Level"
 			              	name="level"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -28,7 +27,7 @@
     		          	cols="12"
     		          	md="12">		
 		    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required" v-if="form_data.level == 'Sales'">
-		    		<v-select
+		    		<v-autocomplete
 		    			class="mt-4"
 		    			v-model="form_data.user_name" 
 		    			@input="setSelectedSales()"
@@ -58,16 +57,15 @@
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
-		            </v-select>
+		            </v-autocomplete>
 	    		</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Agent" rules="required" v-if="form_data.level == 'Agent'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name"
 		    				@input="setSelectedSubAgent()" 
 			              	label="Nama Agent"
 			              	:items="filter_agency"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -91,16 +89,15 @@
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Korwil" rules="required" v-if="form_data.level == 'Korwil'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name" 
 			              	label="Nama Korwil"
 			              	@input="setSelectedKorwil()" 
 			              	:items="filter_korwil"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -124,16 +121,15 @@
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Korut" rules="required" v-if="form_data.level == 'Korut'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name"
 			              	@input="setSelectedKorut()" 
 			              	label="Nama Korut"
 			              	:items="filter_korut"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -150,7 +146,7 @@
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 			    	</v-col>
 			    </v-row>
@@ -202,7 +198,7 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required" 
 		    			 >
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.category_reward_id"
 		              	:items="filter_category"
 		              	label="Kategori Reward"
@@ -211,7 +207,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 			    	</v-col>
 			    </v-row>
@@ -221,7 +217,7 @@
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" >
-				    		<v-select
+				    		<v-autocomplete
 			    			v-model="form_data.reward_points"
 			    			@input="setRewardPoint()"
 			    			:items="computedCategoryName" 
@@ -230,7 +226,7 @@
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
-			            	></v-select>
+			            	></v-autocomplete>
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>
