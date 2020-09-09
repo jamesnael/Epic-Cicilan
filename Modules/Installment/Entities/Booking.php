@@ -229,12 +229,36 @@ class Booking extends Model
         return $this->belongsTo('Modules\Installment\Entities\Unit', 'unit_id');
     }
 
-     /**
-     * Get the relationship for the model.
-     */
+    /**
+    * Get the relationship for the model.
+    */
     public function sales()
     {
         return $this->belongsTo('Modules\SalesAgent\Entities\Sales', 'sales_id');
+    }
+
+    /**
+    * Get the relationship for the model.
+    */
+    public function agency()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\Agency', 'agent_id');
+    }
+
+    /**
+    * Get the relationship for the model.
+    */
+    public function main_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\MainCoordinator', 'main_coor_id');
+    }
+
+    /**
+    * Get the relationship for the model.
+    */
+    public function regional_coordinator()
+    {
+        return $this->belongsTo('Modules\SalesAgent\Entities\RegionalCoordinator', 'regional_coor_id');
     }
 
     /**
@@ -326,5 +350,12 @@ class Booking extends Model
         return $this->hasOne('Modules\Commission\Entities\SalesCommission', 'booking_id');
     }
 
+    /**
+     * Get the relationship for the model.
+     */
+    public function record()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\RecordPoint', 'booking_id');
+    }
 
 }

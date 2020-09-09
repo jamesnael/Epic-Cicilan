@@ -26,6 +26,7 @@ class HandOverController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('handover.index'), 'text' => 'Data Hand Over Unit'],

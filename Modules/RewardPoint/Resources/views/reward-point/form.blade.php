@@ -46,7 +46,7 @@
 			          v-model="main_coordinator"
 			          class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': form_data.status_main_coordinator}">
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': main_coordinator}">
 				        <v-text-field
 					      v-model="form_data.redeem_point_main_coordinator"
 				          label="Reedem Point Koordinator Utama"

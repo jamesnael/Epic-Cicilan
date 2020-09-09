@@ -10,6 +10,7 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\Installment\Entities\Spr;
+use Modules\RewardPoint\Entities\RecordPoint;
 use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class SprController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('spr.index'), 'text' => 'Data SPR'],
@@ -162,7 +164,10 @@ class SprController extends Controller
                 $spr->save();
 
                 //Insert Point
-                
+                $record = RecordPoint::Create([
+                    'booking_id'   => $request->booking_id,
+                    'point_status' => 'F',
+                ]);
             }
 
             $has_spr = Spr::where('booking_id', $request->booking_id)->first();

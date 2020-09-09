@@ -17,6 +17,10 @@ Vue.use(Vuetify);
 
 Vue.component('base-layout', require('./components/BaseLayout.vue').default);
 Vue.component('table-layout', () => import('./components/Table.vue'));
+Vue.component('login-form', require('./components/Auth/LoginForm.vue').default);
+Vue.component('profile-user', require('./components/Auth/ProfileUser.vue').default);
+Vue.component('change-password', require('./components/Auth/ChangePassword.vue').default);
+
 require('./../../Modules/SalesAgent/Resources/js/app');
 require('./../../Modules/AppUser/Resources/js/app');
 require('./../../Modules/RewardPoint/Resources/js/app');

@@ -46,7 +46,8 @@
         },
         computed: {
             total: function() {
-              return parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
+              var result = parseFloat(this.form_data.sales_commission) + parseFloat(this.form_data.agency_commission) + parseFloat(this.form_data.regional_coordinator_commission) + parseFloat(this.form_data.main_coordinator_commission);
+              return result.toFixed(1)
 
             }
         },
@@ -64,7 +65,7 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
-    		            			sales_commission: data.sales_commission,
+    		            			// sales_commission: data.sales_commission,
     		            			agency_commission: data.agency_commission,
     		            			regional_coordinator_commission: data.regional_coordinator_commission,
     		            			main_coordinator_commission: data.main_coordinator_commission,
@@ -97,7 +98,7 @@
         	},
         	clear () {
 		        this.form_data = {
-		        	sales_commission: '',
+		        	// sales_commission: '',
             		agency_commission: '',
             		regional_coordinator_commission: '',
             		main_coordinator_commission: '',

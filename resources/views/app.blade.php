@@ -96,19 +96,56 @@
 				        <v-btn icon>
 				            <v-icon>mdi-bell</v-icon>
 				        </v-btn>
-				        <v-btn
-				            icon
-				            large
-				        >
-				            <v-avatar
-				                size="32px"
-				                item
-				            >
-				                <v-img
-				                    src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-				                    alt="Vuetify"
-				                ></v-img></v-avatar>
-				        </v-btn>
+				        <div class="text-center">
+					        <v-menu offset-y>
+				              	<template v-slot:activator="{ on, attrs }">
+					                <v-btn
+					                  	color="primary"
+					                  	dark
+					                  	v-bind="attrs"
+					                  	v-on="on"
+					                  	icon
+					                  	large
+					                >
+						                <v-avatar
+	          				                size="32px"
+	          				                item
+	              				            >
+	          				                <v-img
+	          				                    src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
+	          				                    alt="Vuetify"
+	          				                ></v-img>
+	          				            </v-avatar>
+					                </v-btn>
+				              </template>
+					              <v-list>
+					                <v-list-item>
+					                	<v-btn class="ma-2" 
+					                		text small color="success"
+											href={{ route('profile') }}
+					                	>
+				                	      <v-icon left>mdi-account</v-icon> {{\Auth::user()->full_name ?? ''}}
+				                	    </v-btn>
+					                </v-list-item>
+					                <v-list-item>
+					                	<v-btn class="ma-2" 
+					                		text small color="error"
+											href={{ route('change-password') }}
+					                	>
+				                	      <v-icon left>mdi-key</v-icon> Ubah Password
+				                	    </v-btn>
+					                </v-list-item>
+					                <v-list-item>
+					                 	<v-btn class="ma-2" 
+					                 		text small color="info"
+											href={{ route('logout') }}
+					                 	>
+				                	      	<v-icon left>mdi-logout</v-icon> Logout
+				                	    </v-btn>
+					                </v-list-item>
+					              </v-list>
+				            </v-menu>
+				          </div>
 				    </v-app-bar>
 				    <v-main>
 				        <v-container

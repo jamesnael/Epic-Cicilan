@@ -53,10 +53,10 @@
             		kuota: '',
             		description: '',
             		status: '',
-            		redeem_point_main_coordinator: '0',
-            		redeem_point_regional_coordinator: '0',
-            		redeem_point_agency: '0',
-            		redeem_point_sales: '0',
+            		redeem_point_main_coordinator: '',
+            		redeem_point_regional_coordinator: '',
+            		redeem_point_agency: '',
+            		redeem_point_sales: '',
             	}
         	}
         },

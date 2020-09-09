@@ -19,6 +19,7 @@ class RewardPointController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('users.index'), 'text' => 'Data Reward'],
@@ -208,10 +209,7 @@ class RewardPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('reward_categories.category_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('reward_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('redeem_point', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('kuota', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('reward_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 

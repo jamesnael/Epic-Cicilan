@@ -25,6 +25,7 @@ class SalesController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('sales.index'), 'text' => 'Data Sales'],
@@ -296,6 +297,7 @@ class SalesController extends Controller
                 $subquery->orWhere('users.email', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('users.phone_number', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('agencies.agency_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('main_coordinators.full_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
