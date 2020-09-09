@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Commission\Entities\Commission;
 use Modules\Installment\Entities\Booking;
+use Modules\RewardPoint\Entities\RecordPoint;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -218,20 +219,35 @@ class SalesCommissionController extends Controller
         try {
 
             if ($request->input('commission_1') && $request->input('payment_date_1')) {
-
                 $salescommission->komisi_status = 'Pembayaran 1';
                 $salescommission->save();
 
             }
 
             if ($request->input('commission_2') && $request->input('payment_date_2')) {
-
+                
+                //Update Status Point
+                $point = RecordPoint::where('booking_id', $request->input('booking_id'))->first();
+                if($point){
+                    $point->point_status = 'T';
+                    $point->save();
+                }
+                
                 $salescommission->komisi_status = 'Pembayaran 2';
                 $salescommission->save();
 
             }
 
             if ($request->input('closing_fee_sales') && $request->input('sales_payment_date') && $request->input('closing_fee_agency') && $request->input('agency_payment_date') && $request->input('closing_fee_korwil') && $request->input('korwil_payment_date') && $request->input('korut_name') && $request->input('korut_payment_date')) {
+
+                //Update Status Point
+                $point = RecordPoint::where('booking_id', $request->input('booking_id'))->first();
+                if($point){
+                    if($point->point_status == 'F'){
+                        $point->point_status = 'T';
+                        $point->save();
+                    }
+                }
 
                 $salescommission->komisi_status = 'Closing Fee';
                 $salescommission->save();

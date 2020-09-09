@@ -78,6 +78,7 @@
 		edit-uri="tukar-point-sales.history"
 		edit-uri-parameter="id"
 		edit-text="History"
+		edit-icon="mdi-history"
 		>
 		@include('components.table')
 	</sales-table>
@@ -96,6 +97,7 @@
 		edit-uri="tukar-point-agent.history"
 		edit-uri-parameter="id"
 		edit-text="History"
+		edit-icon="mdi-history"
 		>
 		@include('components.table')
 	</agent-table>
@@ -114,6 +116,7 @@
 		edit-uri="tukar-point-korwil.history"
 		edit-uri-parameter="id"
 		edit-text="History"
+		edit-icon="mdi-history"
 		>
 		@include('components.table')
 	</korwil-table>
@@ -132,6 +135,7 @@
 		edit-uri="tukar-point-korut.history"
 		edit-uri-parameter="id"
 		edit-text="History"
+		edit-icon="mdi-history"
 		>
 		@include('components.table')
 	</korut-table>

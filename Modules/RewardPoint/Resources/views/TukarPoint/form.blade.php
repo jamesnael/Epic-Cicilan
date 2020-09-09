@@ -14,7 +14,6 @@
 			              	:items="['Sales','Agent','Korwil','Korut']"
 			              	label="Level"
 			              	name="level"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -27,8 +26,8 @@
     		       <v-col
     		          	cols="12"
     		          	md="12">		
-		    		<validation-provider v-slot="{ errors }" name="Username" rules="required" v-if="form_data.level == 'Sales'">
-		    		<v-select
+		    		<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required" v-if="form_data.level == 'Sales'">
+		    		<v-autocomplete
 		    			class="mt-4"
 		    			v-model="form_data.user_name" 
 		    			@input="setSelectedSales()"
@@ -54,35 +53,19 @@
 	            	  				<td width="25%">Sub Agent</td>
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.agency_name }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
 	            	  			</tr>	
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
-		            </v-select>
+		            </v-autocomplete>
 	    		</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Agent" rules="required" v-if="form_data.level == 'Agent'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name"
 		    				@input="setSelectedSubAgent()" 
 			              	label="Nama Agent"
 			              	:items="filter_agency"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -102,35 +85,19 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.regional }}</td>
 	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
-	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Korwil" rules="required" v-if="form_data.level == 'Korwil'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name" 
 			              	label="Nama Korwil"
 			              	@input="setSelectedKorwil()" 
 			              	:items="filter_korwil"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -150,35 +117,19 @@
 	            	  				<td width="25%">:</td>
 	            	  				<td>@{{ data.item.maincoor }}</td>
 	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
-	            	  			</tr>
 	            	  		</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 					<validation-provider v-slot="{ errors }" name="Nama Korut" rules="required" v-if="form_data.level == 'Korut'">
-		    			<v-select
+		    			<v-autocomplete
 			    			v-model="form_data.user_name"
 			              	@input="setSelectedKorut()" 
 			              	label="Nama Korut"
 			              	:items="filter_korut"
 			              	name="user_name"
-			              	v-on="on"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -189,30 +140,13 @@
 	            	  	<template slot="item" slot-scope="data">
 	            	  		<table width="100%" class="mt-2">
 	            	  			<tr>
-	            	  				<td>Koordinator Utama</td>
-	            	  				<td>:</td>
 	            	  				<td>@{{ data.item.text }}</td>
 	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Total Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.total_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Allowed Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.allowed_point }}</td>
-	            	  			</tr>
-	            	  			<tr>
-	            	  				<td width="25%">Sisa Point</td>
-	            	  				<td width="25%">:</td>
-	            	  				<td>@{{ data.item.sisa_point }}</td>
-	            	  			</tr>
-	            	  		</table>
+	            	  			</table>
 	            	  	</template>
             	  		<v-divider></v-divider>
 
-			            	</v-select>
+			            	</v-autocomplete>
 					</validation-provider>
 			    	</v-col>
 			    </v-row>
@@ -264,7 +198,7 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required" 
 		    			 >
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.category_reward_id"
 		              	:items="filter_category"
 		              	label="Kategori Reward"
@@ -273,7 +207,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 			    	</v-col>
 			    </v-row>
@@ -283,7 +217,7 @@
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" >
-				    		<v-select
+				    		<v-autocomplete
 			    			v-model="form_data.reward_points"
 			    			@input="setRewardPoint()"
 			    			:items="computedCategoryName" 
@@ -292,7 +226,7 @@
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
-			            	></v-select>
+			            	></v-autocomplete>
 			    		</validation-provider>
 			    	</v-col>
 			    </v-row>

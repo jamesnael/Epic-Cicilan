@@ -102,6 +102,11 @@
     	<template v-slot:item.table_index="{ item }">
     		<strong>@{{ item.table_index }}</strong>
     	</template>
+    	<template v-slot:item.test="{ item }">
+    		<v-btn icon color="info" :href="ziggy('pembayaran.cicilan.index', [item.slug]).url()">
+				<v-icon small>mdi-eye</v-icon>
+            </v-btn>
+    	</template>
     </v-data-table>
 
     <v-dialog

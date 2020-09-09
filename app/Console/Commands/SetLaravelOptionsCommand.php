@@ -39,7 +39,7 @@ class SetLaravelOptionsCommand extends Command
     {
         $this->line("Start set default value for options.");
 
-        $bar = $this->output->createProgressBar(2);
+        $bar = $this->output->createProgressBar(8);
 
         $bar->setFormat('debug');
 
@@ -50,7 +50,7 @@ class SetLaravelOptionsCommand extends Command
         $bar->advance();
         usleep(300000);
 
-        option(['pph_23' => '0']);
+        option(['pph_23' => 0]);
 
         $bar->advance();
         usleep(300000);
@@ -66,6 +66,21 @@ class SetLaravelOptionsCommand extends Command
         usleep(300000);
 
         option(['sp3_date' => 28]);
+
+        $bar->advance();
+        usleep(300000);
+
+        option(['persen_denda' => 0.0001]);
+
+        $bar->advance();
+        usleep(300000);
+
+        option(['midtrans_server_key' => 'SB-Mid-server-14LzzqHJFe5J64gsfX2HVbON']);
+
+        $bar->advance();
+        usleep(300000);
+
+        option(['midtrans_url' => 'https://app.sandbox.midtrans.com/snap/v1/transactions']);
 
         $bar->advance();
         usleep(300000);

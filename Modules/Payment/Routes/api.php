@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/payment', function (Request $request) {
-    return $request->user();
-});
+Route::post('v1/midtrans/notification', 'PaymentController@handleMidtransNotification')->name('notification');
