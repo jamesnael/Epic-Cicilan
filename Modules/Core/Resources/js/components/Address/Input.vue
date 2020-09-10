@@ -11,30 +11,6 @@
 		    ValidationProvider
 		},
 		props: {
-			addressValue: {
-				type: String,
-				default: ''
-			},
-			addressRules: {
-				type: String,
-				default: ''
-			},
-			addressClass: {
-				type: String,
-				default: ''
-			},
-			addressInputName: {
-				type: String,
-				default: ''
-			},
-			addessLabel: {
-				type: String,
-				default: ''
-			},
-			addressCounter: {
-				type: Number,
-				default: 0
-			},			
 			provinceValue: {
 				type: String,
 				default: ''
@@ -84,7 +60,6 @@
 		},
 		data: function () {
             return {
-        		address: '',
         		province: '',
         		city: '',
         		items: [],
@@ -108,17 +83,11 @@
 		            .then(response => {
 		            	if (response.data.success) {
 		            		this.items = response.data.data
-		            		this.address = this.addressValue
+	            			this.province = this.provinceValue
 
-		            		if (this.provinceValue) {
+		            		if (this.cityValue) {
 		            			this.$nextTick(() => {
-			            			this.province = this.provinceValue
-
-    			            		if (this.cityValue) {
-    			            			this.$nextTick(() => {
-    				            			this.city = this.cityValue
-    			            			})
-    			            		}
+			            			this.city = this.cityValue
 		            			})
 		            		}
 		            	}

@@ -98,18 +98,19 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-        		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="">
-    	    		<v-text-field
-    	    			v-model="form_data.ppjb_date"
-    	    			:persistent-hint="true"
-    		    		:error-messages="errors"
-    		    		label="Tanggal PPJB"
-    		    		:readonly="!field_state"
-    		    		:disabled="field_state">
-        			</v-text-field>
-        		</validation-provider>
-			    
-				</v-row><h3 class="mt-4">Schedule Akad KPR</h3>
+	        		<validation-provider v-slot="{ errors }" name="Tanggal PPJB" rules="">
+	    	    		<v-text-field
+	    	    			:value="reformatDateTime(form_data.ppjb_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+	    	    			:persistent-hint="true"
+	    		    		:error-messages="errors"
+	    		    		label="Tanggal PPJB"
+	    		    		:readonly="!field_state"
+	    		    		:disabled="field_state">
+	        			</v-text-field>
+	        		</validation-provider>
+				</v-row>
+
+				<h3 class="mt-4">Schedule Akad KPR</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -229,15 +230,15 @@
 							<v-file-input 
 		    		            show-size
 		    		            chips 
-		    		            label="Pilih Dokumen"
 		    		            v-model="form_data.dokumen_awal"
-					    		:persistent-hint="true"
+				              	name="dokumen_awal"
+		    		            label="Pilih Dokumen"
 					    		:error-messages="errors"
-				              	name="dokumen_awal">
-			              </v-file-input>
-			              <a :href="form_data.url_dokumen_awal" target="_blank" class="ml-8">
-			              	<small>@{{form_data.dokumen_awal_akad}}</small>
-			              </a>
+				            >
+			              	</v-file-input>
+			              	<a :href="form_data.url_dokumen_awal" target="_blank" class="ml-8">
+			              		<small>@{{form_data.dokumen_awal_akad}}</small>
+			              	</a>
 			            </validation-provider>
 		          </v-col>
 		        </v-row>

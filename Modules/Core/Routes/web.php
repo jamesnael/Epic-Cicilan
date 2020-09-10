@@ -15,3 +15,15 @@ Route::group(['namespace' => 'Province', 'prefix' => 'provinces', 'as' => 'provi
 	Route::get('/', 'ProvinceController@provinceList')->name('index');
 });
 
+Route::group(['namespace' => 'Bank', 'prefix' => 'banks', 'as' => 'banks.'], function() {
+	Route::get('/', 'BankController@bankList')->name('index');
+});
+
+Route::group(['namespace' => 'Occupation', 'prefix' => 'occupations', 'as' => 'occupations.'], function() {
+	Route::get('/', 'OccupationController@occupationList')->name('index');
+});
+
+Route::group(['namespace' => 'PaymentMethod', 'prefix' => 'payment-methods', 'as' => 'payment-methods.'], function() {
+	Route::get('/', 'PaymentMethodController@paymentMethodList')->name('index');
+});
+

@@ -3,7 +3,7 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<validation-provider v-slot="{ errors }" name="Koordinator utama" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.main_coordinator_id" 
 		              	:items="filter_main_coordinator"
 		              	label="Koordinator Utama"
@@ -12,10 +12,10 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Koordinator wilayah" rules="">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.regional_coordinator_id" 
 		              	:items="computedRegionalCoordinator"
 		              	label="Koordinator Wilayah"
@@ -23,10 +23,10 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Sub Agent" rules="">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.agency_id" 
 		              	:items="computedAgency"
 		              	label="Sub Agent"
@@ -34,7 +34,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nama lengkap" rules="required|max:255">
 		    		<v-text-field
@@ -76,12 +76,12 @@
     		            @click:append="showPassword = !showPassword"
     		          ></v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_user.phone_number"
 		    			name="phone_number"
-			    		label="Nomor Telepon"
+			    		label="Nomor HP"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -104,7 +104,20 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Province" rules="max:255">
+	    		<address-input inline-template
+	    			:province-value="form_data.province"
+	    			province-class="mt-4"
+	    			province-input-name="province"
+	    			province-label="Provinsi"
+	    			:city-value="form_data.city"
+	    			city-class="mt-4"
+	    			city-input-name="city"
+	    			city-label="Kota"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::address')
+	    		</address-input>
+	    		{{-- <validation-provider v-slot="{ errors }" name="Province" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_user.province"
@@ -125,7 +138,7 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
 	    		<validation-provider v-slot="{ errors }" name="NIP Sales" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
@@ -177,7 +190,7 @@
 			          md="6"
 			        >
 			          	<validation-provider v-slot="{ errors }" name="Komisi sales" rules="">
-				    		<v-select
+				    		<v-autocomplete
 				    			v-model="form_data.sales_commission"
 				    			:items="filter_sales_commission" 
 				    			@input="setSelectedSales()"
@@ -215,7 +228,7 @@
 			            	  			</tr>
 			            	  		</table>
 			            	  	</template>
-				            </v-select>
+				            </v-autocomplete>
 	    				</validation-provider>
 			        </v-col>
 			        <v-col
@@ -271,7 +284,7 @@
 			    
 
 			    <validation-provider v-slot="{ errors }" name="Status" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.status" 
 		              	:items='["Aktif","Tidak Aktif"]'
 		              	label="Status"
@@ -280,7 +293,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		
 	    		<v-btn

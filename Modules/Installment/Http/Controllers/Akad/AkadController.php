@@ -126,7 +126,7 @@ class AkadController extends Controller
             "booking_id" => "bail|required|exists:Modules\Installment\Entities\Booking,id",
             "akad_date" => "bail|required",
             "akad_time" => "bail|required",
-            "dokumen_awal" => "bail|nullable|image",
+            "dokumen_awal" => "bail|nullable",
             "location" => "bail|required|string|max:255",
             "address" => "bail|nullable|string|max:255",
         ]);
@@ -197,7 +197,7 @@ class AkadController extends Controller
      */
     public function data(Booking $akad)
     {
-        $data = $akad->load('unit','client', 'sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator', 'sales.user','akad_kpr');
+        $data = $akad->load('unit','client', 'sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator', 'sales.user','akad_kpr','ppjb');
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {

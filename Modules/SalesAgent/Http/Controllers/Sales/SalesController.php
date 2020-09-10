@@ -64,7 +64,7 @@ class SalesController extends Controller
                 "value" => 'email',
             ],
             [
-                "text" => 'Nomor Telepon',
+                "text" => 'Nomor HP',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'phone_number',

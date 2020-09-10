@@ -67,7 +67,20 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Province" rules="max:255">
+	    		<address-input inline-template
+	    			:province-value="form_data.province"
+	    			province-class="mt-4"
+	    			province-input-name="province"
+	    			province-label="Provinsi"
+	    			:city-value="form_data.city"
+	    			city-class="mt-4"
+	    			city-input-name="city"
+	    			city-label="Kota"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::address')
+	    		</address-input>
+	    		{{-- <validation-provider v-slot="{ errors }" name="Province" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.province"
@@ -88,8 +101,17 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="max:255">
+	    		</validation-provider> --}}
+	    		<bank-input inline-template
+	    			:bank-value="form_data.bank_name"
+	    			bank-class="mt-4"
+	    			bank-input-name="bank_name"
+	    			bank-label="Nama Bank"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::bank')
+	    		</bank-input>
+	    		{{-- <validation-provider v-slot="{ errors }" name="Nama bank" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.bank_name"
@@ -100,7 +122,7 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
 	    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="numeric">
 		    		<v-text-field
 		    			class="mt-4"
