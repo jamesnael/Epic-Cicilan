@@ -254,7 +254,6 @@
 			              	:items="['Pending','Approved']"	
 			              	label="Approval Pembeli"
 			              	name="approval_client_status"
-			              	v-on="on"
 			              	v-if="form_data.ppjb_sign_date_data !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
