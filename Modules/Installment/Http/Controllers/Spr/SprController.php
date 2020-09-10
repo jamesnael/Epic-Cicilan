@@ -244,50 +244,72 @@ class SprController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales')->bookingStatus('spr')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user')->bookingStatus('spr')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
-            $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            $query->whereHas('client', function($subquery) use ($generalSearch) {
+                $subquery->where('client_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales.user', function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('spr', function($subquery) use ($generalSearch) {
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('print_date', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('sent_date', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('received_date', 'LIKE', '%' . $check_date . '%');
             });
         }
 
         foreach ($request->input('sort') as $sort_key => $sort) {
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->bookingStatus('spr')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->print_date    = $item->spr ? \Carbon\Carbon::parse($item->spr->print_date)->locale('id')->translatedFormat('d F Y') : '';
             $item->sent_date     = $item->spr ? ($item->spr->sent_date) != null ? \Carbon\Carbon::parse($item->spr->sent_date)->locale('id')->translatedFormat('d F Y') : '' : '';
-            $item->unit_name     = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_name     = $item->unit->unit_type . ' ' . $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;
-            if($item->spr){
-                if($item->spr->print_date != null)
+
+            //Status Condition
+            if ($item->spr){
+                if ($item->spr->print_date != null)
                 {
-                    if($item->spr->print_date){
+                    if ($item->spr->print_date){
                         $item->status = "Dicetak";
                     }
-                    if($item->spr->sent_date){
+                    if ($item->spr->sent_date){
                         $item->status = "Dikirim";
                     }
-                    if($item->spr->received_date){
+                    if ($item->spr->received_date){
                         $item->status = "Diterima";
                     }
-                    if($item->spr->approval_status == "Approved"){
+                    if ($item->spr->approval_status == "Approved"){
                         $item->status = "Dokumen sesuai";
                     }
                 }
             } else {
                 $item->status = "Belum dicetak";
             }
+
             return $item;
         });
         return $data;

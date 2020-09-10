@@ -42,7 +42,6 @@ class TukarPointController extends Controller
      */
     public function index()
     {
-        // return $record = RecordPoint::with('booking', 'booking.sales', 'booking.sales.user')->get();
         $this->table_headers = [
             [
                 "text" => 'Nama Sales',
@@ -301,7 +300,7 @@ class TukarPointController extends Controller
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'date_deleted',
+                "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
@@ -334,7 +333,7 @@ class TukarPointController extends Controller
                 "text" => 'Nama Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'booking.unit.unit_type',
+                "value" => 'units',
             ],
             [
                 "text" => 'Point',
@@ -377,7 +376,7 @@ class TukarPointController extends Controller
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'date_deleted',
+                "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
@@ -411,7 +410,7 @@ class TukarPointController extends Controller
                 "text" => 'Nama Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'booking.unit.unit_type',
+                "value" => 'units',
             ],
             [
                 "text" => 'Point',
@@ -453,7 +452,7 @@ class TukarPointController extends Controller
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'date_deleted',
+                "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
@@ -486,7 +485,7 @@ class TukarPointController extends Controller
                 "text" => 'Nama Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'booking.unit.unit_type',
+                "value" => 'units',
             ],
             [
                 "text" => 'Point',
@@ -529,7 +528,7 @@ class TukarPointController extends Controller
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'date_deleted',
+                "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
@@ -562,7 +561,7 @@ class TukarPointController extends Controller
                 "text" => 'Nama Unit',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'booking.unit.unit_type',
+                "value" => 'units',
             ],
             [
                 "text" => 'Point',
@@ -775,8 +774,16 @@ class TukarPointController extends Controller
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
-            $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+            $query->whereHas('user', function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('agency', function($subquery) use ($generalSearch) {
+                $subquery->where('agency_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('regional_coordinator', function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -830,6 +837,10 @@ class TukarPointController extends Controller
             $query->where(function($subquery) use ($generalSearch) {
                 $subquery->where('agency_name', 'LIKE', '%' . $generalSearch . '%');
             });
+
+            $query->orWhereHas('regional_coordinator', function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
         }
 
         foreach ($request->input('sort') as $sort_key => $sort) {
@@ -880,6 +891,10 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('main_coordinator', function($subquery) use ($generalSearch) {
                 $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
@@ -979,7 +994,23 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('deleted_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('reward_point' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('reward_name', 'LIKE', '%' . $generalSearch . '%')->where('sales_id', $id);
+            });
+
+            $query->orWhereHas('reward_point.category' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%')->where('sales_id', $id);
             });
         }
 
@@ -993,7 +1024,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->sales ? $item->sales->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -1029,7 +1060,22 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('record_points.created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('record_points.updated_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('booking.unit' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%')->where('bookings.sales_id', $id);
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%')->where('bookings.sales_id', $id);
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%')->where('bookings.sales_id', $id);
+                $subquery->orWhere('points', 'LIKE', '%' . $generalSearch . '%')->where('bookings.sales_id', $id);
             });
         }
 
@@ -1040,8 +1086,9 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
-            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
             return $item;
         });
@@ -1083,7 +1130,23 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('deleted_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('reward_point' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('reward_name', 'LIKE', '%' . $generalSearch . '%')->where('agency_id', $id);
+            });
+
+            $query->orWhereHas('reward_point.category' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%')->where('agency_id', $id);
             });
         }
 
@@ -1097,7 +1160,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->agency ? $item->agency->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -1133,7 +1196,22 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('record_points.created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('record_points.updated_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('booking.unit' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%')->where('bookings.agent_id', $id);
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%')->where('bookings.agent_id', $id);
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%')->where('bookings.agent_id', $id);
+                $subquery->orWhere('points', 'LIKE', '%' . $generalSearch . '%')->where('bookings.agent_id', $id);
             });
         }
 
@@ -1144,8 +1222,9 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
-            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
 
             return $item;
@@ -1188,7 +1267,23 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('deleted_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('reward_point' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('reward_name', 'LIKE', '%' . $generalSearch . '%')->where('regional_coordinator_id', $id);
+            });
+
+            $query->orWhereHas('reward_point.category' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%')->where('regional_coordinator_id', $id);
             });
         }
 
@@ -1202,7 +1297,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->regional_coordinator ? $item->regional_coordinator->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -1238,7 +1333,22 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('record_points.created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('record_points.updated_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('booking.unit' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%')->where('bookings.regional_coor_id', $id);
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%')->where('bookings.regional_coor_id', $id);
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%')->where('bookings.regional_coor_id', $id);
+                $subquery->orWhere('points', 'LIKE', '%' . $generalSearch . '%')->where('bookings.regional_coor_id', $id);
             });
         }
 
@@ -1249,8 +1359,9 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
-            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
 
             return $item;
@@ -1293,7 +1404,23 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('deleted_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('reward_point' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('reward_name', 'LIKE', '%' . $generalSearch . '%')->where('main_coordinator_id', $id);
+            });
+
+            $query->orWhereHas('reward_point.category' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('category_name', 'LIKE', '%' . $generalSearch . '%')->where('main_coordinator_id', $id);
             });
         }
 
@@ -1307,7 +1434,7 @@ class TukarPointController extends Controller
             $item->exchanged_point = $item->main_coordinator ? $item->main_coordinator->exchanged_point : 0;
             $item->sisa_point      = $item->allowed_point - $item->exchanged_point;
             $item->date            = date('d F Y', strtotime($item->created_at));
-            $item->date_deleted    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date    = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             return $item;
         });
         return $data;
@@ -1343,7 +1470,22 @@ class TukarPointController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('record_points.created_at', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('record_points.updated_at', 'LIKE', '%' . $check_date . '%');
+            });
+
+            $query->orWhereHas('booking.unit' ,function($subquery) use ($generalSearch, $id) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%')->where('bookings.main_coor_id', $id);
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%')->where('bookings.main_coor_id', $id);
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%')->where('bookings.main_coor_id', $id);
+                $subquery->orWhere('points', 'LIKE', '%' . $generalSearch . '%')->where('bookings.main_coor_id', $id);
             });
         }
 
@@ -1354,8 +1496,9 @@ class TukarPointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
+            $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
-            $item->date_deleted = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
+            $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
 
             return $item;

@@ -99,7 +99,7 @@
 		    		            label="Tanggal Kirim"
 		    		            v-bind="attrs"
 		    		            v-on="on"
-		    		            v-if="form_data.print_date !== null"
+		    		            v-if="form_data.print_date_data !== null"
 		    		            :readonly="!field_state"
 		    		            :error-messages="errors">
 		    		        ></v-text-field>
@@ -129,7 +129,7 @@
 		    		            label="Tanggal Terima"
 		    		            readonly
 		    		            v-bind="attrs"
-		    		            v-if="form_data.sent_date !== null"
+		    		            v-if="form_data.sent_date_data !== null"
 		    		            v-on="on"
 		    		        ></v-text-field>
 				    		</validation-provider>
@@ -137,7 +137,7 @@
 	    		        	<v-date-picker name="received_date" v-model="form_data.received_date" @input="menu2 = false"></v-date-picker>
 			    	</v-col>
 			    </v-row>
-			    <v-row v-if="form_data.received_date !== null">
+			    <v-row v-if="form_data.received_date_data !== null">
 					<v-col
     		          cols="12"
     		          md="12">
