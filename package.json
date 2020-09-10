@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "moment": "^2.27.0",
+        "v-mask": "^2.2.3",
         "vee-validate": "^3.3.7",
         "vue-router": "^3.3.4",
         "vuetify": "^2.3.4"

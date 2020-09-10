@@ -50,7 +50,7 @@
 	    		>
 	    			@include('core::occupation')
 	    		</occupation-input>
-	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|numeric|min:10|max:13">
+	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|numeric|min:10|max:15">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.client_mobile_number"
@@ -58,7 +58,9 @@
 			    		label="Nomor Handphone"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="13"
+			    		placeholder="+62"
+			    		:counter="15"
+			    		v-mask="'+62############'"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>

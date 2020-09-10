@@ -54,15 +54,17 @@
 			    		:readonly="field_state"
 		            ></v-select>
 	    		</validation-provider> --}}
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:15">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.phone_number"
 		    			name="phone_number"
-			    		label="Nomor Telepon"
+			    		label="Nomor HP"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
+			    		placeholder="+62"
+			    		:counter="15"
+			    		v-mask="'+62############'"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
