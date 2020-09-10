@@ -67,6 +67,12 @@ class DocumentAdminController extends Controller
                 "sortable" => true,
                 "value" => 'submission_date',
             ],
+            [
+                "text" => 'Status',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approval_developer',
+            ],
         ];
         return view('documentclient::document-admin.index', [
             'page' => $this,
@@ -293,6 +299,7 @@ class DocumentAdminController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->approval_developer = $item->document ? $item->document->approval_developer : '';
             
             return $item;
         });
