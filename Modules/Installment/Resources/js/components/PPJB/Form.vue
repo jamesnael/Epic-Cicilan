@@ -125,7 +125,8 @@
                                     approval_notaris_status: data.ppjb ? data.ppjb.approval_notaris_status : '',
                                     approval_developer_status: data.ppjb ? data.ppjb.approval_developer_status : '',
                                     ppjb_sign_date: data.ppjb ? data.ppjb.ppjb_sign_date : '',
-    		            		    url_file_doc: data.ppjb ? data.ppjb.url_file_doc : '',
+    		            		    ppjb_sign_date_data: data.ppjb ? data.ppjb.ppjb_sign_date : '',
+                                    url_file_doc: data.ppjb ? data.ppjb.url_file_doc : '    ',
                                     url_file_doc_sign: data.ppjb ? data.ppjb.url_file_doc_sign : '',
                                 } 
 

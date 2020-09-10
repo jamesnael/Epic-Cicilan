@@ -241,21 +241,21 @@
 		    	</v-row>
 
 		    	 <h3 class="mt-4"
-		    	 v-if="form_data.ppjb_sign_date !== ''"
+		    	 v-if="form_data.ppjb_sign_date_data !== ''"
 		    	 >Approved PPJB</h3>
 
 		    		
 		    		<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="required">
+		    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_client_status" 
-			              	:items="['Pending','Approved']"
+			              	:items="['Pending','Approved']"	
 			              	label="Approval Pembeli"
 			              	name="approval_client_status"
 			              	v-on="on"
-			              	v-if="form_data.ppjb_sign_date !== ''"
+			              	v-if="form_data.ppjb_sign_date_data !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -267,13 +267,13 @@
 			    	<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="required">
+		    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_developer_status" 
 			              	:items="['Pending','Approved']"
 			              	label="Approval Developer"
 			              	name="approval_developer_status"
-			              	v-if="form_data.ppjb_sign_date !== ''"
+			              	v-if="form_data.ppjb_sign_date_data !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -285,13 +285,13 @@
 					<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="required">
+		    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_notaris_status" 
 			              	:items="['Pending','Approved']"
 			              	label="Approval Notaris"
 			              	name="approval_notaris_status"
-			              	v-if="form_data.ppjb_sign_date !== ''"
+			              	v-if="form_data.ppjb_sign_date_data !== ''"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -303,12 +303,12 @@
 			    <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="">
 				    		<v-file-input
 				    			v-model="form_data.ppjb_doc_sign_file_name"
 				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
-					    		v-if="form_data.ppjb_sign_date !== ''"
+					    		v-if="form_data.ppjb_sign_date_data !== ''"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		>
