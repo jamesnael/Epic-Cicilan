@@ -365,7 +365,17 @@
 	    			<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Metode pembayaran NUP" rules="required">
+    		          	<payment-method-input inline-template
+    		          		payment-method-rules="required"
+    		          		:payment-method-value="form_data.payment_method_nup"
+    		          		payment-method-class="mt-4"
+    		          		payment-method-input-name="payment_method_nup"
+    		          		payment-method-label="Cara Pembayaran NUP"
+    		          		:disabled="field_state"
+    		          	>
+    		          		@include('core::payment_method')
+    		          	</payment-method-input>
+			    		{{-- <validation-provider v-slot="{ errors }" name="Metode pembayaran NUP" rules="required">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.payment_method_nup"
@@ -377,7 +387,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    		</validation-provider>
+			    		</validation-provider> --}}
 			    	</v-col>
 			    </v-row>
 			    <v-row>
@@ -431,7 +441,17 @@
 	    			<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Metode pembayaran UTJ" rules="required">
+    		          	<payment-method-input inline-template
+    		          		payment-method-rules="required"
+    		          		:payment-method-value="form_data.payment_method_utj"
+    		          		payment-method-class="mt-4"
+    		          		payment-method-input-name="payment_method_utj"
+    		          		payment-method-label="Cara Pembayaran UTJ"
+    		          		:disabled="field_state"
+    		          	>
+    		          		@include('core::payment_method')
+    		          	</payment-method-input>
+			    		{{-- <validation-provider v-slot="{ errors }" name="Metode pembayaran UTJ" rules="required">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.payment_method_utj"
@@ -443,7 +463,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    		</validation-provider>
+			    		</validation-provider> --}}
 			    	</v-col>
 			    </v-row>
 			    <v-row>
@@ -479,7 +499,16 @@
 			    	<v-col
     		          	cols="12"
     		          	md="4">
-			    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="">
+    		          	<bank-input inline-template
+    		          		:bank-value="form_data.bank_name"
+    		          		bank-class="mt-4"
+    		          		bank-input-name="bank_name"
+    		          		bank-label="Nama Bank"
+    		          		:disabled="field_state"
+    		          	>
+    		          		@include('core::bank')
+    		          	</bank-input>
+			    		{{-- <validation-provider v-slot="{ errors }" name="Nama bank" rules="">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.bank_name"
@@ -490,7 +519,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    		</validation-provider>
+			    		</validation-provider> --}}
 			    	</v-col>
     		        <v-col
     		          	cols="12"

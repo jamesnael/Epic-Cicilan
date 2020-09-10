@@ -11,43 +11,23 @@
 		    ValidationProvider
 		},
 		props: {
-			provinceValue: {
-				type: String,
-				default: ''
-			},			
-			provinceRules: {
+			paymentMethodValue: {
 				type: String,
 				default: ''
 			},
-			provinceClass: {
+			paymentMethodRules: {
 				type: String,
 				default: ''
 			},
-			provinceInputName: {
+			paymentMethodClass: {
 				type: String,
 				default: ''
 			},
-			provinceLabel: {
+			paymentMethodInputName: {
 				type: String,
 				default: ''
 			},
-			cityValue: {
-				type: String,
-				default: ''
-			},
-			cityRules: {
-				type: String,
-				default: ''
-			},
-			cityClass: {
-				type: String,
-				default: ''
-			},
-			cityInputName: {
-				type: String,
-				default: ''
-			},
-			cityLabel: {
+			paymentMethodLabel: {
 				type: String,
 				default: ''
 			},
@@ -60,18 +40,9 @@
 		},
 		data: function () {
             return {
-        		province: '',
-        		city: '',
+        		paymentMethod: '',
         		items: [],
         	}
-        },
-        computed: {
-            cityOptions: function () {
-            	if (this.province) {
-            		return _.filter(this.items, (o) => { return o.name == this.province })
-            	}
-            	return []
-            }
         },
         mounted() {
             this.getItems();
@@ -79,25 +50,16 @@
         methods: {
     		getItems() {
 		        axios
-		            .get(this.base_url() + this.ziggy('provinces.index').url())
+		            .get(this.base_url() + this.ziggy('payment-methods.index').url())
 		            .then(response => {
 		            	if (response.data.success) {
 		            		this.items = response.data.data
-	            			this.province = this.provinceValue
-
-		            		if (this.cityValue) {
-		            			this.$nextTick(() => {
-			            			this.city = this.cityValue
-		            			})
-		            		}
+		            		this.paymentMethod = this.paymentMethodValue
 		            	}
 		            })
 		            .catch(error => {
 	            		console.log(error.response)
 		            });
-    		},
-    		refreshCity() {
-    			this.city = ''
     		}
         }
 	}

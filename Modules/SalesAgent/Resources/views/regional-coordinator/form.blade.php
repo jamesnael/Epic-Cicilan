@@ -39,12 +39,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.phone_number"
 		    			name="phone_number"
-			    		label="Nomor Telepon"
+			    		label="Nomor HP"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"
@@ -67,7 +67,16 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="max:255">
+	    		<bank-input inline-template
+	    			:bank-value="form_data.bank_name"
+	    			bank-class="mt-4"
+	    			bank-input-name="bank_name"
+	    			bank-label="Nama Bank"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::bank')
+	    		</bank-input>
+	    		{{-- <validation-provider v-slot="{ errors }" name="Nama bank" rules="max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.bank_name"
@@ -78,7 +87,7 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
 	    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="numeric">
 		    		<v-text-field
 		    			class="mt-4"

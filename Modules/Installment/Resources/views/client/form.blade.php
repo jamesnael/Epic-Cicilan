@@ -27,7 +27,7 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Pekerjaan" rules="required|max:255">
+	    		{{-- <validation-provider v-slot="{ errors }" name="Pekerjaan" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.profession"
@@ -39,7 +39,17 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
+	    		<occupation-input inline-template
+	    			occupation-rules="required"
+	    			:occupation-value="form_data.profession"
+	    			occupation-class="mt-4"
+	    			occupation-input-name="profession"
+	    			occupation-label="Pekerjaan"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::occupation')
+	    		</occupation-input>
 	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|numeric|min:10|max:13">
 		    		<v-text-field
 		    			class="mt-4"

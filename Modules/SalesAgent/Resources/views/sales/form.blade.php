@@ -76,12 +76,12 @@
     		            @click:append="showPassword = !showPassword"
     		          ></v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nomor telepon" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_user.phone_number"
 		    			name="phone_number"
-			    		label="Nomor Telepon"
+			    		label="Nomor HP"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"

@@ -55,18 +55,15 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Nama bank" rules="max:255">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="form_data.bank_name"
-		    			name="bank_name"
-			    		label="Nama Bank"
-			    		:persistent-hint="true"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
+	    		<bank-input inline-template
+	    			:bank-value="form_data.bank_name"
+	    			bank-class="mt-4"
+	    			bank-input-name="bank_name"
+	    			bank-label="Nama Bank"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::bank')
+	    		</bank-input>
 	    		<validation-provider v-slot="{ errors }" name="Nomor rekening" rules="numeric">
 		    		<v-text-field
 		    			class="mt-4"
