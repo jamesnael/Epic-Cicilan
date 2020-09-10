@@ -14,6 +14,7 @@
 			              	:items="['Sales','Agent','Korwil','Korut']"
 			              	label="Level"
 			              	name="level"
+				    		hint="* harus diisi"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -66,6 +67,7 @@
 			              	label="Nama Agent"
 			              	:items="filter_agency"
 			              	name="user_name"
+				    		hint="* harus diisi"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -98,6 +100,7 @@
 			              	@input="setSelectedKorwil()" 
 			              	:items="filter_korwil"
 			              	name="user_name"
+				    		hint="* harus diisi"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -130,6 +133,7 @@
 			              	label="Nama Korut"
 			              	:items="filter_korut"
 			              	name="user_name"
+				    		hint="* harus diisi"
 			              	:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"
@@ -153,7 +157,6 @@
 			  	
 			    <h3 class="mt-4"
 			    	v-if="form_data.user_name !== ''">Jumlah Point</h3>
-
 			    
 			  	<v-row v-if="form_data.user_name !== ''">
     		       <v-col
@@ -223,6 +226,7 @@
 			    			:items="computedCategoryName" 
 			    			label="Nama Reward Point"
 			    			name="reward_point_id"
+				    		hint="* harus diisi"
 				    		:persistent-hint="true"
 				    		:error-messages="errors"
 				    		:readonly="field_state"

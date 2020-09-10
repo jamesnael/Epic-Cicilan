@@ -40,7 +40,7 @@
 		delete-uri="tukar-point-korwil.destroy"
 		delete-uri-parameter="id"
 		delete-text="Cancel"
-		delete-confirmation-text="Apakah Anda yakin untuk mengcancel penukaran point berikut ini ?"
+		delete-confirmation-text="Apakah anda yakin untuk mengcancel penukaran point berikut ini ?"
 		delete-cancel-text="Tidak"
 		delete-icon="mdi-cancel"
 		>
