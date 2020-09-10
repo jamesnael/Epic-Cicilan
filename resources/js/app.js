@@ -5,6 +5,7 @@
  */
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify';
+import VueMask from 'v-mask'
 
 require('./bootstrap');
 require('./v-mixins');
@@ -13,6 +14,7 @@ window.Vue = require('vue');
 
 Vue.use(VueRouter)
 Vue.use(Vuetify);
+Vue.use(VueMask);
 
 
 Vue.component('base-layout', require('./components/BaseLayout.vue').default);
