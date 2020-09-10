@@ -266,11 +266,39 @@ class PPJBController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('ppjb', function($subquery) use ($generalSearch){
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e) {
+                    $check_date = $generalSearch;
+                }   
+
+                $subquery->where('ppjb_date', 'LIKE', '%'.$check_date.'%');
             });
         }
 
@@ -278,7 +306,7 @@ class PPJBController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('spr')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->sales_name = $item->sales->user->full_name;

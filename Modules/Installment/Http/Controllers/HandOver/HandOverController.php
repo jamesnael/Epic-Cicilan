@@ -252,6 +252,16 @@ class HandOverController extends Controller
                     $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
                 });
             });
+
+            $query->orWhereHas('ajb', function($subquery) use ($generalSearch){
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                } 
+
+                $subquery->where('ajb_date', 'LIKE', '%'.$check_date.'%');
+            });
         }
 
         foreach ($request->input('sort') as $sort_key => $sort) {
