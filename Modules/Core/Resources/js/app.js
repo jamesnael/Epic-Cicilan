@@ -1,0 +1,1 @@
+Vue.component('address-input', () => import('./components/Address/Input.vue'));

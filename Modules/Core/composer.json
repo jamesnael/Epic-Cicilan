@@ -1,0 +1,25 @@
+{
+    "name": "total-it/core",
+    "description": "",
+    "authors": [
+        {
+            "name": "TOTAL IT",
+            "email": "info@totalit.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Core\\Providers\\CoreServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Core\\": ""
+        }
+    }
+}

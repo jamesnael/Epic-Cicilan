@@ -67,7 +67,7 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
+	    		{{-- <validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"
 		    			v-model="form_data.address"
@@ -103,7 +103,25 @@
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 	    			</v-text-field>
-	    		</validation-provider>
+	    		</validation-provider> --}}
+	    		<address-input inline-template
+	    			:address-value="form_data.address"
+	    			address-class="mt-4"
+	    			address-input-name="address"
+	    			addess-label="Alamat Lengkap"
+	    			:address-counter="255"
+	    			:province-value="form_data.province"
+	    			province-class="mt-4"
+	    			province-input-name="province"
+	    			province-label="Nama Provinsi"
+	    			:city-value="form_data.city"
+	    			city-class="mt-4"
+	    			city-input-name="city"
+	    			city-label="Nama Kota"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::province')
+	    		</address-input>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"

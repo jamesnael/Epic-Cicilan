@@ -6,5 +6,6 @@
     "Commission": true,
     "Installment": true,
     "DocumentClient": true,
-    "Payment": true
+    "Payment": true,
+    "Core": true
 }

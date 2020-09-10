@@ -266,7 +266,7 @@ class AppUserController extends Controller
             "role_id" => "bail|nullable|exists:Modules\AppUser\Entities\Role,id",
             "full_name" => "bail|required|string|max:255",
             "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
-            "phone_number" => "bail|required|numeric|unique:Modules\AppUser\Entities\User,phone_number,$id,id,deleted_at,NULL",
+            "phone_number" => "bail|required|numeric",
             "address" => "bail|nullable|string|max:255",
             "province" => "bail|nullable|string|max:255",
             "city" => "bail|nullable|string|max:255",
