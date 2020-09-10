@@ -1,7 +1,7 @@
 <v-container fluid>
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
-    		<h3>Input Schedule PPJB</h3>
+    		<h3>Input Jadwal PPJB</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		</v-row>
 	    		<v-row>
@@ -60,12 +60,13 @@
 					    		label="Harga Unit"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		readonly>
+					    		:readonly="field_state">
 			    			</v-text-field>
+			    			<small class="form-text text-muted">Rp @{{number_format(unit_price)}}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <v-row>
+				<v-row>
 			    	<v-col
     		          	cols="12"
     		          	md="12">
@@ -117,7 +118,7 @@
 			    </v-row>
 
 
-			    <h3 class="mt-4">Schedule PPJB</h3>
+			    <h3 class="mt-4">Jadwal PPJB</h3>
 	    		
 	    		<validation-provider v-slot="{ errors }" name="" rules="">
     		      	<v-menu

@@ -111,7 +111,7 @@
                                     client_name: data.client.client_name,
                                     phone_number: data.client.client_phone_number,
                                     unit: data.unit.unit_number + '/' + data.unit.unit_block,
-                                    unit_price: data.total_amount,
+                                    unit_price: data.total_amount ,
                                     sales_name: data.sales.user.full_name,
                                     agent_name: data.sales.agency.agency_name,
                                     booking_id: data.document.booking_id,
@@ -128,7 +128,9 @@
     		            		    ppjb_sign_date_data: data.ppjb ? data.ppjb.ppjb_sign_date : '',
                                     url_file_doc: data.ppjb ? data.ppjb.url_file_doc : '    ',
                                     url_file_doc_sign: data.ppjb ? data.ppjb.url_file_doc_sign : '',
-                                } 
+                                }
+                                this.unit_price = data.total_amount
+            
 
                                
     			                this.field_state = false
