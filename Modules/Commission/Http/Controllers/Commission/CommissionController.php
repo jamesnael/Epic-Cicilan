@@ -39,6 +39,12 @@ class CommissionController extends Controller
             //     "value" => 'sales_commission',
             // ],
             [
+                "text" => 'Tipe Komisi',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'commission_type',
+            ],
+            [
                 "text" => 'Komisi Sub Agent',
                 "align" => 'center',
                 "sortable" => true,
@@ -196,7 +202,7 @@ class CommissionController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('sales_commission', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('commission_type', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('sales_commission', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('main_coordinator_commission', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('regional_coordinator_commission', 'LIKE', '%' . $generalSearch . '%');
@@ -262,10 +268,11 @@ class CommissionController extends Controller
     public function validateFormRequest($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "sales_commission" => "bail|nullable|numeric",
+            "commission_type" => "bail|required|max:255",
             "agency_commission" => "bail|nullable|numeric",
             "regional_coordinator_commission" => "bail|nullable|numeric",
             "main_coordinator_commission" => "bail|nullable|numeric",
+            "total" => "bail|nullable|numeric",
         ]);
     }
 }

@@ -22,6 +22,8 @@ class Commission extends Model
         'agency_commission',
         'regional_coordinator_commission',
         'main_coordinator_commission',
+        'commission_type',
+        'total'
     ];
 
     /**

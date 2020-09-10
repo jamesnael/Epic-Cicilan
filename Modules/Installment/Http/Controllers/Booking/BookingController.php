@@ -245,7 +245,7 @@ class BookingController extends Controller
             "surface_area" => "bail|required|numeric",
             "building_area" => "bail|required|numeric",
             // "utj" => "bail|required",
-            "electrical_power" => "bail|required|numeric",
+            "electrical_power" => "bail|nullable|numeric",
             "points" => "bail|required|numeric",
             "closing_fee" => "bail|required",
             "client_id" => "bail|nullable|exists:Modules\Installment\Entities\Client,id",
@@ -301,6 +301,16 @@ class BookingController extends Controller
                 $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
             });
         }
 

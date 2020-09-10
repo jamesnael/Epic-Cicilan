@@ -72,10 +72,10 @@
         },
         computed: {
             total: function() {
-              	var calculate = parseInt(this.form_data.sales_commission ) + parseInt(this.form_data.agency_commission ) + parseInt(this.form_data.regional_coordinator_commission) + parseInt(this.form_data.main_coordinator_commission);
+              	var calculate = parseFloat(this.form_data.agency_commission ) + parseFloat(this.form_data.regional_coordinator_commission) + parseFloat(this.form_data.main_coordinator_commission);
               	
               	if (calculate) {
-	             	return calculate
+	             	return calculate.toFixed(2)
 	             }else{
 	             	return '0'
 	             }
@@ -109,6 +109,7 @@
     		            			agency_commission:data.agency_commission,
     		            			regional_coordinator_commission:data.regional_coordinator_commission,
     		            			main_coordinator_commission:data.main_coordinator_commission,
+    		            			commission_type:data.commission_type,
     		            			bank_name: data.bank_name,
     		            			rek_number: data.rek_number,
     		            			account_name: data.account_name,
@@ -195,12 +196,13 @@
 		    setSelectedAgency() {
 				let agency = _.find(this.filter_agency_commission, o => { return o.value == this.form_data.id_commission})
 				if (_.isUndefined(agency)) {
-					this.form_data.sales_commission = ''
+					// this.form_data.sales_commission = ''
+					this.form_data.commission_type = ''
 					this.form_data.agency_commission = ''
 					this.form_data.main_coordinator_commission = ''
 					this.form_data.regional_coordinator_commission = ''
 				} else {
-					this.form_data.sales_commission = agency.sales_commission
+					this.form_data.commission_type = agency.commission_type
 					this.form_data.agency_commission = agency.agency_commission
 					this.form_data.main_coordinator_commission = agency.main_coordinator_commission
 					this.form_data.regional_coordinator_commission = agency.regional_coordinator_commission

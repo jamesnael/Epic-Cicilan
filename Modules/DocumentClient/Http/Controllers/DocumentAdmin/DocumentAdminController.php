@@ -269,10 +269,16 @@ class DocumentAdminController extends Controller
 
             $query->where(function($subquery) use ($generalSearch) {
                 $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('profession', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
             });
         }
 

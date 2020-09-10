@@ -212,6 +212,12 @@ if (! function_exists('aside_menu')) {
                 'children' => [
                    
                     [
+                        'icon' => 'mdi-account-cash',
+                        'text' => 'Komisi',
+                        'uri' => route('commission.index'),
+                        'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
+                    ],
+                    [
                         'icon' => 'mdi-account-network',
                         'text' => 'Koordinator Utama',
                         'uri' => route('main-coordinator.index'),
@@ -235,12 +241,6 @@ if (! function_exists('aside_menu')) {
                         'uri' => route('sales.index'),
                         'model' => in_array(Route::currentRouteName(), ['sales.index','sales.create','sales.edit'])
                     ],
-                    [
-                        'icon' => 'mdi-account-cash',
-                        'text' => 'Komisi',
-                        'uri' => route('commission.index'),
-                        'model' => in_array(Route::currentRouteName(), ['commission.index','commission.create','commission.edit'])
-                    ],
                 ],
             ],
             [
@@ -256,8 +256,8 @@ if (! function_exists('aside_menu')) {
                         'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
                     ],
                     [
-                        'icon' => 'mdi-numeric-0-circle-outline',
-                        'text' => 'Point',
+                        'icon' => 'mdi-domain',
+                        'text' => 'Tipe Bangunan',
                         'uri' => route('point.index'),
                         'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
                     ],

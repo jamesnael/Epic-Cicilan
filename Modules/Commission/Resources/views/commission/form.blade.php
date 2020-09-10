@@ -17,6 +17,19 @@
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider> --}}
+	    		<validation-provider v-slot="{ errors }" name="Tipe komisi" rules="required|max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.commission_type"
+		    			name="commission_type"
+			    		label="Tipe Komisi"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="required|between:0,100">
 		    		<v-text-field
 		    			class="mt-4"
@@ -25,7 +38,6 @@
 			    		label="Komisi Sub Agent"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
@@ -39,7 +51,6 @@
 			    		label="Komisi Koordinator Wilayah"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>
@@ -53,7 +64,6 @@
 			    		label="Komisi Koordinator Utama"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
-			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
 			    		<v-icon slot="append">mdi-percent-outline</v-icon>

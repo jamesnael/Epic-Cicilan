@@ -36,18 +36,20 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
             	form_data: {
+            		commission_type: '',
             		sales_commission: "0",
             		agency_commission: "0",
             		regional_coordinator_commission: "0",
             		main_coordinator_commission: "0",
-            		total_commission:''
+            		total_commission:'0'
             	}
         	}
         },
         computed: {
             total: function() {
-              var result = parseFloat(this.form_data.sales_commission) + parseFloat(this.form_data.agency_commission) + parseFloat(this.form_data.regional_coordinator_commission) + parseFloat(this.form_data.main_coordinator_commission);
-              return result.toFixed(1)
+              var result = parseFloat(this.form_data.agency_commission) + parseFloat(this.form_data.regional_coordinator_commission) + parseFloat(this.form_data.main_coordinator_commission)
+              
+              return result.toFixed(2);
 
             }
         },
@@ -66,6 +68,7 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			// sales_commission: data.sales_commission,
+    		            			commission_type: data.commission_type,
     		            			agency_commission: data.agency_commission,
     		            			regional_coordinator_commission: data.regional_coordinator_commission,
     		            			main_coordinator_commission: data.main_coordinator_commission,

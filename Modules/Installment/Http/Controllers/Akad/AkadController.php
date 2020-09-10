@@ -250,11 +250,27 @@ class AkadController extends Controller
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
             });
         }
 
@@ -262,7 +278,7 @@ class AkadController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;

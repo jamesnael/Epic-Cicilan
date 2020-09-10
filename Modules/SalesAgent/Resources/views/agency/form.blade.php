@@ -3,7 +3,7 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<validation-provider v-slot="{ errors }" name="Koordinator wilayah" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.regional_coordinator_id" 
 		              	:items="filter_regional_coordinator"
 		              	label="Koordinator Wilayah"
@@ -12,7 +12,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nama sub agent" rules="required|max:255">
 		    		<v-text-field
@@ -144,7 +144,7 @@
 			          md="6"
 			        >
 			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
-				    		<v-select
+				    		<v-autocomplete
 				    			v-model="form_data.id_commission"
 				    			:items="filter_agency_commission" 
 				    			@input="setSelectedAgency()"
@@ -161,7 +161,12 @@
 			            	  	<template slot="item" slot-scope="data">
 			            	  		<table width="100%" border="0" class="mt-2">
 			            	  			<tr>
-			            	  				<td width="35%">Koordinator Utama</td>
+			            	  				<td width="35%">Tipe Komisi</td>
+			            	  				<td>:</td>
+			            	  				<td width="60%">@{{ data.item.commission_type }}</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Koordinator Utama</td>
 			            	  				<td>:</td>
 			            	  				<td>@{{ data.item.main_coordinator_commission }} %</td>
 			            	  			</tr>
@@ -175,14 +180,9 @@
 			            	  				<td>:</td>
 			            	  				<td>@{{ data.item.text }} %</td>
 			            	  			</tr>
-			            	  			<tr>
-			            	  				<td>Sales</td>
-			            	  				<td>:</td>
-			            	  				<td>@{{ data.item.sales_commission }} %</td>
-			            	  			</tr>
 			            	  		</table>
 			            	  	</template>
-				            </v-select>
+				            </v-autocomplete>
 	    				</validation-provider>
 			        </v-col>
 			        <v-text-field
@@ -194,11 +194,11 @@
 			          cols="12"
 			          md="6"
 			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi sales" rules="">
+			          	<validation-provider v-slot="{ errors }" name="Tipe komisi" rules="">
 				    		<v-text-field
-				    			v-model="form_data.sales_commission"
-				              	label="Komisi Sales (%)"
-				              	name="sales_commission"
+				    			v-model="form_data.commission_type"
+				              	label="Tipe Komisi"
+				              	name="commission_type"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"

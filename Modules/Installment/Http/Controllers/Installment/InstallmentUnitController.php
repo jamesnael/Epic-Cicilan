@@ -232,9 +232,20 @@ class InstallmentUnitController extends Controller
             $query->where(function($subquery) use ($generalSearch) {
                 $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('client_number', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
             });
         }
 
@@ -242,7 +253,7 @@ class InstallmentUnitController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->bookingStatus('cicilan')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_number = $item->client->client_number;
             $item->client_name = $item->client->client_name;

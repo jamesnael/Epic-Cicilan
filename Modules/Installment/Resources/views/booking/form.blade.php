@@ -126,7 +126,7 @@
 			    			<small class="form-text text-muted">Rp @{{ form_data.utj ? number_format(form_data.utj) : 0 }}</small>
 			    		</validation-provider>
 			    	</v-col> --}}
-			    	<v-col
+			    	{{-- <v-col
     		          cols="12"
     		          md="6">
 			    		<validation-provider v-slot="{ errors }" name="Daya listrik" rules="required|numeric|min:0">
@@ -141,7 +141,7 @@
 					    		:readonly="field_state">
 			    			</v-text-field>
 			    		</validation-provider>
-			    	</v-col>
+			    	</v-col> --}}
 		    		<v-col
     		          cols="12"
     		          md="6">
@@ -159,8 +159,6 @@
 			    			</v-text-field>
 			    		</validation-provider>
 			    	</v-col>
-		    	</v-row>
-		    	<v-row>
 			    	<v-col
     		          cols="12"
     		          md="6">
@@ -203,12 +201,12 @@
 		    		<v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Cara pembayaran" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Nama pembayaran" rules="required">
 				    		<v-text-field
 				    			class="mt-4"
 				    			v-model="form_data.payment_method"
 				    			name="payment_method"
-					    		label="Cara Pembayaran"
+					    		label="Nama Pembayaran"
 					    		hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:counter="255"

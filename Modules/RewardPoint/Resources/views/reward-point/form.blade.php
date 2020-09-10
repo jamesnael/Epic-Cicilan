@@ -3,7 +3,7 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<validation-provider v-slot="{ errors }" name="Kategori reward" rules="required">
-		    		<v-select
+		    		<v-autocomplete
 		    			v-model="form_data.category_reward_id" 
 		              	:items="filter_category"
 		              	label="Kategori Reward"
@@ -12,7 +12,7 @@
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
 			    		:readonly="field_state"
-		            ></v-select>
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nama Reward" rules="required|max:255">
 		    		<v-text-field
