@@ -90,12 +90,13 @@
 				            style="width: 300px"
 				            class="ml-0 pl-4"
 				        >
-				            <span class="hidden-sm-and-down">{{ config('app.name', 'Laravel') }}</span>
+				            {{-- <span class="hidden-sm-and-down"></span> --}}
+				            <a href="{{ url('/') }}" class="text-decoration-none white--text">{{ config('app.name', 'Laravel') }}</a>
 				        </v-toolbar-title>
 				        <v-spacer></v-spacer>
-				        <v-btn icon>
+				        {{-- <v-btn icon>
 				            <v-icon>mdi-bell</v-icon>
-				        </v-btn>
+				        </v-btn> --}}
 				        <div class="text-center">
 					        <v-menu offset-y>
 				              	<template v-slot:activator="{ on, attrs }">

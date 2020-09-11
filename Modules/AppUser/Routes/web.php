@@ -12,8 +12,15 @@
 */
 
 Route::group(['namespace' => 'User'], function() {
+	// Route::resource('users', 'AppUserController')->except(['show']);
+
+	Route::get('user', 'AppUserController@index')->name('users.index');
+	Route::post('user', 'AppUserController@store')->name('users.store');
 	Route::get('users/table', 'AppUserController@table')->name('users.table');
+	Route::get('user/tambah', 'AppUserController@create')->name('users.create');
 	Route::get('users/{users}/data', 'AppUserController@data')->name('users.data');
-	Route::resource('users', 'AppUserController')->except(['show']);
+	Route::put('user/{user}', 'AppUserController@update')->name('users.update');
+	Route::get('user/{user}/ubah', 'AppUserController@edit')->name('users.edit');
+	Route::delete('user/{user}', 'AppUserController@destroy')->name('users.destroy');
 });
 

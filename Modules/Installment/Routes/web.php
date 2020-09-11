@@ -12,9 +12,16 @@
 */
 
 Route::group(['namespace' => 'Client'], function() {
-	Route::get('client/table', 'ClientController@table')->name('client.table');
-	Route::get('client/{client}/data', 'ClientController@data')->name('client.data');
-	Route::resource('client', 'ClientController')->except(['show']);
+	// Route::resource('client', 'ClientController')->except(['show']);
+
+	Route::get('klien', 'ClientController@index')->name('client.index');
+	Route::post('klien', 'ClientController@store')->name('client.store');
+	Route::get('klien/table', 'ClientController@table')->name('client.table');
+	Route::get('klien/tambah', 'ClientController@create')->name('client.create');
+	Route::put('klien/{client}', 'ClientController@update')->name('client.update');
+	Route::get('klien/{client}/data', 'ClientController@data')->name('client.data');
+	Route::get('klien/{client}/ubah', 'ClientController@edit')->name('client.edit');
+	Route::delete('klien/{client}', 'ClientController@destroy')->name('client.destroy');
 });
 
 Route::group(['namespace' => 'Booking'], function() {
@@ -30,19 +37,37 @@ Route::group(['namespace' => 'Unit'], function() {
 });
 
 Route::group(['namespace' => 'Installment'], function() {
-	Route::get('installment/table', 'InstallementController@table')->name('installment.table');
-	Route::get('installment/{installment}/data', 'InstallementController@data')->name('installment.data');
-	Route::resource('installment', 'InstallementController')->except(['show','destroy']);
+	// Route::resource('installment', 'InstallementController')->except(['show','destroy']);
 
-	Route::get('installment-unit/table', 'InstallmentUnitController@table')->name('installment-unit.table');
-	Route::get('installment-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
-	Route::resource('installment-unit', 'InstallmentUnitController')->except(['destroy', 'create', 'store']);
+	Route::get('cicilan', 'InstallementController@index')->name('installment.index');
+	Route::post('cicilan', 'InstallementController@store')->name('installment.store');
+	Route::get('cicilan/table', 'InstallementController@table')->name('installment.table');
+	Route::get('cicilan/tambah', 'InstallementController@create')->name('installment.create');
+	Route::put('cicilan/{installment}', 'InstallementController@update')->name('installment.update');
+	Route::get('cicilan/{installment}/data', 'InstallementController@data')->name('installment.data');
+	Route::get('cicilan/{installment}/ubah', 'InstallementController@edit')->name('installment.edit');
+
+	// Route::resource('installment-unit', 'InstallmentUnitController')->except(['destroy', 'create', 'store']);
+
+	Route::get('cicilan-unit', 'InstallmentUnitController@index')->name('installment-unit.index');
+	Route::get('cicilan-unit/table', 'InstallmentUnitController@table')->name('installment-unit.table');
+	Route::get('cicilan-unit/{installment_unit}', 'InstallmentUnitController@show')->name('installment-unit.show');
+	Route::put('cicilan-unit/{installment_unit}', 'InstallmentUnitController@update')->name('installment-unit.update');
+	Route::get('cicilan-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
+	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
 });
 
 Route::group(['namespace' => 'PPJB'], function() {
-	Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
-	Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
-	Route::resource('PPJB', 'PPJBController')->except(['show']);
+	// Route::resource('PPJB', 'PPJBController')->except(['show']);
+
+	Route::get('ppjb', 'PPJBController@index')->name('PPJB.index');
+	Route::post('ppjb', 'PPJBController@store')->name('PPJB.store');
+	Route::get('ppjb/table', 'PPJBController@table')->name('PPJB.table');
+	Route::get('ppjb/tambah', 'PPJBController@create')->name('PPJB.create');
+	Route::put('ppjb/{PPJB}', 'PPJBController@update')->name('PPJB.update');
+	Route::get('ppjb/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
+	Route::get('ppjb/{PPJB}/ubah', 'PPJBController@edit')->name('PPJB.edit');
+	Route::delete('ppjb/{PPJB}', 'PPJBController@destroy')->name('PPJB.destroy');
 });
 
 Route::group(['namespace' => 'Akad'], function() {
@@ -58,9 +83,16 @@ Route::group(['namespace' => 'Ajb'], function() {
 });
 
 Route::group(['namespace' => 'HandOver'], function() {
-	Route::get('handover/table', 'HandOverController@table')->name('handover.table');
-	Route::get('handover/{handover}/data', 'HandOverController@data')->name('handover.data');
-	Route::resource('handover', 'HandOverController')->except(['show']);
+	// Route::resource('handover', 'HandOverController')->except(['show']);
+
+	Route::get('serah-terima', 'HandOverController@index')->name('handover.index');
+	Route::post('serah-terima', 'HandOverController@store')->name('handover.store');
+	Route::get('serah-terima/table', 'HandOverController@table')->name('handover.table');
+	Route::get('serah-terima/tambah', 'HandOverController@create')->name('handover.create');
+	Route::put('serah-terima/{handover}', 'HandOverController@update')->name('handover.update');
+	Route::get('serah-terima/{handover}/data', 'HandOverController@data')->name('handover.data');
+	Route::get('serah-terima/{handover}/ubah', 'HandOverController@edit')->name('handover.edit');
+	Route::delete('serah-terima/{handover}', 'HandOverController@destroy')->name('handover.destroy');
 });
 
 Route::group(['namespace' => 'PaymentType'], function() {

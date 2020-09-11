@@ -338,7 +338,7 @@ if (! function_exists('aside_menu')) {
             [
                 'icon' => 'mdi-cash-multiple',
                 'icon-alt' => 'mdi-chevron-down',
-                'text' => 'Cicilan Unit',
+                'text' => 'Pembayaran Cicilan',
                 'uri' => route('installment-unit.index'),
                 'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
             ], 
@@ -359,7 +359,7 @@ if (! function_exists('aside_menu')) {
             [
                 'icon' => 'mdi-handshake',
                 'icon-alt' => 'mdi-chevron-down',
-                'text' => 'Handover Unit',
+                'text' => 'Serah Terima Unit',
                 'uri' => route('handover.index'),
                 'model' => in_array(Route::currentRouteName(), ['handover.index','handover.create', 'handover.edit']),
             ],

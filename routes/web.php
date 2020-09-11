@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+// \Auth::login(\Modules\AppUser\Entities\User::first());
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', 'HomeController@index')->middleware('auth');
+
 Route::group(['namespace' => 'Auth'], function() {
-	Route::get('/', function () {
-	    return view('app');
-	})->middleware('auth');
 
     Route::post('login', 'LoginController@login')->name('login');
     Route::get('login', 'LoginController@showLoginForm')->name('login');
@@ -27,9 +28,9 @@ Route::group(['namespace' => 'Auth'], function() {
     Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
     Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 	
-    Route::get('profile', 'ProfileController@index')->name('profile');
-    Route::get('change-password', 'ProfileController@changePassword')->name('change-password');
-    Route::post('change-password', 'ProfileController@store')->name('change-password');
+    Route::get('profil', 'ProfileController@index')->name('profile');
+    Route::get('ubah-password', 'ProfileController@changePassword')->name('change-password');
+    Route::post('ubah-password', 'ProfileController@store')->name('change-password');
 });
 
 

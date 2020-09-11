@@ -67,6 +67,7 @@
                                 <v-btn
                                     class="mt-4 mr-4 white--text"
                                     color="primary"
+                                    type="submit"
                                     elevation="5"
                                     :disabled="field_state"
                                     :loading="field_state"

@@ -12,13 +12,27 @@
 */
 
 Route::group(['namespace' => 'Commission'], function() {
-	Route::get('commission/table', 'CommissionController@table')->name('commission.table');
-	Route::get('commission/{commission}/data', 'CommissionController@data')->name('commission.data');
-	Route::resource('commission', 'CommissionController')->except(['show']);
+	// Route::resource('commission', 'CommissionController')->except(['show']);
+
+	Route::get('komisi', 'CommissionController@index')->name('commission.index');
+	Route::post('komisi', 'CommissionController@store')->name('commission.store');
+	Route::get('komisi/table', 'CommissionController@table')->name('commission.table');
+	Route::get('komisi/tambah', 'CommissionController@create')->name('commission.create');
+	Route::get('komisi/{commission}/data', 'CommissionController@data')->name('commission.data');
+	Route::put('komisi/{commission}', 'CommissionController@update')->name('commission.update');
+	Route::get('komisi/{commission}/ubah', 'CommissionController@edit')->name('commission.edit');
+	Route::delete('komisi/{commission}', 'CommissionController@destroy')->name('commission.destroy');
 });
 
 Route::group(['namespace' => 'Sales'], function() {
-	Route::get('salescommission/table', 'SalesCommissionController@table')->name('salescommission.table');
-	Route::get('salescommission/{salescommission}/data', 'SalesCommissionController@data')->name('salescommission.data');
-	Route::resource('salescommission', 'SalesCommissionController')->except(['show']);
+	// Route::resource('salescommission', 'SalesCommissionController')->except(['show']);
+
+	Route::get('komisi-sales', 'SalesCommissionController@index')->name('salescommission.index');
+	Route::post('komisi-sales', 'SalesCommissionController@store')->name('salescommission.store');
+	Route::get('komisi-sales/table', 'SalesCommissionController@table')->name('salescommission.table');
+	Route::get('komisi-sales/tambah', 'SalesCommissionController@create')->name('salescommission.create');
+	Route::get('komisi-sales/{salescommission}/data', 'SalesCommissionController@data')->name('salescommission.data');
+	Route::put('komisi-sales/{salescommission}', 'SalesCommissionController@update')->name('salescommission.update');
+	Route::get('komisi-sales/{salescommission}/ubah', 'SalesCommissionController@edit')->name('salescommission.edit');
+	Route::delete('komisi-sales/{salescommission}', 'SalesCommissionController@destroy')->name('salescommission.destroy');
 });

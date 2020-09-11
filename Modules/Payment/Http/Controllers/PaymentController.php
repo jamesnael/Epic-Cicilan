@@ -102,23 +102,26 @@ class PaymentController extends Controller
     public function payment(Request $request, Booking $booking, BookingPayment $payment)
     {
         $order_number = 'EPICADM'.\Carbon\Carbon::now()->locale('id')->format('Ym').sprintf("%06d", $payment->id);
+        $item_details = [
+            [
+                'name' => $payment->payment,
+                'quantity' => 1,
+                'price' => (int) $payment->installment
+            ]
+        ];
+        if ($payment->number_of_delays > 0) {
+            $item_details[] = [
+                'name' => 'Denda',
+                'quantity' => (int) $payment->number_of_delays,
+                'price' => (int) $payment->fine
+            ];
+        }
         $postfields = [
             'transaction_details' => [
                 'order_id' => $order_number,
                 'gross_amount' => (int) $payment->installment + $payment->fine * $payment->number_of_delays,
             ],
-            'item_details' => [
-                [
-                    'name' => $payment->payment,
-                    'quantity' => 1,
-                    'price' => (int) $payment->installment
-                ],
-                [
-                    'name' => 'Denda',
-                    'quantity' => (int) $payment->number_of_delays,
-                    'price' => (int) $payment->fine
-                ]
-            ],
+            'item_details' => $item_details,
             'customer_details' => [
                 'first_name' => $booking->client->client_name,
                 'last_name' => "",
