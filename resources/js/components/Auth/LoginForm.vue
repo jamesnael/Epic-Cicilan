@@ -42,7 +42,7 @@
 				
 				this.field_state = true
 
-				axios.post(this.base_url() + this.ziggy('login').url(), data)
+				axios.post(this.base_url() + this.ziggy('post-login').url(), data)
 				    .then((response) => {
 	    		        if (response.data.error == false) {
 	    		            this.formAlert = true
