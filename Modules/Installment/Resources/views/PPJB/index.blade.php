@@ -18,6 +18,33 @@
             "value" => 'table_index',
         ])->values();
 	@endphp
+  <v-tabs>
+    <v-tab>
+    	Pending
+    </v-tab>
+    <v-tab-item> 	
+	<table-layout inline-template
+		uri="{{ route('PPJB.pendingtable') }}"
+		:headers='@json($page->table_headers)'
+		no-data-text="Tidak ada data ditemukan."
+		no-results-text="Tidak ada data ditemukan."
+		search-text="Pencarian"
+		refresh-text="Muat Ulang"
+		items-per-page-all-text="Semua"
+		items-per-page-text="Tampilkan"
+		page-text-locale="id"
+		add-new-color="light-blue lighten-2"
+		edit-uri="PPJB.edit"
+		edit-uri-parameter="slug"
+		edit-text="Edit PPJB"
+		>
+		@include('components.table')
+	</table-layout>
+    </v-tab-item>
+
+
+    <v-tab>PPJB</v-tab>
+      <v-tab-item> 	
 	<table-layout inline-template
 		uri="{{ route('PPJB.table') }}"
 		:headers='@json($page->table_headers)'
@@ -33,8 +60,11 @@
 		edit-uri-parameter="slug"
 		edit-text="Edit PPJB"
 		>
-		
 		@include('components.table')
 	</table-layout>
+    </v-tab-item>
+
+  </v-tabs>
+
 
 @endsection
