@@ -260,7 +260,7 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -291,14 +291,15 @@ class PPJBController extends Controller
                 });
             });
 
-            $query->orWhereHas('ppjb', function($subquery) use ($generalSearch){
+            $query->orWhereHas('document', function($subquery) use ($generalSearch){
+                //Check if Search is Date
                 try {
                     $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
-                } catch (\Exception $e) {
+                } catch (\Exception $e){
                     $check_date = $generalSearch;
-                }   
+                }
 
-                $subquery->where('ppjb_date', 'LIKE', '%'.$check_date.'%');
+                $subquery->where('submission_date', 'LIKE', '%' . $check_date . '%');
             });
         }
 
@@ -306,7 +307,7 @@ class PPJBController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->has('spr')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->bookingStatus('ppjb')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->sales_name = $item->sales->user->full_name;
