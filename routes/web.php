@@ -30,7 +30,7 @@ Route::group(['namespace' => 'Auth'], function() {
 	
     Route::get('profil', 'ProfileController@index')->name('profile');
     Route::get('ubah-password', 'ProfileController@changePassword')->name('change-password');
-    Route::post('ubah-password', 'ProfileController@store')->name('change-password');
+    Route::post('ubah-password', 'ProfileController@store')->name('post-change-password');
 });
 
 

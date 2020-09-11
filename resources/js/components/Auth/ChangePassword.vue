@@ -47,7 +47,7 @@
 				
 				this.field_state = true
 
-				axios.post(this.base_url() + this.ziggy('change-password').url(), data)
+				axios.post(this.base_url() + this.ziggy('post-change-password').url(), data)
 				    .then((response) => {
 	    		        if (response.data.success) {
 	    		            this.formAlert = true
