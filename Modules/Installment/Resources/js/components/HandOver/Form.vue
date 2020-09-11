@@ -183,6 +183,7 @@
                                     location: data.handover ? data.handover.location : null,
                                     address: data.handover ? data.handover.address : null,
                                     handover_doc_file_name: data.handover ? data.handover.handover_doc_file_name : null,
+                                    handover_doc_file_name_data: data.handover ? data.handover.handover_doc_file_name : null,
                                     handover_doc_sign_name: data.handover ? data.handover.handover_doc_sign_name : null,
                                     sign_upload: data.handover ?  data.handover.url_doc_file_name : '',
                                     file_upload: data.handover ? data.handover.url_doc_sign_file_name : '',

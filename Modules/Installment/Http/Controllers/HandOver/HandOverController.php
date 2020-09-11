@@ -88,6 +88,56 @@ class HandOverController extends Controller
                 "value" => 'agency_name',
             ],
         ];
+        $this->table_headers_2 = [
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'No. Handphone',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_mobile_number',
+            ],
+            [
+                "text" => 'Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_name',
+            ],
+            [
+                "text" => 'Harga Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Tgl AJB',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'ajb_date',
+            ],
+            [
+                "text" => 'Sales',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Sub Agent',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'agency_name',
+            ],
+        ];
         return view('installment::handover.index', [
             'page' => $this,
         ]);
@@ -228,7 +278,15 @@ class HandOverController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments')->orderBy('created_at', 'DESC');
+        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query->whereDoesntHave('handover', function($subquery) {
+            $subquery->where('approval_client_status', '=', 'Approved');
+            $subquery->where('approval_developer_status', '=', 'Approved');
+            $subquery->where('approval_notaris_status', '=', 'Approved');
+            $subquery->where('handover_doc_sign_name', '!=', '');
+        });
+        $query->orderBy('created_at', 'DESC');
+
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -299,6 +357,92 @@ class HandOverController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    public function getTableDataApproved(Request $request)
+    {
+        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query->whereHas('handover', function($subquery) {
+            $subquery->where('approval_client_status', 'Approved');
+            $subquery->where('approval_developer_status', 'Approved');
+            $subquery->where('approval_notaris_status', 'Approved');
+            $subquery->where('handover_doc_sign_name', '!=', '');
+        });
+        $query->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('client_mobile_number', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('ajb', function($subquery) use ($generalSearch){
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                } 
+
+                $subquery->where('ajb_date', 'LIKE', '%'.$check_date.'%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+        $data = $query->has('ajb')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->unit_name            = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price           = 'Rp '.format_money($item->total_amount);
+            $item->payment_method       = $item->payment_method;
+            $item->ajb_date             = $item->ajb ? ($item->ajb->ajb_date) != null ? \Carbon\Carbon::parse($item->ajb->ajb_date)->locale('id')->translatedFormat('d F Y'): '' : '';
+            $item->client_name          = $item->client->client_name;
+            $item->agency_name          = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->client_mobile_number = $item->client->client_mobile_number;
+            $item->sales_name           = $item->sales->user->full_name;
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableApproved(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataApproved($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
