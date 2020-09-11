@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Ajb'], function() {
 
 Route::group(['namespace' => 'HandOver'], function() {
 	Route::get('handover/table', 'HandOverController@table')->name('handover.table');
+	Route::get('handover/table-approved', 'HandOverController@tableApproved')->name('handover.table.approved');
 	Route::get('handover/{handover}/data', 'HandOverController@data')->name('handover.data');
 	Route::resource('handover', 'HandOverController')->except(['show']);
 });
@@ -71,6 +72,7 @@ Route::group(['namespace' => 'PaymentType'], function() {
 
 Route::group(['namespace' => 'Spr'], function() {
 	Route::get('spr/table', 'SprController@table')->name('spr.table');
+	Route::get('spr/table-approved', 'SprController@tableApproved')->name('spr.table.approved');
 	Route::get('spr/{spr}/data', 'SprController@data')->name('spr.data');
 	Route::resource('spr', 'SprController')->except(['show']);
 });
