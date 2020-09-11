@@ -335,7 +335,7 @@
 			           </validation-provider>
 		          </v-col>
 				</v-row>            
-				<v-row v-if="form_data.handover_doc_file_name !== null">
+				<v-row v-if="form_data.handover_doc_file_name_data !== null">
 					<v-col
     		          cols="12"
     		          md="12">
@@ -353,7 +353,7 @@
 					</validation-provider>
 		          </v-col>
 				</v-row>
-    		    <v-row v-if="form_data.handover_doc_file_name !== null">
+    		    <v-row v-if="form_data.handover_doc_file_name_data !== null">
 					<v-col
     		          cols="12"
     		          md="12">
@@ -370,7 +370,7 @@
 					   </validation-provider>
     		        </v-col>
     		    </v-row>
-				<v-row v-if="form_data.handover_doc_file_name !== null">
+				<v-row v-if="form_data.handover_doc_file_name_data !== null">
 					<v-col
     		          cols="12"
     		          md="12">
@@ -387,7 +387,7 @@
 					    </validation-provider>
     		        </v-col>
     		    </v-row>
-    		    <v-row v-if="form_data.handover_doc_file_name !== null">
+    		    <v-row v-if="form_data.handover_doc_file_name_data !== null">
     		    	<v-col
     		          cols="12"
     		          md="12">
