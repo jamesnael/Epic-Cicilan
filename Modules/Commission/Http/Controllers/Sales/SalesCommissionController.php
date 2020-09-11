@@ -342,17 +342,33 @@ class SalesCommissionController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                // $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
-                // $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+
+                $subquery->orWhereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+                
+                $subquery->orWhereHas('regional_coordinator', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
             });
         }
 
@@ -360,7 +376,8 @@ class SalesCommissionController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+
         $data->getCollection()->transform(function($item) {
             $item->sales_name = $item->sales->user->full_name;
             $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';

@@ -55,6 +55,8 @@ Route::group(['namespace' => 'Installment'], function() {
 	Route::put('cicilan-unit/{installment_unit}', 'InstallmentUnitController@update')->name('installment-unit.update');
 	Route::get('cicilan-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
 	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
+	
+	Route::put('cicilan-unit/{installment_unit}/{payment}/paid', 'InstallmentUnitController@payment')->name('manual-payment');
 });
 
 Route::group(['namespace' => 'PPJB'], function() {

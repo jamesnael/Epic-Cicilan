@@ -1,4 +1,4 @@
-<validation-provider v-slot="{ errors }" name="Pekerjaan" :rules="paymentMethodRules">
+<validation-provider v-slot="{ errors }" name="Cara pembayaran" :rules="paymentMethodRules">
 	<v-autocomplete
 		:items="items"
 		item-text="name"
