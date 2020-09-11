@@ -20,7 +20,7 @@ Route::get('/', 'HomeController@index')->middleware('auth');
 
 Route::group(['namespace' => 'Auth'], function() {
 
-    Route::post('login', 'LoginController@login')->name('login');
+    Route::post('login', 'LoginController@login')->name('post-login');
     Route::get('login', 'LoginController@showLoginForm')->name('login');
     Route::match(['get', 'post'], 'logout', 'LoginController@logout')->name('logout');
     Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
