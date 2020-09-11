@@ -224,9 +224,8 @@
 			    	<v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB Awal" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB Awal" rules="">
 				    		<v-file-input
-				    			v-model="form_data.ppjb_doc_file_name"
 				    			name="file_upload"
 				    			label="Surat PPJB awal"
 					    		:persistent-hint="true"
@@ -305,7 +304,6 @@
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="">
 				    		<v-file-input
-				    			v-model="form_data.ppjb_doc_sign_file_name"
 				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
 					    		v-if="form_data.ppjb_sign_date_data !== ''"
