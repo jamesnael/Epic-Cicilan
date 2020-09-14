@@ -40,7 +40,7 @@
 				page-text-locale="id"
 				edit-uri="handover.edit"
 				edit-uri-parameter="slug"
-				edit-text="Edit Hand Over Unit"
+				edit-text="Edit Serah Terima Unit"
 				>
 				
 				@include('components.table')

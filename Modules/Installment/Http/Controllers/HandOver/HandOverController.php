@@ -29,7 +29,7 @@ class HandOverController extends Controller
         $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('handover.index'), 'text' => 'Data Hand Over Unit'],
+            ['href' => route('handover.index'), 'text' => 'Data Serah Terima Unit'],
         ];
     }
     /**
@@ -149,7 +149,7 @@ class HandOverController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Tambah Schedule Hand Over Unit'];
+        $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Tambah Schedule Serah Terima Unit'];
 
         return view('installment::handover.create', [
             'page' => $this,
@@ -183,7 +183,7 @@ class HandOverController extends Controller
      */
     public function edit(Booking $handover)
     {
-        $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Edit Handover Unit'];
+        $this->breadcrumbs[] = ['href' => route('handover.index'), 'text' => 'Input Jadwal Serah Terima Unit'];
 
         return view('installment::handover.edit',[
             'page' => $this,
@@ -206,7 +206,7 @@ class HandOverController extends Controller
         DB::beginTransaction();
         try {
             if ($request->hasFile('file_upload')) {
-                $file_name = 'first_handover-' . uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+                $file_name = 'serah-terima-' . uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs('handover/handover_doc_file_names', $request->file('file_upload'), $file_name
                 );
                 $request->merge([
@@ -215,7 +215,7 @@ class HandOverController extends Controller
             }
 
             if ($request->hasFile('sign_upload')) {
-                $file_name = 'signed_handover-' . uniqid() . '.' . $request->file('sign_upload')->getClientOriginalExtension();
+                $file_name = 'signed_serah-terima-' . uniqid() . '.' . $request->file('sign_upload')->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs('handover/handover_doc_sign_names', $request->file('sign_upload'), $file_name
                 );
                 $request->merge([
