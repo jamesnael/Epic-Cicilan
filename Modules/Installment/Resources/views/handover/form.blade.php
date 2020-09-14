@@ -1,7 +1,7 @@
 <v-container fluid>
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
-    		<h3>Input Schedule Hand Over Unit</h3>
+    		<h3>Input Jadwal Serah Terima Unit</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		</v-row>
 	    		<v-row>
@@ -207,7 +207,7 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-			    <h3 class="mt-4">Set Schedule Hand Over Unit</h3>
+			    <h3 class="mt-4">Set Jadwal Serah Terima Unit</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -221,13 +221,13 @@
 		    		        min-width="290px"
 		    		    >
 	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal Hand Over Unit" rules="required|min:1">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal Serah Terima Unit" rules="required|min:1">
 		    		        <v-text-field
 		    		        	:value="reformatDateTime(form_data.handover_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 		    		        	hint="* harus diisi"
 		    		        	:persistent-hint="true"
 					    		:error-messages="errors"
-		    		            label="Tanggal Hand Over Unit"
+		    		            label="Tanggal Serah Terima Unit"
 		    		            v-bind="attrs"
 		    		            v-on="on"
 		    		            readonly
@@ -314,7 +314,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Upload Surat Hand Over Unit</h3>
+					    <h3 class="mt-4">Upload Surat Serah Terima Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Dokumen Awal" rules="required">
 							<v-file-input 
 		    		            show-size
@@ -335,11 +335,11 @@
 			           </validation-provider>
 		          </v-col>
 				</v-row>            
-				<v-row v-if="form_data.handover_doc_file_name_data !== null">
+				<v-row v-if="form_data.handover_doc_file_name_data != null">
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approval Hand Over Unit</h3>
+					    <h3 class="mt-4">Approval Serah Terima Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 					      <v-select
 					        v-model="form_data.approval_client_status"
@@ -353,7 +353,7 @@
 					</validation-provider>
 		          </v-col>
 				</v-row>
-    		    <v-row v-if="form_data.handover_doc_file_name_data !== null">
+    		    <v-row v-if="form_data.handover_doc_file_name_data != null">
 					<v-col
     		          cols="12"
     		          md="12">
@@ -370,7 +370,7 @@
 					   </validation-provider>
     		        </v-col>
     		    </v-row>
-				<v-row v-if="form_data.handover_doc_file_name_data !== null">
+				<v-row v-if="form_data.handover_doc_file_name_data != null">
 					<v-col
     		          cols="12"
     		          md="12">
@@ -387,17 +387,17 @@
 					    </validation-provider>
     		        </v-col>
     		    </v-row>
-    		    <v-row v-if="form_data.handover_doc_file_name_data !== null">
+    		    <v-row v-if="form_data.handover_doc_file_name_data != null">
     		    	<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Surat Hand Over Unit yang sudah ditandatangani" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Surat Serah Terima Unit yang sudah ditandatangani" rules="">
 			              	<v-file-input 
 		    		            show-size
 		    		            chips 
 		    		            counter 
 		    		            multiple 
-		    		            label="Upload Surat Hand Over Unit yang sudah ditandatangani"
+		    		            label="Upload Surat Serah Terima Unit yang sudah ditandatangani"
 		    		            v-model="form_data.handover_doc_sign_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"

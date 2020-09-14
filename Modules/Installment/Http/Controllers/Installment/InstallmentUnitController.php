@@ -23,7 +23,7 @@ class InstallmentUnitController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth'])->except(['data']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('installment.index'), 'text' => 'Data Pembayaran Cicilan'],
