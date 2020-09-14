@@ -420,6 +420,9 @@
                 <template v-slot:item.payment_date="{ item }">
                   @{{reformatDateTime(item.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY')}}
                 </template>
+                <template v-slot:item.payment_method="{ item }">
+                  @{{item.payment_method}}
+                </template>
                 <template v-slot:item.actions="{ item }">
                   <form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
                     <span v-if="item.payment == 'Uang Tanda Jadi' || item.payment == 'Akad Kredit' || item.payment_date"></span>
@@ -504,9 +507,9 @@
                                             </v-list-item-content>
                                         </v-list-item>
                                         <v-list-item>
-                                            <v-list-item-content>Total Pembayaran:</v-list-item-content>
+                                            <v-list-item-content>Jumlah Pembayaran:</v-list-item-content>
                                             <v-list-item-content>
-                                              <validation-provider v-slot="{ errors }" name="Total pembayaran" rules="required|numeric">
+                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric">
                                                 <v-text-field
                                                     v-model="form_data.total_paid"
                                                     name="total_paid"
