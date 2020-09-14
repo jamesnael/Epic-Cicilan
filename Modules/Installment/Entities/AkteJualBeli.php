@@ -34,7 +34,7 @@ class AkteJualBeli extends Model
      */
     public function getUrlAjbDocFileNameAttribute()
     {
-        return $this->attributes['ajb_doc_file_name'] ? Storage::disk('public')->url('app/public/ajb/dokumen_awal/'.$this->attributes['ajb_doc_file_name']) : null;
+        return (!empty($this->attributes['ajb_doc_file_name'])) ? Storage::disk('public')->url('app/public/ajb/dokumen_awal/'.$this->attributes['ajb_doc_file_name']) : null;
     }
 
     /**
@@ -45,7 +45,7 @@ class AkteJualBeli extends Model
      */
     public function getUrlAjbDocSignFileNameAttribute()
     {
-        return $this->attributes['ajb_doc_sign_file_name'] ? Storage::disk('public')->url('app/public/ajb/dokumen_akhir/'.$this->attributes['ajb_doc_sign_file_name']) : null;
+        return (!empty($this->attributes['ajb_doc_sign_file_name'])) ? Storage::disk('public')->url('app/public/ajb/dokumen_akhir/'.$this->attributes['ajb_doc_sign_file_name']) : null;
     }
 
     /**

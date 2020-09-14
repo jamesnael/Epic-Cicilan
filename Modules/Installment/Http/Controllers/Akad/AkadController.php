@@ -234,7 +234,7 @@ class AkadController extends Controller
                 $data = AkadKpr::create($request->all());
             }
 
-            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved' && $request->has('akad_doc_sign_file_name')) {
                 $akad->booking_status = 'ajb_handover';
                 $akad->save();
             }
@@ -302,7 +302,12 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb');
+
+        $query->whereHas('akad_kpr', function($subquery) {
+            $subquery->where('akad_doc_sign_file_name', NULL);
+        })->orderBy('created_at', 'DESC');
+
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -336,7 +341,7 @@ class AkadController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
@@ -382,7 +387,7 @@ class AkadController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-         $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -416,7 +421,7 @@ class AkadController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;

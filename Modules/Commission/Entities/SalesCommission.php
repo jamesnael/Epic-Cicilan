@@ -72,7 +72,7 @@ class SalesCommission extends Model
      */
     public function getUrlPaymentProofOneAttribute()
     {
-        return $this->attributes['payment_proof_1'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_1']) : '';
+        return (!empty($this->attributes['payment_proof_1'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_1']) : '';
     }
 
     /**
@@ -83,7 +83,7 @@ class SalesCommission extends Model
      */
     public function getUrlPaymentProofTwoAttribute()
     {
-        return $this->attributes['payment_proof_2'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_2']) : '';
+        return (!empty($this->attributes['payment_proof_2'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_2']) : '';
     }
 
     /**
@@ -94,7 +94,7 @@ class SalesCommission extends Model
      */
     public function getUrlSalesEvidenceAttribute()
     {
-        return $this->attributes['sales_evidence'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['sales_evidence']) : null;
+        return (!empty($this->attributes['sales_evidence'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['sales_evidence']) : null;
     }
 
     /**
@@ -105,7 +105,7 @@ class SalesCommission extends Model
      */
     public function getUrlAgencyEvidenceAttribute()
     {
-        return $this->attributes['agency_evidence'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['agency_evidence']) : null;
+        return (!empty($this->attributes['agency_evidence'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['agency_evidence']) : null;
     }
 
     /**
@@ -116,7 +116,7 @@ class SalesCommission extends Model
      */
     public function getUrlKorwilEvidenceAttribute()
     {
-        return $this->attributes['korwil_evidence'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korwil_evidence']) : null;
+        return (!empty($this->attributes['korwil_evidence'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korwil_evidence']) : null;
     }
 
     /**
@@ -127,6 +127,6 @@ class SalesCommission extends Model
      */
     public function getUrlKorutEvidenceAttribute()
     {
-        return $this->attributes['korut_evidence'] ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korut_evidence']) : null;
+        return (!empty($this->attributes['korut_evidence'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korut_evidence']) : null;
     }
 }

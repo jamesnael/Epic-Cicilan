@@ -276,7 +276,7 @@
 					    		:error-messages="errors"
 				              	>
 			              </v-file-input>
-			              <a :href="form_data.url_payment_proof_1" target="_blank" class="ml-8">
+			              <a :href="form_data.url_payment_proof_one" target="_blank" class="ml-8">
 			              	<small>@{{form_data.payment_proof_1}}</small>
 			              </a>
 			           </validation-provider>
@@ -357,7 +357,7 @@
 					    		:error-messages="errors"
 				              	name="payment_proof2">
 			              </v-file-input>
-			              <a :href="form_data.url_payment_proof_2" target="_blank" class="ml-8">
+			              <a :href="form_data.url_payment_proof_two" target="_blank" class="ml-8">
 			              	<small>@{{form_data.payment_proof_2}}</small>
 			              </a>
 			           </validation-provider>

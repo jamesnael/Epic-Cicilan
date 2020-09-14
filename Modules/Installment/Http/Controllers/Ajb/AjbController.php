@@ -299,14 +299,7 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-         // $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
-        $query->whereHas('ajb', function($subquery) {
-            $subquery->where('approval_client_status', '=', '');
-            $subquery->where('approval_developer_status', '=', '');
-            $subquery->where('approval_notaris_status', '=', '');
-        });
-        $query->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -390,8 +383,7 @@ class AjbController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        // $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
-        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
         $query->whereHas('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');

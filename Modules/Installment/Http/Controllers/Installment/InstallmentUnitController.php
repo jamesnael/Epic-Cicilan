@@ -248,19 +248,23 @@ class InstallmentUnitController extends Controller
         DB::beginTransaction();
         try {
 
-            $request->merge([
-               'payment_status' => 'Paid',
+
+            $payment->update([
+                'payment_status' => 'Paid',
+                'payment_date' => $request->payment_date,
+                'payment_method' => $request->payment_method,
+                'total_paid' => $request->total_paid,
             ]);
+        
+            $booking = $payment->booking;
+            if (count($booking->unpaid_payments) == 0) {
+                $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                $booking->save();
 
-            $data = $payment->update($request->all());
-
-             if (count($installment_unit->unpaid_payments) == 0) {
-                $installment_unit->booking_status = $installment_unit->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
-                $installment_unit->save();
             }
 
             DB::commit();
-            return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $data);
+            return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $payment);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

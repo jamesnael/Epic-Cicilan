@@ -34,7 +34,7 @@ class AkadKpr extends Model
      */
     public function getUrlAkadDocFileNameAttribute()
     {
-        return $this->attributes['akad_doc_file_name'] ? Storage::disk('public')->url('app/public/akad_kpr/dokumen_awal/'.$this->attributes['akad_doc_file_name']) : null;
+        return (!empty($this->attributes['akad_doc_file_name'])) ? Storage::disk('public')->url('app/public/akad_kpr/dokumen_awal/'.$this->attributes['akad_doc_file_name']) : null;
     }
 
     /**
@@ -45,7 +45,7 @@ class AkadKpr extends Model
      */
     public function getUrlAkadDocSignFileNameAttribute()
     {
-        return $this->attributes['akad_doc_sign_file_name'] ? Storage::disk('public')->url('app/public/akad_kpr/dokumen_akhir/'.$this->attributes['akad_doc_sign_file_name']) : null;
+        return (!empty($this->attributes['akad_doc_sign_file_name'])) ? Storage::disk('public')->url('app/public/akad_kpr/dokumen_akhir/'.$this->attributes['akad_doc_sign_file_name']) : null;
     }
 
     /**
