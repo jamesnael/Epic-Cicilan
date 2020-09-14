@@ -299,17 +299,18 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required|numeric|between:1,31">
-		    		<v-text-field
+	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required">
+		    		<v-autocomplete
 		    			class="mt-4"
-		    			v-model="form_data.due_date"
-		    			name="due_date"
-			    		label="Tanggal Jatuh Tempo"
+		    			v-model="form_data.due_date" 
+		              	:items="['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']"
+		              	label="Tanggal Jatuh Tempo"
+		              	name="due_date"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
+			    		:readonly="field_state"
+		            ></v-autocomplete>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Cicilan per bulan" rules="required|numeric|min:0">
 		    		<v-text-field
@@ -446,6 +447,8 @@
     		          		payment-method-input-name="payment_method_utj"
     		          		payment-method-label="Cara Pembayaran UTJ"
     		          		:disabled="field_state"
+    		          		hint="* harus diisi"
+    		          		:persistent-hint="true"
     		          	>
     		          		@include('core::payment_method')
     		          	</payment-method-input>

@@ -55,6 +55,8 @@ Route::group(['namespace' => 'Installment'], function() {
 	Route::put('cicilan-unit/{installment_unit}', 'InstallmentUnitController@update')->name('installment-unit.update');
 	Route::get('cicilan-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
 	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
+	
+	Route::put('cicilan-unit/{installment_unit}/{payment}/paid', 'InstallmentUnitController@payment')->name('manual-payment');
 });
 
 Route::group(['namespace' => 'PPJB'], function() {
@@ -97,6 +99,8 @@ Route::group(['namespace' => 'HandOver'], function() {
 	Route::get('serah-terima/{handover}/data', 'HandOverController@data')->name('handover.data');
 	Route::get('serah-terima/{handover}/ubah', 'HandOverController@edit')->name('handover.edit');
 	Route::delete('serah-terima/{handover}', 'HandOverController@destroy')->name('handover.destroy');
+	Route::get('serah-terima/table', 'HandOverController@table')->name('handover.table');
+	Route::get('serah-terima/table-approved', 'HandOverController@tableApproved')->name('handover.table.approved');
 });
 
 Route::group(['namespace' => 'PaymentType'], function() {
@@ -107,6 +111,7 @@ Route::group(['namespace' => 'PaymentType'], function() {
 
 Route::group(['namespace' => 'Spr'], function() {
 	Route::get('spr/table', 'SprController@table')->name('spr.table');
+	Route::get('spr/table-approved', 'SprController@tableApproved')->name('spr.table.approved');
 	Route::get('spr/{spr}/data', 'SprController@data')->name('spr.data');
 	Route::resource('spr', 'SprController')->except(['show']);
 });

@@ -30,9 +30,16 @@
 			    type: String,
 			    default: ''
 			},
+            filter_payment_method: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },  
 		},
 		data: function () {
             return {
+                loader: null,
                 overlay: false,
                 progressText: 'Mohon Menunggu.',
 	            unit_installments: [],
@@ -43,6 +50,7 @@
                 modal: false,
                 idx:false,
                 menu:false,
+                menu2:false,
 	            datepicker: false,
             	form_data: {
             		unit_type:'',
@@ -85,9 +93,16 @@
                     sisa_tunggakan: 0,
                     total_denda: 0,
                     prosentase_pembayaran: 0,
+                    slug: '',
+
+                    payment_method: '',
+                    payment_date: '',
+                    total_paid: '',
+                    description: '',
 
                     payments: []
-            	}
+            	},
+                paymentMethod:''
         	}
         },
         mounted() {
@@ -102,7 +117,6 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-
                                 var items = []
                                 _.forEach(data.payments, (value, key) => {
                                     value.table_index = parseInt(key) + 1
@@ -145,7 +159,8 @@
                                     main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
                                     regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
 
-                                    payments: items
+                                    payments: items,
+                                    slug: data.slug,
     		            		} 
 
     			                this.field_state = false
@@ -187,6 +202,57 @@
                     s[1] += new Array(prec - s[1].length + 1).join('0');
                 }
                 return s.join(dec);
+            },
+            postPayment(item) {
+                this.$refs.observer.validate().then((success) => {
+                    if (!success) {
+                      return;
+                    }
+                    this.field_state = true
+                    
+                    const data = new FormData(this.$refs['post-form']);
+
+                    data.append("_method", "put");
+                    data.append("payment_method", this.form_data.payment_method);
+                    data.append("payment_date", this.form_data.payment_date);
+                    data.append("total_paid", this.form_data.total_paid);
+                    data.append("description", this.form_data.description ? this.form_data.description : '');
+
+                    console.log(data)
+
+                    axios.post(this.base_url() + this.ziggy('manual-payment', [this.form_data.slug, item.slug]).url(), data)
+                        .then((response) => {
+                            if (response.data.success) {
+                                this.formAlert = true
+                                this.formAlertState = 'success'
+                                this.formAlertText = response.data.message
+                                this.field_state = false
+                                
+                                setTimeout((function() {
+                                  window.location.reload();
+                                }), 250);
+                            } else {
+                                this.formAlert = true
+                                this.formAlertState = 'error'
+                                this.formAlertText = response.data.message
+                                this.field_state = false
+                            }
+                        })
+                        .catch((error) => {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = 'Oops, something went wrong. Please try again later.'
+                            this.field_state = false
+                        });
+                 });
+            },
+            setSelectedPayment() {
+                let payment = _.find(this.filter_payment_method, o => { return o.value == this.form_data.payment_method_id})
+                if (_.isUndefined(payment)) {
+                    this.form_data.payment_method = ''
+                } else {
+                    this.form_data.payment_method = payment.text
+                }
             },
         }
 	}

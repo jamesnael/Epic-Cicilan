@@ -12,6 +12,7 @@ use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\Installment\Entities\BookingPayment;
+use Modules\Core\Entities\PaymentMethod;
 
 class InstallmentUnitController extends Controller
 {
@@ -25,7 +26,7 @@ class InstallmentUnitController extends Controller
         $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('installment.index'), 'text' => 'Data Cicilan'],
+            ['href' => route('installment.index'), 'text' => 'Data Pembayaran Cicilan'],
         ];
     }
 
@@ -123,6 +124,12 @@ class InstallmentUnitController extends Controller
                 "value" => 'installment',
             ],
             [
+                "text" => 'Cara Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
                 "text" => 'Tanggal Pembayaran',
                 "align" => 'center',
                 "sortable" => false,
@@ -139,6 +146,12 @@ class InstallmentUnitController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'credit',
+            ],
+            [
+                "text" => 'Aksi',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'actions',
             ],
         ];
         
@@ -168,6 +181,7 @@ class InstallmentUnitController extends Controller
                         return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator']);
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
+            'payment_method' => PaymentMethod::select('id AS value', 'name AS text')->get(),
         ];
     }
 
@@ -197,6 +211,50 @@ class InstallmentUnitController extends Controller
             return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormRequest($request, $value)
+    {
+        return Validator::make($request->all(), [
+            "total_paid" => "bail|required|numeric|size:".$value,
+            "payment_date" => "bail|required",
+            "payment_method" => "bail|required",
+            "description" => "bail|nullable",
+        ],[
+            "total_paid.size" => "Jumlah pembayaran tidak sesuai."
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function payment(Request $request, Booking $installment_unit, BookingPayment $payment)
+    {
+        $validator = $this->validateFormRequest($request, $payment->installment + ($payment->fine * $payment->number_of_delays));
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        DB::beginTransaction();
+        try {
+            
+             $data = $payment->update($request->all());
+
+            DB::commit();
+            return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
 

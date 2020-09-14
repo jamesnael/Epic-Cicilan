@@ -80,6 +80,51 @@ class SprController extends Controller
                 "value" => 'status',
             ],
         ];
+
+        $this->table_headers_2 = [
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_name',
+            ],
+            [
+                "text" => 'Sales',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Tanggal Cetak',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'print_date',
+            ],
+            [
+                "text" => 'Tanggal Kirim',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sent_date',
+            ],
+            [
+                "text" => 'Tanggal Terima',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'received_date',
+            ],
+            [
+                "text" => 'Status',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'status',
+            ],
+        ];
         return view('installment::spr.index', [
             'page' => $this,
         ]);
@@ -336,6 +381,111 @@ class SprController extends Controller
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableApprovedData(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user');
+        $query->whereHas('spr', function($subquery) {
+            $subquery->where('approval_status', 'Approved');
+        });
+        $query->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->whereHas('client', function($subquery) use ($generalSearch) {
+                $subquery->where('client_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch) {
+                $subquery->where('unit_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_number', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('unit_block', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales.user', function($subquery) use ($generalSearch) {
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('spr', function($subquery) use ($generalSearch) {
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('print_date', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('sent_date', 'LIKE', '%' . $check_date . '%');
+                $subquery->orWhere('received_date', 'LIKE', '%' . $check_date . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->print_date    = $item->spr ? \Carbon\Carbon::parse($item->spr->print_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->sent_date     = $item->spr ? ($item->spr->sent_date) != null ? \Carbon\Carbon::parse($item->spr->sent_date)->locale('id')->translatedFormat('d F Y') : '' : '';
+            $item->unit_name     = $item->unit->unit_type . ' ' . $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
+            $item->client_name   = $item->client->client_name;
+            $item->sales_name    = $item->sales->user->full_name;
+
+            //Status Condition
+            if ($item->spr){
+                if ($item->spr->print_date != null)
+                {
+                    if ($item->spr->print_date){
+                        $item->status = "Dicetak";
+                    }
+                    if ($item->spr->sent_date){
+                        $item->status = "Dikirim";
+                    }
+                    if ($item->spr->received_date){
+                        $item->status = "Diterima";
+                    }
+                    if ($item->spr->approval_status == "Approved"){
+                        $item->status = "Dokumen sesuai";
+                    }
+                }
+            } else {
+                $item->status = "Belum dicetak";
+            }
+
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableApproved(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableApprovedData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
 
     /**
      *
