@@ -10,6 +10,8 @@ use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\Installment\Entities\AkadKpr;
+use Modules\Installment\Entities\AkteJualBeli;
+use Modules\Installment\Entities\Handover;
 use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -303,10 +305,6 @@ class AkadController extends Controller
     public function getTableData(Request $request)
     {
         $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb');
-
-        $query->whereHas('akad_kpr', function($subquery) {
-            $subquery->where('akad_doc_sign_file_name', NULL);
-        })->orderBy('created_at', 'DESC');
 
 
         if ($request->input('search')) {
