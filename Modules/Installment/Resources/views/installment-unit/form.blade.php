@@ -469,7 +469,7 @@
 
                                         <v-list-item>
                                             <v-list-item-content><strong>Total Pembayaran:</strong></v-list-item-content>
-                                            <v-list-item-content class="align-end" v-model="total"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
+                                            <v-list-item-content class="align-end" v-model="total" vid="confirmation"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
                                         </v-list-item>
                                     </v-list>
                                 </v-card>
@@ -509,7 +509,7 @@
                                         <v-list-item>
                                             <v-list-item-content>Jumlah Pembayaran:</v-list-item-content>
                                             <v-list-item-content>
-                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric">
+                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric|confirmed:confirmation">
                                                 <v-text-field
                                                     v-model="form_data.total_paid"
                                                     name="total_paid"

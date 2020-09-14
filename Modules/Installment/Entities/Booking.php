@@ -60,7 +60,7 @@ class Booking extends Model
         'total_denda',
         'tanggal_lunas_cicilan',
         'prosentase_pembayaran',
-        // 'total_point',
+        'prosentase_komisi',
     ];
 
     /**
@@ -143,6 +143,13 @@ class Booking extends Model
     public function getProsentasePembayaranAttribute()
     {
         if ($this->total_pembayaran && $this->total_denda) {
+            return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
+        }
+    }
+
+    public function getProsentaseKomisiAttribute()
+    {
+        if ($this->total_pembayaran) {
             return round(($this->total_pembayaran - $this->total_denda) / $this->total_cicilan * 100, 2) ;
         }
     }

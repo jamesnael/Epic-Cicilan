@@ -129,12 +129,15 @@
     		            			sales_name: data.sales.user.full_name,
     		            			unit_price: data.total_amount,
     		            			payment_method: data.payment_method,
+                                    payment_type: data.payment_type,
     		            			agency_name: data.sales.agency.agency_name,
     		            			agency_commission: data.sales.agency.agency_commission,
     		            			closing_fee: data.unit.closing_fee,
     		            			korut_name: data.sales.main_coordinator.full_name,
     		            			korwil_name: data.sales.regional_coordinator.full_name,
     		            			pph_final: data.sales.agency.pph_final,
+
+                                    prosentase_komisi: data.prosentase_komisi,
 
     		            			agency_id: data.sales.agency_id,
     		            			sales_id: data.sales_id,

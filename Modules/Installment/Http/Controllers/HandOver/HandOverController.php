@@ -278,7 +278,8 @@ class HandOverController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query->whereDoesntHave('handover', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');
@@ -325,7 +326,7 @@ class HandOverController extends Controller
         foreach ($request->input('sort') as $sort_key => $sort) {
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
-        $data = $query->has('ajb')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->unit_name            = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price           = 'Rp '.format_money($item->total_amount);
@@ -364,7 +365,8 @@ class HandOverController extends Controller
 
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query->whereHas('handover', function($subquery) {
             $subquery->where('approval_client_status', 'Approved');
             $subquery->where('approval_developer_status', 'Approved');
@@ -411,7 +413,7 @@ class HandOverController extends Controller
         foreach ($request->input('sort') as $sort_key => $sort) {
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
-        $data = $query->has('ajb')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->unit_name            = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price           = 'Rp '.format_money($item->total_amount);

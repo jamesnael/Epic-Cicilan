@@ -4,6 +4,13 @@
 
 	@include('components.breadcrumbs')
 
+	{{-- <v-autocomplete
+	    v-model="value"
+	    :items="['Hard Cash', 'Installments', 'KPR/KPA']"
+	    name="payment_type"
+	    label="Tipe Pembayaran"
+	  ></v-autocomplete> --}}
+
 	@php
 		$page->table_headers[] = [
             "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
@@ -28,9 +35,6 @@
 		items-per-page-all-text="Semua"
 		items-per-page-text="Tampilkan"
 		page-text-locale="id"
-		{{-- add-new-uri="{{ route('booking.create') }}" --}}
-		{{-- add-new-text="Tambah" --}}
-		{{-- add-new-color="light-blue lighten-2" --}}
 		edit-uri="installment.edit"
 		edit-uri-parameter="slug"
 		edit-text="Edit Cicilan"
@@ -38,5 +42,6 @@
 		
 		@include('components.table')
 	</table-layout>
+
 
 @endsection

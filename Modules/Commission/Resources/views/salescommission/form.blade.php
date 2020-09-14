@@ -72,10 +72,10 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.payment_method"
-				    			name="payment_method"
+				    			v-model="form_data.payment_type"
+				    			name="payment_type"
 					    		:error-messages="errors"
-					    		label="Cara Bayar"
+					    		label="Tipe Pembayaran"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -201,168 +201,340 @@
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
-
-			    <h4 class="mt-3">Pencairan Komisi 1</h4>
-			    <v-row class="mt-4">
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Pencairan 1 Komisi (50%)" rules="required|numeric">
-				    		<v-text-field
-				    			v-model="commission_1"
-				    			name="commission_1"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		label="Pencairan 1 Komisi (50%)"
-					    		:readonly="!field_state"
-					    		:disabled="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{commission_1 ? number_format(commission_1) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
-				    <v-col
-    		          	cols="12"
-    		          	md="6">
-				    	<v-menu
-		    		        v-model="menu3"
-		    		        :close-on-content-click="false"
-		    		        :nudge-right="40"
-		    		        transition="scale-transition"
-		    		        offset-y
-		    		        min-width="290px"
-		    		      >
-	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
-		    		        <v-text-field
-		    		        	:value="reformatDateTime(form_data.payment_date_1, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-		    		            label="Tanggal Pembayaran"
-		    		            readonly
-		    		            v-bind="attrs"
-		    		            v-on="on"
-		    		        	:persistent-hint="true"
-					    		:error-messages="errors"
-		    		        ></v-text-field>
+				
+				<div v-if="form_data.payment_type == 'Hard Cash'">
+				    <h4 class="mt-3">Pencairan Komisi 1</h4>
+				    <v-row class="mt-4">
+	    		        <v-col
+	    		          	cols="12"
+	    		          	md="6">
+				    		<validation-provider v-slot="{ errors }" name="Pencairan 1 Komisi (50%)" rules="required|numeric">
+					    		<v-text-field
+					    			v-model="commission_1"
+					    			name="commission_1"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+						    		label="Pencairan 1 Komisi (50%)"
+						    		:readonly="!field_state"
+						    		:disabled="field_state">
+				    			</v-text-field>
+				    			<small class="form-text text-muted">Rp @{{commission_1 ? number_format(commission_1) : 0 }}</small>
 				    		</validation-provider>
-	    		        	</template>
-	    		        	<v-date-picker name="payment_date_1" v-model="form_data.payment_date_1" @input="menu3 = false">
-	    		        	</v-date-picker>
-	    		        </v-menu>
-				    </v-col>
-			    </v-row>
-			    <v-row class="mt-4">
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
-				    		<v-text-field
-				    		 	v-model="form_data.invoice_commission_1"
-				    		 	name="invoice_commission_1"
-					    		label="No Invoice"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    	<v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="required">
-							<v-file-input 
-		    		            show-size
-		    		            chips 
-		    		            label="Upload Bukti Pembayaran"
-				              	name="payment_proof1"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-				              	>
-			              </v-file-input>
-			              <a :href="form_data.url_payment_proof_one" target="_blank" class="ml-8">
-			              	<small>@{{form_data.payment_proof_1}}</small>
-			              </a>
-			           </validation-provider>
-		          </v-col>
-			    </v-row>
-
-			    <h4 class="mt-3">Pencairan Komisi 2</h4>
-			    <v-row class="mt-4">
-    		        <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Pencairan 2 Komisi (50%)" rules="required|numeric">
-				    		<v-text-field
-				    			v-model="commission_2"
-				    			name="commission_2"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		label="Pencairan 2 Komisi (50%)"
-					    		:readonly="!field_state"
-					    		:disabled="field_state">
-			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{commission_2 ? number_format(commission_2) : 0 }}</small>
-			    		</validation-provider>
-				    </v-col>
-				    <v-col
-    		          	cols="12"
-    		          	md="6">
-				    	<v-menu
-		    		        v-model="menu4"
-		    		        :close-on-content-click="false"
-		    		        :nudge-right="40"
-		    		        transition="scale-transition"
-		    		        offset-y
-		    		        min-width="290px"
-		    		      >
-	    		        	<template v-slot:activator="{ on, attrs }">
-				    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
-		    		        <v-text-field
-		    		        	:value="reformatDateTime(form_data.payment_date_2, 'YYYY-MM-DD', 'DD MMMM YYYY')"
-		    		            label="Tanggal Pembayaran"
-		    		            readonly
-		    		            v-bind="attrs"
-		    		            v-on="on"
-		    		        	:persistent-hint="true"
-					    		:error-messages="errors"
-		    		        ></v-text-field>
+					    </v-col>
+					    <v-col
+	    		          	cols="12"
+	    		          	md="6">
+					    	<v-menu
+			    		        v-model="menu3"
+			    		        :close-on-content-click="false"
+			    		        :nudge-right="40"
+			    		        transition="scale-transition"
+			    		        offset-y
+			    		        min-width="290px"
+			    		      >
+		    		        	<template v-slot:activator="{ on, attrs }">
+					    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
+			    		        <v-text-field
+			    		        	:value="reformatDateTime(form_data.payment_date_1, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		            label="Tanggal Pembayaran"
+			    		            readonly
+			    		            v-bind="attrs"
+			    		            v-on="on"
+			    		        	:persistent-hint="true"
+						    		:error-messages="errors"
+			    		        ></v-text-field>
+					    		</validation-provider>
+		    		        	</template>
+		    		        	<v-date-picker name="payment_date_1" v-model="form_data.payment_date_1" @input="menu3 = false">
+		    		        	</v-date-picker>
+		    		        </v-menu>
+					    </v-col>
+				    </v-row>
+				    <v-row class="mt-4">
+				    	<v-col
+	    		          	cols="12"
+	    		          	md="6">
+				    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
+					    		<v-text-field
+					    		 	v-model="form_data.invoice_commission_1"
+					    		 	name="invoice_commission_1"
+						    		label="No Invoice"
+						    		:error-messages="errors"
+						    		:readonly="field_state">
+				    			</v-text-field>
 				    		</validation-provider>
-	    		        	</template>
-	    		        	<v-date-picker name="payment_date_2" v-model="form_data.payment_date_2" @input="menu4 = false">
-	    		        	</v-date-picker>
-	    		        </v-menu>
-				    </v-col>
-			    </v-row>
-			    <v-row class="mt-4">
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
-				    		<v-text-field
-				    		 	v-model="form_data.invoice_commission_2"
-					    		label="No Invoice"
-					    		name="invoice_commission_2"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-				    </v-col>
-			    	<v-col
-    		          cols="12"
-    		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
-							<v-file-input 
-		    		            show-size
-		    		            chips 
-		    		            label="Upload Bukti Pembayaran"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-				              	name="payment_proof2">
-			              </v-file-input>
-			              <a :href="form_data.url_payment_proof_two" target="_blank" class="ml-8">
-			              	<small>@{{form_data.payment_proof_2}}</small>
-			              </a>
-			           </validation-provider>
-		          </v-col>
-			    </v-row>
+					    </v-col>
+				    	<v-col
+	    		          cols="12"
+	    		          md="6">
+				    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="required">
+								<v-file-input 
+			    		            show-size
+			    		            chips 
+			    		            label="Upload Bukti Pembayaran"
+					              	name="payment_proof1"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+					              	>
+				              </v-file-input>
+				              <a :href="form_data.url_payment_proof_one" target="_blank" class="ml-8">
+				              	<small>@{{form_data.payment_proof_1}}</small>
+				              </a>
+				           </validation-provider>
+			          </v-col>
+				    </v-row>
+
+				    <h4 class="mt-3">Pencairan Komisi 2</h4>
+				    <v-row class="mt-4">
+	    		        <v-col
+	    		          	cols="12"
+	    		          	md="6">
+				    		<validation-provider v-slot="{ errors }" name="Pencairan 2 Komisi (50%)" rules="required|numeric">
+					    		<v-text-field
+					    			v-model="commission_2"
+					    			name="commission_2"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+						    		label="Pencairan 2 Komisi (50%)"
+						    		:readonly="!field_state"
+						    		:disabled="field_state">
+				    			</v-text-field>
+				    			<small class="form-text text-muted">Rp @{{commission_2 ? number_format(commission_2) : 0 }}</small>
+				    		</validation-provider>
+					    </v-col>
+					    <v-col
+	    		          	cols="12"
+	    		          	md="6">
+					    	<v-menu
+			    		        v-model="menu4"
+			    		        :close-on-content-click="false"
+			    		        :nudge-right="40"
+			    		        transition="scale-transition"
+			    		        offset-y
+			    		        min-width="290px"
+			    		      >
+		    		        	<template v-slot:activator="{ on, attrs }">
+					    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
+			    		        <v-text-field
+			    		        	:value="reformatDateTime(form_data.payment_date_2, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		            label="Tanggal Pembayaran"
+			    		            readonly
+			    		            v-bind="attrs"
+			    		            v-on="on"
+			    		        	:persistent-hint="true"
+						    		:error-messages="errors"
+			    		        ></v-text-field>
+					    		</validation-provider>
+		    		        	</template>
+		    		        	<v-date-picker name="payment_date_2" v-model="form_data.payment_date_2" @input="menu4 = false">
+		    		        	</v-date-picker>
+		    		        </v-menu>
+					    </v-col>
+				    </v-row>
+				    <v-row class="mt-4">
+				    	<v-col
+	    		          	cols="12"
+	    		          	md="6">
+				    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
+					    		<v-text-field
+					    		 	v-model="form_data.invoice_commission_2"
+						    		label="No Invoice"
+						    		name="invoice_commission_2"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+						    		:readonly="field_state">
+				    			</v-text-field>
+				    		</validation-provider>
+					    </v-col>
+				    	<v-col
+	    		          cols="12"
+	    		          md="6">
+				    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
+								<v-file-input 
+			    		            show-size
+			    		            chips 
+			    		            label="Upload Bukti Pembayaran"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+					              	name="payment_proof2">
+				              </v-file-input>
+				              <a :href="form_data.url_payment_proof_two" target="_blank" class="ml-8">
+				              	<small>@{{form_data.payment_proof_2}}</small>
+				              </a>
+				           </validation-provider>
+			          </v-col>
+				    </v-row>
+			    </div>
+				
+				<div v-else>
+					<div v-if="form_data.prosentase_komisi >= 10">
+					    <h4 class="mt-3">Pencairan Komisi 1</h4>
+					    <v-row class="mt-4">
+		    		        <v-col
+		    		          	cols="12"
+		    		          	md="6">
+					    		<validation-provider v-slot="{ errors }" name="Pencairan 1 Komisi (50%)" rules="required|numeric">
+						    		<v-text-field
+						    			v-model="commission_1"
+						    			name="commission_1"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+							    		label="Pencairan 1 Komisi (50%)"
+							    		:readonly="!field_state"
+							    		:disabled="field_state">
+					    			</v-text-field>
+					    			<small class="form-text text-muted">Rp @{{commission_1 ? number_format(commission_1) : 0 }}</small>
+					    		</validation-provider>
+						    </v-col>
+						    <v-col
+		    		          	cols="12"
+		    		          	md="6">
+						    	<v-menu
+				    		        v-model="menu3"
+				    		        :close-on-content-click="false"
+				    		        :nudge-right="40"
+				    		        transition="scale-transition"
+				    		        offset-y
+				    		        min-width="290px"
+				    		      >
+			    		        	<template v-slot:activator="{ on, attrs }">
+						    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
+				    		        <v-text-field
+				    		        	:value="reformatDateTime(form_data.payment_date_1, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+				    		            label="Tanggal Pembayaran"
+				    		            readonly
+				    		            v-bind="attrs"
+				    		            v-on="on"
+				    		        	:persistent-hint="true"
+							    		:error-messages="errors"
+				    		        ></v-text-field>
+						    		</validation-provider>
+			    		        	</template>
+			    		        	<v-date-picker name="payment_date_1" v-model="form_data.payment_date_1" @input="menu3 = false">
+			    		        	</v-date-picker>
+			    		        </v-menu>
+						    </v-col>
+					    </v-row>
+					    <v-row class="mt-4">
+					    	<v-col
+		    		          	cols="12"
+		    		          	md="6">
+					    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
+						    		<v-text-field
+						    		 	v-model="form_data.invoice_commission_1"
+						    		 	name="invoice_commission_1"
+							    		label="No Invoice"
+							    		:error-messages="errors"
+							    		:readonly="field_state">
+					    			</v-text-field>
+					    		</validation-provider>
+						    </v-col>
+					    	<v-col
+		    		          cols="12"
+		    		          md="6">
+					    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="required">
+									<v-file-input 
+				    		            show-size
+				    		            chips 
+				    		            label="Upload Bukti Pembayaran"
+						              	name="payment_proof1"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+						              	>
+					              </v-file-input>
+					              <a :href="form_data.url_payment_proof_one" target="_blank" class="ml-8">
+					              	<small>@{{form_data.payment_proof_1}}</small>
+					              </a>
+					           </validation-provider>
+				          </v-col>
+					    </v-row>
+				    </div>
+					
+					<div v-else-if="form_data.prosentase_komisi >= 50">
+					    <h4 class="mt-3">Pencairan Komisi 2</h4>
+					    <v-row class="mt-4">
+		    		        <v-col
+		    		          	cols="12"
+		    		          	md="6">
+					    		<validation-provider v-slot="{ errors }" name="Pencairan 2 Komisi (50%)" rules="required|numeric">
+						    		<v-text-field
+						    			v-model="commission_2"
+						    			name="commission_2"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+							    		label="Pencairan 2 Komisi (50%)"
+							    		:readonly="!field_state"
+							    		:disabled="field_state">
+					    			</v-text-field>
+					    			<small class="form-text text-muted">Rp @{{commission_2 ? number_format(commission_2) : 0 }}</small>
+					    		</validation-provider>
+						    </v-col>
+						    <v-col
+		    		          	cols="12"
+		    		          	md="6">
+						    	<v-menu
+				    		        v-model="menu4"
+				    		        :close-on-content-click="false"
+				    		        :nudge-right="40"
+				    		        transition="scale-transition"
+				    		        offset-y
+				    		        min-width="290px"
+				    		      >
+			    		        	<template v-slot:activator="{ on, attrs }">
+						    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
+				    		        <v-text-field
+				    		        	:value="reformatDateTime(form_data.payment_date_2, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+				    		            label="Tanggal Pembayaran"
+				    		            readonly
+				    		            v-bind="attrs"
+				    		            v-on="on"
+				    		        	:persistent-hint="true"
+							    		:error-messages="errors"
+				    		        ></v-text-field>
+						    		</validation-provider>
+			    		        	</template>
+			    		        	<v-date-picker name="payment_date_2" v-model="form_data.payment_date_2" @input="menu4 = false">
+			    		        	</v-date-picker>
+			    		        </v-menu>
+						    </v-col>
+					    </v-row>
+					    <v-row class="mt-4">
+					    	<v-col
+		    		          	cols="12"
+		    		          	md="6">
+					    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
+						    		<v-text-field
+						    		 	v-model="form_data.invoice_commission_2"
+							    		label="No Invoice"
+							    		name="invoice_commission_2"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+							    		:readonly="field_state">
+					    			</v-text-field>
+					    		</validation-provider>
+						    </v-col>
+					    	<v-col
+		    		          cols="12"
+		    		          md="6">
+					    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
+									<v-file-input 
+				    		            show-size
+				    		            chips 
+				    		            label="Upload Bukti Pembayaran"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+						              	name="payment_proof2">
+					              </v-file-input>
+					              <a :href="form_data.url_payment_proof_two" target="_blank" class="ml-8">
+					              	<small>@{{form_data.payment_proof_2}}</small>
+					              </a>
+					           </validation-provider>
+				          </v-col>
+					    </v-row>
+				    </div>
+			    </div>
+
+
 			    <h3 class="mt-5">Closing Fee</h3>
 			    <v-row>
     		        <v-col

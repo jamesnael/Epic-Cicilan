@@ -301,6 +301,13 @@ class AjbController extends Controller
     {
         $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
 
+        $query->whereDoesntHave('ajb', function($subquery) {
+            $subquery->where('approval_client_status', '=', 'Approved');
+            $subquery->where('approval_developer_status', '=', 'Approved');
+            $subquery->where('approval_notaris_status', '=', 'Approved');
+        })->orderBy('created_at', 'DESC');
+
+
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -336,7 +343,13 @@ class AjbController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->whereDoesntHave('ajb', function($subquery) {
+            $subquery->where('approval_client_status', '=', 'Approved');
+            $subquery->where('approval_developer_status', '=', 'Approved');
+            $subquery->where('approval_notaris_status', '=', 'Approved');
+        })->orderBy('created_at', 'DESC')
+        ->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->client_phone_number = $item->client->client_phone_number;
