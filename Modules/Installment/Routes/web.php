@@ -60,6 +60,10 @@ Route::group(['namespace' => 'Installment'], function() {
 });
 
 Route::group(['namespace' => 'PPJB'], function() {
+	Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
+	Route::get('PPJB/pendingtable', 'PPJBController@pendingtable')->name('PPJB.pendingtable');
+	Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
+	Route::resource('PPJB', 'PPJBController')->except(['show']);
 	// Route::resource('PPJB', 'PPJBController')->except(['show']);
 
 	Route::get('ppjb', 'PPJBController@index')->name('PPJB.index');

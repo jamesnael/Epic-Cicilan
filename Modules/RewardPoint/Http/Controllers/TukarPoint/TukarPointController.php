@@ -207,14 +207,43 @@ class TukarPointController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function createSales()
     {
         $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
 
-        return view('rewardpoint::TukarPoint.create', [
+        return view('rewardpoint::TukarPoint.create-sales', [
             'page' => $this,
         ])->with($this->getHelper());
     }
+
+
+    public function createAgent()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-agency', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
+    public function createKorwil()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-korwil', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
+    public function createKorut()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-korut', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
 
     public function data(RewardPoint $tukar_point)
     {
@@ -224,6 +253,8 @@ class TukarPointController extends Controller
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
+
+
 
     public function cancelSales($id)
     {
@@ -687,7 +718,14 @@ class TukarPointController extends Controller
     {
         return [
             'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
-            'reward_name' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->get(),
+            'reward_name_sales' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_sales')->get(),
+            'reward_name_agency' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_agency')->get(),
+            'reward_name_regional_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_regional_coordinator')->get(),
+            'reward_name_main_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_main_coordinator')->get(),
+                                    
+
+
+
             'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->user->full_name;

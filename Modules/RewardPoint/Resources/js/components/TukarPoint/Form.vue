@@ -38,7 +38,28 @@
                     return []
                 }
             },
-            filter_reward: {
+            filter_reward_sales: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
+            filter_reward_agency: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
+            filter_reward_regional_coordinator: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
+            filter_reward_main_coordinator: {
                 type: Array,
                 default: function () {
                     return []
@@ -88,7 +109,11 @@
                 sales: false,
                 dialog:false,
                 dialog1:false,
-                listStatus:['Aktif', 'Tidak Aktif'],
+                dialog2:false,
+                sales_level: 'Sales',
+                agent_level:'Agent',
+                korwil_level:'Korwil',
+                korut_level:'Korut',
                 form_data: {
                     category_reward_id: '',
                     reward_point_id:'',
@@ -102,12 +127,31 @@
 
         computed: {
 
-            computedCategoryName: function () {
+            computedRewardSales: function () {
                 if (this.form_data.category_reward_id) {
-                    return _.filter(this.filter_reward, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
+                    return _.filter(this.filter_reward_sales, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
+                }
+                return []
+            },
+             computedRewardAgency: function () {
+                if (this.form_data.category_reward_id) {
+                    return _.filter(this.filter_reward_agency, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
+                }
+                return []
+            },
+            computedRewardRegionalCoordinator: function () {
+                if (this.form_data.category_reward_id) {
+                    return _.filter(this.filter_reward_regional_coordinator, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
+                }
+                return []
+            },
+            computedRewardMainCoordinator: function () {
+                if (this.form_data.category_reward_id) {
+                    return _.filter(this.filter_reward_main_coordinator, (o) => { return o.category_reward_id == this.form_data.category_reward_id })
                 }
                 return []
             }
+           
            
         },
         mounted() {
@@ -170,6 +214,7 @@
                 }   
                 this.$refs.observer.reset()
             },
+
             postFormData() {
                 console.log('a')
                 const data = new FormData(this.$refs['post-form']);
@@ -273,8 +318,48 @@
 
 
 
-            setRewardPoint() {
-                let reward = _.find(this.computedCategoryName, o => { return o.value == this.form_data.reward_points})
+            setRedeemPointSales() {
+                let reward = _.find(this.computedRewardSales, o => { return o.value == this.form_data.reward_points})
+                console.log(reward);
+                if (_.isUndefined(reward)) {
+                    this.form_data.redeem_point = ''
+                } else {
+                    this.form_data.redeem_point_sales = reward.redeem_point_sales
+                    this.form_data.redeem_point_agency = reward.redeem_point_agency
+                    this.form_data.redeem_point_regional_coordinator = reward.redeem_point_regional_coordinator
+                    this.form_data.redeem_point_main_coordinator = reward.redeem_point_main_coordinator                    
+                }
+            },
+
+
+            setRedeemPointAgency() {
+                let reward = _.find(this.computedRewardAgency, o => { return o.value == this.form_data.reward_points})
+                console.log(reward);
+                if (_.isUndefined(reward)) {
+                    this.form_data.redeem_point = ''
+                } else {
+                    this.form_data.redeem_point_sales = reward.redeem_point_sales
+                    this.form_data.redeem_point_agency = reward.redeem_point_agency
+                    this.form_data.redeem_point_regional_coordinator = reward.redeem_point_regional_coordinator
+                    this.form_data.redeem_point_main_coordinator = reward.redeem_point_main_coordinator                    
+                }
+            },
+
+            setRedeemPointRegionalCoordinator() {
+                let reward = _.find(this.computedRewardRegionalCoordinator, o => { return o.value == this.form_data.reward_points})
+                console.log(reward);
+                if (_.isUndefined(reward)) {
+                    this.form_data.redeem_point = ''
+                } else {
+                    this.form_data.redeem_point_sales = reward.redeem_point_sales
+                    this.form_data.redeem_point_agency = reward.redeem_point_agency
+                    this.form_data.redeem_point_regional_coordinator = reward.redeem_point_regional_coordinator
+                    this.form_data.redeem_point_main_coordinator = reward.redeem_point_main_coordinator                    
+                }
+            },
+
+            setRedeemPointMainCoordinator() {
+                let reward = _.find(this.computedRewardMainCoordinator, o => { return o.value == this.form_data.reward_points})
                 console.log(reward);
                 if (_.isUndefined(reward)) {
                     this.form_data.redeem_point = ''

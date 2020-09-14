@@ -260,6 +260,112 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
+        $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb');
+        $query->whereHas('ppjb', function($subquery){ 
+            $subquery->where('approval_client_status', '!=', 'Pending');
+            $subquery->where('approval_developer_status', '!=', 'Pending');
+            $subquery->where('approval_notaris_status', '!=', 'Pending');
+            $subquery->where('ppjb_doc_sign_file_name', '!=', '');
+
+        });
+        $query->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('document', function($subquery) use ($generalSearch){
+                //Check if Search is Date
+                try {
+                    $check_date = \Carbon\Carbon::parse($generalSearch)->locale('id')->translatedFormat('y-m-d');
+                } catch (\Exception $e){
+                    $check_date = $generalSearch;
+                }
+
+                $subquery->where('submission_date', 'LIKE', '%' . $check_date . '%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency->agency_name ?? '';
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->ppjb_sign_date = $item->ppjb ? \Carbon\Carbon::parse($item->ppjb->ppjb_sign_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->ppjb_date = $item->document ? \Carbon\Carbon::parse($item->document->submission_date)->locale('id')->translatedFormat('d F Y') : '';
+            $item->approval_notaris_status = $item->ppjb->approval_notaris_status ?? 'Pending' ;
+            $item->approval_developer_status = $item->ppjb->approval_developer_status ?? 'Pending' ;
+            $item->approval_client_status = $item->ppjb->approval_client_status ?? 'Pending' ;
+            $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;
+            return $item;
+        });
+        return $data;
+    }
+
+    public function validateFormRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "booking_id" => "bail|required",
+        ]);
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function table(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+  public function getTableDataPending(Request $request)
+    {
         $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
@@ -326,19 +432,9 @@ class PPJBController extends Controller
         return $data;
     }
 
-    public function validateFormRequest($request, $id = null)
-    {
-        return Validator::make($request->all(), [
-            "booking_id" => "bail|required",
-        ]);
-    }
 
-    /**
-     *
-     * Handle incoming request for table data
-     *
-     */
-    public function table(Request $request)
+
+    public function pendingtable(Request $request)
     {
         $request->merge(['sort' => json_decode($request->input('sort'), true)]);
 
@@ -349,11 +445,12 @@ class PPJBController extends Controller
         }
 
         try {
-            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataPending($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
+
 
 
     public function data(Booking $PPJB)
