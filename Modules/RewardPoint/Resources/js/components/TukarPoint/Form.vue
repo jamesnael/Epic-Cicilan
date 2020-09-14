@@ -109,8 +109,11 @@
                 sales: false,
                 dialog:false,
                 dialog1:false,
-                dialog2:true,
-                listStatus:['Aktif', 'Tidak Aktif'],
+                dialog2:false,
+                sales_level: 'Sales',
+                agent_level:'Agent',
+                korwil_level:'Korwil',
+                korut_level:'Korut',
                 form_data: {
                     category_reward_id: '',
                     reward_point_id:'',

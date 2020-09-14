@@ -207,14 +207,43 @@ class TukarPointController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function createSales()
     {
         $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
 
-        return view('rewardpoint::TukarPoint.create', [
+        return view('rewardpoint::TukarPoint.create-sales', [
             'page' => $this,
         ])->with($this->getHelper());
     }
+
+
+    public function createAgent()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-agency', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
+    public function createKorwil()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-korwil', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
+    public function createKorut()
+    {
+        $this->breadcrumbs[] = ['href' => route('tukar-point.index'), 'text' => 'Tambah Tukar Point'];
+
+        return view('rewardpoint::TukarPoint.create-korut', [
+            'page' => $this,
+        ])->with($this->getHelper());
+    }
+
 
     public function data(RewardPoint $tukar_point)
     {
@@ -224,6 +253,8 @@ class TukarPointController extends Controller
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
+
+
 
     public function cancelSales($id)
     {

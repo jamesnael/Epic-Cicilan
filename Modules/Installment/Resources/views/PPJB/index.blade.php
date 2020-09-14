@@ -43,7 +43,7 @@
     </v-tab-item>
 
 
-    <v-tab>PPJB</v-tab>
+    <v-tab>Approved</v-tab>
       <v-tab-item> 	
 	<table-layout inline-template
 		uri="{{ route('PPJB.table') }}"

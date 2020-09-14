@@ -7,7 +7,7 @@
 	<tukarpoint-form inline-template
 	uri="{{ route('tukar-point.store') }}"
 	redirect-uri="{{ route('tukar-point.index') }}"
-	create-uri="{{ route('tukar-point.create') }}"
+	create-uri="{{ route('tukar-point-korwil.create') }}"
 	:filter_category='@json($category)'
 
 
@@ -21,7 +21,7 @@
 	:filter_korut='@json($korut_name)'
 	:filter_korwil='@json($korwil_name)'
 	>
-		@include('rewardpoint::TukarPoint.form')
+		@include('rewardpoint::TukarPoint.form-korwil')
 	</tukarpoint-form>
  	
 @endsection
