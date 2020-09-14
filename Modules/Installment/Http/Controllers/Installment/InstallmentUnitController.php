@@ -23,7 +23,7 @@ class InstallmentUnitController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth'])->except(['data']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('installment.index'), 'text' => 'Data Pembayaran Cicilan'],
@@ -247,11 +247,24 @@ class InstallmentUnitController extends Controller
 
         DB::beginTransaction();
         try {
-            
-             $data = $payment->update($request->all());
+
+
+            $payment->update([
+                'payment_status' => 'Paid',
+                'payment_date' => $request->payment_date,
+                'payment_method' => $request->payment_method,
+                'total_paid' => $request->total_paid,
+            ]);
+        
+            $booking = $payment->booking;
+            if (count($booking->unpaid_payments) == 0) {
+                $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                $booking->save();
+
+            }
 
             DB::commit();
-            return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $data);
+            return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $payment);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

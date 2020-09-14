@@ -11,32 +11,61 @@
             "sortable" => false,
             "value" => 'actions',
         ];
-        $page->table_headers = collect($page->table_headers)->prepend([
+        $page->table_headers_pending = collect($page->table_headers)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
+
+        $page->table_headers_approved = collect($page->table_headers_approved)->prepend([
             "text" => '#',
             "align" => 'center',
             "sortable" => false,
             "value" => 'table_index',
         ])->values();
 	@endphp
-	<table-layout inline-template
-		uri="{{ route('ajb.table') }}"
-		:headers='@json($page->table_headers)'
-		no-data-text="Tidak ada data ditemukan."
-		no-results-text="Tidak ada data ditemukan."
-		search-text="Pencarian"
-		refresh-text="Muat Ulang"
-		items-per-page-all-text="Semua"
-		items-per-page-text="Tampilkan"
-		page-text-locale="id"
-		{{-- add-new-uri="{{ route('ajb.create') }}"
-		add-new-text="Tambah"
-		add-new-color="light-blue lighten-2" --}}
-		edit-uri="ajb.edit"
-		edit-uri-parameter="slug"
-		edit-text="Edit AJB"
-		>
-		
-		@include('components.table')
-	</table-layout>
+
+	<v-tabs>
+	    <v-tab>Pending</v-tab>
+      	<v-tab-item>
+			<table-layout inline-template
+				uri="{{ route('ajb.table') }}"
+				:headers='@json($page->table_headers_pending)'
+				no-data-text="Tidak ada data ditemukan."
+				no-results-text="Tidak ada data ditemukan."
+				search-text="Pencarian"
+				refresh-text="Muat Ulang"
+				items-per-page-all-text="Semua"
+				items-per-page-text="Tampilkan"
+				page-text-locale="id"
+				edit-uri="ajb.edit"
+				edit-uri-parameter="slug"
+				edit-text="Edit AJB"
+				>
+				
+				@include('components.table')
+			</table-layout>
+		</v-tab-item>
+
+		<v-tab>Approved</v-tab>
+      	<v-tab-item>
+      		<table-layout inline-template
+				uri="{{ route('ajb.table.approved') }}"
+				:headers='@json($page->table_headers_approved)'
+				no-data-text="Tidak ada data ditemukan."
+				no-results-text="Tidak ada data ditemukan."
+				search-text="Pencarian"
+				refresh-text="Muat Ulang"
+				items-per-page-all-text="Semua"
+				items-per-page-text="Tampilkan"
+				page-text-locale="id"
+				>
+				
+				@include('components.table')
+			</table-layout>
+		</v-tab-item>
+	</v-tabs>
+
 
 @endsection

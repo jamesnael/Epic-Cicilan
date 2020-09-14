@@ -93,6 +93,69 @@ class AjbController extends Controller
                 "value" => 'approved_bank',
             ],
         ];
+
+        $this->table_headers_approved = [
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'No. Handphone',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_phone_number',
+            ],
+            [
+                "text" => 'Data Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Sales',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Sub Agent',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'agency_name',
+            ],
+            [
+                "text" => 'Approval Pembeli',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_client',
+            ],
+            [
+                "text" => 'Approval Developer',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_developer',
+            ],
+            [
+                "text" => 'Approval Notaris',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_bank',
+            ],
+        ];
         return view('installment::ajb.index', [
             'page' => $this,
         ]);
@@ -236,7 +299,7 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -307,6 +370,95 @@ class AjbController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataApproved(Request $request)
+    {
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
+        $query->whereHas('ajb', function($subquery) {
+            $subquery->where('approval_client_status', '=', 'Approved');
+            $subquery->where('approval_developer_status', '=', 'Approved');
+            $subquery->where('approval_notaris_status', '=', 'Approved');
+        })->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('client_mobile_number', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->client_phone_number = $item->client->client_phone_number;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->sales_name = $item->sales->user->full_name ?? '';
+            $item->agency_name = $item->sales->agency->agency_name ?? '';
+            $item->approved_client = $item->ajb->approval_client_status ?? '';
+            $item->approved_bank = $item->ajb->approval_notaris_status ?? '';
+            $item->approved_developer = $item->ajb->approval_developer_status ?? '';
+            
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableApproved(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataApproved($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

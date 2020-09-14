@@ -95,6 +95,64 @@ class AkadController extends Controller
                 "value" => 'approved_developer',
             ],
         ];
+
+        $this->table_headers_approved = [
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Data Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Sales',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Sub Agent',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'agency_name',
+            ],
+            [
+                "text" => 'Approval Pembeli',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_client',
+            ],
+            [
+                "text" => 'Approval Bank',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_bank',
+            ],
+            [
+                "text" => 'Approval Developer',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'approved_developer',
+            ],
+        ];
+
         return view('installment::akad.index', [
             'page' => $this,
         ]);
@@ -176,7 +234,7 @@ class AkadController extends Controller
                 $data = AkadKpr::create($request->all());
             }
 
-            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved' && $request->has('akad_doc_sign_file_name')) {
                 $akad->booking_status = 'ajb_handover';
                 $akad->save();
             }
@@ -244,7 +302,12 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb');
+
+        $query->whereHas('akad_kpr', function($subquery) {
+            $subquery->where('akad_doc_sign_file_name', NULL);
+        })->orderBy('created_at', 'DESC');
+
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -278,7 +341,7 @@ class AkadController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
@@ -312,6 +375,86 @@ class AkadController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+     /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataApproved(Request $request)
+    {
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->sales_name = $item->sales->user->full_name ?? '';
+            $item->agency_name = $item->sales->agency->agency_name ?? '';
+            $item->approved_client = $item->akad_kpr->approval_client_status ?? '';
+            $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? '';
+            $item->approved_developer = $item->akad_kpr->approval_developer_status ?? '';
+            $item->sisa_tunggakan = $item->sisa_tunggakan;
+            
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableApproved(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataApproved($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

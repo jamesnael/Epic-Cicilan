@@ -295,7 +295,7 @@ if (! function_exists('aside_menu')) {
                     ],
                     [
                         'icon' => 'mdi-account-cash-outline',
-                        'text' => 'Cicilan',
+                        'text' => 'Edit Cicilan',
                         'uri' => route('installment.index'),
                         'model' => in_array(Route::currentRouteName(), ['installment.index','installment.create','installment.edit'])
                     ]

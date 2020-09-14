@@ -469,7 +469,7 @@
 
                                         <v-list-item>
                                             <v-list-item-content><strong>Total Pembayaran:</strong></v-list-item-content>
-                                            <v-list-item-content class="align-end"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
+                                            <v-list-item-content class="align-end" v-model="total"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
                                         </v-list-item>
                                     </v-list>
                                 </v-card>
