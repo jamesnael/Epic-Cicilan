@@ -250,6 +250,7 @@
 		          </v-col>
 				</v-row>
 
+				<div v-if="form_data.ajb_date"></div>
 				<v-row>
 					<v-col
     		          cols="12"
@@ -320,6 +321,7 @@
 			            </validation-provider>
 		          </v-col>
 				</v-row>
+				</div>
 
 	            <v-btn
 		      		class="mt-4"

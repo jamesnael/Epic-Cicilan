@@ -242,77 +242,79 @@
 			            </validation-provider>
 		          </v-col>
 		        </v-row>
-
-				<v-row>
-					<v-col
-    		          cols="12"
-    		          md="12">
-					    <h3 class="mt-4">Approval Akad</h3>
-			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
-							<v-select
-					        v-model="form_data.approval_client_status"
-					        :items="['Pending', 'Approved']"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        label="Approval Pembeli"
-					        name="approval_client_status"
-					      ></v-select>
-						</validation-provider>
-		          </v-col>
-				</v-row>
-				<v-row>
-					<v-col
-    		          cols="12"
-    		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
-	    		          	<v-select
-					        v-model="form_data.approval_notaris_status"
-					        :items="['Pending', 'Approved']"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        label="Approval Bank"
-					        name="approval_notaris_status"
-					      ></v-select>
-					    </validation-provider>
-    		        </v-col>
-    		    </v-row>
-    		    <v-row>
-					<v-col
-    		          cols="12"
-    		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
-	    		          	<v-select
-					        v-model="form_data.approval_developer_status"
-					        :items="['Pending', 'Approved']"
-				    		:persistent-hint="true"
-				    		:error-messages="errors"
-					        label="Approval Developer"
-					        name="approval_developer_status"
-					      ></v-select>
-					   	</validation-provider>
-    		        </v-col>
-    		    </v-row>
-    		    <v-row>
-					<v-col
-    		          cols="12"
-    		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Dokumen akhir" rules="">
-							<v-file-input 
-		    		            show-size
-		    		            chips 
-		    		            counter 
-		    		            label="Dokumen Yang Sudah Ditandatangani"
-		    		            v-model="form_data.dokumen_akhir"
+				
+				<div v-if="form_data.url_dokumen_awal">
+					<v-row>
+						<v-col
+	    		          cols="12"
+	    		          md="12">
+						    <h3 class="mt-4">Approval Akad</h3>
+				    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
+								<v-select
+						        v-model="form_data.approval_client_status"
+						        :items="['Pending', 'Approved']"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-				              	name="dokumen_akhir">
-			              </v-file-input>
-			              <a :href="form_data.url_dokumen_akhir" target="_blank" class="ml-8">
-			              	<small>@{{form_data.dokumen_akhir_akad}}</small>
-			              </a>
-			            </validation-provider>
-		          </v-col>
-				</v-row>
+						        label="Approval Pembeli"
+						        name="approval_client_status"
+						      ></v-select>
+							</validation-provider>
+			          </v-col>
+					</v-row>
+					<v-row>
+						<v-col
+	    		          cols="12"
+	    		          md="12">
+				    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
+		    		          	<v-select
+						        v-model="form_data.approval_notaris_status"
+						        :items="['Pending', 'Approved']"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+						        label="Approval Bank"
+						        name="approval_notaris_status"
+						      ></v-select>
+						    </validation-provider>
+	    		        </v-col>
+	    		    </v-row>
+	    		    <v-row>
+						<v-col
+	    		          cols="12"
+	    		          md="12">
+				    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
+		    		          	<v-select
+						        v-model="form_data.approval_developer_status"
+						        :items="['Pending', 'Approved']"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+						        label="Approval Developer"
+						        name="approval_developer_status"
+						      ></v-select>
+						   	</validation-provider>
+	    		        </v-col>
+	    		    </v-row>
+	    		    <v-row>
+						<v-col
+	    		          cols="12"
+	    		          md="12">
+				    		<validation-provider v-slot="{ errors }" name="Dokumen akhir" rules="">
+								<v-file-input 
+			    		            show-size
+			    		            chips 
+			    		            counter 
+			    		            label="Dokumen Yang Sudah Ditandatangani"
+			    		            v-model="form_data.dokumen_akhir"
+						    		:persistent-hint="true"
+						    		:error-messages="errors"
+					              	name="dokumen_akhir">
+				              </v-file-input>
+				              <a :href="form_data.url_dokumen_akhir" target="_blank" class="ml-8">
+				              	<small>@{{form_data.dokumen_akhir_akad}}</small>
+				              </a>
+				            </validation-provider>
+			          </v-col>
+					</v-row>
+				</div>
 
 	            <v-btn
 		      		class="mt-4"

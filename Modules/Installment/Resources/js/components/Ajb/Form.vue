@@ -19,6 +19,10 @@
             ValidationProvider
         },
         props: {
+            slug: {
+                type: String,
+                required: true
+            },
             uri: {
                 type: String,
                 required: true
@@ -86,7 +90,6 @@
                         .then(response => {
                             if (response.data.success) {
                                 let data = response.data.data
-                                console.log(data)
                                 this.form_data = {
                                     booking_id:data.id,
                                     client_name:data.client.client_name,

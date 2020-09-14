@@ -75,12 +75,14 @@ Route::group(['namespace' => 'PPJB'], function() {
 Route::group(['namespace' => 'Akad'], function() {
 	Route::get('akad/table', 'AkadController@table')->name('akad.table');
 	Route::get('akad/{akad}/data', 'AkadController@data')->name('akad.data');
+	Route::get('akad/table-approved', 'AkadController@tableApproved')->name('akad.table.approved');
 	Route::resource('akad', 'AkadController')->except(['show','destroy', 'create', 'store']);
 });
 
 Route::group(['namespace' => 'Ajb'], function() {
 	Route::get('ajb/table', 'AjbController@table')->name('ajb.table');
 	Route::get('ajb/{ajb}/data', 'AjbController@data')->name('ajb.data');
+	Route::get('ajb/table-approved', 'AjbController@tableApproved')->name('ajb.table.approved');
 	Route::resource('ajb', 'AjbController')->except(['show','destroy', 'create', 'store']);
 });
 

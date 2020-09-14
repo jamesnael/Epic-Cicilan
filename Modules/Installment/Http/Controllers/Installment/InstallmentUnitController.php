@@ -239,8 +239,17 @@ class InstallmentUnitController extends Controller
 
         DB::beginTransaction();
         try {
-            
-             $data = $payment->update($request->all());
+
+            $request->merge([
+               'payment_status' => 'Paid',
+            ]);
+
+            $data = $payment->update($request->all());
+
+             if (count($installment_unit->unpaid_payments) == 0) {
+                $installment_unit->booking_status = $installment_unit->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                $installment_unit->save();
+            }
 
             DB::commit();
             return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $data);
