@@ -26,7 +26,7 @@ class InstallmentUnitController extends Controller
         $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('installment.index'), 'text' => 'Data Cicilan'],
+            ['href' => route('installment.index'), 'text' => 'Data Pembayaran Cicilan'],
         ];
     }
 
@@ -124,6 +124,12 @@ class InstallmentUnitController extends Controller
                 "value" => 'installment',
             ],
             [
+                "text" => 'Cara Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
                 "text" => 'Tanggal Pembayaran',
                 "align" => 'center',
                 "sortable" => false,
@@ -213,13 +219,15 @@ class InstallmentUnitController extends Controller
      * Validation Rules for Store/Update Data
      *
      */
-    public function validateFormRequest($request, $id = null)
+    public function validateFormRequest($request, $value)
     {
         return Validator::make($request->all(), [
-            "total_paid" => "bail|required|numeric",
+            "total_paid" => "bail|required|numeric|size:".$value,
             "payment_date" => "bail|required",
             "payment_method" => "bail|required",
             "description" => "bail|nullable",
+        ],[
+            "total_paid.size" => "Jumlah pembayaran tidak sesuai."
         ]);
     }
 
@@ -231,7 +239,7 @@ class InstallmentUnitController extends Controller
      */
     public function payment(Request $request, Booking $installment_unit, BookingPayment $payment)
     {
-        $validator = $this->validateFormRequest($request, $payment->id);
+        $validator = $this->validateFormRequest($request, $payment->installment + ($payment->fine * $payment->number_of_delays));
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
