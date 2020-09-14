@@ -215,15 +215,58 @@
 			    	</v-col>
 			    </v-row>
 
-			    <v-row v-if="form_data.user_name !== ''">
+			    <v-row>
     		       <v-col
     		          	cols="12"
     		          	md="12">
-			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" >
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Sales' " >
 				    		<v-autocomplete
 			    			v-model="form_data.reward_points"
-			    			@input="setRewardPoint()"
-			    			:items="computedCategoryName" 
+			    			@input="setRedeemPointSales()"
+			    			@click="dialog2 = true"
+			    			:items="computedRewardSales" 
+			    			label="Nama Reward Point"
+			    			name="reward_point_id"
+				    		hint="* harus diisi"
+				    		:persistent-hint="true"
+				    		:error-messages="errors"
+				    		:readonly="field_state"
+			            	></v-autocomplete>
+			    		</validation-provider>
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Agent' " >
+				    		<v-autocomplete
+			    			v-model="form_data.reward_points"
+			    			@input="setRedeemPointAgency()"
+			    			@click="dialog2 = true"
+			    			:items="computedRewardAgency" 
+			    			label="Nama Reward Point"
+			    			name="reward_point_id"
+				    		hint="* harus diisi"
+				    		:persistent-hint="true"
+				    		:error-messages="errors"
+				    		:readonly="field_state"
+			            	></v-autocomplete>
+			    		</validation-provider>
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Korwil' " >
+				    		<v-autocomplete
+			    			v-model="form_data.reward_points"
+			    			@input="setRedeemPointRegionalCoordinator()"
+			    			@click="dialog2 = true"
+			    			:items="computedRewardRegionalCoordinator" 
+			    			label="Nama Reward Point"
+			    			name="reward_point_id"
+				    		hint="* harus diisi"
+				    		:persistent-hint="true"
+				    		:error-messages="errors"
+				    		:readonly="field_state"
+			            	></v-autocomplete>
+			    		</validation-provider>
+			    		<validation-provider v-slot="{ errors }" name="Nama Reward Point" rules="required" v-if="form_data.user_name !== '' && form_data.level == 'Korut' " >
+				    		<v-autocomplete
+			    			v-model="form_data.reward_points"
+			    			@input="setRedeemPointMainCoordinator()"
+			    			@click="dialog2 = true"
+			    			:items="computedRewardMainCoordinator" 
 			    			label="Nama Reward Point"
 			    			name="reward_point_id"
 				    		hint="* harus diisi"
@@ -405,6 +448,36 @@
 
 				</template>
 		    	
+				<template>
+				    <v-dialog
+				      v-model="dialog2"
+				      max-width="290"
+				      v-if="form_data.sisa_point < form_data.redeem_point_sales"
+				    >
+				      <v-card>
+				        <v-card-title class="headline">Warning</v-card-title>
+
+				        <v-card-text>
+				        	Maaf point anda tidak cukup untuk menukarkan reward ini.
+				        </v-card-text>
+
+				        <v-card-actions>
+				          <v-spacer></v-spacer>
+
+				          <v-btn
+				            color="blue darken-1"
+				            text
+				            @click="dialog2 = false,form_data.reward_points = null,form_data.redeem_point_sales = null,form_data.redeem_point_agency = null,form_data.redeem_point_regional_coordinator = null,form_data.redeem_point_main_coordinator = null"
+
+				          >
+				            Tutup
+				          </v-btn>
+				        </v-card-actions>
+				      </v-card>
+				    </v-dialog>
+				</template>
+
+
 	    	</form>
 	    </validation-observer>
     </v-card>

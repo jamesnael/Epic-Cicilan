@@ -687,7 +687,14 @@ class TukarPointController extends Controller
     {
         return [
             'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
-            'reward_name' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->get(),
+            'reward_name_sales' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_sales')->get(),
+            'reward_name_agency' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_agency')->get(),
+            'reward_name_regional_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_regional_coordinator')->get(),
+            'reward_name_main_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_main_coordinator')->get(),
+                                    
+
+
+
             'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->user->full_name;
