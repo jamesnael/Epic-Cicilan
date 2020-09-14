@@ -3,17 +3,16 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
     		<h3>Data Tukar Point Sales</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		</v-row>
 	    		
-	    		 <validation-provider v-slot="{ errors }" name="Level" rules="">
-				    		<v-text-field
-			    			v-model="sales_level"
-			    			label="level"
-			              	name="level"
-			              	 v-show=""
-				    		:error-messages="errors"
+	    		<validation-provider v-slot="{ errors }" name="Level" rules="">
+				   <v-text-field
+			    	v-model="sales_level"
+			    	label="level"
+			        name="level"
+			        v-show=""
+				    :error-messages="errors"
 			            	></v-text-field>
-			    		</validation-provider>
+			    </validation-provider>
 
 
 			  	<v-row>
@@ -192,7 +191,7 @@
 				          <v-btn
 				            color="blue darken-1"
 				            text
-				            @click="dialog2 = false,form_data.reward_points = null,form_data.redeem_point_sales = null"
+				            @click="dialog2 = false,form_data.reward_points = null,form_data.redeem_point_sales = '-'"
 
 				          >
 				            Tutup
