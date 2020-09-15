@@ -33,8 +33,8 @@
                 ],
                 value: '',
                 events: [],
-                colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-                names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+                colors: ['blue', 'green', 'deep-purple', 'cyan'],
+                names: ['Schedule Akad', 'AJB', 'Handover Unit', 'SPR', 'PPJB'],
         	}
         },
         mounted() {
