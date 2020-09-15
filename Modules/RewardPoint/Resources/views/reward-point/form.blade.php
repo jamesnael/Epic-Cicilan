@@ -43,7 +43,7 @@
 	    		<v-row align="center" class="mt-4">
 			        <v-checkbox
 			          hide-details
-			          v-model="main_coordinator"
+			          v-model="form_data.main_coordinator"
 			          class="shrink mr-2 mt-0"
 			        ></v-checkbox>
 		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': main_coordinator}">
@@ -59,7 +59,7 @@
 				</v-row>
 	    		<v-row align="center" class="mt-4">
 			        <v-checkbox
-				        v-model="regional_coordinator"
+				        v-model="form_data.regional_coordinator"
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
@@ -76,7 +76,7 @@
 			    </v-row>
 	    		<v-row align="center" class="mt-4">
 			        <v-checkbox
-				        v-model="agency"
+				        v-model="form_data.agency"
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
@@ -93,7 +93,7 @@
 			    </v-row>
 	    		<v-row align="center" class="mt-4">
 			        <v-checkbox
-				        v-model="sales"
+				        v-model="form_data.sales"
 				        hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
