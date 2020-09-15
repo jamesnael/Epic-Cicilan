@@ -328,18 +328,18 @@
 					    		:error-messages="errors"
 				              	name="file_upload">
 			              </v-file-input>
-			              <a :href="form_data.file_upload" target="_blank" class="ml-8">
+			              <a :href="form_data.file_upload" target="_blank" class="ml-8" v-if="form_data.file_upload !== ''">
 			              	<small>@{{form_data.handover_doc_file_name}}</small>
 			              </a>
 
 			           </validation-provider>
 		          </v-col>
 				</v-row>            
+			    <h3 class="mt-4" v-if="form_data.handover_doc_file_name_data != null">Approval Serah Terima Unit</h3>
 				<v-row v-if="form_data.handover_doc_file_name_data != null">
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Approval Serah Terima Unit</h3>
 			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 					      <v-select
 					        v-model="form_data.approval_client_status"
@@ -391,19 +391,19 @@
     		    	<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Surat Serah Terima Unit yang sudah ditandatangani" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Surat Serah Terima Unit yang telah ditandatangani" rules="">
 			              	<v-file-input 
 		    		            show-size
 		    		            chips 
 		    		            counter 
 		    		            multiple 
-		    		            label="Upload Surat Serah Terima Unit yang sudah ditandatangani"
+		    		            label="Upload Surat Serah Terima Unit yang telah ditandatangani"
 		    		            v-model="form_data.handover_doc_sign_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="sign_upload">
 			              </v-file-input>
-			              <a :href="form_data.sign_upload" target="_blank" class="ml-8">
+			              <a :href="form_data.sign_upload" target="_blank" class="ml-8" v-if="form_data.sign_upload">
 			              	<small>@{{form_data.handover_doc_sign_name}}</small>
 			              </a>
 			            </validation-provider>
