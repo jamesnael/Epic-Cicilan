@@ -1,0 +1,1 @@
+Vue.component('dashboard-layout', require('./components/Dashboard/Form.vue').default);

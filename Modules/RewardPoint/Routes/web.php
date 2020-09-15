@@ -12,9 +12,18 @@
 */
 
 Route::group(['namespace' => 'Point'], function() {
-	Route::get('point/table', 'PointController@table')->name('point.table');
-	Route::get('point/{point}/data', 'PointController@data')->name('point.data');
-	Route::resource('point', 'PointController')->except(['show']);
+	// Route::get('tipe-unit/table', 'PointController@table')->name('point.table');
+	// Route::get('tipe-unit/{point}/data', 'PointController@data')->name('point.data');
+	// Route::resource('point', 'PointController')->except(['show']);
+
+	Route::get('tipe-unit', 'PointController@index')->name('point.index');
+	Route::post('tipe-unit', 'PointController@store')->name('point.store');
+	Route::get('tipe-unit/table', 'PointController@table')->name('point.table');
+	Route::get('tipe-unit/tambah', 'PointController@create')->name('point.create');
+	Route::get('tipe-unit/{point}/data', 'PointController@data')->name('point.data');
+	Route::put('tipe-unit/{point}', 'PointController@update')->name('point.update');
+	Route::get('tipe-unit/{point}/ubah', 'PointController@edit')->name('point.edit');
+	Route::delete('tipe-unit/{point}', 'PointController@destroy')->name('point.destroy');
 });
 
 Route::group(['namespace' => 'RewardPoint'], function() {

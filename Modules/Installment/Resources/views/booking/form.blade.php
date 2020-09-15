@@ -9,7 +9,7 @@
 		    			v-model="form_data.id_unit_type" 
 		    			@input="setSelectedUnitType()"
 		              	:items="filter_unit_type"
-		              	label="Tipe Rumah"
+		              	label="Tipe Unit"
 		              	name="id_unit_type"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"

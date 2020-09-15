@@ -7,5 +7,6 @@
     "Installment": true,
     "DocumentClient": true,
     "Payment": true,
-    "Core": true
+    "Core": true,
+    "Dashboard": true
 }

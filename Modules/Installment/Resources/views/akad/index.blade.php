@@ -19,7 +19,7 @@
             "value" => 'table_index',
         ])->values();
 
-        $page->table_headers_approved = collect($page->table_headers_approved)->prepend([
+        $page->table_headers_approved = collect($page->table_headers)->prepend([
             "text" => '#',
             "align" => 'center',
             "sortable" => false,
@@ -62,9 +62,9 @@
 				items-per-page-all-text="Semua"
 				items-per-page-text="Tampilkan"
 				page-text-locale="id"
-				{{-- edit-uri="akad.edit"
+				edit-uri="akad.edit"
 				edit-uri-parameter="slug"
-				edit-text="Edit Akad" --}}
+				edit-text="Edit Akad"
 				>
 				
 				@include('components.table')

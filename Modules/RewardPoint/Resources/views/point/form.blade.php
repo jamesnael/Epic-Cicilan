@@ -2,12 +2,12 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		<validation-provider v-slot="{ errors }" name="Tipe bangunan" rules="required|max:255">
+	    		<validation-provider v-slot="{ errors }" name="Tipe unit" rules="required|max:255">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.building_type"
 		    			name="building_type"
-			    		label="Tipe Bangunan"
+			    		label="Tipe Unit"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:counter="255"

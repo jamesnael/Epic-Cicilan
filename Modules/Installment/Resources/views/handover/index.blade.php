@@ -63,4 +63,5 @@
 				@include('components.table')
 			</table-layout>
 		</v-tab-item>
+	</v-tabs>
 @endsection

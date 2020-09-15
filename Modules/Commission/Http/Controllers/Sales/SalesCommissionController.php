@@ -122,13 +122,13 @@ class SalesCommissionController extends Controller
                 "text" => 'Pencairan 1 (50%)',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'payment_1',
+                "value" => 'payment_status_1',
             ],
             [
                 "text" => 'Pencairan 2 (50%)',
                 "align" => 'center',
                 "sortable" => true,
-                "value" => 'payment_2',
+                "value" => 'payment_status_2',
             ],
         ];
         return view('commission::salescommission.index', [
@@ -395,6 +395,26 @@ class SalesCommissionController extends Controller
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - (($item->komisi_bruto * $item->pph_21) /100);
             $item->bruto ='Rp '.format_money($item->komisi_bruto); 
             $item->final ='Rp '.format_money($item->komisi_final); 
+            
+            $item->payment_date_1 = $item->commission ? $item->commission->payment_date_1 : '';
+            $item->payment_proof_1 = $item->commission ? $item->commission->payment_proof_1 : '';
+            $item->payment_date_2 = $item->commission ? $item->commission->payment_date_2 : '';
+            $item->payment_proof_2 = $item->commission ? $item->commission->payment_proof_2 : '';
+
+            if ($item->payment_date_1 && $item->payment_proof_1) {
+                $item->payment_status_1 = "Sudah Bayar";
+            }else{
+                $item->payment_status_1 = "Belum Bayar";
+
+            }
+
+            if ($item->payment_date_2 && $item->payment_proof_2) {
+                $item->payment_status_2 = "Sudah Bayar";
+            }else{
+                $item->payment_status_2 = "Belum Bayar";
+
+            }
+
             $item->payment_1 = 'Rp '.format_money($item->komisi_final / 2);
             $item->payment_2 = 'Rp '.format_money($item->komisi_final / 2);
 

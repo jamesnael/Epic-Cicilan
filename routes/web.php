@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'HomeController@index')->middleware('auth');
+// Route::get('/', 'HomeController@index')->middleware('auth');
 
 Route::group(['namespace' => 'Auth'], function() {
 

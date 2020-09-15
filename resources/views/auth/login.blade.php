@@ -102,7 +102,7 @@
                                 v-bind="attrs"
                                 @click="formAlert = false"
                             >
-                                <v-icon>mdi-close</v-icon>
+                                {{-- <v-icon>mdi-close</v-icon> --}}
                             </v-btn>
                         </template>
                     </v-snackbar>

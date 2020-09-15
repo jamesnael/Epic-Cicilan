@@ -21,7 +21,7 @@ class PointController extends Controller
         $this->middleware(['auth']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
-            ['href' => route('point.index'), 'text' => 'Data Tipe Bangunan'],
+            ['href' => route('point.index'), 'text' => 'Data Tipe Unit'],
         ];
     }
 
@@ -33,7 +33,7 @@ class PointController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Tipe Bangunan ',
+                "text" => 'Tipe Unit ',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'building_type',
@@ -62,7 +62,7 @@ class PointController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('point.index'), 'text' => 'Tambah  Tipe Bangunan'];
+        $this->breadcrumbs[] = ['href' => route('point.index'), 'text' => 'Tambah  Tipe Unit'];
 
         return view('rewardpoint::point.create', [
             'page' => $this,
@@ -87,7 +87,7 @@ class PointController extends Controller
         try {
             $data = Point::create($request->all());
             DB::commit();
-            return response_json(true, null, 'Data tipe bangunan berhasil disimpan.', $data);
+            return response_json(true, null, 'Data tipe unit berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -101,7 +101,7 @@ class PointController extends Controller
      */
     public function edit(Point $point)
     {
-        $this->breadcrumbs[] = ['href' => route('point.edit', [$point->slug]), 'text' => 'Edit Tipe Bangunan ' . $point->building_type];
+        $this->breadcrumbs[] = ['href' => route('point.edit', [$point->slug]), 'text' => 'Edit Tipe Unit ' . $point->building_type];
 
         return view('rewardpoint::point.edit', [
             'page' => $this,
@@ -128,7 +128,7 @@ class PointController extends Controller
         try {
             $data = $point->update($request->all());
             DB::commit();
-            return response_json(true, null, 'Data tipe bangunan berhasil disimpan.', $data);
+            return response_json(true, null, 'Data tipe unit berhasil disimpan.', $data);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -147,7 +147,7 @@ class PointController extends Controller
         try {
             $point->delete();
             DB::commit();
-            return response_json(true, null, 'Data tipe bangunan berhasil dihapus.');
+            return response_json(true, null, 'Data tipe unit berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');

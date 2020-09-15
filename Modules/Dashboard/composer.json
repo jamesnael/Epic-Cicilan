@@ -1,0 +1,25 @@
+{
+    "name": "total-it/dashboard",
+    "description": "",
+    "authors": [
+        {
+            "name": "TOTAL IT",
+            "email": "info@totalit.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Dashboard\\Providers\\DashboardServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Dashboard\\": ""
+        }
+    }
+}

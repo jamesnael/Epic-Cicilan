@@ -165,12 +165,12 @@
 			          cols="12"
 			          md="6"
 			        >
-			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
+			          	<validation-provider v-slot="{ errors }" name="Tipe Komisi" rules="">
 				    		<v-autocomplete
 				    			v-model="form_data.id_commission"
 				    			:items="filter_agency_commission" 
 				    			@input="setSelectedAgency()"
-				              	label="Komisi Sub Agent (%)"
+				              	label="Tipe Komisi"
 				              	name="id_commission"
 				              	menu-props="auto"
 					    		:persistent-hint="true"
@@ -185,7 +185,7 @@
 			            	  			<tr>
 			            	  				<td width="35%">Tipe Komisi</td>
 			            	  				<td>:</td>
-			            	  				<td width="60%">@{{ data.item.commission_type }}</td>
+			            	  				<td width="60%">@{{ data.item.text }}</td>
 			            	  			</tr>
 			            	  			<tr>
 			            	  				<td>Koordinator Utama</td>
@@ -200,7 +200,7 @@
 			            	  			<tr>
 			            	  				<td>Sub Agent</td>
 			            	  				<td>:</td>
-			            	  				<td>@{{ data.item.text }} %</td>
+			            	  				<td>@{{ data.item.agency_commission }} %</td>
 			            	  			</tr>
 			            	  		</table>
 			            	  	</template>
@@ -208,19 +208,19 @@
 	    				</validation-provider>
 			        </v-col>
 			        <v-text-field
-			           v-model="form_data.agency_commission"
+			           v-model="form_data.commission_type"
 			           v-show=false
-			           name="agency_commission">
+			           name="commission_type">
 			        </v-text-field>
 			        <v-col
 			          cols="12"
 			          md="6"
 			        >
-			          	<validation-provider v-slot="{ errors }" name="Tipe komisi" rules="">
+			          	<validation-provider v-slot="{ errors }" name="Komisi sub agent" rules="">
 				    		<v-text-field
-				    			v-model="form_data.commission_type"
-				              	label="Tipe Komisi"
-				              	name="commission_type"
+				    			v-model="form_data.agency_commission"
+				              	label="Komisi Sub Agent (%)"
+				              	name="agency_commission"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
