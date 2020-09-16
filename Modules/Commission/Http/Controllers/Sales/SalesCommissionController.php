@@ -276,6 +276,38 @@ class SalesCommissionController extends Controller
                  $data->payment_proof_2 = $file_name;
             }
 
+            if ($request->hasFile('korwil_payment_proof1')) {
+                $file_name = 'komisi-korwil-1-' . uniqid() . '.' . $request->file('korwil_payment_proof1')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korwil_payment_proof1'), $file_name
+                );
+
+                $data->korwil_payment_proof_1 = $file_name;
+            }
+
+            if ($request->hasFile('korwil_payment_proof2')) {
+                $file_name = 'komisi-korwil-2-' . uniqid() . '.' . $request->file('korwil_payment_proof2')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korwil_payment_proof2'), $file_name
+                );
+
+                 $data->korwil_payment_proof_2 = $file_name;
+            }
+
+            if ($request->hasFile('korut_payment_proof1')) {
+                $file_name = 'komisi-korut-1-' . uniqid() . '.' . $request->file('korut_payment_proof1')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korut_payment_proof1'), $file_name
+                );
+
+                $data->korut_payment_proof_1 = $file_name;
+            }
+
+            if ($request->hasFile('korut_payment_proof2')) {
+                $file_name = 'komisi-korut-2-' . uniqid() . '.' . $request->file('korut_payment_proof2')->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('Komisi', $request->file('korut_payment_proof2'), $file_name
+                );
+
+                 $data->korut_payment_proof_2 = $file_name;
+            }
+
             if ($request->hasFile('sales_evidence_cf')) {
                 $file_name = 'sales-closing-fee-' . uniqid() . '.' . $request->file('sales_evidence_cf')->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs('Komisi', $request->file('sales_evidence_cf'), $file_name
