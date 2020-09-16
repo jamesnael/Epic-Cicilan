@@ -27,15 +27,31 @@ Route::group(['namespace' => 'Point'], function() {
 });
 
 Route::group(['namespace' => 'RewardPoint'], function() {
-	Route::get('reward-point/table', 'RewardPointController@table')->name('reward-point.table');
-	Route::get('reward-point/{reward_point}/data', 'RewardPointController@data')->name('reward-point.data');
-	Route::resource('reward-point', 'RewardPointController')->except(['show']);
+	// Route::resource('reward-point', 'RewardPointController')->except(['show']);
+
+	Route::get('reward', 'RewardPointController@index')->name('reward-point.index');
+	Route::post('reward', 'RewardPointController@store')->name('reward-point.store');
+	Route::get('reward/table', 'RewardPointController@table')->name('reward-point.table');
+	Route::get('reward/tambah', 'RewardPointController@create')->name('reward-point.create');
+	Route::put('reward/{reward_point}', 'RewardPointController@update')->name('reward-point.update');
+	Route::get('reward/{reward_point}/data', 'RewardPointController@data')->name('reward-point.data');
+	Route::get('reward/{reward_point}/ubah', 'RewardPointController@edit')->name('reward-point.edit');
+	Route::delete('reward/{reward_point}', 'RewardPointController@destroy')->name('reward-point.destroy');
 });
 
 Route::group(['namespace' => 'RewardCategory'], function() {
-	Route::get('reward-category/table', 'RewardCategoryController@table')->name('reward-category.table');
-	Route::get('reward-category/{reward_category}/data', 'RewardCategoryController@data')->name('reward-category.data');
-	Route::resource('reward-category', 'RewardCategoryController')->except(['show']);
+	// Route::get('kategori-reward/table', 'RewardCategoryController@table')->name('reward-category.table');
+	// Route::get('kategori-reward/{reward_category}/data', 'RewardCategoryController@data')->name('reward-category.data');
+	// Route::resource('reward-category', 'RewardCategoryController')->except(['show']);
+
+	Route::get('kategori-reward', 'RewardCategoryController@index')->name('reward-category.index');
+	Route::post('kategori-reward', 'RewardCategoryController@store')->name('reward-category.store');
+	Route::get('kategori-reward/table', 'RewardCategoryController@table')->name('reward-category.table');
+	Route::get('kategori-reward/tambah', 'RewardCategoryController@create')->name('reward-category.create');
+	Route::put('kategori-reward/{reward_category}', 'RewardCategoryController@update')->name('reward-category.update');
+	Route::get('kategori-reward/{reward_category}/data', 'RewardCategoryController@data')->name('reward-category.data');
+	Route::get('kategori-reward/{reward_category}/ubah', 'RewardCategoryController@edit')->name('reward-category.edit');
+	Route::delete('kategori-reward/{reward_category}', 'RewardCategoryController@destroy')->name('reward-category.destroy');
 });
 
 Route::group(['namespace' => 'TukarPoint'], function() {

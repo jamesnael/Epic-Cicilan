@@ -60,14 +60,14 @@ Route::group(['namespace' => 'Installment'], function() {
 });
 
 Route::group(['namespace' => 'PPJB'], function() {
-	Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
-	Route::get('PPJB/pendingtable', 'PPJBController@pendingtable')->name('PPJB.pendingtable');
-	Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
-	Route::resource('PPJB', 'PPJBController')->except(['show']);
+	// Route::get('PPJB/table', 'PPJBController@table')->name('PPJB.table');
+	// Route::get('PPJB/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
+	// Route::resource('PPJB', 'PPJBController')->except(['show']);
 	// Route::resource('PPJB', 'PPJBController')->except(['show']);
 
 	Route::get('ppjb', 'PPJBController@index')->name('PPJB.index');
 	Route::post('ppjb', 'PPJBController@store')->name('PPJB.store');
+	Route::get('ppjb/pendingtable', 'PPJBController@pendingtable')->name('PPJB.pendingtable');
 	Route::get('ppjb/table', 'PPJBController@table')->name('PPJB.table');
 	Route::get('ppjb/tambah', 'PPJBController@create')->name('PPJB.create');
 	Route::put('ppjb/{PPJB}', 'PPJBController@update')->name('PPJB.update');
