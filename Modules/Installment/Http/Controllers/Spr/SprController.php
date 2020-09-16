@@ -266,6 +266,29 @@ class SprController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function cancelSpr(Request $request, Booking $spr)
+    {
+        DB::beginTransaction();
+        try {
+            $request->merge(['booking_status' => 'spr_cancel']);
+            
+            $data = $spr->update($request->all());
+            
+
+            DB::commit();
+            return response_json(true, null, 'Data Surat Pemesanan Rumah berhasil dibatalkan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
      *
      * Validation Rules for Get Table Data
      *

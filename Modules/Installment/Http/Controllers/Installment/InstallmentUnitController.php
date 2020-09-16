@@ -341,6 +341,30 @@ class InstallmentUnitController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function cancelInstallment(Request $request, Booking $installment_unit)
+    {
+        DB::beginTransaction();
+        try {
+
+            $request->merge(['booking_status' => 'cicilan_cancel']);
+            
+            $data = $installment_unit->update($request->all());
+            
+
+            DB::commit();
+            return response_json(true, null, 'Data cicilan berhasil dibatalkan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
      *
      * Handle incoming request for table data
      *

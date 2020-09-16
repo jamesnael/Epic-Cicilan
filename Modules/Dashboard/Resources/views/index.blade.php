@@ -18,7 +18,7 @@
 		        	        		<v-badge
 							          class="mr-4 ml-2"
 							          color="green"
-							          content="6"
+							          content="{{$document ?? '0'}}"
 							        >
 							        </v-badge>
 								 	Dokumen pengajuan klien yang belum di verifikasi
@@ -31,10 +31,23 @@
 									<v-badge
 							          	class="mr-4 ml-2"
 							          	color="blue"
-							          	content="9"
+							          	content="{{$akad_kpr ?? '0'}}"
 							        >
 							        </v-badge>
-			        	        	Akad AJB yang belum dibuat jadwal
+			        	        	Akad KPR yang belum dibuat jadwal
+			        	        </v-list-item-title>
+		        	      	</v-list-item-content>
+		        	    </v-list-item>
+		        	    <v-list-item>
+		        	      	<v-list-item-content>
+		        	        	<v-list-item-title>
+									<v-badge
+							          	class="mr-4 ml-2"
+							          	color="indigo"
+							          	content="{{$ajb ?? '0'}}"
+							        >
+							        </v-badge>
+			        	        	AJB yang belum dibuat jadwal
 			        	        </v-list-item-title>
 		        	      	</v-list-item-content>
 		        	    </v-list-item>
@@ -44,7 +57,7 @@
 		        	        		<v-badge
 							          	class="mr-4 ml-2"
 							          	color="red"
-							          	content="6"
+							          	content="{{$handover ?? '0'}}"
 							        >
 							        </v-badge>
 							    	Serah terima unit yang belum dibuat jadwal
@@ -57,7 +70,7 @@
 		        	        		<v-badge
 							          	class="mr-4 ml-2"
 							          	color="purple"
-							          	content="5"
+							          	content="{{$installment_pending ?? '0'}}"
 							        >
 							        </v-badge>
 							    	Pembayaran cicilan unit yang sudah jatuh tempo
@@ -87,7 +100,7 @@
 				            	    dark
 				            	  >
 				            	    <v-card-text>
-				            	    	<div class="display-1 font-weight-thin">10</div>
+				            	    	<div class="display-1 font-weight-thin">{{$installment_pending ?? '0'}}</div>
 				            	    </v-card-text>
 
 				            	    <v-card-text>
@@ -111,7 +124,7 @@
 				            	    dark
 				            	  >
 				            	    <v-card-text>
-				            	    	<div class="display-1 font-weight-thin">345</div>
+				            	    	<div class="display-1 font-weight-thin">{{$installment_paid ?? '0'}}</div>
 				            	    </v-card-text>
 
 				            	    <v-card-text>

@@ -42,6 +42,7 @@ class Booking extends Model
         'regional_coor_id',
         'agent_id',
         'komisi_status',
+        'reject_reason',
     ];
 
      /**

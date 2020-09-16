@@ -45,7 +45,9 @@
                 menu3: false,
                 menu4: false,
                 time: null,
+                dialog:false,
 	            datepicker: false,
+                cancel_reason:'',
                 items_approval: [
                     'Approved',
                     'Pending'
@@ -81,6 +83,7 @@
     		            		let data = response.data.data
                                 console.log(data)
     		            		this.form_data = {
+                                    slug:data.slug,
                                     booking_id:data.id,
                                     client_name:data.client.client_name,
                                     client_mobile_number:data.client.client_mobile_number,
@@ -188,6 +191,41 @@
                     s[1] += new Array(prec - s[1].length + 1).join('0');
                 }
                 return s.join(dec);
+            },
+            cancelAkad () {
+                const data = new FormData(this.$refs['put-form']);
+                data.append("_method", "put");
+                data.append("reject_reason", this.cancel_reason);
+
+                axios.post(this.base_url() + this.ziggy('akad.cancel', [this.form_data.slug]).url(), data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = response.data.message
+
+                            setTimeout(() => {
+                                this.goto(this.redirectUri);
+                            }, 3000);
+
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                        }
+                        this.deleteLoader = false
+                        this.promptDelete = false
+
+                        this.setData()
+                    })
+                    .catch((error) => {
+                        this.formAlert = true
+                        this.formAlertState = 'error'
+                        this.formAlertText = 'Oops, something went wrong. Please try again later.'
+
+                        this.deleteLoader = false
+                        this.promptDelete = false
+                    });
             }
         }
 	}

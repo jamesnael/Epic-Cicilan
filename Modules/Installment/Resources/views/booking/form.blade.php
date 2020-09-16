@@ -178,171 +178,8 @@
 			    		</validation-provider>
 			    	</v-col>
 		    	</v-row>
-			    <h3 class="mt-4">Data Cicilan Unit</h3>
-			    <v-row>
-			    	<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
-				    		<v-autocomplete
-				    			class="mt-4"
-				    			v-model="payment_type" 
-				              	:items="['Hard Cash', 'Installments', 'KPR/KPA']"
-				              	label="Tipe Pembayaran"
-				              	@change="paymentType"
-				              	name="payment_type"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state"
-				            ></v-autocomplete>
-			    		</validation-provider>
-			    	</v-col>
-		    		<v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nama pembayaran" rules="required">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.payment_method"
-				    			name="payment_method"
-					    		label="Nama Pembayaran"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:counter="255"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col>
-			    	{{-- <v-col
-    		          	cols="12"
-    		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|numeric|min:0">
-				    		<v-text-field
-				    			class="mt-4"
-				    			v-model="form_data.ppn"
-				    			name="ppn"
-					    		label="PPN"
-					    		hint="* harus diisi"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-					    		:readonly="field_state">
-			    			</v-text-field>
-			    		</validation-provider>
-			    	</v-col> --}}
-			    </v-row>
-			   
-	    		<validation-provider v-slot="{ errors }" name="Total harga + ppn" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="total_amount"
-		    			name="total_amount"
-			    		label="Total Harga + PPN"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    			<small class="form-text text-muted">Rp @{{total_amount ? number_format(total_amount) : 0 }}</small>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="DP" rules="numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-if="payment_type == 'KPR/KPA'"
-		    			v-model="dp_amount"
-		    			name="dp_amount"
-			    		label="Total DP"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{dp_amount ? number_format(dp_amount) : 0 }}</small>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="first_payment"
-		    			name="first_payment"
-			    		label="Pembayaran Pertama"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="principal"
-		    			name="principal"
-			    		label="Principal"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="!field_state"
-			    		:disabled="field_state">
-	    			</v-text-field>
-	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:1">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="installment_time"
-		    			name="installment_time"
-			    		label="Lama Cicilan"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required">
-		    		<v-autocomplete
-		    			class="mt-4"
-		    			v-model="form_data.due_date" 
-		              	:items="['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']"
-		              	label="Tanggal Jatuh Tempo"
-		              	name="due_date"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state"
-		            ></v-autocomplete>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Cicilan per bulan" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="installment"
-		    			name="installment"
-			    		label="Cicilan Per Bulan"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="!field_state"
-			    		:disabled="field_state">
-	    			</v-text-field>
-	    			<small class="form-text text-muted">Rp @{{ installment ? number_format(installment) : 0 }}</small>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Kredit" rules="numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-if="payment_type == 'KPR/KPA'"
-		    			v-model="credits"
-		    			name="credits"
-			    		label="Kredit"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="!field_state"
-			    		:disabled="field_state">
-	    			</v-text-field>
-	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{ credits ? number_format(credits) : 0 }}</small>
-	    		</validation-provider>
 
-	    		<h3 class="mt-6">Data NUP & UTJ</h3>
+		    	<h3 class="mt-6">Data NUP & UTJ</h3>
 	    		<v-row>
 	    			<v-col
     		          	cols="12"
@@ -539,6 +376,171 @@
 				    </v-col>
 			    </v-row>
 
+			    <h3 class="mt-4">Data Cicilan Unit</h3>
+			    <v-row>
+			    	<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Tipe pembayaran" rules="required">
+				    		<v-autocomplete
+				    			class="mt-4"
+				    			v-model="payment_type" 
+				              	:items="['Hard Cash', 'Installments', 'KPR/KPA']"
+				              	label="Tipe Pembayaran"
+				              	@change="paymentType"
+				              	name="payment_type"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            ></v-autocomplete>
+			    		</validation-provider>
+			    	</v-col>
+		    		<v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="Nama pembayaran" rules="required">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.payment_method"
+				    			name="payment_method"
+					    		label="Nama Pembayaran"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:counter="255"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+			    	</v-col>
+			    	{{-- <v-col
+    		          	cols="12"
+    		          	md="6">
+			    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|numeric|min:0">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.ppn"
+				    			name="ppn"
+					    		label="PPN"
+					    		hint="* harus diisi"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+			    	</v-col> --}}
+			    </v-row>
+			   
+	    		<validation-provider v-slot="{ errors }" name="Total harga + ppn" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="total_amount"
+		    			name="total_amount"
+			    		label="Total Harga + PPN"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{total_amount ? number_format(total_amount) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="DP" rules="numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-if="payment_type == 'KPR/KPA'"
+		    			v-model="dp_amount"
+		    			name="dp_amount"
+			    		label="Total DP"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{dp_amount ? number_format(dp_amount) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="first_payment"
+		    			name="first_payment"
+			    		label="Pembayaran Pertama"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="principal"
+		    			name="principal"
+			    		label="Principal"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:1">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="installment_time"
+		    			name="installment_time"
+			    		label="Lama Cicilan"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Tanggal jatuh tempo" rules="required">
+		    		<v-autocomplete
+		    			class="mt-4"
+		    			v-model="form_data.due_date" 
+		              	:items="['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']"
+		              	label="Tanggal Jatuh Tempo"
+		              	name="due_date"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-autocomplete>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Cicilan per bulan" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="installment"
+		    			name="installment"
+			    		label="Cicilan Per Bulan"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ installment ? number_format(installment) : 0 }}</small>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Kredit" rules="numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-if="payment_type == 'KPR/KPA'"
+		    			v-model="credits"
+		    			name="credits"
+			    		label="Kredit"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="!field_state"
+			    		:disabled="field_state">
+	    			</v-text-field>
+	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{ credits ? number_format(credits) : 0 }}</small>
+	    		</validation-provider>
+
+	    		
 			    <h3>Data Klien</h3>
 	    		<validation-provider v-slot="{ errors }" name="Klien" rules="required">
 		    		<v-autocomplete

@@ -48,6 +48,8 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+                cancel_reason:'',
+                dialog:false,
                 menu: false,
                 modal: false,
                 modal2: false,
@@ -106,8 +108,8 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                console.log(data)
     		            		this.form_data = {
+                                    slug: data.slug,
                                     client_name: data.client.client_name,
                                     phone_number: data.client.client_phone_number,
                                     unit: data.unit.unit_number + '/' + data.unit.unit_block,
@@ -218,6 +220,41 @@
         	showFormattedDt(dt) {
                 return moment(dt, "YYYY-MM-DD").format("DD-MMM-YYYY")
             },
+            cancelPpjb () {
+                const data = new FormData(this.$refs['put-form']);
+                data.append("_method", "put");
+                data.append("reject_reason", this.cancel_reason);
+
+                axios.post(this.base_url() + this.ziggy('ppjb.cancel', [this.form_data.slug]).url(), data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = response.data.message
+
+                            setTimeout(() => {
+                                this.goto(this.redirectUri);
+                            }, 3000);
+
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                        }
+                        this.deleteLoader = false
+                        this.promptDelete = false
+
+                        this.setData()
+                    })
+                    .catch((error) => {
+                        this.formAlert = true
+                        this.formAlertState = 'error'
+                        this.formAlertText = 'Oops, something went wrong. Please try again later.'
+
+                        this.deleteLoader = false
+                        this.promptDelete = false
+                    });
+            }
         }
 	}
 </script>

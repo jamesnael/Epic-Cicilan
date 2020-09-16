@@ -176,6 +176,31 @@ class AkadController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function cancelAkad(Request $request, Booking $akad)
+    {
+        DB::beginTransaction();
+        try {
+
+            $request->merge(['booking_status' => 'akad_cancel']);
+            
+            $data = $akad->update($request->all());
+            
+
+            DB::commit();
+            return response_json(true, null, 'Data Akad KPR berhasil dibatalkan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+    /**
      *
      * Validation Rules for Store/Update Data
      *

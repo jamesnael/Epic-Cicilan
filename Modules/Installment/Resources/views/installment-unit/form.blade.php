@@ -469,8 +469,16 @@
 
                                         <v-list-item>
                                             <v-list-item-content><strong>Total Pembayaran:</strong></v-list-item-content>
-                                            <v-list-item-content class="align-end" v-model="total" vid="confirmation"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
+                                            <v-list-item-content class="align-end"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
+                                            {{-- <v-text-field
+                                               v-show=false
+                                               :value="item.installment + item.fine * item.number_of_delays"
+                                               name="total"
+                                               v-model="total"
+                                               vid="confirmation">
+                                            </v-text-field> --}}
                                         </v-list-item>
+
                                     </v-list>
                                 </v-card>
                                 <v-card
@@ -509,7 +517,7 @@
                                         <v-list-item>
                                             <v-list-item-content>Jumlah Pembayaran:</v-list-item-content>
                                             <v-list-item-content>
-                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric|confirmed:confirmation">
+                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric">
                                                 <v-text-field
                                                     v-model="form_data.total_paid"
                                                     name="total_paid"
@@ -646,9 +654,62 @@
             :disabled="field_state">
             Kembali
           </v-btn>
+          <v-btn
+          class="mt-4 mr-4"
+            color="red"
+            dark
+            @click="dialog=true"
+            
+          >
+            Pembatalan Pembelian Unit
+          </v-btn>
+
         {{-- </form> --}}
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <form method="post" id="formCancel" enctype="multipart/form-data" ref="put-form">
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Pembatalan Pembelian Unit</span>
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12">
+                          <validation-provider v-slot="{ errors }" name="Alasan pembatalan" rules="">
+                            <v-textarea
+                              v-model="cancel_reason" 
+                              label="Alasan Pembatalan*" 
+                              name="cancel_reason"
+                              hint="* harus diisi"
+                              :persistent-hint="true"
+                              :error-messages="errors"
+                              :readonly="field_state"
+                              required>
+                            </v-textarea>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn outlined color="primary" elevetion="2" text @click="dialog = false">Close</v-btn>
+                    <v-btn 
+                      class="white--text"
+                      color="green" 
+                      @click="cancelInstallment()"
+                    >
+                      Save
+                  </v-btn>
+
+                  </v-card-actions>
+                </v-card>
+            </form>
+          </v-dialog>
       </validation-observer>
     </v-card>
+
 
     <v-snackbar
         v-model="formAlert"

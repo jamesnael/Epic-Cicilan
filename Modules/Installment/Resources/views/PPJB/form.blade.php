@@ -62,7 +62,7 @@
 					    		:error-messages="errors"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{number_format(unit_price)}}</small>
+			    			<small class="form-text text-muted">Rp @{{number_format(form_data.unit_price)}}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -341,6 +341,61 @@
     		            </span>
     		        </template>
 		    	</v-btn>
+
+
+		    	<v-dialog v-model="dialog" persistent max-width="600px">
+		    		<form method="post" id="formCancel" enctype="multipart/form-data" ref="put-form">
+		    	      <template v-slot:activator="{ on, attrs }">
+		    	        <v-btn
+			    	      class="mt-4 mr-4"
+		    	          color="red"
+		    	          dark
+		    	          v-bind="attrs"
+		    	          v-on="on"
+		    	        >
+		    	          Pembatalan Pembelian Unit
+		    	        </v-btn>
+		    	      </template>
+		    	      <v-card>
+		    	        <v-card-title>
+		    	          <span class="headline">Pembatalan Pembelian Unit</span>
+		    	        </v-card-title>
+		    	        <v-divider></v-divider>
+		    	        <v-card-text>
+		    	          <v-container>
+		    	            <v-row>
+		    	              <v-col cols="12">
+		    	              	<validation-provider v-slot="{ errors }" name="Alasan pembatalan" rules="">
+		    	                	<v-textarea
+		    	                		v-model="cancel_reason" 
+		    	                		label="Alasan Pembatalan*" 
+		    	                		name="cancel_reason"
+    					                hint="* harus diisi"
+    					                :persistent-hint="true"
+    					                :error-messages="errors"
+    					                :readonly="field_state"
+    					                required>
+	    	                		</v-textarea>
+		    	                </validation-provider>
+		    	              </v-col>
+		    	            </v-row>
+		    	          </v-container>
+		    	        </v-card-text>
+		    	        <v-card-actions>
+		    	          <v-spacer></v-spacer>
+		    	          <v-btn outlined color="primary" elevetion="2" text @click="dialog = false">Close</v-btn>
+		    	          <v-btn 
+		    	          	class="white--text"
+		    	          	color="green" 
+		    	          	@click="cancelPpjb()"
+		    	          >
+		    	          	Save
+		    	      	</v-btn>
+
+		    	        </v-card-actions>
+		    	      </v-card>
+		    		</form>
+		    	</v-dialog>
 	    		
 	    	</form>
 	    </validation-observer>

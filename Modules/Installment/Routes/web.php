@@ -28,6 +28,14 @@ Route::group(['namespace' => 'Booking'], function() {
 	Route::get('booking/table', 'BookingController@table')->name('booking.table');
 	Route::get('booking/{booking}/data', 'BookingController@data')->name('booking.data');
 	Route::resource('booking', 'BookingController');
+
+	Route::get('cancel-booking', 'CancelBookingController@index')->name('cancel-booking.index');
+	Route::post('cancel-booking', 'CancelBookingController@store')->name('cancel-booking.store');
+	Route::get('cancel-booking/table', 'CancelBookingController@table')->name('cancel-booking.table');
+	Route::get('cancel-booking/tambah', 'CancelBookingController@create')->name('cancel-booking.create');
+	Route::put('cancel-booking/{booking}', 'CancelBookingController@update')->name('cancel-booking.update');
+	Route::get('cancel-booking/{booking}/data', 'CancelBookingController@data')->name('cancel-booking.data');
+	Route::get('cancel-booking/{booking}/ubah', 'CancelBookingController@edit')->name('cancel-booking.edit');
 });
 
 Route::group(['namespace' => 'Unit'], function() {
@@ -57,6 +65,7 @@ Route::group(['namespace' => 'Installment'], function() {
 	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
 	
 	Route::put('cicilan-unit/{installment_unit}/{payment}/paid', 'InstallmentUnitController@payment')->name('manual-payment');
+	Route::put('cicilan-unit/{installment_unit}/cancel', 'InstallmentUnitController@cancelInstallment')->name('installment-unit.cancel');
 });
 
 Route::group(['namespace' => 'PPJB'], function() {
@@ -74,12 +83,14 @@ Route::group(['namespace' => 'PPJB'], function() {
 	Route::get('ppjb/{PPJB}/data', 'PPJBController@data')->name('PPJB.data');
 	Route::get('ppjb/{PPJB}/ubah', 'PPJBController@edit')->name('PPJB.edit');
 	Route::delete('ppjb/{PPJB}', 'PPJBController@destroy')->name('PPJB.destroy');
+	Route::put('ppjb/{PPJB}/cancel', 'PPJBController@cancelPpjb')->name('ppjb.cancel');
 });
 
 Route::group(['namespace' => 'Akad'], function() {
 	Route::get('akad/table', 'AkadController@table')->name('akad.table');
 	Route::get('akad/{akad}/data', 'AkadController@data')->name('akad.data');
 	Route::get('akad/table-approved', 'AkadController@tableApproved')->name('akad.table.approved');
+	Route::put('akad/{akad}/cancel', 'AkadController@cancelAkad')->name('akad.cancel');
 	Route::resource('akad', 'AkadController')->except(['show','destroy', 'create', 'store']);
 });
 
@@ -115,5 +126,6 @@ Route::group(['namespace' => 'Spr'], function() {
 	Route::get('spr/table', 'SprController@table')->name('spr.table');
 	Route::get('spr/table-approved', 'SprController@tableApproved')->name('spr.table.approved');
 	Route::get('spr/{spr}/data', 'SprController@data')->name('spr.data');
+	Route::put('spr/{spr}/cancel', 'SprController@cancelSpr')->name('spr.cancel');
 	Route::resource('spr', 'SprController')->except(['show']);
 });

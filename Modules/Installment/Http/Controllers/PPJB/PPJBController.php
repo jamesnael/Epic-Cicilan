@@ -232,6 +232,30 @@ class PPJBController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function cancelPpjb(Request $request, Booking $PPJB)
+    {
+        DB::beginTransaction();
+        try {
+
+            $request->merge(['booking_status' => 'ppjb_cancel']);
+            
+            $data = $PPJB->update($request->all());
+            
+
+            DB::commit();
+            return response_json(true, null, 'Data PPJB berhasil dibatalkan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Response
