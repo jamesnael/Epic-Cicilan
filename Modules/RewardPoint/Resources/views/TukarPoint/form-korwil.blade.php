@@ -7,7 +7,7 @@
 
 	    		<validation-provider v-slot="{ errors }" name="Level" rules="">
 				    <v-text-field
-			    	   v-model="sales_level"
+			    	   v-model="korwil_level"
 			    	   label="level"
 			           name="level"
 			           v-show=""

@@ -5,6 +5,7 @@ namespace Modules\RewardPoint\Http\Controllers\TukarPoint;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\AppUser\Entities\User;
 use Modules\RewardPoint\Entities\RewardCategory;
 use Modules\RewardPoint\Entities\RewardPoint;
 use Modules\RewardPoint\Entities\SalesPoint;
@@ -13,6 +14,7 @@ use Modules\RewardPoint\Entities\ExchangePointSubAgent;
 use Modules\RewardPoint\Entities\ExchangePointKoorUmum;
 use Modules\RewardPoint\Entities\ExchangePointKoorWilayah;
 use Modules\RewardPoint\Entities\RecordPoint;
+use Modules\RewardPoint\Notifications\NotifyExchangePoint;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\SalesAgent\Entities\Agency;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
@@ -663,6 +665,13 @@ class TukarPointController extends Controller
                     'reward_point_id' => $request->reward_point_id,
                     'exchange_point'  => $request->redeem_point,
                 ]);
+
+                //Email Notification
+                if ($data) {
+                    $sales = Sales::findOrFail($request->user_name);
+                    $user = User::findOrFail($sales->user_id);
+                    $user->notify(new NotifyExchangePoint($user));
+                }
             }
 
             // Agent Condition
@@ -672,6 +681,14 @@ class TukarPointController extends Controller
                     'reward_point_id' => $request->reward_point_id,
                     'exchange_point'  => $request->redeem_point,
                 ]);
+
+                //Email Notification
+                if ($data) {
+                    $user = Agency::findOrFail($request->user_name);
+                    $user->email = $user->agency_email;
+                    $user->full_name = $user->agency_name;
+                    $user->notify(new NotifyExchangePoint($user));
+                }
             }
 
             // Korwil Condition
@@ -681,6 +698,12 @@ class TukarPointController extends Controller
                     'reward_point_id'         => $request->reward_point_id,
                     'exchange_point'          => $request->redeem_point,
                 ]);
+
+                //Email Notification
+                if ($data) {
+                    $user = RegionalCoordinator::findOrFail($request->user_name);
+                    $user->notify(new NotifyExchangePoint($user));
+                }
             }
 
             // Korut Condition
@@ -690,6 +713,12 @@ class TukarPointController extends Controller
                     'reward_point_id'     => $request->reward_point_id,
                     'exchange_point'      => $request->redeem_point,
                 ]);
+
+                //Email Notification
+                if ($data) {
+                    $user = MainCoordinator::findOrFail($request->user_name);
+                    $user->notify(new NotifyExchangePoint($user));
+                }
             }
 
             DB::commit();
