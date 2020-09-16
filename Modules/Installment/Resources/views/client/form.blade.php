@@ -50,7 +50,7 @@
 	    		>
 	    			@include('core::occupation')
 	    		</occupation-input>
-	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|numeric|min:10|max:15">
+	    		<validation-provider v-slot="{ errors }" name="Nomor handphone" rules="required|min:10|max:15">
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.client_mobile_number"
@@ -77,12 +77,12 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
+	    		<validation-provider v-slot="{ errors }" name="Alamat Surat Menyurat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"
 		    			v-model="form_data.client_address"
 		    			name="client_address"
-			    		label="Alamat"
+			    		label="Alamat Surat Menyurat"
 			    		auto-grow
 		    			clearable
 		    			rows="1"
@@ -92,6 +92,19 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
+	    		<address-input inline-template
+	    			:province-value="form_data.province"
+	    			province-class="mt-4"
+	    			province-input-name="province"
+	    			province-label="Provinsi"
+	    			:city-value="form_data.city"
+	    			city-class="mt-4"
+	    			city-input-name="city"
+	    			city-label="Kota"
+	    			:disabled="field_state"
+	    		>
+	    			@include('core::address')
+	    		</address-input>
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"

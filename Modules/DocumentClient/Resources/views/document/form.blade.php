@@ -98,8 +98,10 @@
 	  		    		            small-chips 
 	  		    		            counter 
 	  		    		            multiple 
+	  		    		            accept="image/*"
 	  		    		            :label="el.title"
-	  	    		              	:name="'files[][' + el.file_name+ ']'">
+	  	    		              	:name="'files[][' + el.file_name+ ']'"
+	  	    		              	:disabled="field_state">
   	    		              	</v-file-input>
 	    		          </td>
 	    		          <td width="25%">

@@ -51,6 +51,10 @@
             		bank_name: '',
             		rek_number: '',
             		account_name: '',
+            		principal: '',
+            		ppn: '',
+            		pph_21: '',
+            		pph_23: '',
             	}
         	}
         },
@@ -78,6 +82,10 @@
     		            			bank_name: data.bank_name,
     		            			rek_number: data.rek_number,
     		            			account_name: data.account_name,
+    		            			principal: data.principal,
+    		            			ppn: data.ppn,
+    		            			pph_21: data.pph_21,
+    		            			pph_23: data.pph_23,
     		            		}
 
     			                this.field_state = false
@@ -112,6 +120,10 @@
             		phone_number: '',
             		email: '',
             		address: '',
+            		principal: '',
+            		ppn: '',
+            		pph_21: '',
+            		pph_23: '',
 		        }
 		        this.$refs.observer.reset()
 		    },
