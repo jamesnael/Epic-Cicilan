@@ -667,11 +667,11 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                if ($data) {
-                    $sales = Sales::findOrFail($request->user_name);
-                    $user = User::findOrFail($sales->user_id);
-                    $user->notify(new NotifyExchangePoint($user));
-                }
+                // if ($data) {
+                //     $sales = Sales::findOrFail($request->user_name);
+                //     $user = User::findOrFail($sales->user_id);
+                //     $user->notify(new NotifyExchangePoint($user));
+                // }
             }
 
             // Agent Condition
@@ -683,12 +683,12 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                if ($data) {
-                    $user = Agency::findOrFail($request->user_name);
-                    $user->email = $user->agency_email;
-                    $user->full_name = $user->agency_name;
-                    $user->notify(new NotifyExchangePoint($user));
-                }
+                // if ($data) {
+                //     $user = Agency::findOrFail($request->user_name);
+                //     $user->email = $user->agency_email;
+                //     $user->full_name = $user->agency_name;
+                //     $user->notify(new NotifyExchangePoint($user));
+                // }
             }
 
             // Korwil Condition
@@ -700,10 +700,10 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                if ($data) {
-                    $user = RegionalCoordinator::findOrFail($request->user_name);
-                    $user->notify(new NotifyExchangePoint($user));
-                }
+                // if ($data) {
+                //     $user = RegionalCoordinator::findOrFail($request->user_name);
+                //     $user->notify(new NotifyExchangePoint($user));
+                // }
             }
 
             // Korut Condition
@@ -715,10 +715,10 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                if ($data) {
-                    $user = MainCoordinator::findOrFail($request->user_name);
-                    $user->notify(new NotifyExchangePoint($user));
-                }
+                // if ($data) {
+                //     $user = MainCoordinator::findOrFail($request->user_name);
+                //     $user->notify(new NotifyExchangePoint($user));
+                // }
             }
 
             DB::commit();
