@@ -373,6 +373,107 @@
                 </v-row>
               </v-card-text>
             </v-card>
+<v-card
+              class="mt-6"
+              elevation="5"
+              >
+              <v-card-title>
+                Data Cicilan Unit
+              </v-card-title>
+              <v-card-text>
+                <v-data-table
+                    :headers='@json($table_headers)'
+                    :items="form_data.payments"
+                    :items-per-page="1000"
+                    hide-default-footer
+                    class="elevation-1"
+                >
+                @foreach ($table_headers as $element)
+                  <template v-slot:header.{{$element['value']}}="{ header }">
+                      <strong>@{{ header.text.toUpperCase() }}</strong>
+                  </template>
+                @endforeach
+                <template v-slot:no-data>
+                    Tidak ada data ditemukan.
+                </template>
+                <template v-slot:no-results>
+                    Tidak ada data ditemukan.
+                </template>
+                <template v-slot:item.actions="{ item }">
+                  <span v-if="item.payment == 'Uang Tanda Jadi' || item.payment == 'Akad Kredit' || item.payment_date"></span>
+                  <v-btn v-else small color="primary">Bayar</v-btn>
+                </template>
+                <template v-slot:item.due_date="{ item }">
+                  @{{reformatDateTime(item.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY')}}
+                </template>
+                <template v-slot:item.installment="{ item }">
+                  @{{number_format(item.installment)}}
+                </template>
+                <template v-slot:item.fine="{ item }">
+                  @{{number_format(item.fine)}}
+                </template>
+                <template v-slot:item.credit="{ item }">
+                  @{{number_format(item.credit)}}
+                </template>
+                <template v-slot:item.payment_date="{ item }">
+                  @{{reformatDateTime(item.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY')}}
+                </template>
+                <template v-slot:item.payment_method="{ item }">
+                  @{{item.payment_method}}
+                </template>
+                </v-data-table>
+                    <v-row
+                      class="mt-6">
+                      <v-col
+                          cols="12"
+                          md="4">
+                          <v-text-field
+                            :value="number_format(form_data.total_pembayaran)"
+                            label="Total Pembayaran"
+                            :readonly="!field_state"
+                            :disabled="field_state">
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col
+                        cols="12"
+                        md="4">
+                        <v-text-field
+                          :value="number_format(form_data.sisa_tunggakan)"
+                          label="Sisa Tunggakan"
+                          :readonly="!field_state"
+                          :disabled="field_state">
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col
+                          cols="12"
+                          md="4">
+                          <v-text-field
+                         :value="number_format(form_data.total_denda)"
+                          label="Total Denda"
+                          :readonly="!field_state"
+                          :disabled="field_state">
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col
+                          cols="12"
+                          md="4">
+                          <v-text-field
+                         :value="number_format(form_data.prosentase_pembayaran)"
+                          label="Prosentase Pembayaran"
+                          :readonly="!field_state"
+                          :disabled="field_state">
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+              </v-card-text>
+            </v-card>
+
     		
 	      	<v-btn
 	      		class="mt-4"

@@ -133,11 +133,62 @@ class CancelBookingController extends Controller
      */
     public function edit(Booking $booking)
     {
+        $table_headers = [
+            [
+                "text" => '#',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'table_index',
+            ],
+            [
+                "text" => 'Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment',
+            ],
+            [
+                "text" => 'Jatuh Tempo',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'due_date',
+            ],
+            [
+                "text" => 'Total Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'installment',
+            ],
+            [
+                "text" => 'Cara Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Tanggal Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_date',
+            ],
+            [
+                "text" => 'Denda',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'fine',
+            ],
+            [
+                "text" => 'Sisa Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'credit',
+            ]
+        ];
         $this->breadcrumbs[] = ['href' => route('cancel-booking.edit', [$booking->slug]), 'text' => 'Detail Cancel Booking ' . ''];
 
         return view('installment::cancel-booking.edit', [
             'page' => $this,
             'data' => $booking,
+            'table_headers' => $table_headers,
 
         ])->with($this->getHelper());
     }
