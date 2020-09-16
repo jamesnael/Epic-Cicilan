@@ -256,12 +256,6 @@ if (! function_exists('aside_menu')) {
                         'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit'])
                     ],
                     [
-                        'icon' => 'mdi-domain',
-                        'text' => 'Tipe Bangunan',
-                        'uri' => route('point.index'),
-                        'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
-                    ],
-                    [
                         'icon' => 'mdi-wallet-giftcard',
                         'text' => 'Reward',
                         'uri' => route('reward-point.index'),
@@ -275,6 +269,12 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Kelola Booking',
                 'model' => in_array(Route::currentRouteName(), ['client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'installment.index', 'installment.create', 'installment.edit']),
                 'children' => [
+                    [
+                        'icon' => 'mdi-domain',
+                        'text' => 'Tipe Unit',
+                        'uri' => route('point.index'),
+                        'model' => in_array(Route::currentRouteName(), ['point.index','point.create','point.edit'])
+                    ],
                     [
                         'icon' => 'mdi-account-multiple',
                         'text' => 'Klien',
@@ -382,7 +382,7 @@ if (! function_exists('aside_menu')) {
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Tukar Point',
                 'uri' => route('tukar-point.index'),
-                'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point.create', 'tukar-point-agent.history', 'tukar-point-korut.history', 'tukar-point-korwil.history', 'tukar-point-sales.history']),
+                'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point-sales.create', 'tukar-point-agency.create', 'tukar-point-korwil.create', 'tukar-point-korut.create', 'tukar-point-agent.history', 'tukar-point-korut.history', 'tukar-point-korwil.history', 'tukar-point-sales.history']),
             ],
         ];
     }
