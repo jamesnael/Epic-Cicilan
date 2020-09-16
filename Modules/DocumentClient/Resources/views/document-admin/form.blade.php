@@ -91,14 +91,16 @@
                     <td width="5%">@{{idx + 1}}</td>
                     <td width="35%">@{{el.title}}</td>
                     <td width="35%">
-                          <v-file-input 
+                      <v-file-input 
                           show-size 
                           small-chips 
                           counter 
                           multiple 
+                          accept="image/*"
                           :label="el.title"
-                            :name="'files[][' + el.file_name+ ']'">
-                          </v-file-input>
+                          :name="'files[][' + el.file_name+ ']'"
+                          :disabled="field_state">
+                      </v-file-input>
                   </td>
                   <td width="25%">
                     <a :href="el.url" target="_blank">

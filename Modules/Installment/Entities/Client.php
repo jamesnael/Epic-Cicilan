@@ -19,7 +19,9 @@ class Client extends Model
     	'client_phone_number',
     	'client_mobile_number',
         'profession',
-    	'client_address'
+    	'client_address',
+        'province',
+        'city'
     ];
 
     /**

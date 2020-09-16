@@ -376,6 +376,11 @@
 				    </v-col>
 			    </v-row>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
 			    <h3 class="mt-4">Data Cicilan Unit</h3>
 			    <v-row>
 			    	<v-col
@@ -471,12 +476,20 @@
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
 	    		</validation-provider>
+<<<<<<< HEAD
 	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
+=======
+	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar" rules="required|numeric|min:0">
+>>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="principal"
 		    			name="principal"
+<<<<<<< HEAD
 			    		label="Principal"
+=======
+			    		label="Total Cicilan Yang Harus Dibayar"
+>>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
