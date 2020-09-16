@@ -46,6 +46,8 @@
             		client_file_ktp: '',
             		client_file_npwp: '',
             		profession: '',
+            		province: '',
+            		city: '',
             	}
         	}
         },
@@ -72,6 +74,8 @@
     		            			client_file_ktp: data.client_file_ktp,
     		            			client_file_npwp: data.client_file_npwp,
     		            			profession: data.profession,
+    		            			province: data.province,
+    		            			city: data.city,
     		            		}
 
     			                this.field_state = false
@@ -110,6 +114,8 @@
 		        	client_file_ktp: '',
 		        	client_file_npwp: '',
 		        	profession: '',
+		        	province: '',
+		        	city: '',
 		        }
 		        this.$refs.observer.reset()
 		    },

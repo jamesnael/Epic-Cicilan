@@ -21,7 +21,11 @@ class MainCoordinator extends Model
         'pph_final',
         'bank_name',
         'rek_number',
-        'account_name'
+        'account_name',
+        'principal',
+        'ppn',
+        'pph_21',
+        'pph_23',
     ];
 
     /**

@@ -54,6 +54,19 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Nama Principal" rules="required|max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.principal"
+		    			name="principal"
+			    		label="Nama Principal"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"
@@ -111,6 +124,45 @@
 			    		:counter="255"
 			    		:error-messages="errors"
 			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="PPN" rules="required|between:0,100">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.ppn"
+		    			name="pph_final"
+			    		label="PPN"
+			    		:error-messages="errors"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:readonly="field_state">
+			    		<v-icon slot="append">mdi-percent-outline</v-icon>
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="PPH 21" rules="required|between:0,100">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.pph_21"
+		    			name="pph_final"
+			    		label="PPH 21"
+			    		:error-messages="errors"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:readonly="field_state">
+			    		<v-icon slot="append">mdi-percent-outline</v-icon>
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="PPH 23" rules="required|between:0,100">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.pph_23"
+		    			name="pph_final"
+			    		label="PPH 23"
+			    		:error-messages="errors"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:readonly="field_state">
+			    		<v-icon slot="append">mdi-percent-outline</v-icon>
 	    			</v-text-field>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="PPH Komisi Final" rules="required|between:0,100">

@@ -38,6 +38,10 @@ class Agency extends Model
         'regional_coordinator_commission',
         'main_coordinator_commission',
         'commission_type',
+        'principal',
+        'ppn',
+        'pph_21',
+        'pph_23',
     ];
 
     /**
