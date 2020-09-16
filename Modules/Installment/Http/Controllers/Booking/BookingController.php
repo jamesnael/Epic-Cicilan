@@ -53,6 +53,12 @@ class BookingController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_type',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => true,
@@ -83,7 +89,7 @@ class BookingController extends Controller
                 "value" => 'due_date',
             ],
             [
-                "text" => 'Principal',
+                "text" => 'Total Cicilan Yang Harus Dibayar',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'principal',
@@ -327,6 +333,7 @@ class BookingController extends Controller
             $item->installment = 'Rp '.format_money($item->installment);
             $item->principal = 'Rp '.format_money($item->principal);
             $item->point = $item->unit->points;
+            $item->unit_type = $item->unit->unit_type;
             return $item;
         });
         return $data;
