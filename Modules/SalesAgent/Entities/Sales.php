@@ -4,9 +4,12 @@ namespace Modules\SalesAgent\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 
 class Sales extends Model
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
