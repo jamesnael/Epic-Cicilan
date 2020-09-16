@@ -5,10 +5,11 @@ namespace Modules\SalesAgent\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Agency extends Model
 {
-    use Sluggable, SoftDeletes;
+    use Notifiable, Sluggable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

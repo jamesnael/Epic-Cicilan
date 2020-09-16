@@ -6,12 +6,12 @@
 	    		
 	    		<validation-provider v-slot="{ errors }" name="Level" rules="">
 				   <v-text-field
-			    	v-model="sales_level"
-			    	label="level"
-			        name="level"
-			        v-show=""
-				    :error-messages="errors"
-			            	></v-text-field>
+				    	v-model="sales_level"
+				    	label="level"
+				        name="level"
+				        v-show=""
+					    :error-messages="errors"
+	            	></v-text-field>
 			    </validation-provider>
 
 

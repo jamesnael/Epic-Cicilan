@@ -5,11 +5,12 @@ namespace Modules\SalesAgent\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class MainCoordinator extends Model
 {
 
-	use Sluggable, SoftDeletes;
+	use Notifiable, Sluggable, SoftDeletes;
 
     protected $fillable = [
         'slug', 
