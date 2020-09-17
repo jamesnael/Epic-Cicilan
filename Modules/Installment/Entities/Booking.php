@@ -43,6 +43,12 @@ class Booking extends Model
         'agent_id',
         'komisi_status',
         'reject_reason',
+        'program_id',
+        'nama_program',
+        'harga_termasuk',
+        'harga_tidak_termasuk',
+        'gimmick',
+        'keterangan_program',
     ];
 
      /**
@@ -70,7 +76,8 @@ class Booking extends Model
      * @var array
      */
     protected $casts = [
-        
+        'harga_termasuk' => 'array',
+        'harga_tidak_termasuk' => 'array',
     ];
 
     /**
@@ -364,6 +371,14 @@ class Booking extends Model
     public function record()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\RecordPoint', 'booking_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function program()
+    {
+        return $this->belongsTo('Modules\Installment\Entities\TipeProgram', 'program_id');
     }
 
 }

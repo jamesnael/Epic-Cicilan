@@ -129,3 +129,9 @@ Route::group(['namespace' => 'Spr'], function() {
 	Route::put('spr/{spr}/cancel', 'SprController@cancelSpr')->name('spr.cancel');
 	Route::resource('spr', 'SprController')->except(['show']);
 });
+
+Route::group(['namespace' => 'TipeProgram'], function() {
+	Route::get('tipe-program/table', 'TipeProgramController@table')->name('tipe-program.table');
+	Route::get('tipe-program/{tipe_program}/data', 'TipeProgramController@data')->name('tipe-program.data');
+	Route::resource('tipe-program', 'TipeProgramController')->except(['show']);
+});
