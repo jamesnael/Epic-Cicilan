@@ -16,8 +16,8 @@ class AddNoktpNpwpAlamatktp extends Migration
         Schema::table('clients', function (Blueprint $table) {
 
             $table->string('alamat_ktp')->nullable()->after('client_address');
-            $table->integer('no_ktp',25)->nullable()->after('alamat_ktp');
-            $table->integer('npwp',25)->nullable()->after('no_ktp');
+            $table->integer('no_ktp')->nullable()->after('alamat_ktp');
+            $table->integer('npwp')->nullable()->after('no_ktp');
             
 
 
