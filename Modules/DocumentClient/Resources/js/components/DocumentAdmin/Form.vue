@@ -62,8 +62,10 @@
             	deleteLoader: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+                dialog: false,
 	            menu2: false,
 			    modal: false,
+                cancel_reason: '',
             	form_data: {
             		booking_id: '',
             		profession:'',
@@ -203,7 +205,6 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-    		            		console.log(data)
     		            		this.form_data = {
     		            			booking_id: data.id,
     		            			slug: data.slug,
@@ -314,7 +315,69 @@
 		                this.deleteLoader = false
 		                this.promptDelete = false
 		            });
-		    }
+		    },
+            downloadPDF () {
+                const data = new FormData();
+
+                axios.post(this.base_url() + this.ziggy('document-admin.download', [this.form_data.slug]).url(), data)
+                    .then((response) => {
+                        console.log(response.data)
+                        if (response.data == '') {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = "Berhasil mengunduh dokumen"
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                        }
+
+                        this.setData()
+                    })
+                    .catch((error) => {
+                        this.formAlert = true
+                        this.formAlertState = 'error'
+                        this.formAlertText = 'Oops, something went wrong. Please try again later.'
+
+                        this.deleteLoader = false
+                        this.promptDelete = false
+                    });
+            },
+            cancelDocument () {
+                const data = new FormData(this.$refs['put-form']);
+                data.append("_method", "put");
+                data.append("reject_reason", this.cancel_reason);
+
+                axios.post(this.base_url() + this.ziggy('document-admin.cancel', [this.form_data.slug]).url(), data)
+                    .then((response) => {
+                        if (response.data.success) {
+                            this.formAlert = true
+                            this.formAlertState = 'success'
+                            this.formAlertText = response.data.message
+
+                            setTimeout(() => {
+                                this.goto(this.redirectUri);
+                            }, 3000);
+
+                        } else {
+                            this.formAlert = true
+                            this.formAlertState = 'error'
+                            this.formAlertText = response.data.message
+                        }
+                        this.deleteLoader = false
+                        this.promptDelete = false
+
+                        this.setData()
+                    })
+                    .catch((error) => {
+                        this.formAlert = true
+                        this.formAlertState = 'error'
+                        this.formAlertText = 'Oops, something went wrong. Please try again later.'
+
+                        this.deleteLoader = false
+                        this.promptDelete = false
+                    });
+            }
         }
 	}
 </script>

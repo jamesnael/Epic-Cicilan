@@ -35,4 +35,8 @@ Route::group(['namespace' => 'DocumentAdmin'], function() {
 	Route::get('dokumen-admin/{document_admin}/ubah', 'DocumentAdminController@edit')->name('document-admin.edit');
 	Route::delete('dokumen-admin/{document_admin}', 'DocumentAdminController@destroy')->name('document-admin.destroy');
 	Route::delete('dokumen-admin/{document_admin}/{file}', 'DocumentAdminController@removeFile')->name('document-admin.remove-file');
+	
+	Route::post('dokumen-admin/{document_admin}/download', 'DocumentAdminController@downloadPDF')->name('document-admin.download');
+
+	Route::put('dokumen-admin/{document_admin}/cancel', 'DocumentAdminController@cancelDocument')->name('document-admin.cancel');
 });

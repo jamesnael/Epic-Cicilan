@@ -298,6 +298,15 @@ class Booking extends Model
     /**
      * Get the relations for the model.
      */
+    public function akad_kredit_payments()
+    {
+        return $this->hasMany('Modules\Installment\Entities\BookingPayment', 'booking_id')
+        ->where('payment', 'Akad Kredit');
+    }
+
+    /**
+     * Get the relations for the model.
+     */
     public function document()
     {
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');

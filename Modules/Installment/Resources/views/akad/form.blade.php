@@ -314,6 +314,20 @@
 				            </validation-provider>
 			          </v-col>
 					</v-row>
+					<validation-provider v-slot="{ errors }" name="Jumlah KPR" rules="required|numeric">
+			    		<v-text-field
+			    			class="mt-4"
+			    			v-model="form_data.total_kpr"
+			    			name="total_kpr"
+				    		label="Jumlah KPR"
+				    		hint="* harus diisi"
+				    		:error-messages="errors"
+				    		:persistent-hint="true"
+				    		:readonly="field_state"
+				    		>
+		    			</v-text-field>
+		    			<small class="form-text text-muted">Rp @{{ form_data.total_kpr ? number_format(form_data.total_kpr) : 0 }}</small>
+		    		</validation-provider>
 				</div>
 
 	            <v-btn

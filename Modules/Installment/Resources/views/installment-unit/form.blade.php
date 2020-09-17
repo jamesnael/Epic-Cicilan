@@ -676,7 +676,7 @@
                     <v-container>
                       <v-row>
                         <v-col cols="12">
-                          <validation-provider v-slot="{ errors }" name="Alasan pembatalan" rules="">
+                          <validation-provider v-slot="{ errors }" name="Alasan pembatalan" rules="required">
                             <v-textarea
                               v-model="cancel_reason" 
                               label="Alasan Pembatalan*" 

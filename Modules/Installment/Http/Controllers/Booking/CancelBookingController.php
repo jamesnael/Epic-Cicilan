@@ -238,7 +238,7 @@ class CancelBookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->with('client','unit','payments')->whereIn('booking_status', ['akad_cancel', 'ppjb_cancel','cicilan_cancel', 'spr_cancel'])->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->with('client','unit','payments')->whereIn('booking_status', ['akad_cancel', 'ppjb_cancel','cicilan_cancel', 'spr_cancel','dokumen_cancel'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -282,6 +282,8 @@ class CancelBookingController extends Controller
                 $item->status = "Cancel di PPJB";
             }elseif($item->booking_status == 'akad_cancel'){
                 $item->status = "Cancel di Akad KPR";
+            }elseif($item->booking_status == 'dokumen_cancel'){
+                $item->status = "Cancel di Dokumen";
             }else{
                 $item->status = "Cancel di SPR";
             }

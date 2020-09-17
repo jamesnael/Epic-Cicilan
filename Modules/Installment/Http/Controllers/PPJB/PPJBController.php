@@ -232,6 +232,20 @@ class PPJBController extends Controller
     }
 
     /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormCancelRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "reject_reason" => "bail|required",
+        ],[
+            "reject_reason.required" => "Alasan pembatalan harus diisi."
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
@@ -239,6 +253,11 @@ class PPJBController extends Controller
      */
     public function cancelPpjb(Request $request, Booking $PPJB)
     {
+        $validator = $this->validateFormCancelRequest($request);
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+        
         DB::beginTransaction();
         try {
 

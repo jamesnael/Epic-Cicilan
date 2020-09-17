@@ -176,6 +176,20 @@ class AkadController extends Controller
     }
 
     /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormCancelRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "reject_reason" => "bail|required",
+        ],[
+            "reject_reason.required" => "Alasan pembatalan harus diisi."
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
@@ -183,6 +197,12 @@ class AkadController extends Controller
      */
     public function cancelAkad(Request $request, Booking $akad)
     {
+        $validator = $this->validateFormCancelRequest($request, $akad->id);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+        
         DB::beginTransaction();
         try {
 
@@ -205,8 +225,11 @@ class AkadController extends Controller
      * Validation Rules for Store/Update Data
      *
      */
-    public function validateFormRequest($request, $id = null)
+    public function validateFormRequest($request, $value)
     {
+        $data = Booking::findOrFail($value);
+        $credit = $data->credits ?? 0;
+
         return Validator::make($request->all(), [
             "booking_id" => "bail|required|exists:Modules\Installment\Entities\Booking,id",
             "akad_date" => "bail|required",
@@ -214,6 +237,9 @@ class AkadController extends Controller
             "dokumen_awal" => "bail|nullable",
             "location" => "bail|required|string|max:255",
             "address" => "bail|nullable|string|max:255",
+            "total_kpr" => "bail|nullable|numeric|lte:".$credit,
+        ],[
+            "total_kpr.lte" => "Total KPR harus kurang dari atau sama dengan Rp $credit."
         ]);
     }
 
@@ -256,13 +282,20 @@ class AkadController extends Controller
             }
 
             if ($akad->akad_kpr) {
-                $data = AkadKpr::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'akad_date', 'akad_time', 'location', 'address','akad_doc_file_name','akad_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status']));
+                $data = AkadKpr::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'akad_date', 'akad_time', 'location', 'address','akad_doc_file_name','akad_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status','total_kpr']));
             }else{
                 $data = AkadKpr::create($request->all());
             }
 
-            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved' && $request->has('akad_doc_sign_file_name')) {
-                $akad->booking_status = 'ajb_handover';
+
+            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+
+                if ($request->total_kpr == $akad->credits) {
+                    $akad->booking_status = 'ajb_handover';
+                }else{
+                    $akad->booking_status = 'cicilan_sp3k';
+                }
+                
                 $akad->save();
             }
 
