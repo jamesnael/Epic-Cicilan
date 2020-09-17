@@ -11,6 +11,7 @@ use Modules\Installment\Entities\Unit;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\RewardPoint\Entities\Point;
+use Modules\Installment\Entities\TipeProgram;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -395,6 +396,7 @@ class BookingController extends Controller
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
             'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->get(),
+            'tipe_programs' => TipeProgram::get(),
         ];
     }
 
