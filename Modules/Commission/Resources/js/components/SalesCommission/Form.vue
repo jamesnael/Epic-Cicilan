@@ -260,6 +260,11 @@
 
                                     url_payment_proof_one: data.commission ? data.commission.url_payment_proof_one : '',
                                     url_payment_proof_two: data.commission ? data.commission.url_payment_proof_two : '',
+                                    url_korwil_payment_proof_one: data.commission ? data.commission.url_korwil_payment_proof_one : '',
+                                    url_korwil_payment_proof_two: data.commission ? data.commission.url_korwil_payment_proof_two : '',
+                                    url_korut_payment_proof_one: data.commission ? data.commission.url_korut_payment_proof_one : '',
+                                    url_korut_payment_proof_two: data.commission ? data.commission.url_korut_payment_proof_two : '',
+
                                     url_sales_evidence: data.commission ? data.commission.url_sales_evidence : '',
                                     url_agency_evidence: data.commission ? data.commission.url_agency_evidence : '',
                                     url_korwil_evidence: data.commission ? data.commission.url_korwil_evidence : '',
