@@ -47,9 +47,17 @@
 	            menu6: false,
 	            menu7: false,
 	            menu8: false,
+                menu9: false,
+                menu10: false,
+                menu11: false,
+                menu12: false,
 	            form_data: {
 		            payment_date_1: '',
 		            payment_date_2: '',
+                    korwil_payment_date_1: '',
+                    korwil_payment_date_2: '',
+                    korut_payment_date_1: '',
+                    korut_payment_date_2: '',
 		            sales_payment_date: '',
 		            agency_payment_date: '',
 		            korwil_payment_date: '',
@@ -85,7 +93,7 @@
             commission_1: function() {
             	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
                 let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
                 let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
                 let result = (commission - pph_final_result - pph_21) / 2 ;
                 return result.toFixed();  
@@ -93,7 +101,7 @@
             commission_2: function() {
             	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
                 let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
                 let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
                 let result = (commission - pph_final_result - pph_21) / 2 ;
                 return result.toFixed();  
@@ -101,8 +109,60 @@
             bruto_commission: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
                 let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.pph21) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
                 let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
+                let result = commission - pph_final_result - pph_21;
+                return result.toFixed();  
+            },
+
+            //Korwil
+            korwil_commission_1: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21) / 2 ;
+                return result.toFixed();  
+            },
+            korwil_commission_2: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21) / 2 ;
+                return result.toFixed();  
+            },
+            korwil_bruto_commission: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
+                let result = commission - pph_final_result - pph_21;
+                return result.toFixed();  
+            },
+
+            //Korut
+            korut_commission_1: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21) / 2 ;
+                return result.toFixed();  
+            },
+            korut_commission_2: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21) / 2 ;
+                return result.toFixed();  
+            },
+            korut_bruto_commission: function() {
+                let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
+                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
+                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
+                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
                 let result = commission - pph_final_result - pph_21;
                 return result.toFixed();  
             },
@@ -131,11 +191,24 @@
     		            			payment_method: data.payment_method,
                                     payment_type: data.payment_type,
     		            			agency_name: data.sales.agency.agency_name,
+                                    korwil_name: data.sales.regional_coordinator.full_name,
+                                    korut_name: data.sales.main_coordinator.full_name,
     		            			agency_commission: data.sales.agency.agency_commission,
+                                    korwil_commission: data.sales.agency.regional_coordinator_commission,
+                                    korut_commission: data.sales.agency.main_coordinator_commission,
     		            			closing_fee: data.unit.closing_fee,
     		            			korut_name: data.sales.main_coordinator.full_name,
     		            			korwil_name: data.sales.regional_coordinator.full_name,
     		            			pph_final: data.sales.agency.pph_final,
+                                    korwil_pph_final: data.sales.regional_coordinator.pph_final,
+                                    korut_pph_final: data.sales.main_coordinator.pph_final,
+
+                                    pph_21: data.sales.agency.pph_21,
+                                    korwil_pph_21: data.sales.regional_coordinator.pph_21,
+                                    korut_pph_21: data.sales.main_coordinator.pph_21,
+                                    pph_23: data.sales.agency.pph_23,
+                                    korwil_pph_23: data.sales.regional_coordinator.pph_23,
+                                    korut_pph_23: data.sales.main_coordinator.pph_23,
 
                                     prosentase_komisi: data.prosentase_komisi,
 
@@ -143,10 +216,20 @@
     		            			sales_id: data.sales_id,
     		            			korwil_id: data.sales.regional_coordinator_id,
     		            			korut_id: data.sales.main_coordinator_id,
-    					            payment_date_1: data.commission ? data.commission.payment_date_1 : '',
+    					            
+                                    payment_date_1: data.commission ? data.commission.payment_date_1 : '',
     					           	invoice_commission_1: data.commission ? data.commission.invoice_commission_1 : '',
     					            payment_date_2: data.commission ? data.commission.payment_date_2 : '',
     					           	invoice_commission_2: data.commission ? data.commission.invoice_commission_2 : '',
+                                    korwil_payment_date_1: data.commission ? data.commission.korwil_payment_date_1 : '',
+                                    korwil_invoice_commission_1: data.commission ? data.commission.korwil_invoice_commission_1 : '',
+                                    korwil_payment_date_2: data.commission ? data.commission.korwil_payment_date_2 : '',
+                                    korwil_invoice_commission_2: data.commission ? data.commission.korwil_invoice_commission_2 : '',
+                                    korut_payment_date_1: data.commission ? data.commission.korut_payment_date_1 : '',
+                                    korut_invoice_commission_1: data.commission ? data.commission.korut_invoice_commission_1 : '',
+                                    korut_payment_date_2: data.commission ? data.commission.korut_payment_date_2 : '',
+                                    korut_invoice_commission_2: data.commission ? data.commission.korut_invoice_commission_2 : '',
+
     					           	sales_bank_name: data.commission ? data.commission.sales_bank_name : '',
     					            closing_fee_sales: data.commission ? data.commission.closing_fee_sales : '',
     					           	sales_no_rek: data.commission ? data.commission.sales_no_rek : '',
@@ -165,6 +248,11 @@
 
     					           	payment_proof_1: data.commission ? data.commission.payment_proof_1 : '',
     					           	payment_proof_2: data.commission ? data.commission.payment_proof_2 : '',
+                                    korwil_payment_proof_1: data.commission ? data.commission.korwil_payment_proof_1 : '',
+                                    korwil_payment_proof_2: data.commission ? data.commission.korwil_payment_proof_2 : '',
+                                    korut_payment_proof_1: data.commission ? data.commission.korut_payment_proof_1 : '',
+                                    korut_payment_proof_2: data.commission ? data.commission.korut_payment_proof_2 : '',
+
     					           	sales_evidence: data.commission ? data.commission.sales_evidence : '',
     					           	agency_evidence: data.commission ? data.commission.agency_evidence : '',
     					           	korwil_evidence: data.commission ? data.commission.korwil_evidence : '',
@@ -172,6 +260,11 @@
 
                                     url_payment_proof_one: data.commission ? data.commission.url_payment_proof_one : '',
                                     url_payment_proof_two: data.commission ? data.commission.url_payment_proof_two : '',
+                                    url_korwil_payment_proof_one: data.commission ? data.commission.url_korwil_payment_proof_one : '',
+                                    url_korwil_payment_proof_two: data.commission ? data.commission.url_korwil_payment_proof_two : '',
+                                    url_korut_payment_proof_one: data.commission ? data.commission.url_korut_payment_proof_one : '',
+                                    url_korut_payment_proof_two: data.commission ? data.commission.url_korut_payment_proof_two : '',
+
                                     url_sales_evidence: data.commission ? data.commission.url_sales_evidence : '',
                                     url_agency_evidence: data.commission ? data.commission.url_agency_evidence : '',
                                     url_korwil_evidence: data.commission ? data.commission.url_korwil_evidence : '',
@@ -244,6 +337,10 @@
                     data.append("sales_id", this.form_data.sales_id);
                     data.append("payment_date_1", this.form_data.payment_date_1 ? this.form_data.payment_date_1 : '' );
                     data.append("payment_date_2", this.form_data.payment_date_2 ? this.form_data.payment_date_2 : '');
+                    data.append("korwil_payment_date_1", this.form_data.korwil_payment_date_1 ? this.form_data.korwil_payment_date_1 : '' );
+                    data.append("korwil_payment_date_2", this.form_data.korwil_payment_date_2 ? this.form_data.korwil_payment_date_2 : '');
+                    data.append("korut_payment_date_1", this.form_data.korut_payment_date_1 ? this.form_data.korut_payment_date_1 : '' );
+                    data.append("korut_payment_date_2", this.form_data.korut_payment_date_2 ? this.form_data.korut_payment_date_2 : '');
                     data.append("sales_payment_date", this.form_data.sales_payment_date ? this.form_data.sales_payment_date : '');
                     data.append("agency_payment_date", this.form_data.agency_payment_date ? this.form_data.agency_payment_date : '');
                     data.append("korwil_payment_date", this.form_data.korwil_payment_date  ? this.form_data.korwil_payment_date : '');

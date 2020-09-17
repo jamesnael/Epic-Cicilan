@@ -1,14 +1,10 @@
 <script>
 	import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
-	import { required, email, max, min, numeric, between } from 'vee-validate/dist/rules'
+	import { required, max } from 'vee-validate/dist/rules'
 	import id from 'vee-validate/dist/locale/id.json'
 
 	extend('required', required)
-	extend('email', email)
 	extend('max', max)
-	extend('min', min)
-	extend('numeric', numeric)
-	extend('between', between)
     localize('id', id);
 
 	export default {
@@ -37,20 +33,11 @@
 	            formAlertText: '',
 	            formAlertState: 'info',
             	form_data: {
-            		client_number: '',
-            		client_name: '',
-            		client_email: '',
-            		client_phone_number: '',
-            		client_mobile_number: '',
-            		client_address: '',
-            		client_file_ktp: '',
-            		client_file_npwp: '',
-            		profession: '',
-            		province: '',
-            		city: '',
-            		npwp:'',
-            		no_ktp:'',
-            		alamat_ktp: '',
+            		nama_program: '',
+            		harga_termasuk: [],
+            		harga_tidak_termasuk: [],
+            		gimmick: '',
+            		keterangan: '',
             	}
         	}
         },
@@ -68,20 +55,11 @@
     		            	if (response.data.success) {
     		            		let data = response.data.data
     		            		this.form_data = {
-    		            			client_number: data.client_number,
-    		            			client_name: data.client_name,
-    		            			client_email: data.client_email,
-    		            			client_phone_number: data.client_phone_number,
-    		            			client_mobile_number: data.client_mobile_number,
-    		            			client_address: data.client_address,
-    		            			client_file_ktp: data.client_file_ktp,
-    		            			client_file_npwp: data.client_file_npwp,
-    		            			no_ktp: data.no_ktp,
-    		            			npwp: data.npwp,
-    		            			alamat_ktp: data.alamat_ktp,
-    		            			profession: data.profession,
-    		            			province: data.province,
-    		            			city: data.city,
+    		            			nama_program: data.nama_program,
+    		            			harga_termasuk: data.harga_termasuk,
+    		            			harga_tidak_termasuk: data.harga_tidak_termasuk,
+    		            			gimmick: data.gimmick,
+    		            			keterangan: data.keterangan,
     		            		}
 
     			                this.field_state = false
@@ -111,20 +89,11 @@
         	},
         	clear () {
 		        this.form_data = {
-		        	client_number: '',
-		        	client_name: '',
-		        	client_email: '',
-		        	client_phone_number: '',
-		        	client_mobile_number: '',
-		        	client_address: '',
-		        	client_file_ktp: '',
-		        	client_file_npwp: '',
-		        	profession: '',
-		        	province: '',
-		        	city: '',
-		        	npwp:'',
-            		no_ktp:'',
-            		alamat_ktp: '',
+		        	nama_program: '',
+            		harga_termasuk: [],
+            		harga_tidak_termasuk: [],
+            		gimmick: '',
+            		keterangan: '',
 		        }
 		        this.$refs.observer.reset()
 		    },
@@ -159,6 +128,22 @@
 	                    this.tableAlertText = 'Oops, something went wrong. Please try again later.'
 	    		        this.field_state = false
 	    		    });
+		    },
+		    addHargaInclude() {
+		    	this.form_data.harga_termasuk.push("")
+		    },
+		    removeHargaInclude(idx) {
+		    	this.form_data.harga_termasuk = _.filter(this.form_data.harga_termasuk, (el, key) => {
+		    		return key != idx
+		    	})
+		    },
+		    addHargaExclude() {
+		    	this.form_data.harga_tidak_termasuk.push("")
+		    },
+		    removeHargaExclude(idx) {
+		    	this.form_data.harga_tidak_termasuk = _.filter(this.form_data.harga_tidak_termasuk, (el, key) => {
+		    		return key != idx
+		    	})
 		    }
         }
 	}

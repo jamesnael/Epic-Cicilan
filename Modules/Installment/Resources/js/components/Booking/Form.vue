@@ -47,6 +47,12 @@
                     return []
                 }
             },
+            filter_tipe_programs: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
 		},
 		data: function () {
             return {
@@ -105,7 +111,15 @@
                     main_coor_id:'',
                     regional_coor_id:'',
                     agent_id:'',
+                    program_id:'',
             	},
+                program: {
+                    nama_program: '',
+                    harga_termasuk: [],
+                    harga_tidak_termasuk: [],
+                    gimmick: '',
+                    keterangan: '',
+                },
             	total_amount: '0',
                 first_payment: '0',
                 dp_amount: '0',
@@ -202,6 +216,7 @@
                                     main_coor_id:data.sales.main_coordinator_id,
                                     regional_coor_id:data.sales.regional_coordinator_id,
                                     agent_id:data.sales.agency_id,
+                                    program_id:data.program_id,
     		            		},
     		            		this.total_amount = data.total_amount
     		            		this.first_payment = data.first_payment
@@ -212,6 +227,8 @@
     		            		this.payment_method = data.payment_method
     		            		this.payment_type = data.payment_type
     		            		this.credits = data.credits
+
+                                this.setSelectedProgram()
 
     			                this.field_state = false
     		            	} else {
@@ -339,6 +356,26 @@
                     this.due_date = '0';
                     this.credits = '0';
             },
+            setSelectedProgram() {
+                let data = _.find(this.filter_tipe_programs, o => { return o.id == this.form_data.program_id})
+                if (_.isUndefined(data)) {
+                    this.program = {
+                                    nama_program: '',
+                                    harga_termasuk: [],
+                                    harga_tidak_termasuk: [],
+                                    gimmick: '',
+                                    keterangan: '',
+                                }
+                } else {
+                    this.program = {
+                                    nama_program: data.nama_program,
+                                    harga_termasuk: data.harga_termasuk,
+                                    harga_tidak_termasuk: data.harga_tidak_termasuk,
+                                    gimmick: data.gimmick,
+                                    keterangan: data.keterangan,
+                                }
+                }
+            }
         }
 	}
 </script>

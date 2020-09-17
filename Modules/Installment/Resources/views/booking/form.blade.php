@@ -179,6 +179,92 @@
 			    	</v-col>
 		    	</v-row>
 
+		    	<h3 class="mt-6">Data Tipe Program</h3>
+	    		<validation-provider v-slot="{ errors }" name="Tipe program" rules="required">
+		    		 <v-autocomplete
+		    			class="mt-4"
+		    			v-model="form_data.program_id" 
+		    			@input="setSelectedProgram()"
+		              	:items="filter_tipe_programs"
+		              	item-text="nama_program"
+              	        item-value="id"
+		              	label="Tipe Program"
+		              	name="program_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-autocomplete>
+	    		</validation-provider>
+	    		<v-text-field
+	    			class="mt-4"
+	    			v-model="program.nama_program"
+	    			name="nama_program"
+		    		label="Nama Tipe Program"
+		    		v-show="false"
+		    		:readonly="!field_state"
+		    		:disabled="field_state">
+    			</v-text-field>
+	    		<v-row
+	    			class="mt-4">
+    		        <v-col
+    		          	cols="12"
+						md="6">
+						<h5>
+							Harga Sudah Termasuk
+						</h5>
+						<div
+							v-for="(el, idx) in program.harga_termasuk"
+						>
+							<v-text-field
+								class="mt-3"
+					            v-model="program.harga_termasuk[idx]"
+					            name="harga_termasuk[]"
+					            label=""
+					            type="text"
+					            :readonly="!field_state"
+					            :disabled="field_state"
+							></v-text-field>
+						</div>
+    		      	</v-col>
+    		        <v-col
+    		          	cols="12"
+    		          	md="6">
+    		          	<h5>
+	    		          	Harga Tidak Termasuk
+	    		        </h5>
+    		        	<div
+    		        		v-for="(el, idx) in program.harga_tidak_termasuk"
+    		        	>
+    		        		<v-text-field
+    		        			class="mt-3"
+    		                    v-model="program.harga_tidak_termasuk[idx]"
+    		                    name="harga_tidak_termasuk[]"
+    		                    label=""
+    		                    type="text"
+    		                    :readonly="!field_state"
+    		                    :disabled="field_state"
+    		        		></v-text-field>
+    		        	</div>
+    		      	</v-col>
+	    		</v-row>
+	    		<v-text-field
+	    			class="mt-4"
+	    			v-model="program.gimmick"
+	    			name="gimmick"
+		    		label="Gimmick"
+		    		:readonly="!field_state"
+		    		:disabled="field_state">
+    			</v-text-field>
+	    		<v-text-field
+	    			class="mt-4"
+	    			v-model="program.keterangan_program"
+	    			name="keterangan_program"
+		    		label="Keterangan"
+		    		:readonly="!field_state"
+		    		:disabled="field_state">
+    			</v-text-field>
+
 		    	<h3 class="mt-6">Data NUP & UTJ</h3>
 	    		<v-row>
 	    			<v-col
@@ -376,11 +462,6 @@
 				    </v-col>
 			    </v-row>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
 			    <h3 class="mt-4">Data Cicilan Unit</h3>
 			    <v-row>
 			    	<v-col
@@ -476,20 +557,16 @@
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
 	    		</validation-provider>
-<<<<<<< HEAD
+
 	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
-=======
+
 	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar" rules="required|numeric|min:0">
->>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
+
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="principal"
 		    			name="principal"
-<<<<<<< HEAD
-			    		label="Principal"
-=======
 			    		label="Total Cicilan Yang Harus Dibayar"
->>>>>>> 0693f599098f8122f8e57f037587a39c5207e87c
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"

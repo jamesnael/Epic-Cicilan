@@ -6,28 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class TipeProgram extends Model
 {
-
-	use Sluggable, SoftDeletes;
+    use Sluggable, SoftDeletes;
 
     protected $fillable = [
     	'slug',
-    	'client_number',
-    	'client_name',
-    	'client_email',
-    	'client_phone_number',
-    	'client_mobile_number',
-        'profession',
-    	'client_address',
-        'province',
-        'city',
-        'client_address',
-        'npwp',
-        'no_ktp'
+    	'nama_program',
+    	'harga_termasuk',
+    	'harga_tidak_termasuk',
+    	'gimmick',
+    	'keterangan',
     ];
 
-    /**
+     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -42,7 +34,8 @@ class Client extends Model
      * @var array
      */
     protected $casts = [
-        
+        'harga_termasuk' => 'array',
+        'harga_tidak_termasuk' => 'array',
     ];
 
     /**
@@ -54,7 +47,7 @@ class Client extends Model
     {
         return [
             'slug' => [
-                'source' => ['client_number', 'client_name'],
+                'source' => ['nama_program'],
             ]
         ];
     }
@@ -69,12 +62,11 @@ class Client extends Model
         return 'slug';
     }
 
-    /**
+     /**
      * Get the relationship for the model.
      */
-    public function client_bookings()
+    public function bookings()
     {
-        return $this->hasMany('Modules\Installment\Entities\Booking', 'client_id');
+        return $this->hasMany('Modules\Installment\Entities\Booking', 'program_id');
     }
-
 }

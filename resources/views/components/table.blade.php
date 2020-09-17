@@ -107,6 +107,7 @@
 				<v-icon small>mdi-eye</v-icon>
             </v-btn>
     	</template>
+    	@stack('table_slot')
     </v-data-table>
 
     <v-dialog

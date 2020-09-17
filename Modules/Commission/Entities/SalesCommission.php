@@ -18,6 +18,24 @@ class SalesCommission extends Model
         'payment_date_2',
        	'invoice_commission_2',
        	'payment_proof_2',
+        'korwil_commission',
+        'korwil_commission_1',
+        'korwil_payment_date_1',
+        'korwil_invoice_commission_1',
+        'korwil_payment_proof_1',
+        'korwil_commission_2',
+        'korwil_payment_date_2',
+        'korwil_invoice_commission_2',
+        'korwil_payment_proof_2',
+        'korut_commission',
+        'korut_commission_1',
+        'korut_payment_date_1',
+        'korut_invoice_commission_1',
+        'korut_payment_proof_1',
+        'korut_commission_2',
+        'korut_payment_date_2',
+        'korut_invoice_commission_2',
+        'korut_payment_proof_2',
         'sales_id',
        	'sales_name',
         'closing_fee_sales',
@@ -50,6 +68,10 @@ class SalesCommission extends Model
     protected $appends = [
         'url_payment_proof_one',
         'url_payment_proof_two',
+        'url_korwil_payment_proof_one',
+        'url_korwil_payment_proof_two',
+        'url_korut_payment_proof_one',
+        'url_korut_payment_proof_two',
         'url_sales_evidence',
         'url_agency_evidence',
         'url_korwil_evidence',
@@ -84,6 +106,50 @@ class SalesCommission extends Model
     public function getUrlPaymentProofTwoAttribute()
     {
         return (!empty($this->attributes['payment_proof_2'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['payment_proof_2']) : '';
+    }
+
+    /**
+     * Get the model's image.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlKorwilPaymentProofOneAttribute()
+    {
+        return (!empty($this->attributes['korwil_payment_proof_1'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korwil_payment_proof_1']) : '';
+    }
+
+    /**
+     *
+     * Get the model's image.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlKorwilPaymentProofTwoAttribute()
+    {
+        return (!empty($this->attributes['korwil_payment_proof_2'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korwil_payment_proof_2']) : '';
+    }
+
+    /**
+     * Get the model's image.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlKorutPaymentProofOneAttribute()
+    {
+        return (!empty($this->attributes['korut_payment_proof_1'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korut_payment_proof_1']) : '';
+    }
+
+    /**
+     *
+     * Get the model's image.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlKorutPaymentProofTwoAttribute()
+    {
+        return (!empty($this->attributes['korut_payment_proof_2'])) ? Storage::disk('public')->url('app/public/Komisi/'.$this->attributes['korut_payment_proof_2']) : '';
     }
 
     /**

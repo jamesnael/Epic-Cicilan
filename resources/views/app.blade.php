@@ -17,7 +17,7 @@
 		<div id="page-content">
 			<base-layout inline-template
 				:items='@json(aside_menu())'>
-				<v-app id="content">
+				<v-app id="content" v-cloak>
 				    <v-navigation-drawer
 				        v-model="drawer"
 				        :clipped="$vuetify.breakpoint.lgAndUp"

@@ -267,8 +267,14 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-home-city',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Booking',
-                'model' => in_array(Route::currentRouteName(), ['client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit']),
+                'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit','client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit']),
                 'children' => [
+                    [
+                        'icon' => 'mdi-trophy-award',
+                        'text' => 'Tipe Program',
+                        'uri' => route('tipe-program.index'),
+                        'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit'])
+                    ],
                     [
                         'icon' => 'mdi-domain',
                         'text' => 'Tipe Unit',
