@@ -127,6 +127,7 @@ Route::group(['namespace' => 'Spr'], function() {
 	Route::get('spr/table-approved', 'SprController@tableApproved')->name('spr.table.approved');
 	Route::get('spr/{spr}/data', 'SprController@data')->name('spr.data');
 	Route::put('spr/{spr}/cancel', 'SprController@cancelSpr')->name('spr.cancel');
+	Route::get('spr/{spr}/cetak-dokumen', 'SprController@print')->name('spr.print');
 	Route::resource('spr', 'SprController')->except(['show']);
 });
 

@@ -18,6 +18,12 @@
             "value" => 'table_index',
         ])->values();
 
+        $page->table_headers_2[] = [
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'actions',
+        ];
         $page->table_headers_2 = collect($page->table_headers_2)->prepend([
             "text" => '#',
             "align" => 'center',
@@ -59,6 +65,10 @@
 				items-per-page-all-text="Semua"
 				items-per-page-text="Tampilkan"
 				page-text-locale="id"
+				edit-uri="spr.print"
+				edit-uri-parameter="slug"
+				edit-text="Print Dokumen SPR"
+				edit-icon="mdi-printer"
 				>
 				
 				@include('components.table')

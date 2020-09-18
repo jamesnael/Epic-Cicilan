@@ -14,6 +14,7 @@ use Modules\RewardPoint\Entities\RecordPoint;
 use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class SprController extends Controller
 {
@@ -176,6 +177,19 @@ class SprController extends Controller
             'page' => $this,
             'data' => $spr,
         ])->with($this->getHelper());
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function print(Booking $spr)
+    {
+        // return view('installment::spr.print', ['data' => $spr]);
+        $date = date('d F Y');
+        $pdf  = PDF::loadView('installment::spr.print', ['data' => $spr, 'date' => $date])->setPaper('a4', 'portrait');
+        return $pdf->download('dokumen-spr.pdf');
     }
 
     /**
