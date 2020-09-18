@@ -45,6 +45,12 @@ class SprController extends Controller
                 "value" => 'client_name',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
@@ -88,6 +94,12 @@ class SprController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
@@ -386,7 +398,7 @@ class SprController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->print_date    = $item->spr ? \Carbon\Carbon::parse($item->spr->print_date)->locale('id')->translatedFormat('d F Y') : '';
             $item->sent_date     = $item->spr ? ($item->spr->sent_date) != null ? \Carbon\Carbon::parse($item->spr->sent_date)->locale('id')->translatedFormat('d F Y') : '' : '';
-            $item->unit_name     = $item->unit->unit_type . ' ' . $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_name     = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;
@@ -490,7 +502,7 @@ class SprController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->print_date    = $item->spr ? \Carbon\Carbon::parse($item->spr->print_date)->locale('id')->translatedFormat('d F Y') : '';
             $item->sent_date     = $item->spr ? ($item->spr->sent_date) != null ? \Carbon\Carbon::parse($item->spr->sent_date)->locale('id')->translatedFormat('d F Y') : '' : '';
-            $item->unit_name     = $item->unit->unit_type . ' ' . $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_name     = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;

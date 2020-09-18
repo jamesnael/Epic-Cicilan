@@ -44,6 +44,12 @@ class CancelBookingController extends Controller
                 "value" => 'client_name',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,

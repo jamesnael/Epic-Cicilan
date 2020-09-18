@@ -48,16 +48,16 @@ class BookingController extends Controller
                 "value" => 'client_name',
             ],
             [
-                "text" => 'Unit',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => 'unit_number',
-            ],
-            [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'unit_type',
+            ],
+            [
+                "text" => 'Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',

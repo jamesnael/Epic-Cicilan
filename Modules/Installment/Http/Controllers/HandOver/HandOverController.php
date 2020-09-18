@@ -52,6 +52,12 @@ class HandOverController extends Controller
                 "value" => 'client_mobile_number',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
@@ -100,6 +106,12 @@ class HandOverController extends Controller
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'client_mobile_number',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',

@@ -51,6 +51,12 @@ class DocumentAdminController extends Controller
                 "value" => 'client_profesion',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,

@@ -49,6 +49,12 @@ class InstallementController extends Controller
                 "value" => 'client_name',
             ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
@@ -306,7 +312,7 @@ class InstallementController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->client_number = $item->client->client_number;
             $item->client_name = $item->client->client_name;
-            $item->unit_number = $item->unit->unit_type .'/'. $item->unit->unit_number .'/'. $item->unit->unit_block;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
             $item->total_amount ='Rp '.format_money($item->total_amount);
             $item->payment_type = $item->payment_type;
             $item->dp_amount = 'Rp '.format_money($item->dp_amount);
