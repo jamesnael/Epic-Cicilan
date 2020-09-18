@@ -1,0 +1,421 @@
+{
+	"Kelola Sales": {
+		"has_child": "true",
+		"submenu": [
+			{
+				"menu": "Komisi",
+				"routes": [
+					{
+						"title": "Komisi Tabel",
+						"uri": "commission.index"
+					},
+					{
+						"title": "Tambah Baru Komisi",
+						"uri": "commission.create"
+					},
+					{
+						"title": "Ubah Komisi",
+						"uri": "commission.edit"
+					},
+					{
+						"title": "Hapus Komisi",
+						"uri": "commission.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Koordinator Utama",
+				"routes": [
+					{
+						"title": "Koordinator Utama Tabel",
+						"uri": "main-coordinator.index"
+					},
+					{
+						"title": "Tambah Baru Koordinator Utama",
+						"uri": "main-coordinator.create"
+					},
+					{
+						"title": "Ubah Koordinator Utama",
+						"uri": "main-coordinator.edit"
+					},
+					{
+						"title": "Hapus Koordinator Utama",
+						"uri": "main-coordinator.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Koordinator Wilayah",
+				"routes": [
+					{
+						"title": "Koordinator Wilayah Tabel",
+						"uri": "regional-coordinator.index"
+					},
+					{
+						"title": "Tambah Baru Koordinator Wilayah",
+						"uri": "regional-coordinator.create"
+					},
+					{
+						"title": "Ubah Koordinator Wilayah",
+						"uri": "regional-coordinator.edit"
+					},
+					{
+						"title": "Hapus Koordinator Wilayah",
+						"uri": "regional-coordinator.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Sub Agent",
+				"routes": [
+					{
+						"title": "Sub Agent Tabel",
+						"uri": "agencies.index"
+					},
+					{
+						"title": "Tambah Baru Sub Agent",
+						"uri": "agencies.create"
+					},
+					{
+						"title": "Ubah Sub Agent",
+						"uri": "agencies.edit"
+					},
+					{
+						"title": "Hapus Sub Agent",
+						"uri": "agencies.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Sales",
+				"routes": [
+					{
+						"title": "Sales Tabel",
+						"uri": "sales.index"
+					},
+					{
+						"title": "Tambah Baru Sales",
+						"uri": "sales.create"
+					},
+					{
+						"title": "Ubah Sales",
+						"uri": "sales.edit"
+					},
+					{
+						"title": "Hapus Sales",
+						"uri": "sales.destroy"
+					}
+				]
+			}
+		],
+		"routes": []
+	},
+	"Kelola Reward": {
+		"has_child": "true",
+		"submenu": [
+			{
+				"menu": "Kategori Reward",
+				"routes": [
+					{
+						"title": "Kategori Reward Tabel",
+						"uri": "reward-category.index"
+					},
+					{
+						"title": "Tambah Baru Kategori Reward",
+						"uri": "reward-category.create"
+					},
+					{
+						"title": "Ubah Kategori Reward",
+						"uri": "reward-category.edit"
+					},
+					{
+						"title": "Hapus Kategori Reward",
+						"uri": "reward-category.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Reward",
+				"routes": [
+					{
+						"title": "Reward Tabel",
+						"uri": "reward-point.index"
+					},
+					{
+						"title": "Tambah Baru Reward",
+						"uri": "reward-point.create"
+					},
+					{
+						"title": "Ubah Reward",
+						"uri": "reward-point.edit"
+					},
+					{
+						"title": "Hapus Reward",
+						"uri": "reward-point.destroy"
+					}
+				]
+			}
+		],
+		"routes": []
+	},
+	"Kelola Booking": {
+		"has_child": "true",
+		"submenu": [
+			{
+				"menu": "Tipe Program",
+				"routes": [
+					{
+						"title": "Tipe Program Tabel",
+						"uri": "tipe-program.index"
+					},
+					{
+						"title": "Tambah Baru Tipe Program",
+						"uri": "tipe-program.create"
+					},
+					{
+						"title": "Ubah Tipe Program",
+						"uri": "tipe-program.edit"
+					},
+					{
+						"title": "Hapus Tipe Program",
+						"uri": "tipe-program.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Tipe Unit",
+				"routes": [
+					{
+						"title": "Tipe Unit Tabel",
+						"uri": "point.index"
+					},
+					{
+						"title": "Tambah Baru Tipe Unit",
+						"uri": "point.create"
+					},
+					{
+						"title": "Ubah Tipe Unit",
+						"uri": "point.edit"
+					},
+					{
+						"title": "Hapus Tipe Unit",
+						"uri": "point.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Klien",
+				"routes": [
+					{
+						"title": "Klien Tabel",
+						"uri": "client.index"
+					},
+					{
+						"title": "Tambah Baru Klien",
+						"uri": "client.create"
+					},
+					{
+						"title": "Ubah Klien",
+						"uri": "client.edit"
+					},
+					{
+						"title": "Hapus Klien",
+						"uri": "client.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Booking",
+				"routes": [
+					{
+						"title": "Booking Tabel",
+						"uri": "booking.index"
+					},
+					{
+						"title": "Tambah Baru Booking",
+						"uri": "booking.create"
+					},
+					{
+						"title": "Ubah Booking",
+						"uri": "booking.edit"
+					},
+					{
+						"title": "Hapus Booking",
+						"uri": "booking.destroy"
+					}
+				]
+			},
+			{
+				"menu": "Cicilan",
+				"routes": [
+					{
+						"title": "Cicilan Tabel",
+						"uri": "installment.index"
+					},
+					{
+						"title": "Ubah Cicilan",
+						"uri": "installment.edit"
+					}
+				]
+			},
+			{
+				"menu": "Cancel Booking",
+				"routes": [
+					{
+						"title": "Cancel Booking Tabel",
+						"uri": "cancel-booking.index"
+					},
+					{
+						"title": "View Cancel Booking",
+						"uri": "cancel-booking.edit"
+					}
+				]
+			}
+		],
+		"routes": []
+	},
+	"Kelola Dokumen": {
+		"has_child": "true",
+		"submenu": [
+			{
+				"menu": "Dokumen Sales",
+				"routes": [
+					{
+						"title": "Dokumen Sales Tabel",
+						"uri": "document.index"
+					},
+					{
+						"title": "Ubah Dokumen Sales",
+						"uri": "document.edit"
+					}
+				]
+			},
+			{
+				"menu": "Dokumen Admin",
+				"routes": [
+					{
+						"title": "Dokumen Admin Tabel",
+						"uri": "document-admin.index"
+					},
+					{
+						"title": "Ubah Dokumen Admin",
+						"uri": "document-admin.edit"
+					}
+				]
+			}
+		],
+		"routes": []
+	},
+	"SPR": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "SPR Tabel",
+				"uri": "spr.index"
+			},
+			{
+				"title": "Ubah SPR",
+				"uri": "spr.edit"
+			}
+		]
+	},
+	"PPJB": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "PPJB Tabel",
+				"uri": "ppjb.index"
+			},
+			{
+				"title": "Ubah PPJB",
+				"uri": "ppjb.edit"
+			}
+		]
+	},
+	"Pembayaran Cicilan": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Pembayaran Cicilan Tabel",
+				"uri": "installment-unit.index"
+			},
+			{
+				"title": "Ubah Pembayaran Cicilan",
+				"uri": "installment-unit.edit"
+			}
+		]
+	},
+	"Akad KPR": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Akad KPR Tabel",
+				"uri": "akad.index"
+			},
+			{
+				"title": "Ubah Akad KPR",
+				"uri": "akad.edit"
+			}
+		]
+	},
+	"Akte Jual Beli": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Akte Jual Beli Tabel",
+				"uri": "ajb.index"
+			},
+			{
+				"title": "Ubah Akte Jual Beli",
+				"uri": "ajb.edit"
+			}
+		]
+	},
+	"Serah Terima Unit": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Serah Terima Unit Tabel",
+				"uri": "handover.index"
+			},
+			{
+				"title": "Ubah Serah Terima Unit",
+				"uri": "handover.edit"
+			}
+		]
+	},
+	"Komisi Sales": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Komisi Sales Tabel",
+				"uri": "salescommission.index"
+			},
+			{
+				"title": "Ubah Komisi Sales",
+				"uri": "salescommission.edit"
+			}
+		]
+	},
+	"Tukar Point": {
+		"has_child": "false",
+		"submenu": [],
+		"routes": [
+			{
+				"title": "Tukar Point Tabel",
+				"uri": "tukar-point.index"
+			},
+			{
+				"title": "View Tukar Point",
+				"uri": "tukar-point.show"
+			}
+		]
+	}
+}
