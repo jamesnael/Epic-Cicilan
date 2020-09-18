@@ -69,6 +69,7 @@
             		unit_type:'',
             		client_name:'',
             		unit_number:'',
+                    unit_address:'',
             		surface_area:'',
             		building_area:'',
             		utj:'',
@@ -170,6 +171,7 @@
                                     unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
     		            			unit_number:data.unit.unit_number,
+                                    unit_address:data.unit.unit_address,
     		            			surface_area:data.unit.surface_area,
     		            			building_area:data.unit.building_area,
     		            			utj:data.unit.utj,
@@ -364,7 +366,7 @@
                                     harga_termasuk: [],
                                     harga_tidak_termasuk: [],
                                     gimmick: '',
-                                    keterangan: '',
+                                    keterangan_program: '',
                                 }
                 } else {
                     this.program = {
@@ -372,7 +374,7 @@
                                     harga_termasuk: data.harga_termasuk,
                                     harga_tidak_termasuk: data.harga_tidak_termasuk,
                                     gimmick: data.gimmick,
-                                    keterangan: data.keterangan,
+                                    keterangan_program: data.keterangan,
                                 }
                 }
             }
