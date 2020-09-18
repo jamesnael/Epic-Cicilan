@@ -50,4 +50,12 @@ class Handover extends Model
     {
         return (!empty($this->attributes['handover_doc_sign_name'])) ? Storage::disk('public')->url('app/public/handover/handover_doc_sign_names/'.$this->attributes['handover_doc_sign_name']) : null;
     }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function booking()
+    {
+        return $this->belongsTo('Modules\Installment\Entities\Booking', 'booking_id');
+    }
 }

@@ -8,6 +8,12 @@ use Illuminate\Routing\Controller;
 use Modules\DocumentClient\Entities\DocumentClient;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\BookingPayment;
+use Modules\Installment\Entities\AkteJualBeli;
+use Modules\Installment\Entities\AkadKpr;
+use Modules\Installment\Entities\PPJB;
+use Modules\Installment\Entities\Handover;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -33,56 +39,59 @@ class DashboardController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Nama Klien',
+                "text" => 'Klien',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'total_amount',
             ],
             [
-                "text" => 'Cara Bayar',
+                "text" => 'DP',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'dp_amount',
             ],
             [
                 "text" => 'Cicilan',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'installment',
             ],
             [
-                "text" => 'Tgl Jatuh Tempo',
+                "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
+                "sortable" => false,
+                "value" => 'payment_type',
             ],
             [
-                "text" => 'Sales',
+                "text" => 'Tanggal Jatuh Tempo',
                 "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
-            [
-                "text" => 'Status',
-                "align" => 'center',
-                "sortable" => true,
-                "value" => '',
-            ],
+                "sortable" => false,
+                "value" => 'due_date',
+            ]
         ];
 
-        $document = DocumentClient::where('approval_developer', 'Pending')->count();
+        $document = Booking::bookingStatus('dokumen')->whereHas('document', function($subquery){
+                            $subquery->where('approval_developer', '=', 'Pending');
+                    })->count();
+        
         $akad_kpr = Booking::has('payments')->has('ppjb')
                             ->doesntHave('unpaid_payments')->kprKpa()
                             ->bookingStatus('akad')->count();
@@ -96,26 +105,85 @@ class DashboardController extends Controller
                                 $subquery->where('handover_doc_sign_name', '!=', '');
                             })->count();
         
-        $now = \Carbon\Carbon::now()->format('Y-m-d');
-        $installment_pending = BookingPayment::where('due_date', $now)
+        $now = \Carbon\Carbon::now()->format('m');
+
+        $installment_pending = BookingPayment::whereMonth('due_date', $now)
                                              ->whereNull('payment_date')
                                              ->where('payment_status', 'Unpaid')
                                              ->count();
 
-        $installment_paid = BookingPayment::where('due_date', '<=', $now)
+        $installment_paid = BookingPayment::whereMonth('due_date', '<=', $now)
                                           ->whereNotNull('payment_date')
                                           ->where('payment_status', 'Paid')
                                           ->count();
 
-        $unpaid = BookingPayment::where('due_date','<=', $now)
+        $unpaid = BookingPayment::whereMonth('due_date','<=', $now)
                                  ->whereNull('payment_date')
                                  ->where('payment_status', 'Unpaid')
                                  ->sum('total_paid');
 
-        $paid = BookingPayment::where('due_date','<=', $now)
-                                     ->whereNotNull('payment_date')
-                                     ->where('payment_status', 'Paid')
-                                     ->sum('total_paid');
+        $paid = BookingPayment::whereMonth('due_date','<=', $now)
+                                ->whereNotNull('payment_date')
+                                ->where('payment_status', 'Paid')
+                                ->sum('total_paid');
+
+        $ajb_schedule = AkteJualBeli::with('booking', 'booking.unit', 'booking.client')->whereNotNull('ajb_date')->whereNotNull('ajb_time')->get();
+        $collection_ajb = collect($ajb_schedule)->transform(function($item) {
+            $item->color = 'green';
+            $item->name = 'AJB';
+            $item->start = $item->ajb_date .' '. $item->ajb_time; 
+            $item->end = '';
+            $item->timed = true;
+            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->client = $item->booking->client->client_name;
+            return $item;
+        });
+
+        $akad = AkadKpr::with('booking', 'booking.unit', 'booking.client')->whereNotNull('akad_date')->whereNotNull('akad_time')->get();
+        $collection_akad = collect($akad)->transform(function($item) {
+            $item->color = 'cyan';
+            $item->name = 'Akad KPR';
+            $item->start = $item->akad_date .' '. $item->akad_time; 
+            $item->end = '';
+            $item->timed = true;
+            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->client = $item->booking->client->client_name;
+            return $item;
+        });
+        $ppjb = PPJB::with('booking', 'booking.unit','booking.client')->whereNotNull('ppjb_date')->whereNotNull('ppjb_time')->get();
+        $collection_ppjb = collect($ppjb)->transform(function($item) {
+            $item->color = 'deep-purple';
+            $item->name = 'PPJB';
+            $item->start = $item->ppjb_date .' '. $item->ppjb_time; 
+            $item->end = '';
+            $item->timed = true;
+            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->client = $item->booking->client->client_name;
+            return $item;
+        });
+
+        $handover = Handover::with('booking', 'booking.unit','booking.client')->whereNotNull('handover_date')->whereNotNull('handover_time')->get();
+        $collection_handover = collect($handover)->transform(function($item) {
+            $item->color = 'deep-purple';
+            $item->name = 'Handover';
+            $item->start = $item->handover_date .' '. $item->handover_time; 
+            $item->end = '';
+            $item->timed = true;
+            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->client = $item->booking->client->client_name;
+            return $item;
+        });
+
+        $collection = collect([
+            'AJB' => $collection_ajb,
+            'Akad' => $collection_akad,
+            'ppjb' => $collection_ppjb,
+            'handover' => $collection_handover,
+        ]);
+
+        $collect_calendar = $collection->flatten(1);
+
+        $event_calendar = $collect_calendar->values()->all();
 
 
         return view('dashboard::index',[
@@ -126,66 +194,184 @@ class DashboardController extends Controller
             'handover' => $handover,
             'installment_pending' => $installment_pending,
             'installment_paid' => $installment_paid,
+            'unpaid' => $unpaid,
+            'paid' => $paid,
+            'events' => $event_calendar,
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
+     *
+     * Validation Rules for Get Table Data
+     *
      */
-    public function create()
+    public function validateTableRequest($request)
     {
-        return view('dashboard::create');
+        return Validator::make($request->all(), [
+            "page" => "bail|required|numeric|min:1",
+            "search" => "bail|present|nullable",
+            "paginate" => "bail|required|numeric|in:5,10,15,-1",
+            "sort" => "bail|present|array",
+            "sort.*[0]" => "bail|required",
+            "sort.*[1]" => "bail|required|boolean",
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
+     *
+     * Query for get data for table
+     *
      */
-    public function store(Request $request)
+    public function getTableData(Request $request)
     {
-        //
+        $now = \Carbon\Carbon::now()->format('m');
+        $query = Booking::has('payments')->with('client','unit','payments')
+        ->whereHas('payments', function($subquery) use($now){
+            $subquery->whereMonth('due_date', $now);
+            $subquery->whereNull('payment_date');
+            $subquery->where('payment_status', 'Unpaid');
+
+        })
+        ->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->unit_number = $item->unit->unit_block .'/'. $item->unit->unit_number;
+            $item->total_amount ='Rp '.format_money($item->total_amount);
+            $item->dp_amount = 'Rp '.format_money($item->dp_amount);
+            $item->installment = 'Rp '.format_money($item->installment);
+            $item->principal = 'Rp '.format_money($item->principal);
+            $item->unit_type = $item->unit->unit_type;
+            return $item;
+        });
+        return $data;
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
+     *
+     * Handle incoming request for table data
+     *
      */
-    public function show($id)
+    public function table(Request $request)
     {
-        return view('dashboard::show');
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
+     *
+     * Query for get data for table
+     *
      */
-    public function edit($id)
+    public function getPaidTableData(Request $request)
     {
-        return view('dashboard::edit');
+        $now = \Carbon\Carbon::now()->format('m');
+        $query = Booking::has('payments')->with('client','unit','payments')
+        ->whereHas('payments', function($subquery) use($now){
+            $subquery->whereMonth('due_date', $now)
+                     ->whereNotNull('payment_date')
+                     ->where('payment_status', 'Paid');
+
+        })
+        ->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('dp_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        foreach ($request->input('sort') as $sort_key => $sort) {
+            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        }
+
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_name = $item->client->client_name;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
+            $item->total_amount ='Rp '.format_money($item->total_amount);
+            $item->dp_amount = 'Rp '.format_money($item->dp_amount);
+            $item->installment = 'Rp '.format_money($item->installment);
+            $item->principal = 'Rp '.format_money($item->principal);
+            $item->unit_type = $item->unit->unit_type;
+            return $item;
+        });
+        return $data;
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
+     *
+     * Handle incoming request for table data
+     *
      */
-    public function update(Request $request, $id)
+    public function tablePaid(Request $request)
     {
-        //
-    }
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getPaidTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 }

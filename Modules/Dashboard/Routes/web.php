@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'DashboardController@index')->name('dashboard.index');
+Route::get('dashboard/table', 'DashboardController@table')->name('dashboard.table');
+Route::get('dashboard/table-paid', 'DashboardController@tablePaid')->name('dashboard-paid.table');

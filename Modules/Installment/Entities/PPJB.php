@@ -46,7 +46,8 @@ class PPJB extends Model
         return $this->hasOne('Modules\DocumentClient\Entities\DocumentClient', 'booking_id');
     }
 
-public function sales()
+    
+    public function sales()
     {
         return $this->belongsTo('Modules\SalesAgent\Entities\Sales', 'sales_id');
     }
@@ -57,6 +58,14 @@ public function sales()
     public function client()
     {
         return $this->belongsTo('Modules\Installment\Entities\Client', 'client_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function booking()
+    {
+        return $this->belongsTo('Modules\Installment\Entities\Booking', 'booking_id');
     }
 
 

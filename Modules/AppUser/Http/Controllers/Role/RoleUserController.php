@@ -181,7 +181,6 @@ class RoleUserController extends Controller
                 $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('pph_final', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -191,7 +190,6 @@ class RoleUserController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->pph_final = $item->pph_final . ' %';
             return $item;
         });
         return $data;
