@@ -205,10 +205,37 @@ class PaymentController extends Controller
                 ]);
                 $booking = $installment->booking;
                 // Send Email Paid
-                if (count($booking->unpaid_payments) == 0) {
-                    $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
-                    $booking->save();
+                // if (count($booking->unpaid_payments) == 0) {
+                //     $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                //     $booking->save();
+                // }
+
+                if (count($booking->akad_kredit_payments) == 1) {
+                    if (count($booking->unpaid_payments) == 0) {
+
+                        if ($booking->booking_status == 'cicilan') {
+                            $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                            $booking->save();
+                        }else{
+                            $booking->booking_status = 'ajb_handover';
+                            $booking->save();
+                        }
+
+                    }
+                }else{
+                    if (count($booking->unpaid_payments) == 0) {
+
+                        if ($booking->booking_status == 'cicilan') {
+                            $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                            $booking->save();
+                        }else{
+                            $booking->booking_status = 'ajb_handover';
+                            $booking->save();
+                        }
+
+                    }
                 }
+                
                 DB::commit();
                 return response_json(true, null, 'Notification Received.', $request->all());
             } else {
