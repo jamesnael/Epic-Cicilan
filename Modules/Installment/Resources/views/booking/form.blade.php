@@ -109,6 +109,24 @@
 			    	</v-col>
 		    	</v-row>
 		    	<v-row>
+			    	<v-col
+    		          cols="12"
+    		          md="12">
+			    		<validation-provider v-slot="{ errors }" name="Jalan" rules="required|min:0">
+				    		<v-text-field
+				    			class="mt-4"
+				    			v-model="form_data.unit_address"
+				    			name="unit_address"
+					    		hint="* harus diisi"
+					    		label="Jalan"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state">
+			    			</v-text-field>
+			    		</validation-provider>
+			    	</v-col>
+		    	</v-row>
+		    	<v-row>
 		    		{{-- <v-col
     		          cols="12"
     		          md="6">

@@ -41,7 +41,13 @@ class PPJBController extends Controller
                 "value" => 'client_name',
             ],
             [
-                "text" => 'Data Unit',
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'unit_number',

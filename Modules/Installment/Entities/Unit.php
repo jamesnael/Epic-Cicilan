@@ -15,6 +15,7 @@ class Unit extends Model
     	'unit_type',
     	'unit_number',
     	'unit_block',
+        'unit_address',
     	'surface_area',
     	'building_area',
     	'floor_name',

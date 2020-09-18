@@ -93,92 +93,14 @@
             			showcase: ''
             		},
         			{
-        				title: 'Fotocopy Kartu Keluarga',
-        				file_name: 'file_kk',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
         				title: 'Fotocopy Buku Nikah',
         				file_name: 'file_surat_nikah',
             			url: '',
             			showcase: ''
             		},
         			{
-        				title: 'Fotocopy Rekening Tabungan',
-        				file_name: 'file_rekening_tabungan',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Asli Slip Gaji (3 Bln Terakhir)',
-        				file_name: 'file_slip_gaji',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Surat Keterangan Kerja',
-        				file_name: 'file_keterangan_kerja',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy R/K Tab.3 bln Terakhir',
-        				file_name: 'file_tabungan_3_bulan_terakhir',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Rek. Koran 6 Bln Bagi Pengusaha',
-        				file_name: 'file_rekening_koran',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy SIUP',
-        				file_name: 'file_siup',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy TDP/NIB',
-        				file_name: 'file_tdp',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy Akte Pendirian/Perubahan',
-        				file_name: 'file_akta',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy Akte Pengesahan Menkeh',
-        				file_name: 'file_pengesahan',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Fotocopy Izin Praktek',
-        				file_name: 'file_izin_praktek',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'SK Domisili',
-        				file_name: 'file_sk_domisili',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'Surat Keterangan Usaha/Sewa',
-        				file_name: 'file_keterangan_usaha',
-            			url: '',
-            			showcase: ''
-            		},
-        			{
-        				title: 'SPT',
-        				file_name: 'file_spt',
+        				title: 'Fotocopy Kartu Keluarga',
+        				file_name: 'file_kk',
             			url: '',
             			showcase: ''
             		}
@@ -190,6 +112,93 @@
         },
         methods: {
         	pairingUploadedUrl(data) {
+                if (this.form_data.client_profession != 'Pengusaha') {
+                    this.files.push({
+                        title: 'Asli Slip Gaji (3 Bln Terakhir)',
+                        file_name: 'file_slip_gaji',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Surat Keterangan Kerja',
+                        file_name: 'file_keterangan_kerja',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Fotocopy R/K Tab.3 bln Terakhir',
+                        file_name: 'file_tabungan_3_bulan_terakhir',
+                        url: '',
+                        showcase: ''
+                    })
+                } else {
+                    this.files.push({
+                        title: 'Rek. Koran 6 Bln Bagi Pengusaha',
+                        file_name: 'file_rekening_koran',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Fotocopy SIUP',
+                        file_name: 'file_siup',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Fotocopy TDP/NIB',
+                        file_name: 'file_tdp',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Fotocopy Akte Pendirian/Perubahan',
+                        file_name: 'file_akta',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Fotocopy Akte Pengesahan Menkeh',
+                        file_name: 'file_pengesahan',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'SK Domisili',
+                        file_name: 'file_sk_domisili',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Surat Keterangan Usaha/Sewa',
+                        file_name: 'file_keterangan_usaha',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'NPWP Perusahaan',
+                        file_name: 'file_npwp_perusahaan',
+                        url: '',
+                        showcase: ''
+                    })
+                    this.files.push({
+                        title: 'Pembukuan Perusahaan',
+                        file_name: 'file_buku_perusahaan',
+                        url: '',
+                        showcase: ''
+                    })
+                }
+                this.files.push({
+                    title: 'SPT (Optional)',
+                    file_name: 'file_spt',
+                    url: '',
+                    showcase: ''
+                })
+                this.files.push({
+                    title: 'File Pendukung (Optional)',
+                    file_name: 'file_other',
+                    url: '',
+                    showcase: ''
+                })
         		_.forEach(this.files, (file) => {
         			let url_link = 'url_' + file.file_name
 				  	file.url = data[url_link] ?? ''

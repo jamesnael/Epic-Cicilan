@@ -24,6 +24,7 @@ class RegionalCoordinator extends Model
         'rek_number',
         'account_name',
         'principal',
+        'no_hp_principal',
         'ppn',
         'pph_21',
         'pph_23',

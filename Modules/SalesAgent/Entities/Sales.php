@@ -27,12 +27,13 @@ class Sales extends Model
         'agency_commission',
         'regional_coordinator_commission',
         'main_coordinator_commission',
-        'status'
+        'status',
+        'no_ktp'
     ];
 
     protected $appends = [
         'url_file_ktp',
-        'url_file_npwp',
+        // 'url_file_npwp',
         'total_point',
         'allowed_point',
         'exchanged_point',
@@ -55,10 +56,10 @@ class Sales extends Model
      * @param  string  $value
      * @return string
      */
-    public function getUrlFileNpwpAttribute()
-    {
-        return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/sales/npwp/'.$this->attributes['file_npwp']) : null;
-    }
+    // public function getUrlFileNpwpAttribute()
+    // {
+    //     return $this->attributes['file_npwp'] ? Storage::disk('public')->url('app/public/sales/npwp/'.$this->attributes['file_npwp']) : null;
+    // }
 
     public function getTotalPointAttribute()
     {

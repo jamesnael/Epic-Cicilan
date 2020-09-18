@@ -65,6 +65,12 @@ class SalesCommissionController extends Controller
             //     "value" => '',
             // ],
             [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
                 "text" => 'Data Unit',
                 "align" => 'center',
                 "sortable" => true,

@@ -45,7 +45,13 @@ class AjbController extends Controller
                 "value" => 'client_phone_number',
             ],
             [
-                "text" => 'Data Unit',
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'unit_number',
@@ -108,7 +114,13 @@ class AjbController extends Controller
                 "value" => 'client_phone_number',
             ],
             [
-                "text" => 'Data Unit',
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => true,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Unit',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'unit_number',

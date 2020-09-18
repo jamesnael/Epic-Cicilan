@@ -267,7 +267,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-gift',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Reward',
-                'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit','point.index','point.create','point.edit','reward-point.index','reward-point.create','reward-point.edit']),
+                'model' => in_array(Route::currentRouteName(), ['reward-category.index','reward-category.create','reward-category.edit','reward-point.index','reward-point.create','reward-point.edit']),
                 'children' => [
                     [
                         'icon' => 'mdi-certificate',
@@ -287,7 +287,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-home-city',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Booking',
-                'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit','client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit']),
+                'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit','client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit', 'point.index', 'point.create', 'point.edit']),
                 'children' => [
                     [
                         'icon' => 'mdi-trophy-award',

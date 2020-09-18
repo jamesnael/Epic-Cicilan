@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNoktpNpwpAlamatktp extends Migration
+class AlterNoktpClients extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class AddNoktpNpwpAlamatktp extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('alamat_ktp')->nullable()->after('client_address');
-            $table->integer('no_ktp')->nullable()->after('alamat_ktp');
-            $table->integer('npwp')->nullable()->after('no_ktp');
+            \DB::select("ALTER TABLE `clients` 
+                CHANGE COLUMN `no_ktp` `no_ktp` VARCHAR(191) NULL DEFAULT NULL ,
+                CHANGE COLUMN `npwp` `npwp` VARCHAR(191) NULL DEFAULT NULL ;
+            ");
         });
     }
 
@@ -27,7 +28,7 @@ class AddNoktpNpwpAlamatktp extends Migration
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
 
         });
     }

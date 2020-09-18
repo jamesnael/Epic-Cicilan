@@ -53,6 +53,21 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="Nomor handphone principal" rules="required|max:15">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.no_hp_principal"
+		    			name="no_hp_principal"
+			    		label="Nomor Handphone Principal"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		placeholder="+62"
+			    		:counter="15"
+			    		v-mask="'+62############'"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Alamat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"

@@ -211,9 +211,12 @@
 Vue.component('user-form', function () {
   return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/User/Form.vue */ "./Modules/AppUser/Resources/js/components/User/Form.vue"));
 });
+<<<<<<< HEAD
 Vue.component('role-form', function () {
   return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/Role/Form.vue */ "./Modules/AppUser/Resources/js/components/Role/Form.vue"));
 });
+=======
+>>>>>>> 03db27575467494c2c55704dfeb0e4fc51df2efc
 
 /***/ }),
 
@@ -89452,6 +89455,7 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+<<<<<<< HEAD
     "role.index": {
       "uri": "role-user",
       "methods": ["GET", "HEAD"],
@@ -89492,6 +89496,8 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+=======
+>>>>>>> 03db27575467494c2c55704dfeb0e4fc51df2efc
     "commission.index": {
       "uri": "komisi",
       "methods": ["GET", "HEAD"],
@@ -90663,9 +90669,15 @@ var Ziggy = {
       "domain": null
     }
   },
+<<<<<<< HEAD
   baseUrl: 'http://epic-cicilan.test/',
   baseProtocol: 'http',
   baseDomain: 'epic-cicilan.test',
+=======
+  baseUrl: 'http://localhost/',
+  baseProtocol: 'http',
+  baseDomain: 'localhost',
+>>>>>>> 03db27575467494c2c55704dfeb0e4fc51df2efc
   basePort: false,
   defaultParameters: []
 };
@@ -91020,8 +91032,13 @@ function route(name, params, absolute, customZiggy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
+=======
+__webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
+>>>>>>> 03db27575467494c2c55704dfeb0e4fc51df2efc
 
 
 /***/ })

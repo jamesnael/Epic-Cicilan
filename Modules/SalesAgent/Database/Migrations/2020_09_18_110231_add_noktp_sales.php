@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNoktpNpwpAlamatktp extends Migration
+class AddNoktpSales extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AddNoktpNpwpAlamatktp extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('alamat_ktp')->nullable()->after('client_address');
-            $table->integer('no_ktp')->nullable()->after('alamat_ktp');
-            $table->integer('npwp')->nullable()->after('no_ktp');
+        Schema::table('sales', function (Blueprint $table) {
+
+            $table->string('no_ktp')->nullable()->after('sales_nip');
+            
+
         });
     }
 

@@ -1,5 +1,25 @@
 @extends('app')
 
+@push('table_slot')
+    <template v-slot:item.prints="{ item }">
+    	<v-tooltip top color="primary">
+		    <template v-slot:activator="{ on, attrs }">
+	    		<v-btn 
+		    		icon 
+		    		color="primary" 
+		    		v-bind="attrs" 
+		    		v-on="on"
+		    		:href="ziggy('spr.print', [item['slug']]).url()"
+		    		target="_blank"
+	    		>
+					<v-icon small>mdi-printer</v-icon>
+	            </v-btn>
+		    </template>
+		    <span>Print Dokumen SPR</span>
+		</v-tooltip>
+	</template>
+@endpush
+
 @section('content')
 
 	@include('components.breadcrumbs')
@@ -19,10 +39,10 @@
         ])->values();
 
         $page->table_headers_2[] = [
-            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'AKSI',
             "align" => 'center',
             "sortable" => false,
-            "value" => 'actions',
+            "value" => 'prints',
         ];
         $page->table_headers_2 = collect($page->table_headers_2)->prepend([
             "text" => '#',
@@ -65,10 +85,6 @@
 				items-per-page-all-text="Semua"
 				items-per-page-text="Tampilkan"
 				page-text-locale="id"
-				edit-uri="spr.print"
-				edit-uri-parameter="slug"
-				edit-text="Print Dokumen SPR"
-				edit-icon="mdi-printer"
 				>
 				
 				@include('components.table')

@@ -69,6 +69,7 @@
             		sales_nip:'',
             		file_ktp:'',
             		file_npwp:'',
+            		no_ktp:'',
             		sales_commission:'',
             		agency_commission:'',
             		regional_coordinator_commission:'',
@@ -123,10 +124,12 @@
     		            			main_coordinator_commission:data.main_coordinator_commission,
     		            			regional_coordinator_id: '',
     		            			agency_id: '',
+    		            			no_ktp: data.no_ktp,
     		            			file_ktp: data.file_ktp,
     		            			url_file_ktp: data.url_file_ktp,
     		            			file_npwp: data.file_npwp,
     		            			url_file_npwp: data.url_file_npwp,
+    		            			status: data.status,
     		            		}
     		            		
     		            		this.form_user = {
@@ -179,6 +182,7 @@
 		        	pph_final: '',
 		        	file_ktp:'',
             		file_npwp:'',
+            		no_ktp:'',
             		main_coordinator_id:'',
             		regional_coordinator_id:'',
             		sales_commission:'',

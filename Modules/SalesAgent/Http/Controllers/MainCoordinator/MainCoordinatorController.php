@@ -114,7 +114,7 @@ class MainCoordinatorController extends Controller
      */
     public function edit(MainCoordinator $main_coordinator)
     {
-        $this->breadcrumbs[] = ['href' => route('regional-coordinator.edit', [$main_coordinator->slug]), 'text' => 'Edit Koordinator Utama ' . $main_coordinator->full_name];
+        $this->breadcrumbs[] = ['href' => route('main-coordinator.edit', [$main_coordinator->slug]), 'text' => 'Edit Koordinator Utama ' . $main_coordinator->full_name];
 
         return view('salesagent::main-coordinator.edit', [
             'page' => $this,
