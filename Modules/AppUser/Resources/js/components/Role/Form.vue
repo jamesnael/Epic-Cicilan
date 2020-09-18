@@ -107,20 +107,20 @@
     		            		console.log(response)
     		            		let data = response.data.data
 
-    		            		var items = []
-                               _.forEach(this.filter_menu, (key) => {
-                       	        	if (key['has_child'] == 'true') {
-                   		                _.forEach(key['submenu'], (parent) => {
-                   		                	_.forEach(parent['routes'], (route) => {
-                   		                	    this.form_data.hak_akses.push(route.uri)
-                   		                	});
-                   		                });
-                       	        	}else{
-                       	        		_.forEach(key['routes'], (child) => {
-                   		                    this.form_data.hak_akses.push(child.uri)
-                   		                });
-                       	        	}
-                       	        });
+    		            		// var items = []
+                    //            _.forEach(this.filter_menu, (key) => {
+                    //    	        	if (key['has_child'] == 'true') {
+                   	// 	                _.forEach(key['submenu'], (parent) => {
+                   	// 	                	_.forEach(parent['routes'], (route) => {
+                   	// 	                	    this.form_data.hak_akses.push(route.uri)
+                   	// 	                	});
+                   	// 	                });
+                    //    	        	}else{
+                    //    	        		_.forEach(key['routes'], (child) => {
+                   	// 	                    this.form_data.hak_akses.push(child.uri)
+                   	// 	                });
+                    //    	        	}
+                    //    	        });
 
     		            		this.form_data = {
     		            			full_name: data.full_name,
@@ -131,11 +131,11 @@
     		            			city: data.city,
     		            			role_id:'',
 
-    		            			user_access: this.response.fillter ? this.response.fillter : []
+    		            			hak_akses: response.data.filter ? response.data.filter : []
     		            		},
 
 
-    		            		this.menu = item;
+    		            		// this.menu = item;
 
 
     			                this.field_state = false

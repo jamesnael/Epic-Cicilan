@@ -227,7 +227,7 @@ class RoleUserController extends Controller
     public function data(User $role)
     {
         try {
-            $hak_akses = $role->user_access;
+            $hak_akses = json_decode($role->user_access, true);
             return response_json(true, null, 'Sukses mengambil data.', $role, $hak_akses);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
