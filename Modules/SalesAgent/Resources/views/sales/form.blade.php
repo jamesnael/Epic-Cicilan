@@ -154,6 +154,21 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="No KTP" rules="required">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.no_ktp"
+		    			name="no_ktp"
+			    		label="No KTP"
+			    		type="number"
+			    		{{-- hint="* harus diisi" --}}
+			    		{{-- :persistent-hint="true" --}}
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		
 	    		<br>
 
 	    		<validation-provider v-slot="{ errors }" name="Foto KTP" rules="image">
@@ -170,7 +185,7 @@
 		    		  	<small>@{{form_data.file_ktp}}</small>
 		    		  </a>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Foto NPWP" rules="image">
+	    		<!-- <validation-provider v-slot="{ errors }" name="Foto NPWP" rules="image">
 		    		<v-file-input
 		    			class="mt-4"
 		    		    accept="image/*"
@@ -185,7 +200,7 @@
 		    		  	<small>@{{form_data.file_npwp}}</small>
 		    		  </a>
 	    		</validation-provider>
-
+ -->
 				{{-- <v-row class="mt-4">
 			        <v-col
 			          cols="12"
