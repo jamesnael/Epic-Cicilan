@@ -118,18 +118,22 @@
 			<td valign="top">Harga sudah termasuk *)</td>
 			<td valign="top">:</td>
 			<td>
-				@foreach($data->harga_termasuk as $harga_msk)
-					- {{ $harga_msk }}<br>
-				@endforeach
+				@if(!empty($data->harga_termasuk))
+					@foreach($data->harga_termasuk as $harga_msk)
+						- {{ $harga_msk }}<br>
+					@endforeach
+				@endif
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">Harga belum termasuk *)</td>
 			<td valign="top">:</td>
 			<td>
-				@foreach($data->harga_tidak_termasuk as $harga_tidak_msk)
-					- {{ $harga_tidak_msk }}<br>
-				@endforeach
+				@if(!empty($data->harga_tidak_termasuk))
+					@foreach($data->harga_tidak_termasuk as $harga_tidak_msk)
+						- {{ $harga_tidak_msk }}<br>
+					@endforeach
+				@endif
 			</td>
 		</tr>
 		<tr>
@@ -185,15 +189,17 @@
 			<th width="20%"><div class="text-center">ANGSURAN</div></th>
 			<th width="20%"><div class="text-center">SISA ANGSURAN</div></th>
 		</tr>
-		@foreach($data->payments as $payment)
-			<tr>
-				<td><div class="text-center">{{ $loop->iteration }}</div></td>
-				<td><div class="text-center">{{ $payment->payment }}</div></td>
-				<td><div class="text-center">{{ \Carbon\Carbon::parse($payment->due_date)->locale('id')->translatedFormat('d F Y') }}</div></td>
-				<td><div class="text-center">Rp. {{ format_money($payment->installment) }}</div></td>
-				<td><div class="text-center">Rp. {{ format_money($payment->credit) }}</div></td>
-			</tr>
-		@endforeach
+		@if(!empty($data->payments))
+			@foreach($data->payments as $payment)
+				<tr>
+					<td><div class="text-center">{{ $loop->iteration }}</div></td>
+					<td><div class="text-center">{{ $payment->payment }}</div></td>
+					<td><div class="text-center">{{ \Carbon\Carbon::parse($payment->due_date)->locale('id')->translatedFormat('d F Y') }}</div></td>
+					<td><div class="text-center">Rp. {{ format_money($payment->installment) }}</div></td>
+					<td><div class="text-center">Rp. {{ format_money($payment->credit) }}</div></td>
+				</tr>
+			@endforeach
+		@endif
 	</table>
 </body>
 </html>
