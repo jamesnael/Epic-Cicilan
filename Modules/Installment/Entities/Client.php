@@ -22,9 +22,9 @@ class Client extends Model
     	'client_address',
         'province',
         'city',
-        'client_address',
+        'alamat_ktp',
+        'no_ktp',
         'npwp',
-        'no_ktp'
     ];
 
     /**

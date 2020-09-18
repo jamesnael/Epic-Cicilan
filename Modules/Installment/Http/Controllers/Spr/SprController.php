@@ -189,7 +189,7 @@ class SprController extends Controller
         // return view('installment::spr.print', ['data' => $spr]);
         $date = date('d F Y');
         $pdf  = PDF::loadView('installment::spr.print', ['data' => $spr, 'date' => $date])->setPaper('a4', 'portrait');
-        return $pdf->download('dokumen-spr.pdf');
+        return $pdf->download('Surat Pemesanan Unit ' . $spr->client->client_name . '.pdf');
     }
 
     /**
