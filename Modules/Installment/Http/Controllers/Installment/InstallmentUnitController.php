@@ -257,9 +257,31 @@ class InstallmentUnitController extends Controller
             ]);
         
             $booking = $payment->booking;
-            if (count($booking->unpaid_payments) == 0) {
-                $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
-                $booking->save();
+
+            if (count($booking->akad_kredit_payments) == 1) {
+                if (count($booking->unpaid_payments) == 1) {
+
+                    if ($booking->booking_status == 'cicilan') {
+                        $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                        $booking->save();
+                    }else{
+                        $booking->booking_status = 'ajb_handover';
+                        $booking->save();
+                    }
+
+                }
+            }else{
+                if (count($booking->unpaid_payments) == 0) {
+
+                    if ($booking->booking_status == 'cicilan') {
+                        $booking->booking_status = $booking->payment_type == 'KPR/KPA' ? 'akad' : 'ajb_handover';
+                        $booking->save();
+                    }else{
+                        $booking->booking_status = 'ajb_handover';
+                        $booking->save();
+                    }
+
+                }
 
             }
 
@@ -295,7 +317,7 @@ class InstallmentUnitController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit','payments','sales.user')->bookingStatus('cicilan')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client','unit','payments','sales.user')->whereIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -324,7 +346,7 @@ class InstallmentUnitController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->bookingStatus('cicilan')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->whereIn('booking_status',['cicilan','cicilan_sp3k'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_number = $item->client->client_number;
             $item->client_name = $item->client->client_name;
@@ -341,6 +363,20 @@ class InstallmentUnitController extends Controller
     }
 
     /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormCancelRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "reject_reason" => "bail|required",
+        ],[
+            "reject_reason.required" => "Alasan pembatalan harus diisi."
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
@@ -348,6 +384,11 @@ class InstallmentUnitController extends Controller
      */
     public function cancelInstallment(Request $request, Booking $installment_unit)
     {
+        $validator = $this->validateFormCancelRequest($request);
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+        
         DB::beginTransaction();
         try {
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PDF;
 
 class DocumentAdminController extends Controller
 {
@@ -136,6 +137,50 @@ class DocumentAdminController extends Controller
     }
 
     /**
+     *
+     * Validation Rules for Store/Update Data
+     *
+     */
+    public function validateFormCancelRequest($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "reject_reason" => "bail|required",
+        ],[
+            "reject_reason.required" => "Alasan pembatalan harus diisi."
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Renderable
+     */
+    public function cancelDocument(Request $request, Booking $document_admin)
+    {
+        $validator = $this->validateFormCancelRequest($request, $document_admin->id);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+        
+        DB::beginTransaction();
+        try {
+
+            $request->merge(['booking_status' => 'dokumen_cancel']);
+            
+            $data = $document_admin->update($request->all());
+            
+
+            DB::commit();
+            return response_json(true, null, 'Data dokumen berhasil dibatalkan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
      * Show the specified resource.
      * @param int $id
      * @return Response
@@ -234,6 +279,7 @@ class DocumentAdminController extends Controller
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
+
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -242,6 +288,33 @@ class DocumentAdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function downloadPDF(Request $request, Booking $document_admin)
+    {
+         try {
+            $data = $document_admin->load('document');
+
+            if ($data->document) {
+                if ($data->document->url_file_ktp_pemohon || $data->document->url_file_ktp_suami_istri || $data->document->url_file_kk){
+
+                    $pdf = PDF::loadview('documentclient::document-admin.document',['data' => $data]);
+                    return $pdf->download('document.pdf');
+
+                }else{
+                    return response_json(false, null, 'Dokumen tidak ditemukan.');
+                }
+            }
+            
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
     }
 
     /**

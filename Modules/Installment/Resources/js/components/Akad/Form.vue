@@ -45,7 +45,7 @@
                 menu3: false,
                 menu4: false,
                 time: null,
-                dialog:false,
+                dialog: false,
 	            datepicker: false,
                 cancel_reason:'',
                 items_approval: [
@@ -64,6 +64,7 @@
                     approval_notaris_status: '',
                     akad_sign_date: '',
                     akad_doc_sign_file_name: '',
+                    total_kpr: '',
             	}
         	}
         },
@@ -81,7 +82,6 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                console.log(data)
     		            		this.form_data = {
                                     slug:data.slug,
                                     booking_id:data.id,
@@ -106,6 +106,7 @@
                                     akad_sign_date: data.akad_kpr ? data.akad_kpr.akad_sign_date : '',
                                     dokumen_akhir_akad: data.akad_kpr ? data.akad_kpr.akad_doc_sign_file_name : '',
                                     url_dokumen_akhir: data.akad_kpr ? data.akad_kpr.url_akad_doc_sign_file_name : '',
+                                    total_kpr:data.akad_kpr ? data.akad_kpr.total_kpr : ''
     		            		} 
 
     			                this.field_state = false

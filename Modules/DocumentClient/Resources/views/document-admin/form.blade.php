@@ -143,7 +143,7 @@
           <v-btn
             class="mt-5 mr-4 white--text"
             color="primary"
-              elevation="5"
+            elevation="5"
             :disabled="field_state"
             :loading="field_state"
             @click="submit">
@@ -154,13 +154,72 @@
                     </span>
                 </template>
           </v-btn>
-            <v-btn
-              class="mt-5"
-              outlined 
-              :disabled="field_state"
-                @click="clear">
-                Ulangi
-            </v-btn>
+          <v-btn
+            class="mt-5"
+            outlined 
+            :disabled="field_state"
+              @click="clear">
+              Ulangi
+          </v-btn>
+          <v-btn
+            class="mt-5 white--text"
+            color="warning"
+            elevation="5"
+            :disabled="field_state"
+            @click="downloadPDF">
+            Download Dokumen
+          </v-btn>
+          <v-btn
+          class="mt-4 mr-4"
+            color="secondary"
+            dark
+            @click="dialog=true"
+            
+          >
+            Pembatalan Pembelian Unit
+          </v-btn>
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <form method="post" id="formCancel" enctype="multipart/form-data" ref="put-form">
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Pembatalan Pembelian Unit</span>
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12">
+                          <validation-provider v-slot="{ errors }" name="Alasan pembatalan" rules="required">
+                            <v-textarea
+                              v-model="cancel_reason" 
+                              label="Alasan Pembatalan*" 
+                              name="cancel_reason"
+                              hint="* harus diisi"
+                              :persistent-hint="true"
+                              :error-messages="errors"
+                              :readonly="field_state"
+                              required>
+                            </v-textarea>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn outlined color="primary" elevetion="2" text @click="dialog = false">Close</v-btn>
+                    <v-btn 
+                      class="white--text"
+                      color="green" 
+                      @click="cancelDocument()"
+                    >
+                      Save
+                  </v-btn>
+
+                  </v-card-actions>
+                </v-card>
+            </form>
+          </v-dialog>
         </form>
       </validation-observer>
     </v-card>

@@ -19,6 +19,7 @@ class AkadKpr extends Model
     	'approval_notaris_status',
     	'akad_sign_date',
     	'akad_doc_sign_file_name',
+        'total_kpr',
     ];
 
     protected $appends = [

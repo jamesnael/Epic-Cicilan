@@ -77,6 +77,43 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    			    		<validation-provider v-slot="{ errors }" name="Alamat KTP" rules="max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.alamat_ktp"
+		    			name="alamat_ktp"
+			    		label="Alamat KTP"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="NPWP" rules="max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.npwp"
+		    			name="npwp"
+			    		label="NPWP"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+	    		<validation-provider v-slot="{ errors }" name="No KTP" rules="max:255">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.no_ktp"
+		    			name="no_ktp"
+			    		label="No KTP"
+			    		:persistent-hint="true"
+			    		:counter="255"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    		</validation-provider>
+
 	    		<validation-provider v-slot="{ errors }" name="Alamat Surat Menyurat" rules="max:255">
 		    		<v-textarea
 		    			class="mt-4"

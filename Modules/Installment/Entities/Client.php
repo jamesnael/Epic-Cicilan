@@ -21,7 +21,10 @@ class Client extends Model
         'profession',
     	'client_address',
         'province',
-        'city'
+        'city',
+        'client_address',
+        'npwp',
+        'no_ktp'
     ];
 
     /**
