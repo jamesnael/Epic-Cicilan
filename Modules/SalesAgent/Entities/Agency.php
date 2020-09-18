@@ -39,6 +39,7 @@ class Agency extends Model
         'main_coordinator_commission',
         'commission_type',
         'principal',
+        'no_hp_principal',
         'ppn',
         'pph_21',
         'pph_23',

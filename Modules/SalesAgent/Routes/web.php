@@ -54,8 +54,8 @@ Route::group(['namespace' => 'MainCoordinator'], function() {
 	Route::post('koordinator-utama', 'MainCoordinatorController@store')->name('main-coordinator.store');
 	Route::get('koordinator-utama/table', 'MainCoordinatorController@table')->name('main-coordinator.table');
 	Route::get('koordinator-utama/tambah', 'MainCoordinatorController@create')->name('main-coordinator.create');
-	Route::put('koordinator-utama/{regional_coordinator}', 'MainCoordinatorController@update')->name('main-coordinator.update');
-	Route::get('koordinator-utama/{regional_coordinator}/data', 'MainCoordinatorController@data')->name('main-coordinator.data');
-	Route::get('koordinator-utama/{regional_coordinator}/ubah', 'MainCoordinatorController@edit')->name('main-coordinator.edit');
-	Route::delete('koordinator-utama/{regional_coordinator}', 'MainCoordinatorController@destroy')->name('main-coordinator.destroy');
+	Route::put('koordinator-utama/{main_coordinator}', 'MainCoordinatorController@update')->name('main-coordinator.update');
+	Route::get('koordinator-utama/{main_coordinator}/data', 'MainCoordinatorController@data')->name('main-coordinator.data');
+	Route::get('koordinator-utama/{main_coordinator}/ubah', 'MainCoordinatorController@edit')->name('main-coordinator.edit');
+	Route::delete('koordinator-utama/{main_coordinator}', 'MainCoordinatorController@destroy')->name('main-coordinator.destroy');
 });

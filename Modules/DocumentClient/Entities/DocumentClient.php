@@ -34,6 +34,9 @@ class DocumentClient extends Model
     	'file_sk_domisili',
     	'file_keterangan_usaha',
     	'file_spt',
+        'file_npwp_perusahaan',
+        'file_buku_perusahaan',
+        'file_other',
         
     	'file_akta_lahir_ijazah',
     	'file_surat_rekomendasi',
@@ -61,6 +64,7 @@ class DocumentClient extends Model
         'url_file_sk_domisili',
         'url_file_keterangan_usaha',
         'url_file_spt',
+        'url_file_other',
         'url_file_keterangan_kerja',
         'url_file_tabungan_3_bulan_terakhir',
     ];
@@ -285,6 +289,39 @@ class DocumentClient extends Model
     public function getUrlFileSptAttribute()
     {
         return $this->attributes['file_spt'] ? Storage::disk('public')->url('app/public/document/file_spt/'.$this->attributes['file_spt']) : null;
+    }
+
+    /**
+     *
+     * Get the model's other file.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlFileOtherAttribute()
+    {
+        return $this->attributes['file_other'] ? Storage::disk('public')->url('app/public/document/file_other/'.$this->attributes['file_other']) : null;
+    }
+
+    /**
+     *
+     * Get the model's file_npwp_perusahaan file.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlFileNpwpPerusahaanAttribute()
+    {
+        return $this->attributes['file_npwp_perusahaan'] ? Storage::disk('public')->url('app/public/document/file_npwp_perusahaan/'.$this->attributes['file_npwp_perusahaan']) : null;
+    }
+
+    /**
+     *
+     * Get the model's file_buku_perusahaan file.
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlFileBukuPerusahaanAttribute()
+    {
+        return $this->attributes['file_buku_perusahaan'] ? Storage::disk('public')->url('app/public/document/file_buku_perusahaan/'.$this->attributes['file_buku_perusahaan']) : null;
     }
 
     /**
