@@ -28,6 +28,7 @@ class User extends Authenticatable
         'city',
         'province',
         'role_id',
+        'user_access'
     ];
 
     /**
@@ -57,6 +58,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
+        'user_access' => 'array',
     ];
 
     /**

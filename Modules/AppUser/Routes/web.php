@@ -24,3 +24,16 @@ Route::group(['namespace' => 'User'], function() {
 	Route::delete('user/{user}', 'AppUserController@destroy')->name('users.destroy');
 });
 
+Route::group(['namespace' => 'Role'], function() {
+	// Route::resource('users', 'AppUserController')->except(['show']);
+
+	Route::get('role-user', 'RoleUserController@index')->name('role.index');
+	Route::post('role-user', 'RoleUserController@store')->name('role.store');
+	Route::get('role-user/table', 'RoleUserController@table')->name('role.table');
+	Route::get('role-user/tambah', 'RoleUserController@create')->name('role.create');
+	Route::get('role-user/{role}/data', 'RoleUserController@data')->name('role.data');
+	Route::put('role-user/{role}', 'RoleUserController@update')->name('role.update');
+	Route::get('role-user/{role}/ubah', 'RoleUserController@edit')->name('role.edit');
+	Route::delete('role-user/{role}', 'RoleUserController@destroy')->name('role.destroy');
+});
+

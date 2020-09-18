@@ -199,11 +199,31 @@ if (! function_exists('aside_menu')) {
     {
         return [
             [
-                'icon' => 'mdi-badge-account',
-                'text' => 'User',
-                'uri' => route('users.index'),
-                'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
+                'icon' => 'mdi-account-multiple',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Kelola User',
+                'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit','role.index','role.create','role.edit','reward-point.index']),
+                'children' => [
+                    [
+                        'icon' => 'mdi-badge-account',
+                        'text' => 'User',
+                        'uri' => route('users.index'),
+                        'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
+                    ],
+                    [
+                        'icon' => 'mdi-clipboard-account',
+                        'text' => 'Hak Akses User',
+                        'uri' => route('role.index'),
+                        'model' => in_array(Route::currentRouteName(), ['role.index','role.create','role.edit'])
+                    ],
+                ]
             ],
+            // [
+            //     'icon' => 'mdi-badge-account',
+            //     'text' => 'User',
+            //     'uri' => route('users.index'),
+            //     'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit'])
+            // ],
             [
                 'icon' => 'mdi-account-group',
                 'icon-alt' => 'mdi-chevron-down',
