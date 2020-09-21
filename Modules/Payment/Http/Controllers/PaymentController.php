@@ -101,7 +101,7 @@ class PaymentController extends Controller
      */
     public function payment(Request $request, Booking $booking, BookingPayment $payment)
     {
-        $order_number = 'EPICADM'.\Carbon\Carbon::now()->locale('id')->format('Ym').sprintf("%06d", $payment->id);
+        $order_number = $this->generateUniqueOrderId($payment);
         $item_details = [
             [
                 'name' => $payment->payment,
@@ -149,6 +149,32 @@ class PaymentController extends Controller
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
 
+    }
+
+    /**
+     *
+     * Handle generate unique Order Number for Midtrans
+     *
+     */
+    public function generateUniqueOrderId($payment)
+    {
+        $order_number = 'EPICADM'.\Carbon\Carbon::now()->locale('id')->format('Ym').sprintf("%06d", $payment->id);
+        if ($payment->pg_number) {
+            $split = explode('-', $payment->pg_number);
+            if ($split[0] == $order_number) {
+                if (isset($split[1])) {
+                    $suffix = $split[1] + 1;
+                } else {
+                    $suffix = '1';
+                }
+            } else {
+                $suffix = '1';
+            }
+
+        } else {
+            $suffix = '1';
+        }
+        return $order_number.'-'.$suffix;
     }
 
     /**

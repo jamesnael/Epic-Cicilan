@@ -27,13 +27,13 @@ Route::group(['namespace' => 'User'], function() {
 Route::group(['namespace' => 'Role'], function() {
 	// Route::resource('users', 'AppUserController')->except(['show']);
 
-	Route::get('role-user', 'RoleUserController@index')->name('role.index');
-	Route::post('role-user', 'RoleUserController@store')->name('role.store');
-	Route::get('role-user/table', 'RoleUserController@table')->name('role.table');
-	Route::get('role-user/tambah', 'RoleUserController@create')->name('role.create');
-	Route::get('role-user/{role}/data', 'RoleUserController@data')->name('role.data');
-	Route::put('role-user/{role}', 'RoleUserController@update')->name('role.update');
-	Route::get('role-user/{role}/ubah', 'RoleUserController@edit')->name('role.edit');
-	Route::delete('role-user/{role}', 'RoleUserController@destroy')->name('role.destroy');
+	Route::get('hak-akses', 'RoleUserController@index')->name('role.index');
+	Route::post('hak-akses', 'RoleUserController@store')->name('role.store');
+	Route::get('hak-akses/table', 'RoleUserController@table')->name('role.table');
+	Route::get('hak-akses/tambah', 'RoleUserController@create')->name('role.create');
+	Route::put('hak-akses/{role}', 'RoleUserController@update')->name('role.update');
+	Route::get('hak-akses/{role}/data', 'RoleUserController@data')->name('role.data');
+	Route::get('hak-akses/{role}/ubah', 'RoleUserController@edit')->name('role.edit');
+	Route::delete('hak-akses/{role}', 'RoleUserController@destroy')->name('role.destroy');
 });
 
