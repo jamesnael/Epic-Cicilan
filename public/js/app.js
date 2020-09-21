@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"a80625cf7e6382c7a37f","1":"9260b16a27c39c05e0f8","2":"652b0264e3188d824f5c","3":"78f4d87a14fab699ef14","4":"3b3c5b56a8f7ed65aa5a","5":"179e631c130da701733c","6":"9afa5377fcf79da6826c","7":"0c784901a008d618b198","8":"945879f06c3f1ac0e75d","9":"edfbf831775bf7756d6f","10":"9d932823a996c4be06a7","11":"d9056f8983b0f9e660fc","12":"396d5b3da2d7f5fb9590","13":"6d13e99d071041ef831d","14":"222e65b424f832b2fb06","15":"557b047bccbf6151f955","16":"7c28d9035aac0db02f15","17":"e439277a4fba75d869ee","18":"d3a51adfdd6ec91ae5e7","19":"52a8ab7075cb78c3f51a","20":"45d4350ce21ac4b06143","21":"409107dfbb06c806f924","22":"39ebca48d9ab43afa9f8","23":"4a673e5eb336fd2d8115","24":"976f9a1e9af3b621098b","25":"0b55096e3f7d5d5336fc","26":"5047bff502b5da3aebe3","27":"d64323f7849d50ff92f8","28":"f059053bc135fa4d28d3","29":"14cf400dc24a5b366808","30":"d16aa1fb7979ea2a8c8a","31":"437c9cc0a23227e858f3","32":"37e6eddd92f232dee11f","33":"3c88af0db7285797de54","34":"5aadaddc67d0c53bbaed","35":"34683531a5a7831ad710","36":"407ad7170beb4356107b","37":"ee769585a3d6260e93f0","38":"decfa7debfe3aa4f1066"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"835e9bc6f721368b08d0","1":"9260b16a27c39c05e0f8","2":"652b0264e3188d824f5c","3":"78f4d87a14fab699ef14","4":"3b3c5b56a8f7ed65aa5a","5":"179e631c130da701733c","6":"9afa5377fcf79da6826c","7":"0c784901a008d618b198","8":"945879f06c3f1ac0e75d","9":"edfbf831775bf7756d6f","10":"9d932823a996c4be06a7","11":"d9056f8983b0f9e660fc","12":"edad982c427627452f53","13":"6d13e99d071041ef831d","14":"222e65b424f832b2fb06","15":"557b047bccbf6151f955","16":"7c28d9035aac0db02f15","17":"e439277a4fba75d869ee","18":"d3a51adfdd6ec91ae5e7","19":"52a8ab7075cb78c3f51a","20":"45d4350ce21ac4b06143","21":"409107dfbb06c806f924","22":"39ebca48d9ab43afa9f8","23":"4a673e5eb336fd2d8115","24":"976f9a1e9af3b621098b","25":"0b55096e3f7d5d5336fc","26":"5047bff502b5da3aebe3","27":"d64323f7849d50ff92f8","28":"f059053bc135fa4d28d3","29":"14cf400dc24a5b366808","30":"d16aa1fb7979ea2a8c8a","31":"437c9cc0a23227e858f3","32":"37e6eddd92f232dee11f","33":"3c88af0db7285797de54","34":"5aadaddc67d0c53bbaed","35":"34683531a5a7831ad710","36":"407ad7170beb4356107b","37":"ee769585a3d6260e93f0","38":"decfa7debfe3aa4f1066"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -2281,76 +2281,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {// 
   },
-  props: {// 
+  props: {
+    events_calendar: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    }
   },
   data: function data() {
     return {
-      item: 1,
-      items: [{
-        text: 'Real-Time',
-        icon: 'mdi-clock'
-      }, {
-        text: 'Audience',
-        icon: 'mdi-account'
-      }, {
-        text: 'Conversions',
-        icon: 'mdi-flag'
-      }],
+      focus: '',
       type: 'month',
-      types: ['month', 'week', 'day', '4day'],
-      mode: 'stack',
-      modes: ['stack', 'column'],
-      weekday: [0, 1, 2, 3, 4, 5, 6],
-      weekdays: [{
-        text: 'Sun - Sat',
-        value: [0, 1, 2, 3, 4, 5, 6]
-      }, {
-        text: 'Mon - Sun',
-        value: [1, 2, 3, 4, 5, 6, 0]
-      }, {
-        text: 'Mon - Fri',
-        value: [1, 2, 3, 4, 5]
-      }, {
-        text: 'Mon, Wed, Fri',
-        value: [1, 3, 5]
-      }],
-      value: '',
-      events: [],
-      colors: ['blue', 'green', 'deep-purple', 'cyan'],
-      names: ['Schedule Akad', 'AJB', 'Handover Unit', 'SPR', 'PPJB']
+      typeToLabel: {
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        '4day': '4 Days'
+      },
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      events: []
     };
   },
-  mounted: function mounted() {// 
+  mounted: function mounted() {
+    this.$refs.calendar.checkChange();
   },
   methods: {
-    getEvents: function getEvents(_ref) {
-      var start = _ref.start,
-          end = _ref.end;
+    viewDay: function viewDay(_ref) {
+      var date = _ref.date;
+      this.focus = date;
+      this.type = 'day';
+    },
+    getEventColor: function getEventColor(event) {
+      return event.color;
+    },
+    setToday: function setToday() {
+      this.focus = '';
+    },
+    prev: function prev() {
+      this.$refs.calendar.prev();
+    },
+    next: function next() {
+      this.$refs.calendar.next();
+    },
+    showEvent: function showEvent(_ref2) {
+      var _this = this;
+
+      var nativeEvent = _ref2.nativeEvent,
+          event = _ref2.event;
+
+      var open = function open() {
+        _this.selectedEvent = event;
+        _this.selectedElement = nativeEvent.target;
+        setTimeout(function () {
+          return _this.selectedOpen = true;
+        }, 10);
+      };
+
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
+
+      nativeEvent.stopPropagation();
+    },
+    updateRange: function updateRange(_ref3) {
+      var start = _ref3.start,
+          end = _ref3.end;
       var events = [];
       var min = new Date("".concat(start.date, "T00:00:00"));
       var max = new Date("".concat(end.date, "T23:59:59"));
       var days = (max.getTime() - min.getTime()) / 86400000;
       var eventCount = this.rnd(days, days + 20);
-
-      for (var i = 0; i < eventCount; i++) {
-        var allDay = this.rnd(0, 3) === 0;
-        var firstTimestamp = this.rnd(min.getTime(), max.getTime());
-        var first = new Date(firstTimestamp - firstTimestamp % 900000);
-        var secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-        var second = new Date(first.getTime() + secondTimestamp);
-        events.push({
-          name: this.names[this.rnd(0, this.names.length - 1)],
-          start: first,
-          end: second,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
-          timed: !allDay
-        });
-      }
-
-      this.events = events;
-    },
-    getEventColor: function getEventColor(event) {
-      return event.color;
+      this.events = this.events_calendar;
     },
     rnd: function rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
@@ -89456,42 +89463,42 @@ var Ziggy = {
       "domain": null
     },
     "role.index": {
-      "uri": "role-user",
+      "uri": "hak-akses",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "role.store": {
-      "uri": "role-user",
+      "uri": "hak-akses",
       "methods": ["POST"],
       "domain": null
     },
     "role.table": {
-      "uri": "role-user\/table",
+      "uri": "hak-akses\/table",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "role.create": {
-      "uri": "role-user\/tambah",
-      "methods": ["GET", "HEAD"],
-      "domain": null
-    },
-    "role.data": {
-      "uri": "role-user\/{role}\/data",
+      "uri": "hak-akses\/tambah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "role.update": {
-      "uri": "role-user\/{role}",
+      "uri": "hak-akses\/{role}",
       "methods": ["PUT"],
       "domain": null
     },
+    "role.data": {
+      "uri": "hak-akses\/{role}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
     "role.edit": {
-      "uri": "role-user\/{role}\/ubah",
+      "uri": "hak-akses\/{role}\/ubah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "role.destroy": {
-      "uri": "role-user\/{role}",
+      "uri": "hak-akses\/{role}",
       "methods": ["DELETE"],
       "domain": null
     },
@@ -89597,6 +89604,16 @@ var Ziggy = {
     },
     "dashboard.index": {
       "uri": "\/",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "dashboard.table": {
+      "uri": "dashboard\/table",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "dashboard-paid.table": {
+      "uri": "dashboard\/table-paid",
       "methods": ["GET", "HEAD"],
       "domain": null
     },

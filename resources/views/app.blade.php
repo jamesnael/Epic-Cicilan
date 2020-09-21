@@ -25,56 +25,60 @@
 				    >
 				        <v-list dense shaped>
 				            <template v-for="item in items">
-				            	<v-list-group
-					            	v-if="item.children"
-				            	    :key="item.text"
-				            	    v-model="item.model"
-				            	    :prepend-icon="item.icon"
-				            	    no-action
-				            	>
-				            	    <template v-slot:activator>
-				            	        <v-list-item-content>
-				            	            <v-list-item-title v-text="item.text"></v-list-item-title>
-				            	        </v-list-item-content>
-				            	    </template>
+				            	<div v-if="item.children">
+			            			<v-list-group		
+			            				v-if="item.show"
+			            			    :key="item.text"
+			            			    v-model="item.model"
+			            			    :prepend-icon="item.icon"
+			            			    no-action
+			            			>
+			            			    <template v-slot:activator>
+			            			        <v-list-item-content>
+			            			            <v-list-item-title v-text="item.text"></v-list-item-title>
+			            			        </v-list-item-content>
+			            			    </template>
 
-				            	    <v-list-item
-				            	        v-for="(child, i) in item.children"
-				            	        :key="i"
-				                        v-model="child.model"
-				                        link
-				                        :href="child.uri"
-				                        color="primary"
-				                        class="pl-7"
-				            	    >
-				            	        <v-list-item-action v-if="child.icon" class="mr-5">
-				                            <v-icon>@{{ child.icon }}</v-icon>
-				                        </v-list-item-action>
-				                        <v-list-item-content>
-				                            <v-list-item-title>
-				                                @{{ child.text }}
-				                            </v-list-item-title>
-				                        </v-list-item-content>
-				            	    </v-list-item>
-				            	</v-list-group>
-
-				                <v-list-item
-				                    v-else
-				                    :key="item.text"
-				                    v-model="item.model"
-				                    link
-				                    :href="item.uri"
-				                    color="primary"
-				                >
-				                    <v-list-item-action>
-				                        <v-icon>@{{ item.icon }}</v-icon>
-				                    </v-list-item-action>
-				                    <v-list-item-content>
-				                        <v-list-item-title>
-				                            @{{ item.text }}
-				                        </v-list-item-title>
-				                    </v-list-item-content>
-				                </v-list-item>
+			            			    <v-list-item
+			            			        v-for="(child, i) in item.children"
+			            			        v-if="child.show"
+			            			        :key="i"
+			            		            v-model="child.model"
+			            		            link
+			            		            :href="child.uri"
+			            		            color="primary"
+			            		            class="pl-7"
+			            			    >
+			            			        <v-list-item-action v-if="child.icon" class="mr-5">
+			            		                <v-icon>@{{ child.icon }}</v-icon>
+			            		            </v-list-item-action>
+			            		            <v-list-item-content>
+			            		                <v-list-item-title>
+			            		                    @{{ child.text }}
+			            		                </v-list-item-title>
+			            		            </v-list-item-content>
+			            			    </v-list-item>
+			            			</v-list-group>
+				            	</div>
+				            	<div v-else>
+				            		<v-list-item
+				            			v-if="item.show"
+				            		    :key="item.text"
+				            		    v-model="item.model"
+				            		    link
+				            		    :href="item.uri"
+				            		    color="primary"
+				            		>
+				            		    <v-list-item-action>
+				            		        <v-icon>@{{ item.icon }}</v-icon>
+				            		    </v-list-item-action>
+				            		    <v-list-item-content>
+				            		        <v-list-item-title>
+				            		            @{{ item.text }}
+				            		        </v-list-item-title>
+				            		    </v-list-item-content>
+				            		</v-list-item>
+				            	</div>
 				            </template>
 				        </v-list>
 				    </v-navigation-drawer>

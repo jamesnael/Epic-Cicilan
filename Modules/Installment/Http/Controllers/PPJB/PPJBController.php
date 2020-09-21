@@ -21,6 +21,7 @@ class PPJBController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('PPJB.index'), 'text' => 'Daftar PPJB'],
@@ -205,7 +206,8 @@ class PPJBController extends Controller
 
             if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Approved'
                 && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Approved'
-                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved') {
+                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved'
+                && $request->has('ppjb_doc_sign_file_name') && $request->input('ppjb_doc_sign_file_name') != '') {
                 $PPJB->booking_status = 'cicilan';
                 $PPJB->save();
             }

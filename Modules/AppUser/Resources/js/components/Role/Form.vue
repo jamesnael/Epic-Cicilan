@@ -179,7 +179,9 @@
 		    },
 		    postFormData() {
 	    		const data = new FormData(this.$refs['post-form']);
-	    		// data.append("hak_akses", this.form_data.hak_akses);
+	    		if (_.isEmpty(this.form_data.hak_akses)) {
+		    		data.append("hak_akses[]", "");
+	    		}
 	    		if (this.dataUri) {
 	    		    data.append("_method", "put");
 	    		}
