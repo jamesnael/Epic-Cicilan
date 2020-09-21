@@ -137,12 +137,12 @@
                 if (this.payment_type == 'KPR/KPA') {
                     this.credits = parseInt(this.total_amount) - parseInt(this.dp_amount);
 
-                    return parseInt(this.dp_amount) - parseInt(this.first_payment);
+                    return parseInt(this.dp_amount) - parseInt(this.first_payment) - parseInt(this.nup_amount) - parseInt(this.utj_amount);
                 }
 
                 this.credits = '0';
 
-                return parseInt(this.total_amount) - parseInt(this.first_payment);
+                return parseInt(this.total_amount) - parseInt(this.first_payment) - parseInt(this.nup_amount) - parseInt(this.utj_amount);
             },
             installment: function() {
             	if(this.principal == '' && this.installment_time == ''){

@@ -18,7 +18,12 @@ class CheckUserAccess
     public function handle($request, Closure $next)
     {
         if (! $request->expectsJson()) {
-            if (!in_array(Route::currentRouteName(), Auth::user()->user_access)) {
+            $route_name = Route::currentRouteName();
+            $route_name = str_replace('table', 'index', $route_name);
+            $route_name = str_replace('store', 'create', $route_name);
+            $route_name = str_replace('data', 'edit', $route_name);
+
+            if (!in_array($route_name, Auth::user()->user_access) && !Auth::user()->is_admin) {
                 abort(401);
             }
 
