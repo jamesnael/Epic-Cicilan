@@ -23,7 +23,7 @@ class CheckUserAccess
             $route_name = str_replace('store', 'create', $route_name);
             $route_name = str_replace('data', 'edit', $route_name);
 
-            if (!in_array($route_name, Auth::user()->user_access) && !Auth::user()->is_admin) {
+            if (!in_array($route_name, Auth::user()->user_access?: []) && !Auth::user()->is_admin) {
                 abort(401);
             }
 
@@ -34,7 +34,7 @@ class CheckUserAccess
             $route_name = str_replace('store', 'create', $route_name);
             $route_name = str_replace('data', 'edit', $route_name);
             
-            if (!in_array($route_name, Auth::user()->user_access)) {
+            if (!in_array($route_name, Auth::user()->user_access?: [])) {
                 abort(404);;
             }
 
