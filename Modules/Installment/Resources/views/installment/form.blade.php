@@ -346,7 +346,7 @@
                                     md="4">
                                     <v-text-field
                                         :value="number_format(form_data.principal)"
-                                        label="Principal"
+                                        label="Total cicilan yang harus dibayar"
                                         :readonly="!field_state"
                                         :disabled="field_state">
                                     </v-text-field>
