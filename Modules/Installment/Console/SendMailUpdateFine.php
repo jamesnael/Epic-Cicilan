@@ -7,6 +7,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Modules\Installment\Entities\Booking;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
+use Modules\Installment\Notifications\HMin7Installment;
+use Modules\Installment\Notifications\HMin1Installment;
+use Modules\Installment\Notifications\SP1Installment;
+use Modules\Installment\Notifications\SP2Installment;
+use Modules\Installment\Notifications\SP3Installment;
 
 class SendMailUpdateFine extends Command
 {
@@ -52,7 +58,7 @@ class SendMailUpdateFine extends Command
                 $sp2_date = Carbon::parse($installment->sp2_date . ' 23:59:59');
                 $sp3_date = Carbon::parse($installment->sp3_date . ' 23:59:59');
 
-                $today = Carbon::now()->locale('id');
+                $today = Carbon::now('Asia/Jakarta');
                 $diff = $due_date->diffInDays($today, false);
                 $sp1_diff = $sp1_date->diffInDays($today, false);
                 $sp2_diff = $sp2_date->diffInDays($today, false);
@@ -61,6 +67,8 @@ class SendMailUpdateFine extends Command
                 // Check -7 Notification
                 if ($diff == -7 && !$installment->notification_mail_7) {
                     // Send Email -7 Notification
+                    Notification::route('mail', $booking->client->client_email)
+                                ->notify(new HMin7Installment($installment, $booking));
                     $installment->notification_mail_7 = true;
                     $installment->save();
                 }
@@ -68,6 +76,8 @@ class SendMailUpdateFine extends Command
                 // Check -1 Notification
                 if ($diff == -1 && !$installment->notification_mail_1) {
                     // Send Email -1 Notification
+                    Notification::route('mail', $booking->client->client_email)
+                                ->notify(new HMin1Installment($installment, $booking));
                     $installment->notification_mail_1 = true;
                     $installment->save();
                 }
@@ -83,6 +93,8 @@ class SendMailUpdateFine extends Command
                 // Check SP 1 Notification
                 if ($sp1_diff == 0 && !$installment->notification_mail_sp1) {
                     // Send Email SP 1 Notification
+                    Notification::route('mail', $booking->client->client_email)
+                                ->notify(new SP1Installment($installment, $booking));
                     $installment->notification_mail_sp1 = true;
                     $installment->save();
                 }
@@ -90,6 +102,8 @@ class SendMailUpdateFine extends Command
                 // Check SP 2 Notification
                 if ($sp2_diff == 0 && !$installment->notification_mail_sp2) {
                     // Send Email SP 2 Notification
+                    Notification::route('mail', $booking->client->client_email)
+                                ->notify(new SP2Installment($installment, $booking));
                     $installment->notification_mail_sp2 = true;
                     $installment->save();
                 }
@@ -97,6 +111,8 @@ class SendMailUpdateFine extends Command
                 // Check SP 3 Notification
                 if ($sp3_diff == 0 && !$installment->notification_mail_sp3) {
                     // Send Email SP 3 Notification
+                    Notification::route('mail', $booking->client->client_email)
+                                ->notify(new SP3Installment($installment, $booking));
                     $installment->notification_mail_sp3 = true;
                     $installment->save();
                 }

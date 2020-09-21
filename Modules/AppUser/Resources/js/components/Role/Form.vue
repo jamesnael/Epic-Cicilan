@@ -186,7 +186,7 @@
 	    		
 	    		this.field_state = true
 
-	    		axios.post(this.uri, data)
+	    		axios.put(this.uri, data)
 	    		    .then((response) => {
 	    		        if (response.data.success) {
 	    		            this.formAlert = true

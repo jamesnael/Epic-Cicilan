@@ -20,6 +20,7 @@ class RoleUserController extends Controller
     public function __construct()
     {
         $this->middleware(['auth'])->except(['data']);
+        // $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('role.index'), 'text' => 'Hak Akses User'],
@@ -112,7 +113,7 @@ class RoleUserController extends Controller
      */
     public function validateFormRequest($request, $id = null)
     {
-        // $request->merge(['hak_akses' => json_decode($request->input('hak_akses'), true)]);
+        $request->merge(['hak_akses' => $request->input('hak_akses')]);
         return Validator::make($request->all(), [
             "hak_akses" => "bail|present|array",
         ]);
@@ -135,9 +136,7 @@ class RoleUserController extends Controller
 
         DB::beginTransaction();
         try {
-            $hak_akses = json_encode($request->input('hak_akses'), true);
-            $data = collect($hak_akses)->implode(','); 
-            $request->merge(['user_access' => $data]);
+            $request->merge(['user_access' => $request->input('hak_akses')]);
             $role->update($request->only(["user_access"]));
 
             DB::commit();
@@ -172,7 +171,7 @@ class RoleUserController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::doesntHave('sales')->with('role');
+        $query = User::query();
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -181,7 +180,6 @@ class RoleUserController extends Controller
                 $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('pph_final', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -191,7 +189,6 @@ class RoleUserController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->pph_final = $item->pph_final . ' %';
             return $item;
         });
         return $data;
@@ -227,7 +224,7 @@ class RoleUserController extends Controller
     public function data(User $role)
     {
         try {
-            $hak_akses = json_decode($role->user_access, true);
+            $hak_akses = $role->user_access;
             return response_json(true, null, 'Sukses mengambil data.', $role, $hak_akses);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
