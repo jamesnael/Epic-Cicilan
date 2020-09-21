@@ -162,11 +162,11 @@ class DashboardController extends Controller
             return $item;
         });
 
-        $handover_schedule = Handover::with('booking', 'booking.unit','booking.client')->whereNotNull('handover_date')->whereNotNull('handover_time')->get();
+        $handover_schedule = Handover::with('booking', 'booking.unit','booking.client')->whereNotNull('handover_date')->whereNotNull('time')->get();
         $collection_handover = collect($handover_schedule)->transform(function($item) {
             $item->color = 'deep-purple';
             $item->name = 'Handover';
-            $item->start = $item->handover_date .' '. $item->handover_time; 
+            $item->start = $item->handover_date .' '. $item->time; 
             $item->end = '';
             $item->timed = true;
             $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
