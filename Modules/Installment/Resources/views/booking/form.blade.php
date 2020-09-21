@@ -576,8 +576,6 @@
 	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
 	    		</validation-provider>
 
-	    		<validation-provider v-slot="{ errors }" name="Principal" rules="required|numeric|min:0">
-
 	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar" rules="required|numeric|min:0">
 
 		    		<v-text-field
