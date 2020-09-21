@@ -9,5 +9,6 @@ Vue.component('ajb-form', () => import('./components/Ajb/Form.vue'));
 Vue.component('handover-form', () => import('./components/HandOver/Form.vue'));
 Vue.component('paymenttype-form', () => import('./components/PaymentType/Form.vue'));
 Vue.component('spr-form', () => import('./components/Spr/Form.vue'));
+Vue.component('report-form', () => import('./components/Report/Form.vue'));
 Vue.component('cancel-booking', () => import('./components/CancelBooking/Form.vue'));
 Vue.component('tipe-program-form', () => import('./components/TipeProgram/Form.vue'));

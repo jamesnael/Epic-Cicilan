@@ -416,6 +416,13 @@ if (! function_exists('aside_menu')) {
                 'uri' => route('tukar-point.index'),
                 'model' => in_array(Route::currentRouteName(), ['tukar-point.index','tukar-point-sales.create', 'tukar-point-agency.create', 'tukar-point-korwil.create', 'tukar-point-korut.create', 'tukar-point-agent.history', 'tukar-point-korut.history', 'tukar-point-korwil.history', 'tukar-point-sales.history']),
             ],
+            [
+                'icon' => 'mdi-file-chart',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Laporan',
+                'uri' => route('report.create'),
+                'model' => in_array(Route::currentRouteName(), ['report.index','report.create']),
+            ],
         ];
     }
 }
