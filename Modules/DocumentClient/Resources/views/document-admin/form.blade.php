@@ -152,7 +152,7 @@
                     <span class="custom-loader">
                         <v-icon color="white">mdi-sync</v-icon>
                     </span>
-                </template>
+              </template>
           </v-btn>
           <v-btn
             class="mt-5"
@@ -166,11 +166,17 @@
             color="warning"
             elevation="5"
             :disabled="field_state"
+            :loading="field_state"
             @click="downloadPDF">
             Download Dokumen
+              <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon color="white">mdi-sync</v-icon>
+                    </span>
+              </template>
           </v-btn>
           <v-btn
-          class="mt-4 mr-4"
+            class="mt-5 mr-4"
             color="secondary"
             dark
             @click="dialog=true"

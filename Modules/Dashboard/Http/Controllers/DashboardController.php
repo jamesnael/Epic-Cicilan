@@ -154,7 +154,7 @@ class DashboardController extends Controller
         $collection_ppjb = collect($ppjb)->transform(function($item) {
             $item->color = 'deep-purple';
             $item->name = 'PPJB';
-            $item->start = $item->ppjb_date .' '. $item->ppjb_time; 
+            $item->start = $item->ppjb_date .' '. $item->ppjb_time;
             $item->end = '';
             $item->timed = true;
             $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;

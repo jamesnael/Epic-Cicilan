@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"43b1a7980510532dca70","1":"a49397e6c9ee43f9e02c","2":"7eff2c623c44ea456de6","3":"58f4a8570dece41c0313","4":"da2ba3ab9549045f52c4","5":"c95212f37d3d37111d21","6":"687c1923b08fe2b44952","7":"c9cf3751afb77b14bdef","8":"f74f5df93b9541faeb10","9":"405594f6a42b5c519b00","10":"3f3757eba46f61147d44","11":"ae6d492c8763f962f08a","12":"6b8fcd9e632b496a9716","13":"489a31f5b970630c8478","14":"9eb39e31a6ea4ef565fe","15":"16de56f42b2de9d3969a","16":"3ce60edeb896acf80e61","17":"08d76957e96bad8ea305","18":"99e53371a50d246417eb","19":"2dc3c3dd64f294eafa98","20":"5cccc1f1df247dd19f97","21":"4eca74c4408bc22a80c7","22":"af62788a630e1885d19e","23":"cdc1972305fe85779b2a","24":"2943b3cccb01044027f1","25":"dee10d558b1521d34d40","26":"18a41a72fd1bc7931722","27":"074abc6a2ab65ab7934b","28":"194aab9d47c9a1f04705","29":"3aeb223d8b69106fd31d","30":"54801c53c3332f25e146","31":"76c5a0b132f8465f14d1","32":"8324f380d7dc98b5f384","33":"f2f8164dcecbaa663d8d","34":"9bd1bbeaf103677a8971","35":"9a8c2a1ea5380a345fd6","36":"b309d36e0ddde0193921","37":"b5f775b2e70c1f2bc058"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"be13c2e3f5e4f149a7c8","1":"4da0375a4dfa6501aae8","2":"823f99dfe23c84f6cf8b","3":"ebca9523bc76c8e05c1f","4":"8573ae58d36b4809128a","5":"c258059ed3aa68d6b1a2","6":"8eefa19d8a430d7bc20a","7":"a22fd69f317c27726148","8":"cd0aa62074a6484160ab","9":"d367e8ee8c1654b58e36","10":"51cca73a917537dcb37d","11":"570a7ad6e742ed8ac91e","12":"e48ab6fdd9691b85610e","13":"9ced1496db2600689153","14":"0db562ff85821d4c2240","15":"e3cd4b20f7754f6b74b2","16":"e642e1e316bc1de4d089","17":"a7e6520e88498babc1f4","18":"b22cc592f3d9363f85bf","19":"900e3be8d2bcc976f495","20":"b17b81cad43f7826a6f9","21":"4f727c9403c264a7c564","22":"61d28c3a1d623e7e1b62","23":"00749e74ac9115a672a2","24":"15516a0288e8d7a0d5a7","25":"2801997f4c487facaf65","26":"6485586d8fd716c82322","27":"bb68f85a9afdba867c17","28":"fa96f18495d47b8eb322","29":"aae973ef7f79e38efe0e","30":"8c8493490c65e9695b16","31":"53666137c44c59e91c91","32":"8334ce86e928aa527af8","33":"74407e8aaeee522edb7b","34":"005bd4f8b8b876d3caaf","35":"481683702af0bd7596cc","36":"b932bbb45a4e47100a37","37":"111c6d6882dbd52488f4"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -2349,11 +2349,26 @@ __webpack_require__.r(__webpack_exports__);
     updateRange: function updateRange(_ref3) {
       var start = _ref3.start,
           end = _ref3.end;
-      var events = [];
-      var min = new Date("".concat(start.date, "T00:00:00"));
-      var max = new Date("".concat(end.date, "T23:59:59"));
-      var days = (max.getTime() - min.getTime()) / 86400000;
-      var eventCount = this.rnd(days, days + 20);
+      var events = []; // const min = new Date(`${start.date}T00:00:00`)
+      // const max = new Date(`${end.date}T23:59:59`)
+      // const days = (max.getTime() - min.getTime()) / 86400000
+      // const eventCount = this.rnd(days, days + 20)
+      // for (let i = 0; i < eventCount; i++) {
+      //   const allDay = this.rnd(0, 3) === 0
+      //   const firstTimestamp = this.rnd(min.getTime(), max.getTime())
+      //   const first = new Date(firstTimestamp - (firstTimestamp % 900000))
+      //   const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
+      //   const second = new Date(first.getTime() + secondTimestamp)
+      //   events.push({
+      //     name: this.events_calendar[i].name,
+      //     start: this.events_calendar[i].start,
+      //     end: '',
+      //     color: this.events_calendar[i].color,
+      //     timed: this.events_calendar[i].timed,
+      //   })
+      // }
+      // this.events = events
+
       this.events = this.events_calendar;
     },
     rnd: function rnd(a, b) {
@@ -91037,8 +91052,8 @@ function route(name, params, absolute, customZiggy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\epic_2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laragon\www\epic_2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
