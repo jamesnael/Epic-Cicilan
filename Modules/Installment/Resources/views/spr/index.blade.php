@@ -31,6 +31,13 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+        $page->table_headers[] = [
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Cetak',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'prints',
+        ];
+
         $page->table_headers = collect($page->table_headers)->prepend([
             "text" => '#',
             "align" => 'center',
@@ -39,7 +46,7 @@
         ])->values();
 
         $page->table_headers_2[] = [
-            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'AKSI',
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Cetak',
             "align" => 'center',
             "sortable" => false,
             "value" => 'prints',

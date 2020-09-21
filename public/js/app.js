@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"be13c2e3f5e4f149a7c8","1":"4da0375a4dfa6501aae8","2":"823f99dfe23c84f6cf8b","3":"ebca9523bc76c8e05c1f","4":"8573ae58d36b4809128a","5":"c258059ed3aa68d6b1a2","6":"8eefa19d8a430d7bc20a","7":"a22fd69f317c27726148","8":"cd0aa62074a6484160ab","9":"d367e8ee8c1654b58e36","10":"51cca73a917537dcb37d","11":"570a7ad6e742ed8ac91e","12":"e48ab6fdd9691b85610e","13":"9ced1496db2600689153","14":"0db562ff85821d4c2240","15":"e3cd4b20f7754f6b74b2","16":"e642e1e316bc1de4d089","17":"a7e6520e88498babc1f4","18":"b22cc592f3d9363f85bf","19":"900e3be8d2bcc976f495","20":"b17b81cad43f7826a6f9","21":"4f727c9403c264a7c564","22":"61d28c3a1d623e7e1b62","23":"00749e74ac9115a672a2","24":"15516a0288e8d7a0d5a7","25":"2801997f4c487facaf65","26":"6485586d8fd716c82322","27":"bb68f85a9afdba867c17","28":"fa96f18495d47b8eb322","29":"aae973ef7f79e38efe0e","30":"8c8493490c65e9695b16","31":"53666137c44c59e91c91","32":"8334ce86e928aa527af8","33":"74407e8aaeee522edb7b","34":"005bd4f8b8b876d3caaf","35":"481683702af0bd7596cc","36":"b932bbb45a4e47100a37","37":"111c6d6882dbd52488f4"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"835e9bc6f721368b08d0","1":"9260b16a27c39c05e0f8","2":"652b0264e3188d824f5c","3":"78f4d87a14fab699ef14","4":"3b3c5b56a8f7ed65aa5a","5":"179e631c130da701733c","6":"9afa5377fcf79da6826c","7":"0c784901a008d618b198","8":"945879f06c3f1ac0e75d","9":"edfbf831775bf7756d6f","10":"9d932823a996c4be06a7","11":"d9056f8983b0f9e660fc","12":"edad982c427627452f53","13":"6d13e99d071041ef831d","14":"222e65b424f832b2fb06","15":"557b047bccbf6151f955","16":"7c28d9035aac0db02f15","17":"e439277a4fba75d869ee","18":"d3a51adfdd6ec91ae5e7","19":"52a8ab7075cb78c3f51a","20":"45d4350ce21ac4b06143","21":"409107dfbb06c806f924","22":"39ebca48d9ab43afa9f8","23":"4a673e5eb336fd2d8115","24":"976f9a1e9af3b621098b","25":"0b55096e3f7d5d5336fc","26":"5047bff502b5da3aebe3","27":"d64323f7849d50ff92f8","28":"f059053bc135fa4d28d3","29":"14cf400dc24a5b366808","30":"d16aa1fb7979ea2a8c8a","31":"437c9cc0a23227e858f3","32":"37e6eddd92f232dee11f","33":"3c88af0db7285797de54","34":"5aadaddc67d0c53bbaed","35":"34683531a5a7831ad710","36":"407ad7170beb4356107b","37":"c5fb0c1249779908825d","38":"decfa7debfe3aa4f1066"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -346,7 +346,7 @@ Vue.component('booking-form', function () {
   return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./components/Booking/Form.vue */ "./Modules/Installment/Resources/js/components/Booking/Form.vue"));
 });
 Vue.component('unit-form', function () {
-  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/Unit/Form.vue */ "./Modules/Installment/Resources/js/components/Unit/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/Unit/Form.vue */ "./Modules/Installment/Resources/js/components/Unit/Form.vue"));
 });
 Vue.component('installment-form', function () {
   return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./components/Installment/Form.vue */ "./Modules/Installment/Resources/js/components/Installment/Form.vue"));
@@ -370,13 +370,16 @@ Vue.component('paymenttype-form', function () {
   return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./components/PaymentType/Form.vue */ "./Modules/Installment/Resources/js/components/PaymentType/Form.vue"));
 });
 Vue.component('spr-form', function () {
-  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/Spr/Form.vue */ "./Modules/Installment/Resources/js/components/Spr/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/Spr/Form.vue */ "./Modules/Installment/Resources/js/components/Spr/Form.vue"));
+});
+Vue.component('report-form', function () {
+  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/Report/Form.vue */ "./Modules/Installment/Resources/js/components/Report/Form.vue"));
 });
 Vue.component('cancel-booking', function () {
   return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./components/CancelBooking/Form.vue */ "./Modules/Installment/Resources/js/components/CancelBooking/Form.vue"));
 });
 Vue.component('tipe-program-form', function () {
-  return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/TipeProgram/Form.vue */ "./Modules/Installment/Resources/js/components/TipeProgram/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/TipeProgram/Form.vue */ "./Modules/Installment/Resources/js/components/TipeProgram/Form.vue"));
 });
 
 /***/ }),
@@ -389,7 +392,7 @@ Vue.component('tipe-program-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('payment-form', function () {
-  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/Payment/Form.vue */ "./Modules/Payment/Resources/js/components/Payment/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/Payment/Form.vue */ "./Modules/Payment/Resources/js/components/Payment/Form.vue"));
 });
 
 /***/ }),
@@ -402,31 +405,31 @@ Vue.component('payment-form', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('reward-point-form', function () {
-  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/RewardPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardPoint/Form.vue"));
 });
 Vue.component('reward-category-form', function () {
-  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/RewardCategory/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardCategory/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/RewardCategory/Form.vue */ "./Modules/RewardPoint/Resources/js/components/RewardCategory/Form.vue"));
 });
 Vue.component('point-form', function () {
-  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/Point/Form.vue */ "./Modules/RewardPoint/Resources/js/components/Point/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/Point/Form.vue */ "./Modules/RewardPoint/Resources/js/components/Point/Form.vue"));
 });
 Vue.component('tukarpoint-form', function () {
-  return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/Form.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/Form.vue"));
 });
 Vue.component('tukarpoint-history', function () {
-  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/History.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/History.vue"));
+  return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/History.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/History.vue"));
 });
 Vue.component('sales-table', function () {
-  return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/SalesTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/SalesTable.vue"));
+  return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/SalesTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/SalesTable.vue"));
 });
 Vue.component('agent-table', function () {
-  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/AgentTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/AgentTable.vue"));
+  return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/AgentTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/AgentTable.vue"));
 });
 Vue.component('korwil-table', function () {
-  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/KorwilTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/KorwilTable.vue"));
+  return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/KorwilTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/KorwilTable.vue"));
 });
 Vue.component('korut-table', function () {
-  return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/KorutTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/KorutTable.vue"));
+  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/TukarPoint/KorutTable.vue */ "./Modules/RewardPoint/Resources/js/components/TukarPoint/KorutTable.vue"));
 });
 
 /***/ }),
@@ -439,16 +442,16 @@ Vue.component('korut-table', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 Vue.component('salesagent-agency-form', function () {
-  return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/Agency/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Agency/Form.vue"));
 });
 Vue.component('sales-form', function () {
-  return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/Sales/Form.vue */ "./Modules/SalesAgent/Resources/js/components/Sales/Form.vue"));
 });
 Vue.component('regional-coordinator-form', function () {
-  return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./components/RegionalCoordinator/Form.vue */ "./Modules/SalesAgent/Resources/js/components/RegionalCoordinator/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./components/RegionalCoordinator/Form.vue */ "./Modules/SalesAgent/Resources/js/components/RegionalCoordinator/Form.vue"));
 });
 Vue.component('main-coordinator-form', function () {
-  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/MainCoordinator/Form.vue */ "./Modules/SalesAgent/Resources/js/components/MainCoordinator/Form.vue"));
+  return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./components/MainCoordinator/Form.vue */ "./Modules/SalesAgent/Resources/js/components/MainCoordinator/Form.vue"));
 });
 
 /***/ }),
@@ -89022,7 +89025,7 @@ Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.use(v_mask__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.component('base-layout', __webpack_require__(/*! ./components/BaseLayout.vue */ "./resources/js/components/BaseLayout.vue")["default"]);
 Vue.component('table-layout', function () {
-  return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
+  return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./components/Table.vue */ "./resources/js/components/Table.vue"));
 });
 Vue.component('login-form', __webpack_require__(/*! ./components/Auth/LoginForm.vue */ "./resources/js/components/Auth/LoginForm.vue")["default"]);
 Vue.component('profile-user', __webpack_require__(/*! ./components/Auth/ProfileUser.vue */ "./resources/js/components/Auth/ProfileUser.vue")["default"]);
@@ -89494,14 +89497,14 @@ var Ziggy = {
       "methods": ["GET", "HEAD"],
       "domain": null
     },
-    "role.data": {
-      "uri": "hak-akses\/{role}\/data",
-      "methods": ["GET", "HEAD"],
-      "domain": null
-    },
     "role.update": {
       "uri": "hak-akses\/{role}",
       "methods": ["PUT"],
+      "domain": null
+    },
+    "role.data": {
+      "uri": "hak-akses\/{role}\/data",
+      "methods": ["GET", "HEAD"],
       "domain": null
     },
     "role.edit": {
@@ -90251,6 +90254,41 @@ var Ziggy = {
     },
     "tipe-program.destroy": {
       "uri": "tipe-program\/{tipe_program}",
+      "methods": ["DELETE"],
+      "domain": null
+    },
+    "report.data": {
+      "uri": "report\/{report}\/data",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "report.index": {
+      "uri": "report",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "report.create": {
+      "uri": "report\/tambah",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "report.store": {
+      "uri": "report",
+      "methods": ["POST"],
+      "domain": null
+    },
+    "report.edit": {
+      "uri": "report\/{report}\/ubah",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
+    "report.update": {
+      "uri": "report\/{report}",
+      "methods": ["PUT", "PATCH"],
+      "domain": null
+    },
+    "report.destroy": {
+      "uri": "report\/{report}",
       "methods": ["DELETE"],
       "domain": null
     },
@@ -91052,8 +91090,8 @@ function route(name, params, absolute, customZiggy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
