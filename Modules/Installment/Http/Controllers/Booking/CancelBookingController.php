@@ -23,6 +23,7 @@ class CancelBookingController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('booking.index'), 'text' => 'Data Cancel Booking'],

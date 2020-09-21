@@ -6,206 +6,213 @@
 	:events_calendar='@json($events)'>
 		<v-container fluid>
         	<v-card flat>
-			    <v-card
-		            elevation="5"
-		            >
-		            <v-card-title>
-		                Notifikasi
-		            </v-card-title>
-		            <v-card-text>
-		            	<v-list-item>
-		        	      	<v-list-item-content>
-		        	        	<v-list-item-title>
-		        	        		<v-badge
-							          class="mr-4 ml-2"
-							          color="green"
-							          content="{{$document ?? '0'}}"
-							        >
-							        </v-badge>
-		        	        		<v-btn text small href="{{ route('document-admin.index') }}">
-									 	Dokumen pengajuan klien yang belum di verifikasi
-									</v-btn>
-								<v-list-item-title>
-		        	      	</v-list-item-content>
-		        	    </v-list-item>
-		        	    <v-list-item>
-		        	      	<v-list-item-content>
-		        	        	<v-list-item-title>
-									<v-badge
-							          	class="mr-4 ml-2"
-							          	color="blue"
-							          	content="{{$akad_kpr ?? '0'}}"
-							        >
-							        </v-badge>
-							        <v-btn text small href="{{ route('akad.index') }}">
-			        	        		Akad KPR yang belum dibuat jadwal
-			        	        	</v-btn>
-			        	        </v-list-item-title>
-		        	      	</v-list-item-content>
-		        	    </v-list-item>
-		        	    <v-list-item>
-		        	      	<v-list-item-content>
-		        	        	<v-list-item-title>
-									<v-badge
-							          	class="mr-4 ml-2"
-							          	color="indigo"
-							          	content="{{$ajb ?? '0'}}"
-							        >
-							        </v-badge>
-							        <v-btn text small href="{{ route('ajb.index') }}">
-				        	        	AJB yang belum dibuat jadwal
-				        	        </v-btn>
-			        	        </v-list-item-title>
-		        	      	</v-list-item-content>
-		        	    </v-list-item>
-		        	    <v-list-item>
-		        	      	<v-list-item-content>
-		        	        	<v-list-item-title>
-		        	        		<v-badge
-							          	class="mr-4 ml-2"
-							          	color="red"
-							          	content="{{$handover ?? '0'}}"
-							        >
-							        </v-badge>
-							        <v-btn text small href="{{ route('handover.index') }}">
-								    	Serah terima unit yang belum dibuat jadwal
-								    </v-btn>
-							    </v-list-item-title>
-		        	      	</v-list-item-content>
-		        	    </v-list-item>
-		        	    <v-list-item>
-		        	      	<v-list-item-content>
-		        	        	<v-list-item-title>
-		        	        		<v-badge
-							          	class="mr-4 ml-2"
-							          	color="purple"
-							          	content="{{$installment_pending ?? '0'}}"
-							        >
-							        </v-badge>
-							        <v-btn text small href="{{ route('installment-unit.index') }}">
-								    	Pembayaran cicilan unit yang sudah jatuh tempo
-								    </v-btn>	
-							    </v-list-item-title>
-		        	      	</v-list-item-content>
-		        	    </v-list-item>
-		            </v-card-text>
-		        </v-card>
+        		<v-row>
+        			<v-col 
+        				cols="12"
+	                    md="5">
+					    <v-card
+				            elevation="5"
+				            >
+				            <v-card-title>
+				                Notifikasi
+				            </v-card-title>
+				            <v-card-text>
+				            	<v-list-item>
+				        	      	<v-list-item-content>
+				        	        	<v-list-item-title>
+				        	        		<v-badge
+									          class="mr-4 ml-2"
+									          color="green"
+									          content="{{$document ?? '0'}}"
+									        >
+									        </v-badge>
+				        	        		<v-btn text small href="{{ route('document-admin.index') }}">
+											 	Dokumen pengajuan klien yang belum di verifikasi
+											</v-btn>
+										</v-list-item-title>
+				        	      	</v-list-item-content>
+				        	    </v-list-item>
+				        	    <v-list-item>
+				        	      	<v-list-item-content>
+				        	        	<v-list-item-title>
+											<v-badge
+									          	class="mr-4 ml-2"
+									          	color="blue"
+									          	content="{{$akad_kpr ?? '0'}}"
+									        >
+									        </v-badge>
+									        <v-btn text small href="{{ route('akad.index') }}">
+					        	        		Akad KPR yang belum dibuat jadwal
+					        	        	</v-btn>
+					        	        </v-list-item-title>
+				        	      	</v-list-item-content>
+				        	    </v-list-item>
+				        	    <v-list-item>
+				        	      	<v-list-item-content>
+				        	        	<v-list-item-title>
+											<v-badge
+									          	class="mr-4 ml-2"
+									          	color="indigo"
+									          	content="{{$ajb ?? '0'}}"
+									        >
+									        </v-badge>
+									        <v-btn text small href="{{ route('ajb.index') }}">
+						        	        	AJB yang belum dibuat jadwal
+						        	        </v-btn>
+					        	        </v-list-item-title>
+				        	      	</v-list-item-content>
+				        	    </v-list-item>
+				        	    <v-list-item>
+				        	      	<v-list-item-content>
+				        	        	<v-list-item-title>
+				        	        		<v-badge
+									          	class="mr-4 ml-2"
+									          	color="red"
+									          	content="{{$handover ?? '0'}}"
+									        >
+									        </v-badge>
+									        <v-btn text small href="{{ route('handover.index') }}">
+										    	Serah terima unit yang belum dibuat jadwal
+										    </v-btn>
+									    </v-list-item-title>
+				        	      	</v-list-item-content>
+				        	    </v-list-item>
+				        	    <v-list-item>
+				        	      	<v-list-item-content>
+				        	        	<v-list-item-title class="mb-11">
+				        	        		<v-badge
+									          	class="mr-4 ml-2"
+									          	color="purple"
+									          	content="{{$installment_pending ?? '0'}}"
+									        >
+									        </v-badge>
+									        <v-btn text small href="{{ route('installment-unit.index') }}">
+										    	Pembayaran cicilan unit yang sudah jatuh tempo
+										    </v-btn>	
+									    </v-list-item-title>
+				        	      	</v-list-item-content>
+				        	    </v-list-item>
+				            </v-card-text>
+				        </v-card>
+					</v-col>
 
+					<v-col
+        				cols="12"
+	                    md="7">
+				        <v-card
+				            elevation="5"
+				            >
+				            <v-card-title>
+				                Informasi Pembayaran Cicilan
+				            </v-card-title>
+
+				            <v-card-text>
+				            	<v-row>
+				            		<v-col
+										cols="12"
+				    		          	md="6"
+				            		>
+						            	<v-card
+						            	    class="mx-auto text-center"
+						            	    color="purple"
+						            	    dark
+						            	  >
+						            	    <v-card-text>
+						            	    	<div class="text-h5 font-weight-thin">{{$installment_pending ?? '0'}}</div>
+						            	    </v-card-text>
+
+						            	    <v-card-text>
+						            	      <div class="text-h6 font-weight-thin">Cicilan Unit Belum Dibayar</div>
+						            	    </v-card-text>
+
+						            	    <v-divider></v-divider>
+
+						            	    {{-- <v-card-actions class="justify-center">
+						            	      <v-btn block text>Detail</v-btn>
+						            	    </v-card-actions> --}}
+						            	</v-card>
+									</v-col>
+									<v-col
+										cols="12"
+				    		          	md="6"
+									>
+						            	<v-card
+						            	    class="mx-auto text-center"
+						            	    color="green"
+						            	    dark
+						            	  >
+						            	    <v-card-text>
+						            	    	<div class="text-h5 font-weight-thin">{{$installment_paid ?? '0'}}</div>
+						            	    </v-card-text>
+
+						            	    <v-card-text>
+						            	      <div class="text-h6 font-weight-thin">Cicilan Unit Sudah Dibayar</div>
+						            	    </v-card-text>
+
+						            	    <v-divider></v-divider>
+
+						            	    {{-- <v-card-actions class="justify-center">
+						            	      <v-btn block text>Detail</v-btn>
+						            	    </v-card-actions> --}}
+						            	</v-card>
+					            	</v-col>   
+					           	</v-row> 
+
+					           	<v-row>
+				            		<v-col
+										cols="12"
+				    		          	md="6"
+				            		>
+						            	<v-card
+						            	    class="mx-auto text-center"
+						            	    color="blue"
+						            	    dark
+						            	  >
+						            	    <v-card-text>
+						            	    	 <div class="text-h5 font-weight-thin">Rp {{$unpaid ? number_format($unpaid) : 0}}</div>
+						            	    </v-card-text>
+
+						            	    <v-card-text>
+						            	      <div class="text-h6 font-weight-thin">Total Cicilan Belum Dibayar</div>
+						            	    </v-card-text>
+
+						            	    <v-divider></v-divider>
+
+						            	    {{-- <v-card-actions class="justify-center">
+						            	      <v-btn block text>Detail</v-btn>
+						            	    </v-card-actions> --}}
+						            	</v-card>
+									</v-col>
+									<v-col
+										cols="12"
+				    		          	md="6"
+									>
+						            	<v-card
+						            	    class="mx-auto text-center"
+						            	    color="red"
+						            	    dark
+						            	  >
+						            	    <v-card-text>
+						            	    	<div class="text-h5 font-weight-thin">Rp {{$paid ? number_format($paid) : 0}}</div>
+						            	    </v-card-text>
+
+						            	    <v-card-text>
+						            	      <div class="text-h6 font-weight-thin">Total Cicilan Sudah Dibayar</div>
+						            	    </v-card-text>
+
+						            	    <v-divider></v-divider>
+
+						            	    {{-- <v-card-actions class="justify-center">
+						            	      <v-btn block text>Detail</v-btn>
+						            	    </v-card-actions> --}}
+						            	</v-card>
+					            	</v-col>   
+					           	</v-row> 
+				            </v-card-text>
+				        </v-card>
+			        </v-col>
+				</v-row>
 		        <v-card
-		        	class="mt-4"
-		            elevation="5"
-		            >
-		            <v-card-title>
-		                Informasi Pembayaran Cicilan
-		            </v-card-title>
-
-		            <v-card-text>
-		            	<v-row>
-		            		<v-col
-								cols="12"
-		    		          	md="6"
-		            		>
-				            	<v-card
-				            	    class="mx-auto text-center"
-				            	    color="purple"
-				            	    dark
-				            	  >
-				            	    <v-card-text>
-				            	    	<div class="display-1 font-weight-thin">{{$installment_pending ?? '0'}}</div>
-				            	    </v-card-text>
-
-				            	    <v-card-text>
-				            	      <div class="display-1 font-weight-thin">Cicilan Unit Yang Belum Dibayar</div>
-				            	    </v-card-text>
-
-				            	    <v-divider></v-divider>
-
-				            	    <v-card-actions class="justify-center">
-				            	      <v-btn block text>Detail</v-btn>
-				            	    </v-card-actions>
-				            	</v-card>
-							</v-col>
-							<v-col
-								cols="12"
-		    		          	md="6"
-							>
-				            	<v-card
-				            	    class="mx-auto text-center"
-				            	    color="green"
-				            	    dark
-				            	  >
-				            	    <v-card-text>
-				            	    	<div class="display-1 font-weight-thin">{{$installment_paid ?? '0'}}</div>
-				            	    </v-card-text>
-
-				            	    <v-card-text>
-				            	      <div class="display-1 font-weight-thin">Cicilan Unit Yang Sudah Dibayar</div>
-				            	    </v-card-text>
-
-				            	    <v-divider></v-divider>
-
-				            	    <v-card-actions class="justify-center">
-				            	      <v-btn block text>Detail</v-btn>
-				            	    </v-card-actions>
-				            	</v-card>
-			            	</v-col>   
-			           	</v-row> 
-
-			           	<v-row>
-		            		<v-col
-								cols="12"
-		    		          	md="6"
-		            		>
-				            	<v-card
-				            	    class="mx-auto text-center"
-				            	    color="blue"
-				            	    dark
-				            	  >
-				            	    <v-card-text>
-				            	    	 <div class="display-1 font-weight-thin">Rp {{$unpaid ? number_format($unpaid) : 0}}</div>
-				            	    </v-card-text>
-
-				            	    <v-card-text>
-				            	      <div class="display-1 font-weight-thin">Total Cicilan Belum Dibayar</div>
-				            	    </v-card-text>
-
-				            	    <v-divider></v-divider>
-
-				            	    <v-card-actions class="justify-center">
-				            	      <v-btn block text>Detail</v-btn>
-				            	    </v-card-actions>
-				            	</v-card>
-							</v-col>
-							<v-col
-								cols="12"
-		    		          	md="6"
-							>
-				            	<v-card
-				            	    class="mx-auto text-center"
-				            	    color="red"
-				            	    dark
-				            	  >
-				            	    <v-card-text>
-				            	    	<div class="display-1 font-weight-thin">Rp {{$paid ? number_format($paid) : 0}}</div>
-				            	    </v-card-text>
-
-				            	    <v-card-text>
-				            	      <div class="display-1 font-weight-thin">Total Cicilan Sudah Dibayar</div>
-				            	    </v-card-text>
-
-				            	    <v-divider></v-divider>
-
-				            	    <v-card-actions class="justify-center">
-				            	      <v-btn block text>Detail</v-btn>
-				            	    </v-card-actions>
-				            	</v-card>
-			            	</v-col>   
-			           	</v-row> 
-		            </v-card-text>
-		        </v-card>
-
-		        <v-card
-		        	class="mt-4"
 		            elevation="5"
 		            >
 		            <v-card-title>
@@ -282,44 +289,6 @@
 		            </v-card-title>
 
 		            <v-card-text>
-						{{-- <div>
-						    <v-sheet
-						      tile
-						      height="54"
-						      color="grey lighten-3"
-						      class="d-flex"
-						    >
-						      <v-btn
-						        icon
-						        class="ma-2"
-						        @click="$refs.calendar.prev()"
-						      >
-						       	<v-icon>mdi-chevron-left</v-icon>
-						      </v-btn>
-						      <v-spacer></v-spacer>
-						      <v-btn
-						        icon
-						        class="ma-2"
-						        @click="$refs.calendar.next()"
-						      >
-						        <v-icon>mdi-chevron-right</v-icon>
-						      </v-btn>
-						    </v-sheet>
-						    <v-sheet height="600">
-						      <v-calendar
-						        ref="calendar"
-						        v-model="value"
-						        :weekdays="weekday"
-						        :type="type"
-						        :events="events"
-						        :event-overlap-mode="mode"
-						        :event-overlap-threshold="30"
-						        :event-color="getEventColor"
-						        @change="getEvents"
-						      ></v-calendar>
-						    </v-sheet>
-						</div> --}}
-
 						<v-row class="fill-height">
 						    <v-col>
 						      <v-sheet height="64">

@@ -63,6 +63,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the model's access.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUserAccessAttribute()
+    {
+        return isset($this->attributes['user_access']) ? json_decode($this->attributes['user_access'], true) : [];
+    }
+
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
