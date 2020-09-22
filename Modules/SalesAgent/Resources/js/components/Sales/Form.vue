@@ -90,7 +90,7 @@
         computed: {
             computedRegionalCoordinator: function () {
             	if (this.form_data.main_coordinator_id) {
-            		return _.filter(this.filter_regional_coordinator, (o) => { return o.value == this.form_data.main_coordinator_id })
+            		return _.filter(this.filter_regional_coordinator, (o) => { return o.main_coordinator_id == this.form_data.main_coordinator_id })
             	}
             	return []
             },
@@ -114,7 +114,6 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-    		            		console.log(data)
     		            		this.form_data = {
     		            			sales_nip: data.sales_nip,
     		            			main_coordinator_id:data.main_coordinator_id,

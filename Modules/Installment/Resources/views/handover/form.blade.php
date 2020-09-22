@@ -22,7 +22,7 @@
     		        <v-col
     		          	cols="12"
     		          	md="6">
-			    		<validation-provider v-slot="{ errors }" name="Nomor Handphone" rules="|numeric">
+			    		<validation-provider v-slot="{ errors }" name="Nomor Handphone" rules="">
 				    		<v-text-field
 				    			v-model="form_data.client_mobile_number"
 				    			name="client_mobile_number"

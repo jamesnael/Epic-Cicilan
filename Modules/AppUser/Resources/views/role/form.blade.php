@@ -105,12 +105,6 @@
 	                            	<div v-if="element['has_child'] == 'true'">
 		                            	<div v-for="(parent, key) in element['submenu']">
 		                            		<h4>@{{parent.menu}}</h4>
-				                            {{-- <v-checkbox
-					                            class="mb-4"
-					                            :label="parent.menu"
-					                            color="indigo darken-3"
-					                            hide-details
-					                        ></v-checkbox> --}}
 			                            	<div v-for="(child, key) in parent['routes']">
 					                            <v-checkbox
 						                            class="mb-4"
@@ -173,7 +167,6 @@
 
     <v-snackbar
         v-model="formAlert"
-        {{-- centered --}}
         top
         multi-line
         :color="formAlertState"

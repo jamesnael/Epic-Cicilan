@@ -337,6 +337,7 @@
 						      </v-sheet>
 						      <v-sheet height="600">
 						        <v-calendar
+						        	
 						          ref="calendar"
 						          v-model="focus"
 						          color="primary"
@@ -367,9 +368,31 @@
 						              <v-spacer></v-spacer>
 						            </v-toolbar>
 						            <v-card-text>
-						              <span v-html="selectedEvent.client"></span><br>
+						            	<table width="100%" border="0" class="mt-2">
+			            	  			<tr>
+			            	  				<td width="35%">Nama Klien</td>
+			            	  				<td>:</td>
+			            	  				<td width="60%">@{{ selectedEvent.client }}</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Nomor Unit</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ selectedEvent.unit }}</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Lokasi Jadwal @{{selectedEvent.name}}</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ selectedEvent.address }}</td>
+			            	  			</tr>
+			            	  			<tr>
+			            	  				<td>Tanggal @{{selectedEvent.name}}</td>
+			            	  				<td>:</td>
+			            	  				<td>@{{ reformatDateTime(selectedEvent.start, 'YYYY-MM-DD hh:mm', 'DD MMMM YYYY HH:mm') }}</td>
+			            	  			</tr>
+			            	  		</table>
+						              {{-- <span v-html="selectedEvent.client"></span><br>
 						              <span v-html="selectedEvent.unit"></span><br>
-						              <span v-html="selectedEvent.address"></span><br>
+						              <span v-html="selectedEvent.address"></span><br> --}}
 						            </v-card-text>
 						            <v-card-actions>
 						              <v-btn

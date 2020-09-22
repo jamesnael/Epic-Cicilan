@@ -136,3 +136,8 @@ Route::group(['namespace' => 'TipeProgram'], function() {
 	Route::get('tipe-program/{tipe_program}/data', 'TipeProgramController@data')->name('tipe-program.data');
 	Route::resource('tipe-program', 'TipeProgramController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Report'], function() {
+	Route::get('report/{report}/data', 'ReportController@data')->name('report.data');
+	Route::resource('report', 'ReportController')->except(['show']);
+});
