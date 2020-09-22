@@ -16,6 +16,8 @@ use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\RewardPoint\Notifications\ReminderAkad;
 
 class AkadController extends Controller
 {
@@ -46,61 +48,61 @@ class AkadController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_method',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Approval Pembeli',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_client',
             ],
             [
                 "text" => 'Approval Bank',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_bank',
             ],
             [
                 "text" => 'Approval Developer',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_developer',
             ],
         ];
@@ -109,61 +111,61 @@ class AkadController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_method',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Approval Pembeli',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_client',
             ],
             [
                 "text" => 'Approval Bank',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_bank',
             ],
             [
                 "text" => 'Approval Developer',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_developer',
             ],
         ];
@@ -292,6 +294,9 @@ class AkadController extends Controller
                 $request->merge([
                     'akad_doc_sign_file_name' => $file_name_akhir,
                 ]);
+
+                Notification::route('mail', $akad->client->client_email)
+                            ->notify(new ReminderAkad($akad));
             }
 
             if ($akad->akad_kpr) {
@@ -406,9 +411,9 @@ class AkadController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -486,9 +491,9 @@ class AkadController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

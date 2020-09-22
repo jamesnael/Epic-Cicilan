@@ -106,6 +106,7 @@
                                     client_name: data.client.client_name,
                                     sales_name: data.sales.user.full_name,
                                     unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
+                                    unit_type: data.unit.unit_type + ' ' + data.unit.unit_number + '/' + data.unit.unit_block,
                                     print_date: data.spr ? data.spr.print_date : null,
                                     print_date_data: data.spr ? data.spr.print_date : null,
                                     sent_date: data.spr ? data.spr.sent_date : null,

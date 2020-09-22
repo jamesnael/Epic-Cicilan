@@ -41,8 +41,8 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
-				    			v-model="form_data.unit"
-				    			name="Unit"
+				    			v-model="form_data.unit_type"
+				    			name="unit_type"
 					    		label="Unit"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"

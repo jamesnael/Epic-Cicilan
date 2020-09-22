@@ -51,6 +51,7 @@
 					      v-model="form_data.redeem_point_main_coordinator"
 				          label="Reedem Point Koordinator Utama"
 				          name="redeem_point_main_coordinator"
+				          :disabled="!form_data.main_coordinator"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
@@ -68,6 +69,7 @@
 			          v-model="form_data.redeem_point_regional_coordinator"
 			          label="Reedem Point Koordinator Wilayah"
 			          name="redeem_point_regional_coordinator"
+			          :disabled="!form_data.regional_coordinator"
 			          :error-messages="errors"
 		    		  :readonly="field_state"
 			        >
@@ -85,6 +87,7 @@
 				          v-model="form_data.redeem_point_agency"
 				          label="Reedem Point Sub Agent"
 				          name="redeem_point_agency"
+				          :disabled="!form_data.agency"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
@@ -102,6 +105,7 @@
 				          v-model="form_data.redeem_point_sales"
 				          label="Reedem Point Sales"
 				          name="redeem_point_sales"
+				          :disabled="!form_data.sales"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
