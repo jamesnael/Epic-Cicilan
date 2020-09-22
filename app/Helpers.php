@@ -210,7 +210,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-account-multiple',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola User',
-                'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit','role.index','role.create','role.edit','reward-point.index']),
+                'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit','role.index','role.create','role.edit']),
                 'show' => Auth::user()->is_admin || in_array('users.index', Auth::user()->user_access?: []) || in_array('role.index', Auth::user()->user_access?: []),
                 'children' => [
                     [
