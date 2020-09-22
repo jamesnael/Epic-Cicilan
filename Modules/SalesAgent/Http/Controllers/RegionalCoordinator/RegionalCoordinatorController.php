@@ -38,37 +38,37 @@ class RegionalCoordinatorController extends Controller
             [
                 "text" => 'Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'main_coordinator.full_name',
             ],
             [
                 "text" => 'Nama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'email',
             ],
             [
                 "text" => 'Nomor HP',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'phone_number',
             ],
             [
                 "text" => 'Alamat',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'address',
             ],
             [
                 "text" => 'PPH Final',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'pph_final',
             ],
         ];
@@ -198,22 +198,42 @@ class RegionalCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RegionalCoordinator::with('main_coordinator');
+        $query = RegionalCoordinator::with('main_coordinator')
+                                    ->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('phone_number', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%')
+                         ->orWhere('email', 'LIKE', '%' . $generalSearch . '%')
+                         ->orWhere('phone_number', 'LIKE', '%' . $generalSearch . '%')
+                         ->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
             });
+
+            $query->orWhereHas('main_coordinator', function($subquery) use ($generalSearch){
+                $subquery->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // if ($request->input('sort')) {
+        //     foreach ($request->input('sort') as $sort_key => $sort) {
+        //         if ($sort[0] == 'main_coordinator.full_name') {
+
+        //             // $query->join('main_coordinators', 'regional_coordinators.main_coordinator_id', '=', 'main_coordinators.id')
+        //             //       ->orderBy('full_name', $sort[1] ? 'desc' : 'asc');
+
+        //             // $query->join()
+        //             $query->orderBy('main_coordinators.full_name', $sort[1] ? 'desc' : 'asc');
+        //         }
+        //         else {
+        //             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        //         }
+        //     }
+        // }else{
+        //     $query->orderBy('created_at', 'DESC');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

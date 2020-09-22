@@ -36,31 +36,31 @@ class TipeProgramController extends Controller
             [
                 "text" => 'Tipe Program',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'nama_program',
             ],
             [
                 "text" => 'Harga Termasuk',
                 "align" => 'left',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'harga_termasuk',
             ],
             [
                 "text" => 'Harga Tidak Termasuk',
                 "align" => 'left',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'harga_tidak_termasuk',
             ],
             [
                 "text" => 'Gimmick',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'gimmick',
             ],
             [
                 "text" => 'Keterangan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'keterangan',
             ]
         ];
@@ -192,7 +192,7 @@ class TipeProgramController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = TipeProgram::query();
+        $query = TipeProgram::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -206,9 +206,9 @@ class TipeProgramController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

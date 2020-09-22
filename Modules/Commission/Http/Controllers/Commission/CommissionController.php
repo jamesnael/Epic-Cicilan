@@ -42,25 +42,25 @@ class CommissionController extends Controller
             [
                 "text" => 'Tipe Komisi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'commission_type',
             ],
             [
                 "text" => 'Komisi Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_commission',
             ],
             [
                 "text" => 'Komisi Koordinator Wilayah',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'regional_coordinator_commission',
             ],
             [
                 "text" => 'Komisi Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'main_coordinator_commission',
             ]
         ];
@@ -197,7 +197,7 @@ class CommissionController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Commission::query();
+        $query = Commission::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -210,9 +210,9 @@ class CommissionController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

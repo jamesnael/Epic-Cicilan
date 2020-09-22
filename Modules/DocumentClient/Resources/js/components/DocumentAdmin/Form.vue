@@ -330,7 +330,6 @@
 
                 axios.post(this.base_url() + this.ziggy('document-admin.download', [this.form_data.slug]).url(), data)
                     .then((response) => {
-                        console.log(response.data)
                         if (response.data == '') {
                             this.formAlert = true
                             this.formAlertState = 'success'

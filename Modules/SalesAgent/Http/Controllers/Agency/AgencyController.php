@@ -39,37 +39,37 @@ class AgencyController extends Controller
             [
                 "text" => 'Koordinator Wilayah',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'regional_coordinator.full_name',
             ],
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Email Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_email',
             ],
             [
                 "text" => 'Nomor Telepon',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_phone',
             ],
             [
                 "text" => 'Alamat',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_address',
             ],
             [
                 "text" => 'PPH Final',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'pph_final',
             ],
         ];
@@ -213,7 +213,8 @@ class AgencyController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Agency::with('regional_coordinator');
+        $query = Agency::with('regional_coordinator')
+                        ->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -227,9 +228,19 @@ class AgencyController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //    if ($sort[0] == 'regional_coordinator.full_name') {
+
+        //         $query->with(['regional_coordinator' => function($subquery) use ($sort){
+        //             $subquery->orderBy('full_name', $sort[1] == 'false' ? 'desc' : 'asc');
+        //         }]);
+
+        //         // $query->orderBy('regional_coordinator_id', $sort[1] ? 'desc' : 'asc');
+        //     }
+        //     else {
+        //         $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        //     }
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

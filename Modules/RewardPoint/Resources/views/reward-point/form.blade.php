@@ -46,7 +46,7 @@
 			          v-model="form_data.main_coordinator"
 			          class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': main_coordinator}">
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': form_data.main_coordinator}">
 				        <v-text-field
 					      v-model="form_data.redeem_point_main_coordinator"
 				          label="Reedem Point Koordinator Utama"
@@ -63,7 +63,7 @@
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator wilayah" :rules="{'numeric': true, 'required': regional_coordinator}">
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator wilayah" :rules="{'numeric': true, 'required': form_data.regional_coordinator}">
 			        <v-text-field
 			          v-model="form_data.redeem_point_regional_coordinator"
 			          label="Reedem Point Koordinator Wilayah"
@@ -80,7 +80,7 @@
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': agency}">
+					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': form_data.agency}">
 				        <v-text-field
 				          v-model="form_data.redeem_point_agency"
 				          label="Reedem Point Sub Agent"
@@ -97,7 +97,7 @@
 				        hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-					<validation-provider v-slot="{ errors }" name="Reedem point sales" :rules="{'numeric': true, 'required': sales}">
+					<validation-provider v-slot="{ errors }" name="Reedem point sales" :rules="{'numeric': true, 'required': form_data.sales}">
 				        <v-text-field
 				          v-model="form_data.redeem_point_sales"
 				          label="Reedem Point Sales"
