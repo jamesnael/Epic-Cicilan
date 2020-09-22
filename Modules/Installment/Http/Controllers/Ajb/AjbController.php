@@ -312,13 +312,13 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')/*->doesntHave('unpaid_payments')*/->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
 
         $query->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');
             $subquery->where('approval_notaris_status', '=', 'Approved');
-            $subquery->where('ajb_doc_sign_name', '!=', '');
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
         });
 
 
@@ -357,12 +357,14 @@ class AjbController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->whereDoesntHave('ajb', function($subquery) {
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+        ->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');
             $subquery->where('approval_notaris_status', '=', 'Approved');
-            $subquery->where('ajb_doc_sign_name', '!=', '');
-        })->orderBy('created_at', 'DESC')
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
+        })
+        ->orderBy('created_at', 'DESC')
         ->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         
         $data->getCollection()->transform(function($item) {
@@ -416,7 +418,7 @@ class AjbController extends Controller
             $subquery->where('approval_client_status', 'Approved');
             $subquery->where('approval_developer_status', 'Approved');
             $subquery->where('approval_notaris_status', 'Approved');
-            $subquery->where('ajb_doc_sign_name', '!=', '');
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
         });
         $query->orderBy('created_at', 'DESC');
 
