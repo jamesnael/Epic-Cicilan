@@ -36,13 +36,13 @@ class RewardCategoryController extends Controller
             [
                 "text" => 'Nama Kategori Reward',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'category_name',
             ],
             [
                 "text" => 'Keterangan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'description',
             ]
         ];
@@ -173,7 +173,7 @@ class RewardCategoryController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RewardCategory::with('reward');
+        $query = RewardCategory::with('reward')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

@@ -161,6 +161,7 @@
                                     agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
                                     main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
                                     regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
+                                    reject_reason:data.reject_reason,
 
                                     payments: items,
                                     slug: data.slug,

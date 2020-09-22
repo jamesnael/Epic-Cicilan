@@ -45,61 +45,61 @@ class BookingController extends Controller
             [
                 "text" => 'Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'total_amount',
             ],
             [
                 "text" => 'DP',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'dp_amount',
             ],
             [
                 "text" => 'Cicilan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'installment',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_type',
             ],
             [
                 "text" => 'Tanggal Jatuh Tempo',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'due_date',
             ],
             [
                 "text" => 'Total Cicilan Yang Harus Dibayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'principal',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'point',
             ]
         ];
@@ -322,9 +322,9 @@ class BookingController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

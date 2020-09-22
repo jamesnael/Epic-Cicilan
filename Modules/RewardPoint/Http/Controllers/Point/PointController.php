@@ -36,19 +36,19 @@ class PointController extends Controller
             [
                 "text" => 'Tipe Unit ',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'building_type',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'point',
             ],
             [
                 "text" => 'Closing Fee',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'closing_fee',
             ],
         ];
@@ -179,7 +179,7 @@ class PointController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Point::query();
+        $query = Point::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -190,9 +190,9 @@ class PointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

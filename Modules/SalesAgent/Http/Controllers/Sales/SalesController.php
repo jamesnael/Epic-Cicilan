@@ -281,7 +281,7 @@ class SalesController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator');
+        $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
         // select(
         //     'users.slug',
         //     'users.full_name',
@@ -307,11 +307,11 @@ class SalesController extends Controller
             });
         }
 
-        $data = $query->orderBy('created_at', 'desc')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
 
         $data->getCollection()->transform(function($item) {
-            $item->agency_name = $item->sales->agency->agency_name;
-            $item->main_coordinator_name = $item->sales->main_coordinator->full_name;
+            $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->main_coordinator_name = $item->sales->main_coordinator? $item->sales->main_coordinator->full_name : '';
             return $item;
         });
 

@@ -41,37 +41,37 @@ class DocumentClientController extends Controller
             [
                 "text" => 'Nama Debitur',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Pekerjaan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_profesion',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Tgl Pengajuan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'submission_date',
             ],
         ];
@@ -255,9 +255,9 @@ class DocumentClientController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

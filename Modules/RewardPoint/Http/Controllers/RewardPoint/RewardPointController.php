@@ -37,43 +37,43 @@ class RewardPointController extends Controller
             [
                 "text" => 'Kategori Reward',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'category.category_name',
             ],
             [
                 "text" => 'Nama Reward',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_name',
             ],
             [
                 "text" => 'Redeem Point Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'redeem_point_main_coordinator',
             ],
             [
                 "text" => 'Redeem Point Koordinator Wilayah',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'redeem_point_regional_coordinator',
             ],
             [
                 "text" => 'Redeem Point Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'redeem_point_agency',
             ],
             [
                 "text" => 'Redeem Point Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'redeem_point_sales',
             ],
             [
                 "text" => 'Deskripsi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'description',
             ],
         ];
@@ -214,9 +214,9 @@ class RewardPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

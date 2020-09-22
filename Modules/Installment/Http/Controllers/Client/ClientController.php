@@ -36,37 +36,37 @@ class ClientController extends Controller
             [
                 "text" => 'ID Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_number',
             ],
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Pekerjaan',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'profession',
             ],
             [
                 "text" => 'No Handphone',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_mobile_number',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_email',
             ],
             [
                 "text" => 'No.Telepon',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_phone_number',
             ]
         ];
@@ -203,7 +203,7 @@ class ClientController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Client::query();
+        $query = Client::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -217,9 +217,9 @@ class ClientController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

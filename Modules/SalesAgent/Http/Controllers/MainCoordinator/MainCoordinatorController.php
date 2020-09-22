@@ -37,31 +37,31 @@ class MainCoordinatorController extends Controller
             [
                 "text" => 'Nama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'email',
             ],
             [
                 "text" => 'Nomor Telepon',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'phone_number',
             ],
             [
                 "text" => 'Alamat',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'address',
             ],
             [
                 "text" => 'PPH Final',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'pph_final',
             ],
         ];
@@ -191,7 +191,7 @@ class MainCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = MainCoordinator::query();
+        $query = MainCoordinator::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -204,9 +204,9 @@ class MainCoordinatorController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
