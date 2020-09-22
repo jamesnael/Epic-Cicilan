@@ -21,6 +21,8 @@ use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Modules\SalesAgent\Entities\MainCoordinator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\RewardPoint\Notifications\PenukaranPoint;
 
 class TukarPointController extends Controller
 {
@@ -667,12 +669,10 @@ class TukarPointController extends Controller
                     'exchange_point'  => $request->redeem_point,
                 ]);
 
+
                 //Email Notification
-                // if ($data) {
-                //     $sales = Sales::findOrFail($request->user_name);
-                //     $user = User::findOrFail($sales->user_id);
-                //     $user->notify(new NotifyExchangePoint($user));
-                // }
+                // Notification::route('mail', $data->sales->user->email)
+                //             ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Agent Condition
@@ -684,12 +684,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // if ($data) {
-                //     $user = Agency::findOrFail($request->user_name);
-                //     $user->email = $user->agency_email;
-                //     $user->full_name = $user->agency_name;
-                //     $user->notify(new NotifyExchangePoint($user));
-                // }
+                // Notification::route('mail', $data->agency->agency_email)
+                //             ->notify(new PenukaranPoint($data->agency->agency_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Korwil Condition
@@ -701,10 +697,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // if ($data) {
-                //     $user = RegionalCoordinator::findOrFail($request->user_name);
-                //     $user->notify(new NotifyExchangePoint($user));
-                // }
+                // Notification::route('mail', $data->regional_coordinator->email)
+                //             ->notify(new PenukaranPoint($data->regional_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Korut Condition
@@ -716,10 +710,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // if ($data) {
-                //     $user = MainCoordinator::findOrFail($request->user_name);
-                //     $user->notify(new NotifyExchangePoint($user));
-                // }
+                // Notification::route('mail', $data->main_coordinator->email)
+                //             ->notify(new PenukaranPoint($data->main_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             DB::commit();

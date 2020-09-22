@@ -20,7 +20,7 @@
 						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">Perihal</p>
 					</td>
 					<td style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">:<strong>Reminder H-1 Tagihan</strong></p>
+						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">: <strong>Reminder H-1 Tagihan</strong></p>
 					</td>
 				</tr>
 			</table>
@@ -60,7 +60,12 @@
 			</table>
 			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Demikian <strong>Surat Reminder H-1 Tagihan</strong> ini kami sampaikan. Atas perhatian dan kerjasamanya kami ucapkan terima kasih.</p>
 			
-			@include('core::layouts.email_footer', ['action_name' => 'Pembayaran Cicilan', 'action_url' => route('pembayaran.cicilan.index', [$booking->slug])])
+			@include('core::layouts.email_footer', [
+				'action_name' => 'Pembayaran Cicilan', 
+				'action_url' => route('pembayaran.cicilan.index', [$booking->slug]),
+				'paraf_name' => 'Andrias Irawan Widjaja',
+				'paraf_jabatan' => 'Direktur'
+				])
 		</td>
 	</tr>
 </table>
