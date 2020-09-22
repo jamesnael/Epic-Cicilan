@@ -134,7 +134,7 @@ class DashboardController extends Controller
             $item->start = $item->ajb_date .' '. $item->ajb_time; 
             $item->end = '';
             $item->timed = true;
-            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->unit = $item->booking->unit->unit_type .'/'. $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
             $item->client = $item->booking->client->client_name;
             return $item;
         });
@@ -146,7 +146,7 @@ class DashboardController extends Controller
             $item->start = $item->akad_date .' '. $item->akad_time; 
             $item->end = '';
             $item->timed = true;
-            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->unit = $item->booking->unit->unit_type .'/'. $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
             $item->client = $item->booking->client->client_name;
             return $item;
         });
@@ -157,7 +157,7 @@ class DashboardController extends Controller
             $item->start = $item->ppjb_date .' '. $item->ppjb_time;
             $item->end = '';
             $item->timed = true;
-            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->unit = $item->booking->unit->unit_type .'/'. $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
             $item->client = $item->booking->client->client_name;
             return $item;
         });
@@ -169,7 +169,7 @@ class DashboardController extends Controller
             $item->start = $item->handover_date .' '. $item->time; 
             $item->end = '';
             $item->timed = true;
-            $item->unit = $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
+            $item->unit = $item->booking->unit->unit_type .'/'. $item->booking->unit->unit_block .'/'. $item->booking->unit->unit_number;
             $item->client = $item->booking->client->client_name;
             return $item;
         });
