@@ -89,6 +89,7 @@
                                     client_mobile_number:data.client.client_mobile_number,
                                     unit_number:data.unit.unit_number + '/' + data.unit.unit_block,
                                     unit_price: this.moneyFormat(data.total_amount),
+                                    unit_type: data.unit.unit_type + ' ' + data.unit.unit_number + '/' + data.unit.unit_block,
                                     sales_name:data.sales.user.full_name,
                                     agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
                                     akad_date: data.akad_kpr ? data.akad_kpr.akad_date : '',

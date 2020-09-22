@@ -204,7 +204,7 @@ class RewardPointController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RewardPoint::with('category');
+        $query = RewardPoint::with('category')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

@@ -96,6 +96,7 @@
                                     client_mobile_number:data.client.client_mobile_number,
                                     unit_number:data.unit.unit_number + '/' + data.unit.unit_block,
                                     unit_price: this.moneyFormat(data.total_amount),
+                                    unit_type: data.unit.unit_type + ' ' + data.unit.unit_number + '/' + data.unit.unit_block,
                                     sales_name:data.sales.user.full_name,
                                     korwil:data.sales ? data.sales.regional_coordinator.full_name : '',
                                     korut:data.sales ? data.sales.main_coordinator.full_name : '',

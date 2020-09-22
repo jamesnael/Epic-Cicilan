@@ -40,7 +40,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
-				    			v-model="form_data.unit_number"
+				    			v-model="form_data.unit_type"
 					    		:error-messages="errors"
 					    		label="Unit"
 					    		:readonly="!field_state"

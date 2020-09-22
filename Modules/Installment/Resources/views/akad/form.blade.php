@@ -43,7 +43,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
-				    			v-model="form_data.unit_number"
+				    			v-model="form_data.unit_type"
 				    			:persistent-hint="true"
 					    		:error-messages="errors"
 					    		label="Unit"
