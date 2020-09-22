@@ -441,6 +441,7 @@ if (! function_exists('aside_menu')) {
                 'text' => 'Laporan',
                 'uri' => route('report.create'),
                 'model' => in_array(Route::currentRouteName(), ['report.index','report.create']),
+                'show' => Auth::user()->is_admin || in_array('tukar-point.index', Auth::user()->user_access?: [])
             ],
         ];
     }

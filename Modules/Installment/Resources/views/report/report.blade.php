@@ -22,7 +22,7 @@
 		@foreach($data as $value)
 			<tr>
 				<td align="center" valign="middle">{{ $no++ }}</td>
-				<td valign="middle">{!! $value->client->client_number !!}</td>
+				<td valign="middle">'{{ $value->client->client_number }}</td>
 				<td valign="middle">{{ $value->client->client_name }}</td>
 				<td align="center" valign="middle">{{ $value->unit->unit_type }}</td>
 				<td align="center" valign="middle">{{ $value->unit->unit_number }} / {{ $value->unit->unit_block }}</td>
