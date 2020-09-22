@@ -46,11 +46,12 @@
 			          v-model="form_data.main_coordinator"
 			          class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': main_coordinator}">
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator utama" :rules="{'numeric': true, 'required': form_data.main_coordinator}">
 				        <v-text-field
 					      v-model="form_data.redeem_point_main_coordinator"
 				          label="Reedem Point Koordinator Utama"
 				          name="redeem_point_main_coordinator"
+				          :disabled="!form_data.main_coordinator"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
@@ -63,11 +64,12 @@
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator wilayah" :rules="{'numeric': true, 'required': regional_coordinator}">
+		    		<validation-provider v-slot="{ errors }" name="Reedem point koordinator wilayah" :rules="{'numeric': true, 'required': form_data.regional_coordinator}">
 			        <v-text-field
 			          v-model="form_data.redeem_point_regional_coordinator"
 			          label="Reedem Point Koordinator Wilayah"
 			          name="redeem_point_regional_coordinator"
+			          :disabled="!form_data.regional_coordinator"
 			          :error-messages="errors"
 		    		  :readonly="field_state"
 			        >
@@ -80,11 +82,12 @@
 			          	hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': agency}">
+					<validation-provider v-slot="{ errors }" name="Reedem point agency" :rules="{'numeric': true, 'required': form_data.agency}">
 				        <v-text-field
 				          v-model="form_data.redeem_point_agency"
 				          label="Reedem Point Sub Agent"
 				          name="redeem_point_agency"
+				          :disabled="!form_data.agency"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
@@ -97,11 +100,12 @@
 				        hide-details
 			          	class="shrink mr-2 mt-0"
 			        ></v-checkbox>
-					<validation-provider v-slot="{ errors }" name="Reedem point sales" :rules="{'numeric': true, 'required': sales}">
+					<validation-provider v-slot="{ errors }" name="Reedem point sales" :rules="{'numeric': true, 'required': form_data.sales}">
 				        <v-text-field
 				          v-model="form_data.redeem_point_sales"
 				          label="Reedem Point Sales"
 				          name="redeem_point_sales"
+				          :disabled="!form_data.sales"
 				          :error-messages="errors"
 			    		  :readonly="field_state"
 				        >
