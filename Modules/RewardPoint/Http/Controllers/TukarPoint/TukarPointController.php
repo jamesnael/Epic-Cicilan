@@ -51,43 +51,43 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'user.full_name',
             ],
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency.agency_name',
             ],
             [
                 "text" => 'Korwil',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'regional_coordinator.full_name',
             ],
             [
                 "text" => 'Total Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'total_point',
             ],
             [
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'allowed_point',
             ],
             [
                 "text" => 'Point Yang Telah Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchanged_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sisa_point',
             ],
         ];
@@ -96,37 +96,37 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Korwil',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'regional_coordinator.full_name',
             ],
             [
                 "text" => 'Total Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'total_point',
             ],
             [
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'allowed_point',
             ],
             [
                 "text" => 'Point Yang Telah Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchanged_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sisa_point',
             ],
         ];
@@ -135,37 +135,37 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Korwil',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Korut',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'main_coordinator.full_name',
             ],
             [
                 "text" => 'Total Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'total_point',
             ],
             [
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'allowed_point',
             ],
             [
                 "text" => 'Point Yang Telah Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchanged_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sisa_point',
             ],
         ];
@@ -174,31 +174,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Total Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'total_point',
             ],
             [
                 "text" => 'Point Bisa Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'allowed_point',
             ],
             [
                 "text" => 'Point Yang Telah Ditukar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchanged_point',
             ],
             [
                 "text" => 'Sisa Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sisa_point',
             ],
         ];
@@ -329,31 +329,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Penukaran',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.category.category_name',
             ],
             [
                 "text" => 'Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.reward_name',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchange_point',
             ],
         ];
@@ -362,31 +362,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Closing',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Nama Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'units',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'booking.unit.points',
             ],
             [
                 "text" => 'Status Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
             [
                 "text" => 'Tanggal Pelunasan Komisi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'updated_date',
             ],
         ];
@@ -405,31 +405,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Penukaran',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.category.category_name',
             ],
             [
                 "text" => 'Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.reward_name',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchange_point',
             ],
 
@@ -439,31 +439,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Closing',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Nama Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'units',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'booking.unit.points',
             ],
             [
                 "text" => 'Status Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
             [
                 "text" => 'Tanggal Pelunasan Komisi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'updated_date',
             ],
         ];
@@ -481,31 +481,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Penukaran',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.category.category_name',
             ],
             [
                 "text" => 'Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.reward_name',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchange_point',
             ],
         ];
@@ -514,31 +514,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Closing',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Nama Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'units',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'booking.unit.points',
             ],
             [
                 "text" => 'Status Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
             [
                 "text" => 'Tanggal Pelunasan Komisi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'updated_date',
             ],
         ];
@@ -557,31 +557,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Penukaran',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Tanggal Cancel',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'deleted_date',
             ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.category.category_name',
             ],
             [
                 "text" => 'Rewards',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'reward_point.reward_name',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'exchange_point',
             ],
         ];
@@ -590,31 +590,31 @@ class TukarPointController extends Controller
             [
                 "text" => 'Tanggal Closing',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'date',
             ],
             [
                 "text" => 'Nama Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'units',
             ],
             [
                 "text" => 'Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'booking.unit.points',
             ],
             [
                 "text" => 'Status Point',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
             [
                 "text" => 'Tanggal Pelunasan Komisi',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'updated_date',
             ],
         ];
@@ -847,9 +847,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -903,9 +903,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -959,9 +959,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1011,9 +1011,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1074,9 +1074,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1139,9 +1139,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1210,9 +1210,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1275,9 +1275,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1347,9 +1347,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1412,9 +1412,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1484,9 +1484,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1549,9 +1549,9 @@ class TukarPointController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {

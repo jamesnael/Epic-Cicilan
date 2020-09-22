@@ -38,103 +38,103 @@ class SalesCommissionController extends Controller
             [
                 "text" => 'Nama Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Koordinator Wilayah',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'korwil_name',
             ],
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             // [
             //     "text" => 'Tanggal Transaksi',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => '',
             // ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Data Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Pricelist',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_method',
             ],
             // [
             //     "text" => 'Type Komisi',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => '',
             // ],
             // [
             //     "text" => 'Komisi Koordinator Utama',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => '',
             // ],
             // [
             //     "text" => 'Komisi Bruto Korwil',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => '',
             // ],
             // [
             //     "text" => 'Total Komisi(PPH Final + PPH 21)',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => '',
             // ],
             [
                 "text" => 'Komisi Bruto Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'bruto',
             ],
             [
                 "text" => 'Total Komisi Sub Agent (PPH Final + PPH 21)',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'final',
             ],
             [
                 "text" => 'Pencairan 1 (50%)',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_status_1',
             ],
             [
                 "text" => 'Pencairan 2 (50%)',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_status_2',
             ],
         ];
@@ -411,9 +411,9 @@ class SalesCommissionController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
 
