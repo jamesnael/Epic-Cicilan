@@ -27,10 +27,10 @@ class BookingHelper
     {
         $payments = [];
         $payment = [];
-        $payment['payment'] = 'Uang Tanda Jadi';
+        $payment['payment'] = 'UTJ + NUP';
         $payment['due_date'] = \Carbon\Carbon::parse($booking->utj_date)->format('Y-m-d');
         $payment['installment'] = $booking->nup_amount + $booking->utj_amount;
-        $payment['credit'] = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount : $booking->total_amount;
+        $payment['credit'] = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount - $booking->nup_amount - $booking->utj_amount : $booking->total_amount - $booking->nup_amount - $booking->utj_amount;
         $payment['payment_status']= 'Paid';
         $payment['payment_date']= \Carbon\Carbon::parse($booking->utj_date)->format('Y-m-d');
         $payment['payment_method'] = $booking->payment_method_utj;
@@ -38,7 +38,7 @@ class BookingHelper
 
         $payments[] = $payment;
 
-        $credits = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount : $booking->total_amount;
+        $credits = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount - $booking->nup_amount - $booking->utj_amount : $booking->total_amount - $booking->nup_amount - $booking->utj_amount;
         $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
         for ($i = 1; $i <= $booking->installment_time; $i++) {
             if (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') {
