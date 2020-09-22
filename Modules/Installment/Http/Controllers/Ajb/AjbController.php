@@ -14,6 +14,8 @@ use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\Installment\Notifications\ReminderAJB;
 
 class AjbController extends Controller
 {
@@ -241,6 +243,9 @@ class AjbController extends Controller
                 $request->merge([
                     'ajb_doc_sign_file_name' => $file_name_akhir,
                 ]);
+
+                Notification::route('mail', $ajb->client->client_email)
+                            ->notify(new ReminderAJB($ajb));
             }
 
             if ($ajb->ajb) {

@@ -42,49 +42,49 @@ class SprController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_name',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Tanggal Cetak',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'print_date',
             ],
             [
                 "text" => 'Tanggal Kirim',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sent_date',
             ],
             [
                 "text" => 'Tanggal Terima',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'received_date',
             ],
             [
                 "text" => 'Status',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
         ];
@@ -93,49 +93,49 @@ class SprController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_name',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Tanggal Cetak',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'print_date',
             ],
             [
                 "text" => 'Tanggal Kirim',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sent_date',
             ],
             [
                 "text" => 'Tanggal Terima',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'received_date',
             ],
             [
                 "text" => 'Status',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'status',
             ],
         ];
@@ -392,9 +392,10 @@ class SprController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
+
         $data = $query->bookingStatus('spr')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->print_date    = $item->spr ? \Carbon\Carbon::parse($item->spr->print_date)->locale('id')->translatedFormat('d F Y') : '';

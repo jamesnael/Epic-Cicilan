@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\Installment\Entities\BookingPayment;
+use Illuminate\Support\Facades\Notification;
+use Modules\RewardPoint\Notifications\ReminderHandover;
 
 class HandOverController extends Controller
 {
@@ -234,6 +236,9 @@ class HandOverController extends Controller
                 $request->merge([
                     'handover_doc_sign_name' => $file_name,
                 ]);
+
+                Notification::route('mail', $handover->client->client_email)
+                            ->notify(new ReminderHandover($handover));
             }
             $has_handover = HandOver::where('booking_id', $request->booking_id)->first();
             if ($has_handover) {

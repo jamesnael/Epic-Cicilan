@@ -1,0 +1,64 @@
+<?php
+
+namespace Modules\Installment\Notifications;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+
+class ReminderAJB extends Notification
+{
+    use Queueable;
+
+    public $booking;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct($booking)
+    {
+        $this->booking = $booking;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param mixed $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+                    ->subject('Notifikasi Acara Tanda Tangan Akta Jual Beli (AJB)')
+                    ->view('installment::emails.reminder_ajb', 
+                        ['booking' => $this->booking]
+                    );
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+}
