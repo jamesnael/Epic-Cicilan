@@ -146,7 +146,7 @@
                                     booking_id: data.id,
                                     ajb_date: data.ajb ? data.ajb.ajb_date : null,
                                     unit_name: data.unit.unit_number + '/' + data.unit.unit_block,
-    		            			unit_type: data.unit.unit_type,
+    		            			unit_type: data.unit.unit_type + ' ' + data.unit.unit_number + '/' + data.unit.unit_block,
     		            			unit_block: data.unit.unit_block,
     		            			unit_number: data.unit.unit_number,
     		            			closing_fee:this.moneyFormat(data.unit.closing_fee),

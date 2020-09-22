@@ -216,7 +216,7 @@
 				    </v-col>
 			    </v-row>
 				
-				<div v-if="form_data.payment_type == 'Hard Cash'">
+				{{-- <div v-if="form_data.payment_type == 'Hard Cash'">
 				    <h4 class="mt-3">Pencairan Komisi 1</h4>
 				    <v-row class="mt-4">
 	    		        <v-col
@@ -378,10 +378,10 @@
 				           </validation-provider>
 			          </v-col>
 				    </v-row>
-			    </div>
+			    </div> --}}
 				
-				<div v-else>
-					<div v-if="form_data.prosentase_komisi >= 10">
+				<div>
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 1</h4>
 					    <v-row class="mt-4">
 		    		        <v-col
@@ -464,7 +464,7 @@
 					    </v-row>
 				    </div>
 					
-					<div v-else-if="form_data.prosentase_komisi >= 50">
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 2</h4>
 					    <v-row class="mt-4">
 		    		        <v-col
@@ -640,7 +640,7 @@
 				    </v-col>
 			    </v-row>
 				
-				<div v-if="form_data.payment_type == 'Hard Cash'">
+				{{-- <div v-if="form_data.payment_type == 'Hard Cash'">
 				    <h4 class="mt-3">Pencairan Komisi 1</h4>
 				    <v-row class="mt-4">
 	    		        <v-col
@@ -802,10 +802,10 @@
 				           </validation-provider>
 			          </v-col>
 				    </v-row>
-			    </div>
+			    </div> --}}
 				
-				<div v-else>
-					<div v-if="form_data.prosentase_komisi >= 10">
+				<div>
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 1</h4>
 					    <v-row class="mt-4">
 		    		        <v-col
@@ -888,7 +888,7 @@
 					    </v-row>
 				    </div>
 					
-					<div v-else-if="form_data.prosentase_komisi >= 50">
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 2</h4>
 					    <v-row class="mt-4">
 		    		        <v-col
@@ -1064,7 +1064,7 @@
 				    </v-col>
 			    </v-row>
 				
-				<div v-if="form_data.payment_type == 'Hard Cash'">
+				{{-- <div v-if="form_data.payment_type == 'Hard Cash'">
 				    <h4 class="mt-3">Pencairan Komisi 1</h4>
 				    <v-row class="mt-4">
 	    		        <v-col
@@ -1226,10 +1226,10 @@
 				           </validation-provider>
 			          </v-col>
 				    </v-row>
-			    </div>
+			    </div> --}}
 				
-				<div v-else>
-					<div v-if="form_data.prosentase_komisi >= 10">
+				<div>
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 1</h4>
 					    <v-row class="mt-4">
 		    		        <v-col
@@ -1312,7 +1312,7 @@
 					    </v-row>
 				    </div>
 					
-					<div v-else-if="form_data.prosentase_komisi >= 50">
+					<div>
 					    <h4 class="mt-3">Pencairan Komisi 2</h4>
 					    <v-row class="mt-4">
 		    		        <v-col

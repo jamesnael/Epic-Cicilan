@@ -40,7 +40,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="Unit" rules="">
 				    		<v-text-field
-				    			v-model="form_data.unit_number"
+				    			v-model="form_data.unit_type"
 					    		:error-messages="errors"
 					    		label="Unit"
 					    		:readonly="!field_state"
@@ -272,13 +272,13 @@
 						<v-col
 	    		          cols="12"
 	    		          md="12">
-				    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
+				    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="">
 		    		          	<v-select
 						        v-model="form_data.approval_notaris_status"
 						        :items="items_approval"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-						        label="Approval Bank"
+						        label="Approval Notaris"
 						        name="approval_notaris_status"
 						      ></v-select>
 						    </validation-provider>

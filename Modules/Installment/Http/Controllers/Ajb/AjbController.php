@@ -14,6 +14,8 @@ use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\Installment\Notifications\ReminderAJB;
 
 class AjbController extends Controller
 {
@@ -241,6 +243,9 @@ class AjbController extends Controller
                 $request->merge([
                     'ajb_doc_sign_file_name' => $file_name_akhir,
                 ]);
+
+                Notification::route('mail', $ajb->client->client_email)
+                            ->notify(new ReminderAJB($ajb));
             }
 
             if ($ajb->ajb) {
@@ -318,7 +323,8 @@ class AjbController extends Controller
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');
             $subquery->where('approval_notaris_status', '=', 'Approved');
-        })->orderBy('created_at', 'DESC');
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
+        });
 
 
         if ($request->input('search')) {
@@ -356,11 +362,14 @@ class AjbController extends Controller
             $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         }
 
-        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->whereDoesntHave('ajb', function($subquery) {
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+        ->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
             $subquery->where('approval_developer_status', '=', 'Approved');
             $subquery->where('approval_notaris_status', '=', 'Approved');
-        })->orderBy('created_at', 'DESC')
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
+        })
+        ->orderBy('created_at', 'DESC')
         ->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         
         $data->getCollection()->transform(function($item) {
@@ -411,10 +420,12 @@ class AjbController extends Controller
     {
         $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
         $query->whereHas('ajb', function($subquery) {
-            $subquery->where('approval_client_status', '=', 'Approved');
-            $subquery->where('approval_developer_status', '=', 'Approved');
-            $subquery->where('approval_notaris_status', '=', 'Approved');
-        })->orderBy('created_at', 'DESC');
+            $subquery->where('approval_client_status', 'Approved');
+            $subquery->where('approval_developer_status', 'Approved');
+            $subquery->where('approval_notaris_status', 'Approved');
+            $subquery->where('ajb_doc_sign_file_name', '!=', '');
+        });
+        $query->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

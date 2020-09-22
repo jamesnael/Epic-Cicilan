@@ -61,7 +61,8 @@
         		menu3: false,
 	            menu4: false,
 	            listStatus:['All', 'Lunas', 'Belum Lunas'],
-	            listLaporan:['Pembayaran Cicilan', 'Komisi', 'Point Reward'],
+	            // listLaporan:['Pembayaran Cicilan', 'Komisi', 'Point Reward'],
+	            listLaporan:['Pembayaran Cicilan'],
             	form_data: {
             		category_reward_id: '',
             		reward_name: '',

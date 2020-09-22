@@ -161,13 +161,16 @@
               @click="clear">
               Ulangi
           </v-btn>
+
           <v-btn
             class="mt-5 white--text"
             color="warning"
             elevation="5"
             :disabled="field_state"
             :loading="field_state"
-            @click="downloadPDF">
+            href="{{ route('document-admin.download',[$data->slug]) }}"
+            >
+            {{-- @click="downloadPDF"> --}}
             Download Dokumen
               <template v-slot:loader>
                     <span class="custom-loader">

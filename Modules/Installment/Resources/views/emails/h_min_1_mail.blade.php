@@ -20,18 +20,18 @@
 						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">Perihal</p>
 					</td>
 					<td style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">:<strong>Reminder H-1 Tagihan</strong></p>
+						<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1em; margin-top: 0; text-align: left;">: <strong>Reminder H-1 Tagihan</strong></p>
 					</td>
 				</tr>
 			</table>
 			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;margin: 30px auto;">
 				Kepada Yth,<br>
-				<strong>Bapak/Ibu {{$booking->client->client_name}}</strong><br>
+				Bapak/Ibu <strong>{{$booking->client->client_name}}</strong><br>
 				{{$booking->client->client_address}}<br>
 				{{$booking->client->city}}, {{$booking->client->province}} 
 			</p>
 			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Dengan Hormat,</p>
-			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Kami mengucapkan terima kasih atas kepercayaan Bapak/Ibu untuk pembelian Rumah di Emerald Neopolis (<strong>{{$booking->unit->unit_type}} No. {{$booking->unit->unit_number}}</strong>).</p>
+			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Kami mengucapkan terima kasih atas kepercayaan Bapak/Ibu untuk pembelian Rumah di Emerald Neopolis (<strong>{{$booking->unit->unit_type}} {{$booking->unit->unit_number}}/{{$booking->unit->unit_block}}</strong>).</p>
 			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Kami sampaikan bahwa menurut catatan kami per tanggal <strong>{{\Carbon\Carbon::parse($installment->due_date)->locale('id')->format('d F Y')}}</strong>, cicilan rumah Bapak/Ibu akan jatuh tempo sebesar <strong>Rp. {{number_format($installment->installment, 0, ',', '.')}}</strong> 
 				@php
 					$amount = new NumberFormatter("id", NumberFormatter::SPELLOUT);
@@ -60,7 +60,12 @@
 			</table>
 			<p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: left;">Demikian <strong>Surat Reminder H-1 Tagihan</strong> ini kami sampaikan. Atas perhatian dan kerjasamanya kami ucapkan terima kasih.</p>
 			
-			@include('core::layouts.email_footer', ['action_name' => 'Pembayaran Cicilan', 'action_url' => route('pembayaran.cicilan.index', [$booking->slug])])
+			@include('core::layouts.email_footer', [
+				'action_name' => 'Pembayaran Cicilan', 
+				'action_url' => route('pembayaran.cicilan.index', [$booking->slug]),
+				'paraf_name' => 'Andrias Irawan Widjaja',
+				'paraf_jabatan' => 'Direktur'
+				])
 		</td>
 	</tr>
 </table>

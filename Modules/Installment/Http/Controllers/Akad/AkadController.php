@@ -16,6 +16,8 @@ use Modules\SalesAgent\Entities\Sales;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\RewardPoint\Notifications\ReminderAkad;
 
 class AkadController extends Controller
 {
@@ -292,6 +294,9 @@ class AkadController extends Controller
                 $request->merge([
                     'akad_doc_sign_file_name' => $file_name_akhir,
                 ]);
+
+                Notification::route('mail', $akad->client->client_email)
+                            ->notify(new ReminderAkad($akad));
             }
 
             if ($akad->akad_kpr) {

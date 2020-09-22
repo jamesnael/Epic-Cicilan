@@ -43,31 +43,31 @@ class SalesController extends Controller
             [
                 "text" => 'Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'main_coordinator_name',
             ],
             [
                 "text" => 'Nama User',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'email',
             ],
             [
                 "text" => 'Nomor HP',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'phone_number',
             ]
         ];
@@ -281,46 +281,50 @@ class SalesController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::select(
-            'users.slug',
-            'users.full_name',
-            'users.email',
-            'users.phone_number',
-            'agencies.agency_name',
-            'main_coordinators.full_name AS main_coordinator_name'
-        );
+        $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator');
+        // select(
+        //     'users.slug',
+        //     'users.full_name',
+        //     'users.email',
+        //     'users.phone_number',
+        //     'agencies.agency_name',
+        //     'main_coordinators.full_name AS main_coordinator_name'
+        // );
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('users.full_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('users.email', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('users.phone_number', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('agencies.agency_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('main_coordinators.full_name', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%')
+                ->orWhere('email', 'LIKE', '%' . $generalSearch . '%')
+                ->orWhere('phone_number', 'LIKE', '%' . $generalSearch . '%')
+                ->orWhereHas('sales.agency', function(Builder $subquery) use ($generalSearch) {
+                    $subquery->where('agency_name', 'LIKE', '%' . $generalSearch . '%');
+                })
+                ->orWhereHas('sales.main_coordinator', function(Builder $subquery) use ($generalSearch) {
+                    $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
+                });
             });
         }
 
+        $data = $query->orderBy('created_at', 'desc')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
 
-        $query->join('sales', 'sales.user_id', '=', 'users.id')
-        ->join('agencies', 'sales.agency_id', '=', 'agencies.id')
-        ->join('main_coordinators', 'sales.main_coordinator_id', '=', 'main_coordinators.id');
-        
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            if ($sort[0] == 'agency_name') {
-                $query->orderBy('agencies.agency_name', $sort[1] ? 'desc' : 'asc');
-            } else {
-                $query->orderBy('users.'.$sort[0], $sort[1] ? 'desc' : 'asc');
-            }
-        }
-        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
-        // $data->getCollection()->transform(function($item) {
-        //     \Log::info(json_encode($item, JSON_PRETTY_PRINT));
-        //     $item->agency_name = $item->sales->agency->agency_name;
-        //     return $item;
-        // });
+        $data->getCollection()->transform(function($item) {
+            $item->agency_name = $item->sales->agency->agency_name;
+            $item->main_coordinator_name = $item->sales->main_coordinator->full_name;
+            return $item;
+        });
+
         return $data;
+
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     if ($sort[0] == 'agency_name') {
+        //         $query->orderBy('agencies.agency_name', $sort[1] ? 'desc' : 'asc');
+        //     } else {
+        //         $query->orderBy('users.'.$sort[0], $sort[1] ? 'desc' : 'asc');
+        //     }
+        // }
+        $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
     }
 
     /**
