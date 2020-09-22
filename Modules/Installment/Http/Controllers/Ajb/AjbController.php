@@ -36,67 +36,67 @@ class AjbController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'No. Handphone',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_phone_number',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_method',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Approval Pembeli',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_client',
             ],
             [
                 "text" => 'Approval Developer',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_developer',
             ],
             [
                 "text" => 'Approval Notaris',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_bank',
             ],
         ];
@@ -105,67 +105,67 @@ class AjbController extends Controller
             [
                 "text" => 'Nama Klien',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_name',
             ],
             [
                 "text" => 'No. Handphone',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'client_phone_number',
             ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit.unit_type',
             ],
             [
                 "text" => 'Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_number',
             ],
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'unit_price',
             ],
             [
                 "text" => 'Cara Bayar',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'payment_method',
             ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'sales_name',
             ],
             [
                 "text" => 'Sub Agent',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Approval Pembeli',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_client',
             ],
             [
                 "text" => 'Approval Developer',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_developer',
             ],
             [
                 "text" => 'Approval Notaris',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'approved_bank',
             ],
         ];
@@ -312,7 +312,7 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr')->orderBy('created_at', 'DESC');
 
         $query->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
@@ -353,9 +353,9 @@ class AjbController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
         ->whereDoesntHave('ajb', function($subquery) {
@@ -364,7 +364,6 @@ class AjbController extends Controller
             $subquery->where('approval_notaris_status', '=', 'Approved');
             $subquery->where('ajb_doc_sign_file_name', '!=', '');
         })
-        ->orderBy('created_at', 'DESC')
         ->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         
         $data->getCollection()->transform(function($item) {
@@ -413,14 +412,13 @@ class AjbController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb')->orderBy('created_at', 'DESC');
         $query->whereHas('ajb', function($subquery) {
             $subquery->where('approval_client_status', 'Approved');
             $subquery->where('approval_developer_status', 'Approved');
             $subquery->where('approval_notaris_status', 'Approved');
             $subquery->where('ajb_doc_sign_file_name', '!=', '');
         });
-        $query->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -453,9 +451,9 @@ class AjbController extends Controller
             });
         }
 
-        foreach ($request->input('sort') as $sort_key => $sort) {
-            $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        }
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
 
         $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
