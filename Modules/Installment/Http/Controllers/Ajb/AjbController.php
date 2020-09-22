@@ -312,7 +312,7 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
+        $query = Booking::has('payments')/*->doesntHave('unpaid_payments')*/->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr');
 
         $query->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Approved');
