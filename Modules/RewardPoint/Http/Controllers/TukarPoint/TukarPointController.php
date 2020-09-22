@@ -671,8 +671,8 @@ class TukarPointController extends Controller
 
 
                 //Email Notification
-                // Notification::route('mail', $data->sales->user->email)
-                //             ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                Notification::route('mail', $data->sales->user->email)
+                            ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Agent Condition
@@ -684,8 +684,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // Notification::route('mail', $data->agency->agency_email)
-                //             ->notify(new PenukaranPoint($data->agency->agency_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                Notification::route('mail', $data->agency->agency_email)
+                            ->notify(new PenukaranPoint($data->agency->agency_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Korwil Condition
@@ -697,8 +697,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // Notification::route('mail', $data->regional_coordinator->email)
-                //             ->notify(new PenukaranPoint($data->regional_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                Notification::route('mail', $data->regional_coordinator->email)
+                            ->notify(new PenukaranPoint($data->regional_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             // Korut Condition
@@ -710,8 +710,8 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                // Notification::route('mail', $data->main_coordinator->email)
-                //             ->notify(new PenukaranPoint($data->main_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                Notification::route('mail', $data->main_coordinator->email)
+                            ->notify(new PenukaranPoint($data->main_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
 
             DB::commit();
