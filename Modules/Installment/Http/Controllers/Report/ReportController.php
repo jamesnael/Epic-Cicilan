@@ -72,13 +72,28 @@ class ReportController extends Controller
         if ($request->nama_laporan == "Pembayaran Cicilan"){
             // Status All
             if ($request->status == "All") {
-                $data = Booking::with('client','unit','payments','sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                //Sales Status
+                if (!empty($request->user_name)) {
+                    $data = Booking::with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                } else {
+                    $data = Booking::with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                }
             //Status Lunas
             } elseif ($request->status == "Lunas") {
-                $data = Booking::doesnthave('unpaid_payments')->with('client','unit','payments','sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                //Sales Status
+                if (!empty($request->user_name)) {
+                    $data = Booking::doesnthave('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                } else {
+                    $data = Booking::doesnthave('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                }
             //Status Belum Lunas
             } elseif ($request->status == "Belum Lunas") {
-                $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                //Sales Status
+                if (!empty($request->user_name)) {
+                    $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                } else {
+                    $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
+                }
             }
             // return view('installment::report.report', ['data' => $data]);
             return (new InstallmentReport($data))->download('Installment Report.xlsx');
