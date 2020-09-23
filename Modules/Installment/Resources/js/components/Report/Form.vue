@@ -68,7 +68,7 @@
             		reward_name: '',
             		kuota: '',
             		description: '',
-            		status: '',
+            		status: 'All',
             		redeem_point_main_coordinator: '',
             		redeem_point_regional_coordinator: '',
             		redeem_point_agency: '',
@@ -92,6 +92,7 @@
     		            		this.form_data = {
                                     client_name: data.client.client_name,
     		            			sales: (data.redeem_point_sales != null) ? true : false,
+    		            			status: 'All',
     		            		}
 
     			                this.field_state = false
@@ -117,6 +118,15 @@
     		        }
 
     		        this.postFormData()
+    			});
+        	},
+        	checkForm(e) {
+    			this.$refs.observer.validate().then((success) => {
+    				if (!success) {
+    		          return;
+    		        }
+
+    		        this.$refs['post-form'].submit()
     			});
         	},
         	clear () {
