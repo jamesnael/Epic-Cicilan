@@ -37,31 +37,31 @@ class AppUserController extends Controller
             [
                 "text" => 'Nama User',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             // [
             //     "text" => 'Hak Akses',
             //     "align" => 'center',
-            //     "sortable" => true,
+            //     "sortable" => false,
             //     "value" => 'role.role_name',
             // ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'email',
             ],
             [
                 "text" => 'Nomor Telepon',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'phone_number',
             ],
             [
                 "text" => 'Alamat',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'address',
             ]
            
