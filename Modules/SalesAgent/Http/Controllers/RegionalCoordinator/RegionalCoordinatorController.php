@@ -38,37 +38,37 @@ class RegionalCoordinatorController extends Controller
             [
                 "text" => 'Koordinator Utama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'main_coordinator.full_name',
             ],
             [
                 "text" => 'Nama',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Email',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'email',
             ],
             [
                 "text" => 'Nomor HP',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'phone_number',
             ],
             [
                 "text" => 'Alamat',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'address',
             ],
             [
                 "text" => 'PPH Final',
                 "align" => 'center',
-                "sortable" => true,
+                "sortable" => false,
                 "value" => 'pph_final',
             ],
         ];
