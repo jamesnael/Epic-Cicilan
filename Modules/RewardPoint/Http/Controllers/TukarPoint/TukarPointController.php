@@ -278,7 +278,7 @@ class TukarPointController extends Controller
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -299,7 +299,7 @@ class TukarPointController extends Controller
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -320,7 +320,7 @@ class TukarPointController extends Controller
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -341,7 +341,7 @@ class TukarPointController extends Controller
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
