@@ -217,7 +217,7 @@ class RegionalCoordinatorController extends Controller
 
         }
 
-        if ($request->input('sort')) {
+        if ($request->input('sort') != []) {
             foreach ($request->input('sort') as $sort_key => $sort) {
                 
                 if ($sort[0] == 'main_coordinator.full_name') {

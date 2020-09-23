@@ -65,7 +65,7 @@ class InstallementController extends Controller
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
-                "value" => 'dp_amount',
+                "value" => 'total_amount',
             ],
             [
                 "text" => 'Cara Bayar',

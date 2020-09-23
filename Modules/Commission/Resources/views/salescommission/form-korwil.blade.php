@@ -97,17 +97,18 @@
 				    </v-col>
 			    </v-row>
     			
-    			<h3 class="mt-5">Pembayaran Komisi Sub Agent</h3>
+			    <!-- Pembayaran Korwil -->
+			    <h3 class="mt-5">Pembayaran Komisi Koordinator Wilayah</h3>
     			<v-row class="mt-4">
     		        <v-col
     		          	cols="12"
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.agency_name"
-				    			name="agency_name"
+				    			v-model="form_data.korwil_name"
+				    			name="korwil_name"
 					    		:error-messages="errors"
-					    		label="Nama Sub Agent"
+					    		label="Nama Korwil"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -118,9 +119,9 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.agency_commission"
-				    			name="agency_commission"
-					    		label="Komisi Sub Agent (%)"
+				    			v-model="form_data.korwil_commission"
+				    			name="korwil_commission"
+					    		label="Komisi Korwil (%)"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
@@ -134,7 +135,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.pph_final"
+				    			v-model="form_data.korwil_pph_final"
 				    			label="PPH Final (%)"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
@@ -147,7 +148,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.pph_21"
+				    			v-model="form_data.korwil_pph_21"
 					    		label="PPH 21 (%)"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
@@ -163,7 +164,7 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			v-model="form_data.pph_23"
+				    			v-model="form_data.korwil_pph_23"
 					    		label="PPH 23 (%)"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
@@ -177,13 +178,13 @@
     		          	md="6">
 			    		<validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
-				    			:value="bruto_commission"
+				    			:value="korwil_bruto_commission"
 					    		label="Komisi Bruto"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{bruto_commission ? number_format(bruto_commission) : 0 }}</small>
+			    			<small class="form-text text-muted">Rp @{{korwil_bruto_commission ? number_format(korwil_bruto_commission) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -196,22 +197,22 @@
 	    		          	md="6">
 				    		<validation-provider v-slot="{ errors }" name="Pencairan 1 Komisi (50%)" rules="required|numeric">
 					    		<v-text-field
-					    			v-model="commission_1"
-					    			name="commission_1"
+					    			v-model="korwil_commission_1"
+					    			name="korwil_commission_1"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 1 Komisi (50%)"
 						    		:readonly="!field_state"
 						    		:disabled="field_state">
 				    			</v-text-field>
-				    			<small class="form-text text-muted">Rp @{{commission_1 ? number_format(commission_1) : 0 }}</small>
+				    			<small class="form-text text-muted">Rp @{{korwil_commission_1 ? number_format(korwil_commission_1) : 0 }}</small>
 				    		</validation-provider>
 					    </v-col>
 					    <v-col
 	    		          	cols="12"
 	    		          	md="6">
 					    	<v-menu
-			    		        v-model="menu3"
+			    		        v-model="menu9"
 			    		        :close-on-content-click="false"
 			    		        :nudge-right="40"
 			    		        transition="scale-transition"
@@ -221,7 +222,7 @@
 		    		        	<template v-slot:activator="{ on, attrs }">
 					    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
 			    		        <v-text-field
-			    		        	:value="reformatDateTime(form_data.payment_date_1, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		        	:value="reformatDateTime(form_data.korwil_payment_date_1, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 			    		            label="Tanggal Pembayaran"
 			    		            readonly
 			    		            v-bind="attrs"
@@ -231,7 +232,7 @@
 			    		        ></v-text-field>
 					    		</validation-provider>
 		    		        	</template>
-		    		        	<v-date-picker name="payment_date_1" v-model="form_data.payment_date_1" @input="menu3 = false">
+		    		        	<v-date-picker name="korwil_payment_date_1" v-model="form_data.korwil_payment_date_1" @input="menu9 = false">
 		    		        	</v-date-picker>
 		    		        </v-menu>
 					    </v-col>
@@ -242,8 +243,8 @@
 	    		          	md="6">
 				    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
 					    		<v-text-field
-					    		 	v-model="form_data.invoice_commission_1"
-					    		 	name="invoice_commission_1"
+					    		 	v-model="form_data.korwil_invoice_commission_1"
+					    		 	name="korwil_invoice_commission_1"
 						    		label="No Invoice"
 						    		:error-messages="errors"
 						    		:readonly="field_state">
@@ -258,13 +259,13 @@
 			    		            show-size
 			    		            chips 
 			    		            label="Upload Bukti Pembayaran"
-					              	name="payment_proof1"
+					              	name="korwil_payment_proof1"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 					              	>
 				              </v-file-input>
-				              <a :href="form_data.url_payment_proof_one" target="_blank" class="ml-8">
-				              	<small>@{{form_data.payment_proof_1}}</small>
+				              <a :href="form_data.url_korwil_payment_proof_one" target="_blank" class="ml-8">
+				              	<small>@{{form_data.korwil_payment_proof_1}}</small>
 				              </a>
 				           </validation-provider>
 			          </v-col>
@@ -279,22 +280,22 @@
 	    		          	md="6">
 				    		<validation-provider v-slot="{ errors }" name="Pencairan 2 Komisi (50%)" rules="required|numeric">
 					    		<v-text-field
-					    			v-model="commission_2"
-					    			name="commission_2"
+					    			v-model="korwil_commission_2"
+					    			name="korwil_commission_2"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 2 Komisi (50%)"
 						    		:readonly="!field_state"
 						    		:disabled="field_state">
 				    			</v-text-field>
-				    			<small class="form-text text-muted">Rp @{{commission_2 ? number_format(commission_2) : 0 }}</small>
+				    			<small class="form-text text-muted">Rp @{{korwil_commission_2 ? number_format(korwil_commission_2) : 0 }}</small>
 				    		</validation-provider>
 					    </v-col>
 					    <v-col
 	    		          	cols="12"
 	    		          	md="6">
 					    	<v-menu
-			    		        v-model="menu4"
+			    		        v-model="menu10"
 			    		        :close-on-content-click="false"
 			    		        :nudge-right="40"
 			    		        transition="scale-transition"
@@ -304,7 +305,7 @@
 		    		        	<template v-slot:activator="{ on, attrs }">
 					    		<validation-provider v-slot="{ errors }" name="Tanggal pembayaran" rules="">
 			    		        <v-text-field
-			    		        	:value="reformatDateTime(form_data.payment_date_2, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		        	:value="reformatDateTime(form_data.korwil_payment_date_2, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 			    		            label="Tanggal Pembayaran"
 			    		            readonly
 			    		            v-bind="attrs"
@@ -314,7 +315,7 @@
 			    		        ></v-text-field>
 					    		</validation-provider>
 		    		        	</template>
-		    		        	<v-date-picker name="payment_date_2" v-model="form_data.payment_date_2" @input="menu4 = false">
+		    		        	<v-date-picker name="korwil_payment_date_2" v-model="form_data.korwil_payment_date_2" @input="menu10 = false">
 		    		        	</v-date-picker>
 		    		        </v-menu>
 					    </v-col>
@@ -325,9 +326,9 @@
 	    		          	md="6">
 				    		<validation-provider v-slot="{ errors }" name="No invoice" rules="">
 					    		<v-text-field
-					    		 	v-model="form_data.invoice_commission_2"
+					    		 	v-model="form_data.korwil_invoice_commission_2"
 						    		label="No Invoice"
-						    		name="invoice_commission_2"
+						    		name="korwil_invoice_commission_2"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		:readonly="field_state">
@@ -344,10 +345,10 @@
 			    		            label="Upload Bukti Pembayaran"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
-					              	name="payment_proof2">
+					              	name="korwil_payment_proof2">
 				              </v-file-input>
-				              <a :href="form_data.url_payment_proof_two" target="_blank" class="ml-8">
-				              	<small>@{{form_data.payment_proof_2}}</small>
+				              <a :href="form_data.url_korwil_payment_proof_two" target="_blank" class="ml-8">
+				              	<small>@{{form_data.korwil_payment_proof_2}}</small>
 				              </a>
 				           </validation-provider>
 			          </v-col>

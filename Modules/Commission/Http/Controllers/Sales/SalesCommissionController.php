@@ -48,23 +48,11 @@ class SalesCommissionController extends Controller
                 "value" => 'agency_name',
             ],
             [
-                "text" => 'Koordinator Wilayah',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'korwil_name',
-            ],
-            [
                 "text" => 'Nama Klien',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'client_name',
             ],
-            // [
-            //     "text" => 'Tanggal Transaksi',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => '',
-            // ],
             [
                 "text" => 'Tipe Unit',
                 "align" => 'center',
@@ -89,30 +77,6 @@ class SalesCommissionController extends Controller
                 "sortable" => false,
                 "value" => 'payment_method',
             ],
-            // [
-            //     "text" => 'Type Komisi',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => '',
-            // ],
-            // [
-            //     "text" => 'Komisi Koordinator Utama',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => '',
-            // ],
-            // [
-            //     "text" => 'Komisi Bruto Korwil',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => '',
-            // ],
-            // [
-            //     "text" => 'Total Komisi(PPH Final + PPH 21)',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => '',
-            // ],
             [
                 "text" => 'Komisi Bruto Sub Agent',
                 "align" => 'center',
@@ -136,6 +100,244 @@ class SalesCommissionController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'payment_status_2',
+            ],
+
+        ];
+
+        $this->table_headers_korwil = [
+            [
+                "text" => 'Nama Sales',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Koordinator Wilayah',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'korwil_name',
+            ],
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Data Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Pricelist',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Komisi Bruto Koordinator Wilayah',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'bruto',
+            ],
+            [
+                "text" => 'Total Komisi Koordinator Wilayah (PPH Final + PPH 21)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'final',
+            ],
+            [
+                "text" => 'Pencairan 1 (50%)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_status_1',
+            ],
+            [
+                "text" => 'Pencairan 2 (50%)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_status_2',
+            ],
+            [
+                "text" => 'Aksi',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'actions',
+            ],
+        ];
+
+        $this->table_headers_korut = [
+            [
+                "text" => 'Nama Sales',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Koordinator Utama',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'korut_name',
+            ],
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Data Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Pricelist',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Komisi Bruto Koordinator Utama',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'bruto',
+            ],
+            [
+                "text" => 'Total Komisi Koordinator Utama (PPH Final + PPH 21)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'final',
+            ],
+            [
+                "text" => 'Pencairan 1 (50%)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_status_1',
+            ],
+            [
+                "text" => 'Pencairan 2 (50%)',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_status_2',
+            ],
+            [
+                "text" => 'Aksi',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'actions',
+            ],
+        ];
+
+        $this->table_headers_closingfee = [
+            [
+                "text" => 'Nama Sales',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'sales_name',
+            ],
+            [
+                "text" => 'Sub Agent',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'agency_name',
+            ],
+            [
+                "text" => 'Koordinator Wilayah',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'korut_name',
+            ],
+            [
+                "text" => 'Koordinator Utama',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'korut_name',
+            ],
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Data Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Pricelist',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_price',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Closing Fee Sales',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_sales',
+            ],
+            [
+                "text" => 'Closing Fee Sub Agent',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_agent',
+            ],
+            [
+                "text" => 'Closing Fee Koordinator Wilayah',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_korwil',
+            ],
+            [
+                "text" => 'Closing Fee Koordinator Utama',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_korut',
+            ],
+            [
+                "text" => 'Aksi',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'actions',
             ],
         ];
         return view('commission::salescommission.index', [
@@ -183,9 +385,54 @@ class SalesCommissionController extends Controller
      */
     public function edit(Booking $salescommission)
     {
-        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sales'];
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sub Agent'];
 
         return view('commission::salescommission.edit',[
+            'page' => $this,
+            'data' => $salescommission,
+        ])->with($this->getHelper());
+    }
+
+     /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function editKorwil(Booking $salescommission)
+    {
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sub Agent'];
+
+        return view('commission::salescommission.edit-korwil',[
+            'page' => $this,
+            'data' => $salescommission,
+        ])->with($this->getHelper());
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function editKorut(Booking $salescommission)
+    {
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sales'];
+
+        return view('commission::salescommission.edit-korut',[
+            'page' => $this,
+            'data' => $salescommission,
+        ])->with($this->getHelper());
+    }
+
+     /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function editClosingFee(Booking $salescommission)
+    {
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sales'];
+
+        return view('commission::salescommission.edit-closingfee',[
             'page' => $this,
             'data' => $salescommission,
         ])->with($this->getHelper());
@@ -426,12 +673,18 @@ class SalesCommissionController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
-            $item->pph_21 = $this->getHelper()['pph_21'];
+            $item->ppn = $item->sales->agency->ppn;
+            $item->pph_21 = $item->sales->agency->pph_21;
+            $item->pph_23 = $item->sales->agency->pph_23;
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_agent = $item->sales->agency->agency_commission;
 
             $item->komisi_bruto = ($item->total_amount * $item->commission_agent) /100;
-            $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - (($item->komisi_bruto * $item->pph_21) /100);
+            $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_21) /100) - 
+                                                        (($item->komisi_bruto * $item->ppn) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_23) /100);
+
             $item->bruto ='Rp '.format_money($item->komisi_bruto); 
             $item->final ='Rp '.format_money($item->komisi_final); 
             
@@ -480,6 +733,356 @@ class SalesCommissionController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataKorwil(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+
+                $subquery->orWhereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+                
+                $subquery->orWhereHas('regional_coordinator', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
+
+        $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+
+        $data->getCollection()->transform(function($item) {
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->korwil_name = $item->sales->regional_coordinator ? $item->sales->regional_coordinator->full_name : '';
+            $item->korut_name = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
+            $item->client_name = $item->client->client_name;
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->ppn = $item->sales->agency->ppn;
+            $item->pph_21 = $item->sales->agency->pph_21;
+            $item->pph_23 = $item->sales->agency->pph_23;
+            $item->pph_final = $item->sales->agency->pph_final;
+            $item->commission_korwil = $item->sales->agency->regional_coordinator_commission;
+
+            $item->komisi_bruto = ($item->total_amount * $item->commission_korwil) /100;
+            $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_21) /100) - 
+                                                        (($item->komisi_bruto * $item->ppn) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_23) /100);
+
+            $item->bruto ='Rp '.format_money($item->komisi_bruto); 
+            $item->final ='Rp '.format_money($item->komisi_final); 
+            
+
+            $item->payment_date_1 = $item->commission ? $item->commission->korwil_payment_date_1 : '';
+            $item->payment_proof_1 = $item->commission ? $item->commission->korwil_payment_proof_1 : '';
+            $item->payment_date_2 = $item->commission ? $item->commission->korwil_payment_date_2 : '';
+            $item->payment_proof_2 = $item->commission ? $item->commission->korwil_payment_proof_2 : '';
+
+            if ($item->payment_date_1 && $item->payment_proof_1) {
+                $item->payment_status_1 = "Sudah Bayar";
+            }else{
+                $item->payment_status_1 = "Belum Bayar";
+
+            }
+
+            if ($item->payment_date_2 && $item->payment_proof_2) {
+                $item->payment_status_2 = "Sudah Bayar";
+            }else{
+                $item->payment_status_2 = "Belum Bayar";
+
+            }
+
+            $item->payment_1 = 'Rp '.format_money($item->komisi_final / 2);
+            $item->payment_2 = 'Rp '.format_money($item->komisi_final / 2);
+
+             
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableKorwil(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataKorwil($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+     /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataKorut(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+
+                $subquery->orWhereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+                
+                $subquery->orWhereHas('regional_coordinator', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
+
+        $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+
+        $data->getCollection()->transform(function($item) {
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->korwil_name = $item->sales->regional_coordinator ? $item->sales->regional_coordinator->full_name : '';
+            $item->korut_name = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
+            $item->client_name = $item->client->client_name;
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->ppn = $item->sales->agency->ppn;
+            $item->pph_21 = $item->sales->agency->pph_21;
+            $item->pph_23 = $item->sales->agency->pph_23;
+            $item->pph_final = $item->sales->agency->pph_final;
+            $item->commission_korut = $item->sales->agency->main_coordinator_commission;
+
+            $item->komisi_bruto = ($item->total_amount * $item->commission_korut) /100;
+            $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_21) /100) - 
+                                                        (($item->komisi_bruto * $item->ppn) /100) - 
+                                                        (($item->komisi_bruto * $item->pph_23) /100);
+
+            $item->bruto ='Rp '.format_money($item->komisi_bruto); 
+            $item->final ='Rp '.format_money($item->komisi_final); 
+            
+
+            $item->payment_date_1 = $item->commission ? $item->commission->korut_payment_date_1 : '';
+            $item->payment_proof_1 = $item->commission ? $item->commission->korut_payment_proof_1 : '';
+            $item->payment_date_2 = $item->commission ? $item->commission->korut_payment_date_2 : '';
+            $item->payment_proof_2 = $item->commission ? $item->commission->korut_payment_proof_2 : '';
+
+            if ($item->payment_date_1 && $item->payment_proof_1) {
+                $item->payment_status_1 = "Sudah Bayar";
+            }else{
+                $item->payment_status_1 = "Belum Bayar";
+
+            }
+
+            if ($item->payment_date_2 && $item->payment_proof_2) {
+                $item->payment_status_2 = "Sudah Bayar";
+            }else{
+                $item->payment_status_2 = "Belum Bayar";
+
+            }
+
+            $item->payment_1 = 'Rp '.format_money($item->komisi_final / 2);
+            $item->payment_2 = 'Rp '.format_money($item->komisi_final / 2);
+
+             
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableKorut(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataKorut($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataClosingFee(Request $request)
+    {
+        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('total_amount', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('sales', function($subquery) use ($generalSearch){
+                $subquery->whereHas('user', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+
+                $subquery->orWhereHas('agency', function($subquery2) use ($generalSearch){
+                    $subquery2->where('agency_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+                
+                $subquery->orWhereHas('regional_coordinator', function($subquery2) use ($generalSearch){
+                    $subquery2->where('full_name', 'LIKE', '%'.$generalSearch.'%');
+                });
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
+
+        $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+
+        $data->getCollection()->transform(function($item) {
+            $item->sales_name = $item->sales->user->full_name;
+            $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
+            $item->korwil_name = $item->sales->regional_coordinator ? $item->sales->regional_coordinator->full_name : '';
+            $item->korut_name = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
+            $item->client_name = $item->client->client_name;
+            $item->client_profesion = $item->client->profession;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price = 'Rp '.format_money($item->total_amount);
+
+            $item->payment_korut_date = $item->commission ? $item->commission->korut_payment_date : '';
+            $item->payment_korut_evidence = $item->commission ? $item->commission->korut_evidence : '';
+            $item->payment_korwil_date = $item->commission ? $item->commission->korwil_payment_date : '';
+            $item->payment_korwil_evidence = $item->commission ? $item->commission->korwil_evidence : '';
+            $item->payment_agency_date = $item->commission ? $item->commission->agency_payment_date : '';
+            $item->payment_agency_evidence = $item->commission ? $item->commission->agency_evidence : '';
+            $item->payment_sales_date = $item->commission ? $item->commission->sales_payment_date : '';
+            $item->payment_sales_evidence = $item->commission ? $item->commission->sales_evidence : '';
+
+
+            if ($item->payment_korut_date && $item->payment_korut_evidence) {
+                $item->payment_korut = "Sudah Bayar";
+            }else{
+                $item->payment_korut = "Belum Bayar";
+            }
+
+            if ($item->payment_korwil_date && $item->payment_korwil_evidence) {
+                $item->payment_korwil = "Sudah Bayar";
+            }else{
+                $item->payment_korwil = "Belum Bayar";
+            }
+
+            if ($item->payment_agency_date && $item->payment_agency_evidence) {
+                $item->payment_agent = "Sudah Bayar";
+            }else{
+                $item->payment_agent = "Belum Bayar";
+            }
+
+            if ($item->payment_sales_date && $item->payment_sales_evidence) {
+                $item->payment_sales = "Sudah Bayar";
+            }else{
+                $item->payment_sales = "Belum Bayar";
+            }
+
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableClosingFee(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataClosingFee($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

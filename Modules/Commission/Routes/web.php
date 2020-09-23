@@ -30,9 +30,15 @@ Route::group(['namespace' => 'Sales'], function() {
 	Route::get('komisi-sales', 'SalesCommissionController@index')->name('salescommission.index');
 	Route::post('komisi-sales', 'SalesCommissionController@store')->name('salescommission.store');
 	Route::get('komisi-sales/table', 'SalesCommissionController@table')->name('salescommission.table');
+	Route::get('komisi-sales/table/korwil', 'SalesCommissionController@tableKorwil')->name('salescommission.table.korwil');
+	Route::get('komisi-sales/table/korut', 'SalesCommissionController@tableKorut')->name('salescommission.table.korut');
+	Route::get('komisi-sales/table/closingfee', 'SalesCommissionController@tableClosingFee')->name('salescommission.table.closingfee');
 	Route::get('komisi-sales/tambah', 'SalesCommissionController@create')->name('salescommission.create');
 	Route::get('komisi-sales/{salescommission}/data', 'SalesCommissionController@data')->name('salescommission.data');
 	Route::put('komisi-sales/{salescommission}', 'SalesCommissionController@update')->name('salescommission.update');
 	Route::get('komisi-sales/{salescommission}/ubah', 'SalesCommissionController@edit')->name('salescommission.edit');
+	Route::get('komisi-sales/{salescommission}/ubah-korwil', 'SalesCommissionController@editKorwil')->name('salescommission.edit.korwil');
+	Route::get('komisi-sales/{salescommission}/ubah-korut', 'SalesCommissionController@editKorut')->name('salescommission.edit.korut');
+	Route::get('komisi-sales/{salescommission}/ubah-closingfee', 'SalesCommissionController@editClosingFee')->name('salescommission.edit.closingfee');
 	Route::delete('komisi-sales/{salescommission}', 'SalesCommissionController@destroy')->name('salescommission.destroy');
 });
