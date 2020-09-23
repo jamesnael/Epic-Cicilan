@@ -100,6 +100,12 @@ class MainCoordinatorController extends Controller
         DB::beginTransaction();
         try {
             $data = MainCoordinator::create($request->all());
+            
+            activity()
+               ->performedOn($data)
+               ->causedBy(\Auth::user())
+               ->log('Koordinator utama baru berhasil dibuat');
+
             DB::commit();
             return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -140,6 +146,12 @@ class MainCoordinatorController extends Controller
         DB::beginTransaction();
         try {
             $data = $main_coordinator->update($request->all());
+
+            activity()
+                ->performedOn($main_coordinator)
+                ->causedBy(\Auth::user())
+                ->log('Koordinator utama berhasil diubah');
+
             DB::commit();
             return response_json(true, null, 'Data koordinator utama berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -158,6 +170,12 @@ class MainCoordinatorController extends Controller
     {
         DB::beginTransaction();
         try {
+
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['koordinator utama' => $main_coordinator])
+                ->log('Koordinator utama berhasil dihapus');
+
             $main_coordinator->delete();
             DB::commit();
             return response_json(true, null, 'Data koordinator utama berhasil dihapus.');
