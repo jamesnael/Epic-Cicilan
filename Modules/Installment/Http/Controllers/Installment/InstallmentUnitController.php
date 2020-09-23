@@ -290,6 +290,10 @@ class InstallmentUnitController extends Controller
 
                 }
             }
+            activity()
+                 ->performedOn($installment_unit)
+                 ->causedBy(\Auth::user())
+                 ->log(' Pembayaran cicilan berhasil di buat');
 
             DB::commit();
             return response_json(true, null, 'Data pembayaran cicilan berhasil disimpan.', $payment);

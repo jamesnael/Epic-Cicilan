@@ -301,8 +301,18 @@ class AkadController extends Controller
 
             if ($akad->akad_kpr) {
                 $data = AkadKpr::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'akad_date', 'akad_time', 'location', 'address','akad_doc_file_name','akad_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status','total_kpr']));
+                 activity()
+                 ->performedOn($akad)
+                 ->causedBy(\Auth::user())
+                 ->log('Akad berhasil diubah');
+
             }else{
                 $data = AkadKpr::create($request->all());
+                activity()
+                 ->performedOn($akad)
+                 ->causedBy(\Auth::user())
+                 ->log('Akad baru berhasil dibuat');
+
             }
 
 
