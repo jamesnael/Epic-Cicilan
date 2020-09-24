@@ -294,7 +294,7 @@
             		        md="4">
             		        <v-text-field
             		            :value="number_format(form_data.principal)"
-            		            label="Principal"
+            		            label="Total Cicilan Yang Harus Dibayar"
             		            :readonly="!field_state"
             		            :disabled="field_state">
             		        </v-text-field>
@@ -447,7 +447,7 @@
                             md="4">
                             <v-text-field
 		                        :value="number_format(form_data.total_pembayaran)"
-		                        label="Total Pembayaran"
+		                        label="Total Angsuran Yang Sudah Dibayar"
 		                        :readonly="!field_state"
 		                        :disabled="field_state">
 		                    </v-text-field>

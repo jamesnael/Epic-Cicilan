@@ -145,11 +145,13 @@ class MainCoordinatorController extends Controller
 
         DB::beginTransaction();
         try {
+            $old =  MainCoordinator::where('slug', $main_coordinator->slug)->get();
             $data = $main_coordinator->update($request->all());
 
             activity()
                 ->performedOn($main_coordinator)
                 ->causedBy(\Auth::user())
+                ->withProperties(['new' => $main_coordinator, 'old' => $old])
                 ->log('Koordinator utama berhasil diubah');
 
             DB::commit();

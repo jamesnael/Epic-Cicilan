@@ -8,5 +8,6 @@
     "DocumentClient": true,
     "Payment": true,
     "Core": true,
-    "Dashboard": true
+    "Dashboard": true,
+    "ActivityLog": true
 }
