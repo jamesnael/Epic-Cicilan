@@ -244,14 +244,22 @@ class AjbController extends Controller
                     'ajb_doc_sign_file_name' => $file_name_akhir,
                 ]);
 
-                Notification::route('mail', $ajb->client->client_email)
-                            ->notify(new ReminderAJB($ajb));
+                // Notification::route('mail', $ajb->client->client_email)
+                //             ->notify(new ReminderAJB($ajb));
             }
 
             if ($ajb->ajb) {
                 $data = AkteJualBeli::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'ajb_date', 'ajb_time', 'location', 'address','ajb_doc_file_name','ajb_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status']));
+                activity()
+                 ->performedOn($ajb)
+                 ->causedBy(\Auth::user())
+                 ->log('AJB berhasil diubah'); 
             }else{
                 $data = AkteJualBeli::create($request->all());
+                activity()
+                 ->performedOn($ajb)
+                 ->causedBy(\Auth::user())
+                 ->log('AJB baru berhasil dibuat');
             }
 
 

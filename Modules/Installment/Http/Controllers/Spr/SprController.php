@@ -252,6 +252,10 @@ class SprController extends Controller
                     'sent_date'       => $sent_date,
                     'received_date'   => $received_date,
                  ]);
+                  activity()
+                 ->performedOn($spr)
+                 ->causedBy(\Auth::user())
+                 ->log('SPR berhasil diubah');
             }else{
                 $data = Spr::create([
                     'booking_id'      => $request->booking_id,
@@ -260,6 +264,10 @@ class SprController extends Controller
                     'sent_date'       => $sent_date,
                     'received_date'   => $received_date,
                 ]);
+                 activity()
+                 ->performedOn($spr)
+                 ->causedBy(\Auth::user())
+                 ->log('SPR baru berhasil dibuat');
             }
 
             DB::commit();
