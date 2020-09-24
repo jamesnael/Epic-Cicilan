@@ -344,7 +344,7 @@
 					      <v-select
 					        v-model="form_data.approval_client_status"
 			                label="Approval Pembeli"
-			                :items="['Approved', 'Pending']"
+			                :items="['Disetujui', 'Pending']"
 			                name="approval_client_status"
 			                :persistent-hint="true"
 			                :error-messages="errors"
@@ -361,7 +361,7 @@
 	    		          	<v-select
 					        v-model="form_data.approval_developer_status"
 			                label="Approval Estate"
-			                :items="['Approved', 'Pending']"
+			                :items="['Disetujui', 'Pending']"
 			                name="approval_developer_status"
 			                :persistent-hint="true"
 			                :error-messages="errors"
@@ -378,7 +378,7 @@
 	    		          	<v-select
 					        v-model="form_data.approval_notaris_status"
 			                label="Approval Teknik"
-			                :items="['Approved', 'Pending']"
+			                :items="['Disetujui', 'Pending']"
 			                name="approval_notaris_status"
 			                :persistent-hint="true"
 			                :error-messages="errors"

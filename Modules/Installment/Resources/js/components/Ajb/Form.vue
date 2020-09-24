@@ -51,7 +51,7 @@
                 time: null,
                 datepicker: false,
                 items_approval: [
-                    'Approved',
+                    'Disetujui',
                     'Pending'
                 ],
                 form_data: {

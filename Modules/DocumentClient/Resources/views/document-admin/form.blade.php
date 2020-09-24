@@ -131,7 +131,7 @@
           <validation-provider v-slot="{ errors }" name="Approval developer" rules="">
             <v-select
                 v-model="form_data.approval_developer"
-                :items="['Approved', 'Pending']"
+                :items="['Disetujui', 'Pending']"
                 label="Approval Developer"
                 name="approval_developer"
                 :persistent-hint="true"

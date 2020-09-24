@@ -242,7 +242,7 @@
 
 		    	 <h3 class="mt-4"
 		    	 v-if="form_data.ppjb_sign_date_data !== ''"
-		    	 >Approved PPJB</h3>
+		    	 >Approval PPJB</h3>
 
 		    		
 		    		<v-col
@@ -251,7 +251,7 @@
 		    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_client_status" 
-			              	:items="['Pending','Approved']"	
+			              	:items="['Disetujui','Pending']"	
 			              	label="Approval Pembeli"
 			              	name="approval_client_status"
 			              	v-if="form_data.ppjb_sign_date_data !== ''"
@@ -269,7 +269,7 @@
 		    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_developer_status" 
-			              	:items="['Pending','Approved']"
+			              	:items="['Disetujui','Pending']"
 			              	label="Approval Developer"
 			              	name="approval_developer_status"
 			              	v-if="form_data.ppjb_sign_date_data !== ''"
@@ -287,7 +287,7 @@
 		    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="">
 		    			<v-select
 			    			v-model="form_data.approval_notaris_status" 
-			              	:items="['Pending','Approved']"
+			              	:items="['Disetujui','Pending']"
 			              	label="Approval Notaris"
 			              	name="approval_notaris_status"
 			              	v-if="form_data.ppjb_sign_date_data !== ''"

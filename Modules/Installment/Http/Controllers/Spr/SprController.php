@@ -231,7 +231,7 @@ class SprController extends Controller
         }
         DB::beginTransaction();
         try {
-            if ($request->has('approval_status') && $request->input('approval_status') == 'Approved' && $spr->booking_status == 'spr') {
+            if ($request->has('approval_status') && $request->input('approval_status') == 'Disetujui' && $spr->booking_status == 'spr') {
                 $spr->booking_status = 'ppjb';
                 $spr->save();
 

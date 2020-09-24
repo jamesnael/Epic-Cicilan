@@ -229,7 +229,7 @@ class DocumentAdminController extends Controller
         DB::beginTransaction();
         try {
 
-            if ($request->has('approval_developer') && $request->input('approval_developer') == 'Approved' && $document_admin->booking_status == 'dokumen') {
+            if ($request->has('approval_developer') && $request->input('approval_developer') == 'Disetujui' && $document_admin->booking_status == 'dokumen') {
                 $document_admin->booking_status = 'spr';
                 $document_admin->save();
             }
