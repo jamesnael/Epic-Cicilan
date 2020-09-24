@@ -147,7 +147,7 @@
 							class="mt-2"
 					        v-model="form_data.approval_status"
 			                label="Approval Status"
-			                :items="['Approved', 'Pending']"
+			                :items="['Disetujui', 'Pending']"
 			                name="approval_status"
 			                :persistent-hint="true"
 			                :error-messages="errors"

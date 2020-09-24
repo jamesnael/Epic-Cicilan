@@ -90,19 +90,19 @@ class PPJBController extends Controller
                 "value" => 'ppjb_sign_date',
             ],
             [
-                "text" => 'Approved Pembeli',
+                "text" => 'Approval Pembeli',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'approval_client_status',
             ],
             [
-                "text" => 'Approved Developer',
+                "text" => 'Approval Developer',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'approval_developer_status',
             ],
             [
-                "text" => 'Approved Notaris',
+                "text" => 'Approval Notaris',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'approval_notaris_status',
@@ -204,9 +204,9 @@ class PPJBController extends Controller
 
 
 
-            if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Approved'
-                && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Approved'
-                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Approved'
+            if ($request->has('approval_client_status') && $request->input('approval_client_status') == 'Disetujui'
+                && $request->has('approval_developer_status') && $request->input('approval_developer_status') == 'Disetujui'
+                && $request->has('approval_notaris_status') && $request->input('approval_notaris_status') == 'Disetujui'
                 && $request->has('ppjb_doc_sign_file_name') && $request->input('ppjb_doc_sign_file_name') != '') {
                 $PPJB->booking_status = 'cicilan';
                 $PPJB->save();

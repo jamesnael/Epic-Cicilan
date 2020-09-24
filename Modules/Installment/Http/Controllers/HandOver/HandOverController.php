@@ -307,9 +307,9 @@ class HandOverController extends Controller
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query->whereDoesntHave('handover', function($subquery) {
-            $subquery->where('approval_client_status', '=', 'Approved');
-            $subquery->where('approval_developer_status', '=', 'Approved');
-            $subquery->where('approval_notaris_status', '=', 'Approved');
+            $subquery->where('approval_client_status', '=', 'Disetujui');
+            $subquery->where('approval_developer_status', '=', 'Disetujui');
+            $subquery->where('approval_notaris_status', '=', 'Disetujui');
             $subquery->where('handover_doc_sign_name', '!=', '');
         });
         $query->orderBy('created_at', 'DESC');
@@ -394,9 +394,9 @@ class HandOverController extends Controller
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
         $query->whereHas('handover', function($subquery) {
-            $subquery->where('approval_client_status', 'Approved');
-            $subquery->where('approval_developer_status', 'Approved');
-            $subquery->where('approval_notaris_status', 'Approved');
+            $subquery->where('approval_client_status', 'Disetujui');
+            $subquery->where('approval_developer_status', 'Disetujui');
+            $subquery->where('approval_notaris_status', 'Disetujui');
             $subquery->where('handover_doc_sign_name', '!=', '');
         });
         $query->orderBy('created_at', 'DESC');

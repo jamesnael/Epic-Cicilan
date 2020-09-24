@@ -316,7 +316,7 @@ class AkadController extends Controller
             }
 
 
-            if ($request->input('approval_client_status') == 'Approved' && $request->input('approval_notaris_status') == 'Approved' && $request->input('approval_developer_status') == 'Approved') {
+            if ($request->input('approval_client_status') == 'Disetujui' && $request->input('approval_notaris_status') == 'Disetujui' && $request->input('approval_developer_status') == 'Disetujui') {
 
                 if ($request->total_kpr == $akad->credits) {
                     $akad->booking_status = 'ajb_handover';
@@ -432,9 +432,9 @@ class AkadController extends Controller
             $item->unit_price = 'Rp '.format_money($item->total_amount);
             $item->sales_name = $item->sales->user->full_name ?? '';
             $item->agency_name = $item->sales->agency->agency_name ?? '';
-            $item->approved_client = $item->akad_kpr->approval_client_status ?? '';
-            $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? '';
-            $item->approved_developer = $item->akad_kpr->approval_developer_status ?? '';
+            $item->approved_client = $item->akad_kpr->approval_client_status ?? 'Pending';
+            $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? 'Pending';
+            $item->approved_developer = $item->akad_kpr->approval_developer_status ?? 'Pending';
             $item->sisa_tunggakan = $item->sisa_tunggakan;
             
             return $item;

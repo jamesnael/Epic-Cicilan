@@ -252,7 +252,7 @@
 				    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 								<v-select
 						        v-model="form_data.approval_client_status"
-						        :items="['Pending', 'Approved']"
+						        :items="['Pending', 'Disetujui']"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 						        label="Approval Pembeli"
@@ -268,7 +268,7 @@
 				    		<validation-provider v-slot="{ errors }" name="Approval Bank" rules="">
 		    		          	<v-select
 						        v-model="form_data.approval_notaris_status"
-						        :items="['Pending', 'Approved']"
+						        :items="['Pending', 'Disetujui']"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 						        label="Approval Bank"
@@ -284,7 +284,7 @@
 				    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
 		    		          	<v-select
 						        v-model="form_data.approval_developer_status"
-						        :items="['Pending', 'Approved']"
+						        :items="['Pending', 'Disetujui']"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 						        label="Approval Developer"

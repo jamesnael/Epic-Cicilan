@@ -328,9 +328,9 @@ class AjbController extends Controller
         $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr')->orderBy('created_at', 'DESC');
 
         $query->whereDoesntHave('ajb', function($subquery) {
-            $subquery->where('approval_client_status', '=', 'Approved');
-            $subquery->where('approval_developer_status', '=', 'Approved');
-            $subquery->where('approval_notaris_status', '=', 'Approved');
+            $subquery->where('approval_client_status', '=', 'Disetujui');
+            $subquery->where('approval_developer_status', '=', 'Disetujui');
+            $subquery->where('approval_notaris_status', '=', 'Disetujui');
             $subquery->where('ajb_doc_sign_file_name', '!=', '');
         });
 
@@ -372,9 +372,9 @@ class AjbController extends Controller
 
         $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
         ->whereDoesntHave('ajb', function($subquery) {
-            $subquery->where('approval_client_status', '=', 'Approved');
-            $subquery->where('approval_developer_status', '=', 'Approved');
-            $subquery->where('approval_notaris_status', '=', 'Approved');
+            $subquery->where('approval_client_status', '=', 'Disetujui');
+            $subquery->where('approval_developer_status', '=', 'Disetujui');
+            $subquery->where('approval_notaris_status', '=', 'Disetujui');
             $subquery->where('ajb_doc_sign_file_name', '!=', '');
         })
         ->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
@@ -386,9 +386,9 @@ class AjbController extends Controller
             $item->unit_price = 'Rp '.format_money($item->total_amount);
             $item->sales_name = $item->sales->user->full_name ?? '';
             $item->agency_name = $item->sales->agency->agency_name ?? '';
-            $item->approved_client = $item->ajb->approval_client_status ?? '';
-            $item->approved_bank = $item->ajb->approval_notaris_status ?? '';
-            $item->approved_developer = $item->ajb->approval_developer_status ?? '';
+            $item->approved_client = $item->ajb->approval_client_status ?? 'Pending';
+            $item->approved_bank = $item->ajb->approval_notaris_status ?? 'Pending';
+            $item->approved_developer = $item->ajb->approval_developer_status ?? 'Pending';
             
             return $item;
         });
@@ -427,9 +427,9 @@ class AjbController extends Controller
     {
         $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb')->orderBy('created_at', 'DESC');
         $query->whereHas('ajb', function($subquery) {
-            $subquery->where('approval_client_status', 'Approved');
-            $subquery->where('approval_developer_status', 'Approved');
-            $subquery->where('approval_notaris_status', 'Approved');
+            $subquery->where('approval_client_status', 'Disetujui');
+            $subquery->where('approval_developer_status', 'Disetujui');
+            $subquery->where('approval_notaris_status', 'Disetujui');
             $subquery->where('ajb_doc_sign_file_name', '!=', '');
         });
 
