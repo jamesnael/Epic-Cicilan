@@ -12,10 +12,10 @@
 			<th align="center"><b>Unit</b></th>
 			<th align="center"><b>Harga Unit</b></th>
 			<th align="center"><b>Cara Bayar</b></th>
-			<th align="center"><b>Total Bayar</b></th>
+			<th align="center"><b>Total Pembayaran</b></th>
 			<th align="center"><b>Total NUP</b></th>
 			<th align="center"><b>Total UTJ</b></th>
-			<th align="center"><b>Cicilan Per Bulan</b></th>
+			<th align="center"><b>Total Cicilan Yang Harus Dibayar</b></th>
 			<th align="center"><b>Lama Cicilan</b></th>
 			<th align="center"><b>Tanggal Jatuh Tempo</b></th>
 			<th align="center"><b>Sisa Tunggakan</b></th>
@@ -29,9 +29,6 @@
 	<tbody>
 		@php $no = 1 @endphp
 		@foreach($data as $value)
-			@php
-				$pembayaran = $value->total_pembayaran - $value->sisa_tunggakan;
-			@endphp
 			<tr>
 				<td align="center" valign="middle">{{ $no++ }}</td>
 				<td valign="middle">'{{ $value->client->client_number }}</td>
@@ -40,10 +37,10 @@
 				<td align="center" valign="middle">{{ $value->unit->unit_number }} / {{ $value->unit->unit_block }}</td>
 				<td align="center" valign="middle">Rp {{ format_money($value->total_amount) }}</td>
 				<td align="center" valign="middle">{{ $value->payment_type }}</td>
+				<td align="center" valign="middle">Rp {{ format_money($value->total_pembayaran) }}</td>
 				<td align="center" valign="middle">Rp {{ format_money($value->nup_amount) }}</td>
 				<td align="center" valign="middle">Rp {{ format_money($value->utj_amount) }}</td>
-				<td align="center" valign="middle">Rp {{ format_money($pembayaran) }}</td>
-				<td align="center" valign="middle">Rp {{ format_money($value->installment) }}</td>
+				<td align="center" valign="middle">Rp {{ format_money($value->principal) }}</td>
 				<td align="center" valign="middle">{{ $value->installment_time }}</td>
 				<td align="center" valign="middle">{{ $value->due_date }}</td>
 				<td align="center" valign="middle">Rp {{ format_money($value->sisa_tunggakan) }}</td>
