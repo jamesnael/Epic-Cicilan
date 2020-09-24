@@ -148,7 +148,7 @@
 		    		        	<template v-slot:activator="{ on, attrs }">
 					    		<validation-provider v-slot="{ errors }" name="Dari Tanggal" rules="required|min:1">
 			    		        <v-text-field
-			    		        	:value="reformatDateTime(form_data.print_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		        	:value="reformatDateTime(from_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 				    		        prepend-icon="mdi-calendar"
 						    		:error-messages="errors"
 			    		            label="Dari Tanggal"
@@ -159,7 +159,7 @@
 			    		        ></v-text-field>
 					    		</validation-provider>
 		    		        	</template>
-		    		        	<v-date-picker name="from_date" v-model="form_data.print_date" @input="menu4 = false"></v-date-picker>
+		    		        	<v-date-picker name="from_date" v-model="from_date" @input="menu4 = false"></v-date-picker>
 				    	</v-col>
 				    	<v-col
 	    		          	cols="12"
@@ -175,19 +175,18 @@
 		    		        	<template v-slot:activator="{ on, attrs }">
 					    		<validation-provider v-slot="{ errors }" name="Sampai Tanggal" rules="required|min:1">
 			    		        <v-text-field
-			    		        	:value="reformatDateTime(form_data.sent_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+			    		        	:value="reformatDateTime(until_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 				    		        prepend-icon="mdi-calendar"
 			    		            label="Sampai Tanggal"
 			    		            v-bind="attrs"
 			    		            v-on="on"
-			    		            v-if="form_data.print_date_data !== null"
 			    		            :readonly="!field_state"
 			    		            name="until_date"
 			    		            :error-messages="errors">
 			    		        ></v-text-field>
 					    		</validation-provider>
 		    		        	</template>
-		    		        	<v-date-picker name="until_date" v-model="form_data.sent_date" @input="menu3 = false" :disabled="!form_data.print_date"></v-date-picker>
+		    		        	<v-date-picker name="until_date" v-model="until_date" :min="from_date" @input="menu3 = false" :disabled="!from_date"></v-date-picker>
 
 				    	</v-col>
 				    </v-row>

@@ -69,34 +69,37 @@ class ReportController extends Controller
         $from_date  = \Carbon\Carbon::parse($request->from_date)->locale('id')->translatedFormat('Y-m-d');
         $until_date = \Carbon\Carbon::parse($request->until_date)->locale('id')->translatedFormat('Y-m-d');
 
-        if ($request->nama_laporan == "Pembayaran Cicilan"){
+        if ($request->nama_laporan == "Pembayaran Cicilan")
+        {
             // Status All
             if ($request->status == "All") {
-                //Sales Status
+                // Sales Status
                 if (!empty($request->user_name)) {
                     $data = Booking::with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 } else {
                     $data = Booking::with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 }
-            //Status Lunas
+
+            // Status Lunas
             } elseif ($request->status == "Lunas") {
-                //Sales Status
+                // Sales Status
                 if (!empty($request->user_name)) {
                     $data = Booking::doesnthave('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 } else {
                     $data = Booking::doesnthave('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 }
-            //Status Belum Lunas
+
+            // Status Belum Lunas
             } elseif ($request->status == "Belum Lunas") {
-                //Sales Status
+                // Sales Status
                 if (!empty($request->user_name)) {
                     $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->where('sales_id', $request->user_name)->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 } else {
                     $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 }
             }
-            // return view('installment::report.report', ['data' => $data]);
-            return (new InstallmentReport($data))->download('Installment Report.xlsx');
+            return view('installment::report.report', ['data' => $data]);
+            // return (new InstallmentReport($data))->download('Installment Report.xlsx');
         } else {
             return response_json(false, 'Error!!', 'Laporan hanya untuk Pemebayaran Cicilan untuk sementara');
         }

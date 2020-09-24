@@ -1,7 +1,7 @@
 <table border="1" class="table" style="margin-top:20px;">
 	<thead>
 		<tr>
-			<th colspan="14" style="text-decoration:bold;font-size: 18;">Installment Report</th>
+			<th colspan="19" style="text-decoration:bold;font-size: 18;">Installment Report</th>
 		</tr>
 		<tr></tr>
 		<tr>

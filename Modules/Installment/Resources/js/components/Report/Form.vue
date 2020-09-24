@@ -60,6 +60,8 @@
 	            sales: false,
         		menu3: false,
 	            menu4: false,
+	            from_date: '',
+	            until_date: '',
 	            listStatus:['All', 'Lunas', 'Belum Lunas'],
 	            // listLaporan:['Pembayaran Cicilan', 'Komisi', 'Point Reward'],
 	            listLaporan:['Pembayaran Cicilan'],
