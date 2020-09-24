@@ -351,7 +351,7 @@
                                         :disabled="field_state">
                                     </v-text-field>
                                 </v-col>
-                                <v-col
+                                {{-- <v-col
                                     cols="12"
                                     md="4">
                                     <v-text-field
@@ -360,7 +360,7 @@
                                         :readonly="!field_state"
                                         :disabled="field_state">
                                     </v-text-field>
-                                </v-col>
+                                </v-col> --}}
                                 <v-col
                                     cols="12"
                                     md="4">
