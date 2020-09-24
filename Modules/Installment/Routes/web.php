@@ -59,10 +59,12 @@ Route::group(['namespace' => 'Installment'], function() {
 
 	Route::get('cicilan-unit', 'InstallmentUnitController@index')->name('installment-unit.index');
 	Route::get('cicilan-unit/table', 'InstallmentUnitController@table')->name('installment-unit.table');
+	Route::get('cicilan-unit/table-lunas', 'InstallmentUnitController@tableLunas')->name('installment-unit.table.lunas');
 	Route::get('cicilan-unit/{installment_unit}', 'InstallmentUnitController@show')->name('installment-unit.show');
 	Route::put('cicilan-unit/{installment_unit}', 'InstallmentUnitController@update')->name('installment-unit.update');
 	Route::get('cicilan-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
 	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
+	Route::get('cicilan-unit/{installment_unit}/lunas', 'InstallmentUnitController@editLunas')->name('installment-unit.edit.lunas');
 	
 	Route::put('cicilan-unit/{installment_unit}/{payment}/paid', 'InstallmentUnitController@payment')->name('manual-payment');
 	Route::put('cicilan-unit/{installment_unit}/cancel', 'InstallmentUnitController@cancelInstallment')->name('installment-unit.cancel');

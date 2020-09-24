@@ -93,6 +93,63 @@ class InstallmentUnitController extends Controller
                 "value" => 'sales_name',
             ],
         ];
+
+        $this->table_headers_lunas = [
+            [
+                "text" => 'ID Klien',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'client_number',
+            ],
+            [
+                "text" => 'Nama Klien',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'client_name',
+            ],
+            [
+                "text" => 'Tipe Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit.unit_type',
+            ],
+            [
+                "text" => 'Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Harga Unit',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'total_amount',
+            ],
+            [
+                "text" => 'Cara Bayar',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_type',
+            ],
+            [
+                "text" => 'Total Bayar',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'installment',
+            ],
+            [
+                "text" => 'Tgl Jatuh Tempo',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'due_date',
+            ],
+            [
+                "text" => 'Sales',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'sales_name',
+            ],
+        ];
         return view('installment::installment-unit.index', [
             'page' => $this,
         ]);
@@ -168,6 +225,74 @@ class InstallmentUnitController extends Controller
             'page' => $this,
             'data' => $installment_unit,
             'table_headers' => $table_headers,
+        ])->with($this->getHelper());
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Responsec
+     */
+    public function editLunas(Booking $installment_unit)
+    {
+        $table_headers = [
+            [
+                "text" => '#',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'table_index',
+            ],
+            [
+                "text" => 'Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment',
+            ],
+            [
+                "text" => 'Jatuh Tempo',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'due_date',
+            ],
+            [
+                "text" => 'Total Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'installment',
+            ],
+            [
+                "text" => 'Cara Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_method',
+            ],
+            [
+                "text" => 'Tanggal Pembayaran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'payment_date',
+            ],
+            [
+                "text" => 'Denda',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'fine',
+            ],
+            [
+                "text" => 'Sisa Angsuran',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'credit',
+            ]
+        ];
+        $this->breadcrumbs[] = ['href' => route('installment-unit.index', [$installment_unit->slug]), 'text' => 'Detail Booking ' . ''];
+
+        return view('installment::installment-unit.show', [
+            'page' => $this,
+            'data' => $installment_unit,
+            'table_headers' => $table_headers,
+
         ])->with($this->getHelper());
     }
 
@@ -432,6 +557,80 @@ class InstallmentUnitController extends Controller
 
         try {
             return response_json(true, null, 'Sukses mengambil data.', $this->getTableData($request));
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+     /**
+     *
+     * Query for get data for table
+     *
+     */
+    public function getTableDataLunas(Request $request)
+    {
+        $query = Booking::with('client','unit','payments','sales.user')->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
+
+        if ($request->input('search')) {
+            $generalSearch = $request->input('search');
+
+            $query->where(function($subquery) use ($generalSearch) {
+                $subquery->where('installment', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('due_date', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('payment_type', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('total_amount', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
+            });
+
+            $query->orWhereHas('client', function($subquery) use ($generalSearch){
+                $subquery->where('client_name', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('client_number', 'LIKE', '%'.$generalSearch.'%');
+            });
+
+            $query->orWhereHas('unit', function($subquery) use ($generalSearch){
+                $subquery->where('unit_number', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_block', 'LIKE', '%'.$generalSearch.'%');
+                $subquery->orWhere('unit_type', 'LIKE', '%'.$generalSearch.'%');
+            });
+        }
+
+        // foreach ($request->input('sort') as $sort_key => $sort) {
+        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
+        // }
+
+        $data = $query->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data->getCollection()->transform(function($item) {
+            $item->client_number = $item->client->client_number;
+            $item->client_name = $item->client->client_name;
+            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
+            $item->total_amount ='Rp '.format_money($item->total_amount);
+            $item->payment_type = $item->payment_type;
+            $item->dp_amount = 'Rp '.format_money($item->dp_amount);
+            $item->installment = 'Rp '.format_money($item->installment);
+            $item->sales_name = $item->sales->user->full_name;
+
+            return $item;
+        });
+        return $data;
+    }
+
+    /**
+     *
+     * Handle incoming request for table data
+     *
+     */
+    public function tableLunas(Request $request)
+    {
+        $request->merge(['sort' => json_decode($request->input('sort'), true)]);
+
+        $validator = $this->validateTableRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getTableDataLunas($request));
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

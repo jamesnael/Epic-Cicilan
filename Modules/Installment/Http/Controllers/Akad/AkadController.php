@@ -471,7 +471,7 @@ class AkadController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])->with('client', 'unit', 'sales', 'ajb');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -505,7 +505,7 @@ class AkadController extends Controller
         //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
         // }
 
-        $data = $query->has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
+        $data = $query->has('payments')->doesntHave('unpaid_payments')->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
