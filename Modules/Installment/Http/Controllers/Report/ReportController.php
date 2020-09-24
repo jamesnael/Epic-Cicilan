@@ -68,6 +68,7 @@ class ReportController extends Controller
     {
         $from_date  = \Carbon\Carbon::parse($request->from_date)->locale('id')->translatedFormat('Y-m-d');
         $until_date = \Carbon\Carbon::parse($request->until_date)->locale('id')->translatedFormat('Y-m-d');
+        $date_now   = \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y');
 
         if ($request->nama_laporan == "Pembayaran Cicilan")
         {
@@ -99,7 +100,7 @@ class ReportController extends Controller
                 }
             }
             // return view('installment::report.report', ['data' => $data]);
-            return (new InstallmentReport($data))->download('Installment Report.xlsx');
+            return (new InstallmentReport($data, $from_date, $until_date))->download('Laporan Pembayaran Cicilan - '. $date_now. '.xlsx');
         } else {
             return response_json(false, 'Error!!', 'Laporan hanya untuk Pemebayaran Cicilan untuk sementara');
         }

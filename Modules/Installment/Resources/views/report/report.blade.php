@@ -1,7 +1,7 @@
 <table border="1" class="table" style="margin-top:20px;">
 	<thead>
 		<tr>
-			<th colspan="19" style="text-decoration:bold;font-size: 18;">Installment Report</th>
+			<th colspan="19" style="text-decoration:bold;font-size: 18;">Laporan Pembayaran Cicilan {{ \Carbon\Carbon::parse($from_date)->locale('id')->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($until_date)->locale('id')->translatedFormat('d F Y') }}</th>
 		</tr>
 		<tr></tr>
 		<tr>
