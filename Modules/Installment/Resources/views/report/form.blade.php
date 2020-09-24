@@ -46,15 +46,13 @@
 					   <v-col
 					      	cols="12"
 					      	md="12">		
-							<validation-provider v-slot="{ errors }" name="Nama Sales" rules="required">
+							<validation-provider v-slot="{ errors }" name="Nama Sales" rules="">
 								<v-autocomplete
 									v-model="form_data.user_name" 
 									@input="setSelectedSales()"
 							      	:items="filter_sales"
 							      	label="Nama Sales"
 							      	name="user_name"
-									hint="* harus diisi"
-									:persistent-hint="true"
 									:error-messages="errors"
 									:readonly="field_state"
 							    >
@@ -189,7 +187,7 @@
 			    		        ></v-text-field>
 					    		</validation-provider>
 		    		        	</template>
-		    		        	<v-date-picker name="until_date" v-model="form_data.sent_date" @input="menu3 = false" :disabled="field_state"></v-date-picker>
+		    		        	<v-date-picker name="until_date" v-model="form_data.sent_date" @input="menu3 = false" :disabled="!form_data.print_date"></v-date-picker>
 
 				    	</v-col>
 				    </v-row>
@@ -207,7 +205,7 @@
 		    		    elevation="5"
 			    		:disabled="field_state"
 			    		:loading="field_state"
-			    		type="submit">
+			    		@click="checkForm">
 			    		Submit
 		    		    <template v-slot:loader>
 	    		            <span class="custom-loader">

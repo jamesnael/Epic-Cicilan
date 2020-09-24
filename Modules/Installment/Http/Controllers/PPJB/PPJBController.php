@@ -222,8 +222,17 @@ class PPJBController extends Controller
              $has_ppjb = PPJB::where('booking_id', $request->booking_id)->first();
             if ($has_ppjb) {
                 $data = $has_ppjb->update($request->all());
+                 activity()
+                 ->performedOn($PPJB)
+                 ->causedBy(\Auth::user())
+                 ->log('PPJB berhasil diubah');
+
             }else{
                 $data = PPJB::create($request->all());
+                activity()
+                 ->performedOn($PPJB)
+                 ->causedBy(\Auth::user())
+                 ->log('PPJB baru berhasil dibuat');
             }
 
            

@@ -51,19 +51,19 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Sales',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'user.full_name',
             ],
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'agency.agency_name',
             ],
             [
                 "text" => 'Korwil',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'regional_coordinator.full_name',
             ],
             [
@@ -96,13 +96,13 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Sub Agent',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'agency_name',
             ],
             [
                 "text" => 'Korwil',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'regional_coordinator.full_name',
             ],
             [
@@ -135,13 +135,13 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Korwil',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'full_name',
             ],
             [
                 "text" => 'Korut',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'main_coordinator.full_name',
             ],
             [
@@ -174,7 +174,7 @@ class TukarPointController extends Controller
             [
                 "text" => 'Nama Koordinator Utama',
                 "align" => 'center',
-                "sortable" => false,
+                "sortable" => true,
                 "value" => 'full_name',
             ],
             [
@@ -268,10 +268,17 @@ class TukarPointController extends Controller
             $exchange_sales = ExchangePointSales::findOrFail($id);
             $exchange_sales->delete();
             DB::commit();
+
+            //Log Activity
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['tukar point' => $exchange_sales])
+                ->log('Data penukaran point berhasil dicancel');
+
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -282,10 +289,17 @@ class TukarPointController extends Controller
             $exchange_agent = ExchangePointSubAgent::findOrFail($id);
             $exchange_agent->delete();
             DB::commit();
+
+            //Log Activity
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['tukar point' => $exchange_agent])
+                ->log('Data penukaran point berhasil dicancel');
+
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -296,10 +310,17 @@ class TukarPointController extends Controller
             $exchange_korwil = ExchangePointKoorWilayah::findOrFail($id);
             $exchange_korwil->delete();
             DB::commit();
+
+            //Log Activity
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['tukar point' => $exchange_korwil])
+                ->log('Data penukaran point berhasil dicancel');
+
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -310,10 +331,17 @@ class TukarPointController extends Controller
             $exchange_korut = ExchangePointKoorUmum::findOrFail($id);
             $exchange_korut->delete();
             DB::commit();
+
+            //Log Activity
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['tukar point' => $exchange_korut])
+                ->log('Data penukaran point berhasil dicancel');
+
             return response_json(true, null, 'Penukaran point berhasil dicancel.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengcancel penukaran point, Data berikut telah di cancel sebelumnya.');
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Data berikut telah di cancel sebelumnya.');
         }
     }
 
@@ -669,7 +697,6 @@ class TukarPointController extends Controller
                     'exchange_point'  => $request->redeem_point,
                 ]);
 
-
                 //Email Notification
                 Notification::route('mail', $data->sales->user->email)
                             ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
@@ -713,6 +740,11 @@ class TukarPointController extends Controller
                 Notification::route('mail', $data->main_coordinator->email)
                             ->notify(new PenukaranPoint($data->main_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
             }
+            //Log Activity
+            activity()
+             ->performedOn($data)
+             ->causedBy(\Auth::user())
+             ->log('Penukaran point berhasil dilakukan');
 
             DB::commit();
             return response_json(true, null, 'Tukar point berhasil dilakukan.', $data);
@@ -829,7 +861,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataSales(Request $request)
     {
-        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking')->orderBy('created_at', 'DESC');
+        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -847,9 +879,25 @@ class TukarPointController extends Controller
             });
         }
 
-        // foreach ($request->input('sort') as $sort_key => $sort) {
-        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        // }
+        if ($request->input('sort') == []) {
+            $query->orderBy('created_at', 'DESC');
+        } else {
+            foreach ($request->input('sort') as $sort_key => $sort) {
+                if ($sort[0] == "user.full_name") {
+                    $query->join('users', 'users.id', '=', 'sales.user_id')
+                    ->select('sales.*', 'users.full_name as sales_name')
+                    ->orderBy('sales_name', $sort[1] ? 'desc' : 'asc');
+                } elseif ($sort[0] == "agency.agency_name"){
+                    $query->join('agencies', 'agencies.id', '=', 'sales.agency_id')
+                    ->select('sales.*', 'agencies.agency_name as agencys_name')
+                    ->orderBy('agencys_name', $sort[1] ? 'desc' : 'asc');
+                } elseif ($sort[0] == "regional_coordinator.full_name"){
+                    $query->join('regional_coordinators', 'regional_coordinators.id', '=', 'sales.regional_coordinator_id')
+                    ->select('sales.*', 'regional_coordinators.full_name as korwil_name')
+                    ->orderBy('korwil_name', $sort[1] ? 'desc' : 'asc');
+                }
+            }
+        }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -889,7 +937,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataAgent(Request $request)
     {
-        $query = Agency::with('regional_coordinator', 'point')->orderBy('created_at', 'DESC');
+        $query = Agency::with('regional_coordinator', 'point');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -903,9 +951,19 @@ class TukarPointController extends Controller
             });
         }
 
-        // foreach ($request->input('sort') as $sort_key => $sort) {
-        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        // }
+        if ($request->input('sort') == []) {
+            $query->orderBy('created_at', 'DESC');
+        } else {
+            foreach ($request->input('sort') as $sort_key => $sort) {
+                if ($sort[0] == "agency_name"){
+                    $query->orderBy('agency_name', $sort[1] ? 'desc' : 'asc');
+                } elseif ($sort[0] == "regional_coordinator.full_name"){
+                    $query->join('regional_coordinators', 'regional_coordinators.id', '=', 'agencies.regional_coordinator_id')
+                    ->select('agencies.*', 'regional_coordinators.full_name as korwil_name')
+                    ->orderBy('korwil_name', $sort[1] ? 'desc' : 'asc');
+                }
+            }
+        }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -945,7 +1003,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorwil(Request $request)
     {
-        $query = RegionalCoordinator::with('main_coordinator', 'agency')->orderBy('created_at', 'DESC');
+        $query = RegionalCoordinator::with('main_coordinator', 'agency');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -959,9 +1017,19 @@ class TukarPointController extends Controller
             });
         }
 
-        // foreach ($request->input('sort') as $sort_key => $sort) {
-        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        // }
+        if ($request->input('sort') == []) {
+            $query->orderBy('created_at', 'DESC');
+        } else {
+            foreach ($request->input('sort') as $sort_key => $sort) {
+                if ($sort[0] == "full_name"){
+                    $query->orderBy('full_name', $sort[1] ? 'desc' : 'asc');
+                } elseif ($sort[0] == "main_coordinator.full_name"){
+                    $query->join('main_coordinators', 'main_coordinators.id', '=', 'regional_coordinators.main_coordinator_id')
+                    ->select('regional_coordinators.*', 'main_coordinators.full_name as korut_name')
+                    ->orderBy('korut_name', $sort[1] ? 'desc' : 'asc');
+                }
+            }
+        }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
@@ -1001,7 +1069,7 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorut(Request $request)
     {
-        $query = MainCoordinator::with('regional_coordinators', 'point')->orderBy('created_at', 'DESC');
+        $query = MainCoordinator::with('regional_coordinators', 'point');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1011,9 +1079,15 @@ class TukarPointController extends Controller
             });
         }
 
-        // foreach ($request->input('sort') as $sort_key => $sort) {
-        //     $query->orderBy($sort[0], $sort[1] ? 'desc' : 'asc');
-        // }
+        if ($request->input('sort') == []) {
+            $query->orderBy('created_at', 'DESC');
+        } else {
+            foreach ($request->input('sort') as $sort_key => $sort) {
+                if ($sort[0] == "full_name"){
+                    $query->orderBy('full_name', $sort[1] ? 'desc' : 'asc');
+                }
+            }
+        }
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
