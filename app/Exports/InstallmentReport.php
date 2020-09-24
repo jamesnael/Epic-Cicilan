@@ -15,15 +15,19 @@ class InstallmentReport implements FromView
     * @return \Illuminate\Support\Collection
     */
 
-    public function __construct($data)
+    public function __construct($data, $from_date, $until_date)
     {
-        $this->data = $data;
+        $this->data       = $data;
+        $this->from_date  = $from_date;
+        $this->until_date = $until_date;
     }
 
     public function view(): View
     {
         return view('installment::report.report', [
-            'data' => $this->data
+            'data'       => $this->data,
+            'from_date'  => $this->from_date,
+            'until_date' => $this->until_date,
         ]);
     }
 }
