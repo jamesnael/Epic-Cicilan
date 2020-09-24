@@ -51,6 +51,7 @@
                 menu10: false,
                 menu11: false,
                 menu12: false,
+                bank_name: '',
 	            form_data: {
 		            payment_date_1: '',
 		            payment_date_2: '',
@@ -62,6 +63,7 @@
 		            agency_payment_date: '',
 		            korwil_payment_date: '',
 		            korut_payment_date: '',
+                    bank_name: '',
 		           	// sales_name: '',
         			// agency_commission: '',
 		         //    commission_1: '',
@@ -231,6 +233,7 @@
                                     korut_invoice_commission_2: data.commission ? data.commission.korut_invoice_commission_2 : '',
 
     					           	sales_bank_name: data.commission ? data.commission.sales_bank_name : '',
+                                    bank_name: data.commission ? data.commission.sales_bank_name : '',
     					            closing_fee_sales: data.commission ? data.commission.closing_fee_sales : '',
     					           	sales_no_rek: data.commission ? data.commission.sales_no_rek : '',
     					           	sales_bank_account: data.commission ? data.commission.sales_bank_account : '',
@@ -269,7 +272,8 @@
                                     url_agency_evidence: data.commission ? data.commission.url_agency_evidence : '',
                                     url_korwil_evidence: data.commission ? data.commission.url_korwil_evidence : '',
                                     url_korut_evidence: data.commission ? data.commission.url_korut_evidence : '',
-    		            		}
+    		            		},
+                                this.bank_name = data.bank_name,
 
 
 
