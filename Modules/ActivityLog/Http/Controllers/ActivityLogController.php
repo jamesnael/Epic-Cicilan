@@ -137,11 +137,17 @@ class ActivityLogController extends Controller
         $hak_akses = json_decode(file_get_contents($path), true);
 
         $menu =[];
+        $submenu=[];
         foreach ($hak_akses as $key => $value) {
-            array_push($menu, $key);
+            array_push($menu, $value);
+            if ($value['has_child'] == true) {
+                foreach ($value['submenu'] as $key => $item) {
+                    array_push($submenu, $item['menu']);
+                }
+            }
         }
 
-        return $menu;
+        return $submenu;
         
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
