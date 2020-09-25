@@ -152,7 +152,16 @@
     		          	cols="12"
     		          	md="6"
     		          	>
-			    		<validation-provider v-slot="{ errors }" name="" rules="">
+    		          	<bank-input inline-template
+    		          		:bank-value="form_data.bank_name"
+    		          		{{-- bank-class="mt-4" --}}
+    		          		bank-input-name="sales_bank_name"
+    		          		bank-label="Nama Bank"
+    		          		:disabled="field_state"
+    		          	>
+    		          		@include('core::bank')
+    		          	</bank-input>
+			    		{{-- <validation-provider v-slot="{ errors }" name="" rules="">
 				    		<v-text-field
 				    			v-model="form_data.sales_bank_name"
 				    			name="sales_bank_name"
@@ -161,7 +170,7 @@
 					    		label="Nama Bank"
 					    		:readonly="field_state">
 			    			</v-text-field>
-			    		</validation-provider>
+			    		</validation-provider> --}}
 				    </v-col>
 				    <v-col
     		          	cols="12"

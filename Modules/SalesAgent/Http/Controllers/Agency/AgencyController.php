@@ -107,14 +107,14 @@ class AgencyController extends Controller
 
         DB::beginTransaction();
         try {
-            // $request->merge([
-            //     'id_agency_commision' => $request->id_agency_commission,
-            //     'id_sales_commission' => $request->id_agency_commission,
-            //     'id_regional_coordinator_commission' => $request->id_agency_commission,
-            //     'id_main_coordinator_commission' => $request->id_agency_commission,
-            // ]);
 
             $data = Agency::create($request->all());
+
+            activity()
+               ->performedOn($data)
+               ->causedBy(\Auth::user())
+               ->log('Sub Agent baru berhasil dibuat');
+
             DB::commit();
             return response_json(true, null, 'Data sub agent berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -154,14 +154,16 @@ class AgencyController extends Controller
 
         DB::beginTransaction();
         try {
-            // $request->merge([
-            //     'id_agency_commision' => $request->id_agency_commission,
-            //     'id_sales_commission' => $request->id_agency_commission,
-            //     'id_regional_coordinator_commission' => $request->id_agency_commission,
-            //     'id_main_coordinator_commission' => $request->id_agency_commission,
-            // ]);
-            
+
+            $old =  Agency::where('slug', $agency->slug)->get();
             $data = $agency->update($request->all());
+
+            activity()
+                ->performedOn($agency)
+                ->causedBy(\Auth::user())
+                ->withProperties(['new' => $agency, 'old' => $old])
+                ->log('Sub Agent berhasil diubah');
+
             DB::commit();
             return response_json(true, null, 'Data sub agent berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -180,6 +182,13 @@ class AgencyController extends Controller
     {
         DB::beginTransaction();
         try {
+            
+            activity()
+                ->causedBy(\Auth::user())
+                ->withProperties(['sub_agent' => $agency])
+                ->log('Sub Agent berhasil dihapus');
+
+
             $agency->delete();
             DB::commit();
             return response_json(true, null, 'Data sub agent berhasil dihapus.');
