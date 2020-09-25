@@ -426,7 +426,7 @@ class SprController extends Controller
                     if ($item->spr->received_date){
                         $item->status = "Diterima";
                     }
-                    if ($item->spr->approval_status == "Approved"){
+                    if ($item->spr->approval_status == "Disetujui"){
                         $item->status = "Dokumen sesuai";
                     }
                 }
@@ -470,7 +470,7 @@ class SprController extends Controller
     {
         $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user');
         $query->whereHas('spr', function($subquery) {
-            $subquery->where('approval_status', 'Approved');
+            $subquery->where('approval_status', 'Disetujui');
         });
         $query->orderBy('created_at', 'DESC');
 
@@ -530,7 +530,7 @@ class SprController extends Controller
                     if ($item->spr->received_date){
                         $item->status = "Diterima";
                     }
-                    if ($item->spr->approval_status == "Approved"){
+                    if ($item->spr->approval_status == "Disetujui"){
                         $item->status = "Dokumen sesuai";
                     }
                 }
