@@ -562,19 +562,7 @@
 	    			</v-text-field>
 	    			<small v-if="payment_type == 'KPR/KPA'" class="form-text text-muted">Rp @{{dp_amount ? number_format(dp_amount) : 0 }}</small>
 	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="first_payment"
-		    			name="first_payment"
-			    		label="Pembayaran Pertama"
-			    		hint="* harus diisi"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
-	    		</validation-provider>
+	    		
 
 	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar" rules="required|numeric|min:0">
 
@@ -590,6 +578,20 @@
 			    		:disabled="field_state">
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{ principal ? number_format(principal) : 0 }}</small>
+	    		</validation-provider>
+
+	    		<validation-provider v-slot="{ errors }" name="Pembayaran pertama" rules="required|numeric|min:0">
+		    		<v-text-field
+		    			class="mt-4"
+		    			v-model="first_payment"
+		    			name="first_payment"
+			    		label="Pembayaran Pertama"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state">
+	    			</v-text-field>
+	    			<small class="form-text text-muted">Rp @{{ first_payment ? number_format(first_payment) : 0 }}</small>
 	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Lama cicilan" rules="required|numeric|min:1">
 		    		<v-text-field
