@@ -17,11 +17,11 @@
     		          	cols="12"
     		          	md="12">		
 		    		
-					<validation-provider v-slot="{ errors }" name="Nama Korut" rules="required">
+					<validation-provider v-slot="{ errors }" name="Nama Koordinator Utama" rules="required">
 		    			<v-autocomplete
 			    			v-model="form_data.user_name"
 			              	@input="setSelectedKorut()" 
-			              	label="Nama Korut"
+			              	label="Nama Koordinator Utama"
 			              	:items="filter_korut"
 			              	name="user_name"
 				    		hint="* harus diisi"

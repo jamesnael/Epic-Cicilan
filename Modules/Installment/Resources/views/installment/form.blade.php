@@ -427,7 +427,7 @@
                         </template>
                         <template v-slot:item.installment="{ item }">
                             <v-text-field
-                                v-if="item.payment == 'Uang Tanda Jadi'"
+                                v-if="item.payment == 'UTJ + NUP'"
                                 :value="item.installment"
                                 :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
                                 :persistent-hint="true"

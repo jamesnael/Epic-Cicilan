@@ -315,7 +315,7 @@
     		          cols="12"
     		          md="12">
 					    <h3 class="mt-4">Upload Surat Serah Terima Unit</h3>
-			    		<validation-provider v-slot="{ errors }" name="Dokumen Awal" rules="required">
+			    		<validation-provider v-slot="{ errors }" name="Dokumen Awal" rules="">
 							<v-file-input 
 		    		            show-size
 		    		            chips 

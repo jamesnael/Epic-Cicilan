@@ -181,11 +181,11 @@
 			    	<v-col
     		          cols="12"
     		          md="6">
-			    		<validation-provider v-slot="{ errors }" name="Tempat" rules="required|max:255">
+			    		<validation-provider v-slot="{ errors }" name="Tempat / Bank" rules="required|max:255">
 				    		<v-text-field
 				    			v-model="form_data.location"
 				    			name="location"
-					    		label="Tempat"
+					    		label="Tempat / Bank"
 					    		hint="* harus diisi"
 					    		:counter="255"
 					    		:error-messages="errors"
