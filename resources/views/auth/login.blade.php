@@ -4,7 +4,7 @@
 <login-form inline-template>
     <validation-observer ref="observer" v-slot="{ validate, reset }">
         <form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-            <v-app id="inspire">
+            <v-app id="inspire" v-cloak>
                 <v-main>
                     <v-container
                       class="fill-height"
