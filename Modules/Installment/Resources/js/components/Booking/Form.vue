@@ -148,7 +148,7 @@
             	if(this.principal == '' && this.installment_time == ''){
             		return '0';
             	}
-            	let result = (parseInt(this.principal) - parseInt(this.first_payment)) / parseInt(this.installment_time);
+            	let result = (parseInt(this.principal) - parseInt(this.first_payment)) / (parseInt(this.installment_time) - 1);
 
                 return result.toFixed();
             },
