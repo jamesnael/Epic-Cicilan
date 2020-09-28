@@ -17,12 +17,12 @@
             "sortable" => false,
             "value" => 'table_index',
         ])->values();
-		$page->table_headers[] = [
-            "text" => config('app.locale', 'en') == 'en' ? 'Test' : 'Test',
-            "align" => 'center',
-            "sortable" => false,
-            "value" => 'test',
-        ];
+		// $page->table_headers[] = [
+  //           "text" => config('app.locale', 'en') == 'en' ? 'Test' : 'Test',
+  //           "align" => 'center',
+  //           "sortable" => false,
+  //           "value" => 'test',
+  //       ];
 
         $page->table_headers_lunas[] = [
             "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
