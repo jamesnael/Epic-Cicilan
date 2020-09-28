@@ -133,22 +133,29 @@
         	}
         },
         computed:{
+            hargaExcludePPN: function() {
+                if (this.total_amount) {
+                    return  _.isNumber(parseInt(this.total_amount)) ? _.round(parseInt(this.total_amount) / 1.1, 0) : 0;
+                }
+
+                return 0;
+            },
             principal: function() {
                 if (this.payment_type == 'KPR/KPA') {
                     this.credits = parseInt(this.total_amount) - parseInt(this.dp_amount);
 
-                    return parseInt(this.dp_amount) - parseInt(this.first_payment) - parseInt(this.form_data.nup_amount) - parseInt(this.form_data.utj_amount);
+                    return parseInt(this.dp_amount) /*- parseInt(this.first_payment)*/ - parseInt(this.form_data.nup_amount) - parseInt(this.form_data.utj_amount);
                 }
 
                 this.credits = '0';
 
-                return parseInt(this.total_amount) - parseInt(this.first_payment) - parseInt(this.form_data.nup_amount) - parseInt(this.form_data.utj_amount);
+                return parseInt(this.total_amount) /*- parseInt(this.first_payment)*/ - parseInt(this.form_data.nup_amount) - parseInt(this.form_data.utj_amount);
             },
             installment: function() {
             	if(this.principal == '' && this.installment_time == ''){
             		return '0';
             	}
-            	let result = parseInt(this.principal) / parseInt(this.installment_time);
+            	let result = (parseInt(this.principal) - parseInt(this.first_payment)) / (parseInt(this.installment_time) - 1);
 
                 return result.toFixed();
             },

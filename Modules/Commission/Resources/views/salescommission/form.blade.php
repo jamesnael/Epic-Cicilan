@@ -58,7 +58,8 @@
 				    			v-model="form_data.unit_price"
 				    			name="unit_price"
 					    		:error-messages="errors"
-					    		label="Harga Unit + PPN"
+					    		label="Harga Unit tanpa PPN"
+					    		hide-details="auto"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -179,6 +180,7 @@
 				    		<v-text-field
 				    			:value="bruto_commission"
 					    		label="Komisi Bruto"
+					    		hide-details="auto"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
@@ -198,6 +200,7 @@
 					    		<v-text-field
 					    			v-model="commission_1"
 					    			name="commission_1"
+					    			hide-details="auto"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 1 Komisi (50%)"
@@ -281,6 +284,7 @@
 					    		<v-text-field
 					    			v-model="commission_2"
 					    			name="commission_2"
+					    			hide-details="auto"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 2 Komisi (50%)"

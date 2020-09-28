@@ -110,7 +110,7 @@
 			</agent-table>
 		</v-tab-item>
 
-		<v-tab>Data Point Korwil</v-tab>
+		<v-tab>Data Point Koordinator Wilayah</v-tab>
       	<v-tab-item>
 			<korwil-table inline-template
 				uri="{{ route('tukar-point-korwil.table') }}"
@@ -133,7 +133,7 @@
 				@include('components.table')
 			</korwil-table>
 		</v-tab-item>
-		<v-tab>Data Point Korut</v-tab>
+		<v-tab>Data Point Koordinator Utama</v-tab>
       	<v-tab-item>
 			<korut-table inline-template
 				uri="{{ route('tukar-point-korut.table') }}"

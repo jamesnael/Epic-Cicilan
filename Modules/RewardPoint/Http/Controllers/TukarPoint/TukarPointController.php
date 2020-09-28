@@ -133,13 +133,13 @@ class TukarPointController extends Controller
 
         $this->table_headers_korwil = [
             [
-                "text" => 'Nama Korwil',
+                "text" => 'Nama Koordinator Wilayah',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'full_name',
             ],
             [
-                "text" => 'Korut',
+                "text" => 'Koordinator Utama',
                 "align" => 'center',
                 "sortable" => true,
                 "value" => 'main_coordinator.full_name',

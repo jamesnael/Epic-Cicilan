@@ -58,7 +58,8 @@
 				    			v-model="form_data.unit_price"
 				    			name="unit_price"
 					    		:error-messages="errors"
-					    		label="Harga Unit + PPN"
+					    		label="Harga Unit tanpa PPN"
+					    		hide-details="auto"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -108,7 +109,7 @@
 				    			v-model="form_data.korut_name"
 				    			name="korut_name"
 					    		:error-messages="errors"
-					    		label="Nama Korut"
+					    		label="Nama Koordinator Utama"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -121,7 +122,7 @@
 				    		<v-text-field
 				    			v-model="form_data.korut_commission"
 				    			name="korut_commission"
-					    		label="Komisi Korut (%)"
+					    		label="Komisi Koordinator Utama (%)"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
@@ -180,11 +181,12 @@
 				    		<v-text-field
 				    			:value="korut_bruto_commission"
 					    		label="Komisi Bruto"
+					    		hide-details="auto"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
-			    			<small class="form-text text-muted">Rp @{{bruto_commission ? number_format(bruto_commission) : 0 }}</small>
+			    			<small class="form-text text-muted">Rp @{{korut_bruto_commission ? number_format(korut_bruto_commission) : 0 }}</small>
 			    		</validation-provider>
 				    </v-col>
 			    </v-row>
@@ -202,6 +204,7 @@
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 1 Komisi (50%)"
+						    		hide-details="auto"
 						    		:readonly="!field_state"
 						    		:disabled="field_state">
 				    			</v-text-field>
@@ -282,6 +285,7 @@
 					    		<v-text-field
 					    			v-model="korut_commission_2"
 					    			name="korut_commission_2"
+					    			hide-details="auto"
 						    		:persistent-hint="true"
 						    		:error-messages="errors"
 						    		label="Pencairan 2 Komisi (50%)"

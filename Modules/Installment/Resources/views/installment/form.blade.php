@@ -427,7 +427,7 @@
                         </template>
                         <template v-slot:item.installment="{ item }">
                             <v-text-field
-                                v-if="item.payment == 'Uang Tanda Jadi'"
+                                v-if="item.payment == 'UTJ + NUP'"
                                 :value="item.installment"
                                 :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
                                 :persistent-hint="true"
@@ -439,6 +439,14 @@
                                 :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
                                 :persistent-hint="true"
                                 :value="item.credit"
+                                :readonly="!field_state"
+                                :disabled="field_state"
+                            ></v-text-field>
+                            <v-text-field
+                                v-else-if="item.payment_date"
+                                :value="item.installment"
+                                :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
+                                :persistent-hint="true"
                                 :readonly="!field_state"
                                 :disabled="field_state"
                             ></v-text-field>
