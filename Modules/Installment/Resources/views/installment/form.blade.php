@@ -443,6 +443,14 @@
                                 :disabled="field_state"
                             ></v-text-field>
                             <v-text-field
+                                v-else-if="item.payment_date"
+                                :value="item.installment"
+                                :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
+                                :persistent-hint="true"
+                                :readonly="!field_state"
+                                :disabled="field_state"
+                            ></v-text-field>
+                            <v-text-field
                                 v-else
                                 v-model="item.installment"
                                 :hint="'Rp ' + item.installment ? moneyFormat(item.installment) : 0"
