@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\Installment\Entities\BookingPayment;
 use Illuminate\Support\Facades\Notification;
-use Modules\RewardPoint\Notifications\ReminderHandover;
+use Modules\Installment\Notifications\ReminderHandover;
 
 class HandOverController extends Controller
 {
@@ -139,6 +139,18 @@ class HandOverController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'ajb_date',
+            ],
+            [
+                "text" => 'Nomor BAST',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'handover.no_bast',
+            ],
+            [
+                "text" => 'Nama Petugas',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'handover.nama_petugas',
             ],
             [
                 "text" => 'Sales',

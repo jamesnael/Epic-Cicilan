@@ -187,6 +187,8 @@
                                     handover_doc_sign_name: data.handover ? data.handover.handover_doc_sign_name : null,
                                     file_upload: data.handover ?  data.handover.url_doc_file_name : '',
                                     sign_upload: data.handover ? data.handover.url_doc_sign_file_name : '',
+                                    no_bast: data.handover ?  data.handover.no_bast : '',
+                                    nama_petugas: data.handover ?  data.handover.nama_petugas : '',
                                     approval_client_status: data.handover ? data.handover.approval_client_status : null,
                                     approval_developer_status: data.handover ? data.handover.approval_developer_status : null,
                                     approval_notaris_status: data.handover ? data.handover.approval_notaris_status : null,
