@@ -49,6 +49,7 @@ class Booking extends Model
         'harga_tidak_termasuk',
         'gimmick',
         'keterangan_program',
+        'deal_closer'
     ];
 
      /**

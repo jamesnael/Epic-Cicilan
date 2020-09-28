@@ -101,6 +101,7 @@
                     payment_date: '',
                     total_paid: '',
                     description: '',
+                    deal_closer: '',
 
                     payments: []
                 },
@@ -165,6 +166,7 @@
 
                                     payments: items,
                                     slug: data.slug,
+                                    deal_closer: data.deal_closer,
                                 } 
 
                                 this.field_state = false

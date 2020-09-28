@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"43b1a7980510532dca70","1":"a49397e6c9ee43f9e02c","2":"7eff2c623c44ea456de6","3":"ff12762de725f63d4d10","4":"da2ba3ab9549045f52c4","5":"c95212f37d3d37111d21","6":"687c1923b08fe2b44952","7":"c9cf3751afb77b14bdef","8":"3a997dcfe38c63662028","9":"405594f6a42b5c519b00","10":"93fa9ae9124cb5538362","11":"f212c98a983c559bc9f3","12":"b8691fcbaef1473113ad","13":"4f758bf8244399fe3ac3","14":"9eb39e31a6ea4ef565fe","15":"9401578f3116dd9925a9","16":"3ce60edeb896acf80e61","17":"08d76957e96bad8ea305","18":"f9c80abde9b62ed762f2","19":"2dc3c3dd64f294eafa98","20":"8e32c20bdcd3d7dcc63b","21":"c12bf3269cb47103bb23","22":"d217f9ec7a86ee1c2d52","23":"da21ba8db4c23813a9b3","24":"da3689bf37419b260f91","25":"fdbcd412453b7a65a984","26":"8acf13f32fa056b82b6d","27":"e6d14e478812b4feaef7","28":"11a7728c4bb5c98747fb","29":"e05d2762d3f50b6c00a9","30":"ef1138a76618a70bf325","31":"d2ef6865544c146b70d2","32":"0c874a796b2cced52a4b","33":"25260196e302677b12f1","34":"5c7ed3023e89e98e834c","35":"cc2f6e14227c1178d78c","36":"ed0381b2943510e2fa41","37":"07047ae95ec563bfb5b7","38":"b9bc7174ba4d8005eff7"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"be13c2e3f5e4f149a7c8","1":"4da0375a4dfa6501aae8","2":"823f99dfe23c84f6cf8b","3":"0641965f34c864064388","4":"8573ae58d36b4809128a","5":"c258059ed3aa68d6b1a2","6":"8eefa19d8a430d7bc20a","7":"a22fd69f317c27726148","8":"e8a96335b08b75cd01cd","9":"d367e8ee8c1654b58e36","10":"e6bcfbca674fe5ccf39e","11":"29de4dd32a0afacc114c","12":"aa9c30799eb111ba589b","13":"113bd9ce3a6c209b967a","14":"0db562ff85821d4c2240","15":"088d6fa965a4d272464d","16":"ad456c813ef8ddcc1490","17":"6df765f681d5a868964e","18":"2d2796957e1f3a4e0722","19":"900e3be8d2bcc976f495","20":"2af8bc4e2817ec28f795","21":"abe00cf62336e2668d38","22":"a89731d0c31cd00d2d7c","23":"8c935d6c2c712e85cdf8","24":"576eb5b32efdd534ee98","25":"14a104fa10da66c9f05a","26":"81bf1fb33b050ba93dd3","27":"3dff2bc0a328e3abaa3b","28":"0e85d9b47b8e67c08abc","29":"5f4e8564fd204382fc85","30":"a725d69ab1d68a21fe0d","31":"624cb66a2279160f2d8d","32":"56e0cb98d1eb93e2bab3","33":"5f3aeef4e79477749df1","34":"8243e6d767ad23a77ab0","35":"4e2766f57a0eb6a967b8","36":"27b503fea5448ecfe6d2","37":"f4c68fbb2350a60e4c9e","38":"e8950ce9cbe9cab3db58"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -89603,12 +89603,12 @@ var Ziggy = {
       "domain": null
     },
     "salescommission.table.korwil": {
-      "uri": "komisi-sales\/table\/korwil",
+      "uri": "komisi-sales\/table\/koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "salescommission.table.korut": {
-      "uri": "komisi-sales\/table\/korut",
+      "uri": "komisi-sales\/table\/koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -89638,12 +89638,12 @@ var Ziggy = {
       "domain": null
     },
     "salescommission.edit.korwil": {
-      "uri": "komisi-sales\/{salescommission}\/ubah-korwil",
+      "uri": "komisi-sales\/{salescommission}\/ubah-koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "salescommission.edit.korut": {
-      "uri": "komisi-sales\/{salescommission}\/ubah-korut",
+      "uri": "komisi-sales\/{salescommission}\/ubah-koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90513,12 +90513,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.table": {
-      "uri": "tukar-point\/table-korwil",
+      "uri": "tukar-point\/table-koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.table": {
-      "uri": "tukar-point\/table-korut",
+      "uri": "tukar-point\/table-koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90543,22 +90543,22 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-history-korwil.table": {
-      "uri": "tukar-point\/table-korwil-history\/{id}",
+      "uri": "tukar-point\/table-koordinator-wilayah-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korwil-get-point.table": {
-      "uri": "tukar-point\/table-korwil-history-get-point\/{id}",
+      "uri": "tukar-point\/table-koordinator-wilayah-history-get-point\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korut.table": {
-      "uri": "tukar-point\/table-korut-history\/{id}",
+      "uri": "tukar-point\/table-koordinator-utama-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korut-get-point.table": {
-      "uri": "tukar-point\/table-korut-history-get-point\/{id}",
+      "uri": "tukar-point\/table-koordinator-utama-history-get-point\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90578,12 +90578,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.history": {
-      "uri": "tukar-point\/{tukar_point}\/history_korwil",
+      "uri": "tukar-point\/{tukar_point}\/history_koordinator_wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.history": {
-      "uri": "tukar-point\/{tukar_point}\/history_korut",
+      "uri": "tukar-point\/{tukar_point}\/history_koordinator_utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90598,12 +90598,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.destroy": {
-      "uri": "tukar-point\/{tukar_point}\/cancel_korwil",
+      "uri": "tukar-point\/{tukar_point}\/cancel_koordinator_wilayah",
       "methods": ["DELETE"],
       "domain": null
     },
     "tukar-point-korut.destroy": {
-      "uri": "tukar-point\/{tukar_point}\/cancel_korut",
+      "uri": "tukar-point\/{tukar_point}\/cancel_koordinator_utama",
       "methods": ["DELETE"],
       "domain": null
     },
@@ -90613,17 +90613,17 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-agency.create": {
-      "uri": "tukar-point\/tambah\/agency",
+      "uri": "tukar-point\/tambah\/sub-agent",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korwil.create": {
-      "uri": "tukar-point\/tambah\/korwil",
+      "uri": "tukar-point\/tambah\/koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.create": {
-      "uri": "tukar-point\/tambah\/korut",
+      "uri": "tukar-point\/tambah\/koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90803,9 +90803,9 @@ var Ziggy = {
       "domain": null
     }
   },
-  baseUrl: 'http://epic-cicilan.test/',
+  baseUrl: 'http://localhost/',
   baseProtocol: 'http',
-  baseDomain: 'epic-cicilan.test',
+  baseDomain: 'localhost',
   basePort: false,
   defaultParameters: []
 };
@@ -91160,8 +91160,8 @@ function route(name, params, absolute, customZiggy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\epic_2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laragon\www\epic_2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\epic-cicilan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

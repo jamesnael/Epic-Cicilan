@@ -3,7 +3,6 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
     		<h3>Input Schedule AJB</h3>
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-	    		</v-row>
 	    		<v-row>
     		        <v-col
     		          	cols="12"
@@ -268,6 +267,22 @@
 							</validation-provider>
 			          </v-col>
 					</v-row>
+					 <v-row>
+						<v-col
+	    		          cols="12"
+	    		          md="12">
+				    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
+		    		          	<v-select
+						        v-model="form_data.approval_developer_status"
+						        :items="items_approval"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+						        label="Approval Developer"
+						        name="approval_developer_status"
+						      ></v-select>
+						   	</validation-provider>
+	    		        </v-col>
+	    		    </v-row>
 					<v-row>
 						<v-col
 	    		          cols="12"
@@ -285,22 +300,57 @@
 	    		        </v-col>
 	    		    </v-row>
 	    		    <v-row>
-						<v-col
-	    		          cols="12"
-	    		          md="12">
-				    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
-		    		          	<v-select
-						        v-model="form_data.approval_developer_status"
-						        :items="items_approval"
-					    		:persistent-hint="true"
-					    		:error-messages="errors"
-						        label="Approval Developer"
-						        name="approval_developer_status"
-						      ></v-select>
-						   	</validation-provider>
-	    		        </v-col>
-	    		    </v-row>
+	    			</v-row>
+		    		<validation-provider v-slot="{ errors }" name="Nama Notaris" rules="">
+			    		<v-text-field
+				    		class="mt-4"
+			    			v-model="form_data.notaris_name"
+			    			name="notaris_name"
+				    		label="Nama Notaris"
+				    		:disabled="field_state">
+				    	>
+		    			</v-text-field>
+		    		</validation-provider>
+		    		<validation-provider v-slot="{ errors }" name="Nomor AJB" rules="">
+			    		<v-text-field
+				    		class="mt-4"
+			    			v-model="form_data.ajb_number"
+			    			name="ajb_number"
+				    		:error-messages="errors"
+				    		label="Nomor AJB"
+				    		:disabled="field_state">
+		    			</v-text-field>
+		    		</validation-provider>
 	    		    <v-row>
+		    			<v-col
+	    		          	cols="12"
+	    		          	md="12">
+					    		<v-menu
+			    		        v-model="menu3"
+			    		        :close-on-content-click="false"
+			    		        :nudge-right="40"
+			    		        transition="scale-transition"
+			    		        offset-y
+			    		        min-width="290px"
+			    		      >
+		    		        	<template v-slot:activator="{ on, attrs }">
+					    		<validation-provider v-slot="{ errors }" name="Tanggal Upload" rules="required|min:1">
+				    		        <v-text-field
+				    		        	:value="reformatDateTime(form_data.upload_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+				    		        	{{-- hint="* harus diisi" --}}
+				    		        	{{-- :persistent-hint="true" --}}
+							    		:error-messages="errors"
+				    		            label="Tanggal Upload"
+				    		            readonly
+				    		            v-bind="attrs"
+				    		            v-on="on"
+				    		        ></v-text-field>
+					    		</validation-provider>
+		    		        	</template>
+		    		        	<v-date-picker v-model="form_data.upload_date" @input="menu3 = false"></v-date-picker>
+		    		      	</v-menu>
+				    	</v-col>
+      		    		
 						<v-col
 	    		          cols="12"
 	    		          md="12">

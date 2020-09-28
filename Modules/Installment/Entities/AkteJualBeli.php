@@ -19,6 +19,9 @@ class AkteJualBeli extends Model
     	'approval_notaris_status',
     	'ajb_sign_date',
     	'ajb_doc_sign_file_name',
+        'ajb_number',
+        'upload_date',
+        'notaris_name'
     ];
 
     protected $appends = [
