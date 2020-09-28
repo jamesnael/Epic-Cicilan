@@ -47,7 +47,7 @@ class Sales extends Model
      */
     public function getUrlFileKtpAttribute()
     {
-        return $this->attributes['file_ktp'] ? Storage::disk('public')->url('app/public/sales/ktp/'.$this->attributes['file_ktp']) : null;
+        return (!empty($this->attributes['file_ktp'])) ? Storage::disk('public')->url('app/public/sales/ktp/'.$this->attributes['file_ktp']) : null;
     }
 
     /**

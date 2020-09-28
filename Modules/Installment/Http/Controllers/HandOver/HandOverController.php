@@ -237,8 +237,8 @@ class HandOverController extends Controller
                     'handover_doc_sign_name' => $file_name,
                 ]);
 
-                // Notification::route('mail', $handover->client->client_email)
-                //             ->notify(new ReminderHandover($handover));
+                Notification::route('mail', $handover->client->client_email)
+                            ->notify(new ReminderHandover($handover));
             }
             $has_handover = HandOver::where('booking_id', $request->booking_id)->first();
             if ($has_handover) {

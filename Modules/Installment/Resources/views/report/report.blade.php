@@ -1,7 +1,7 @@
 <table border="1" class="table" style="margin-top:20px;">
 	<thead>
 		<tr>
-			<th colspan="19" style="text-decoration:bold;font-size: 18;">Laporan Pembayaran Cicilan {{ \Carbon\Carbon::parse($from_date)->locale('id')->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($until_date)->locale('id')->translatedFormat('d F Y') }}</th>
+			<th colspan="20" style="text-decoration:bold;font-size: 18;">Laporan Pembayaran Cicilan {{ \Carbon\Carbon::parse($from_date)->locale('id')->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($until_date)->locale('id')->translatedFormat('d F Y') }}</th>
 		</tr>
 		<tr></tr>
 		<tr>
@@ -24,11 +24,37 @@
 			<th align="center"><b>Nama Korwil</b></th>
 			<th align="center"><b>Status</b></th>
 			<th align="center"><b>Tanggal Transaksi</b></th>
+			<th align="center"><b>Booking Status</b></th>
 		</tr>
 	</thead>
 	<tbody>
 		@php $no = 1 @endphp
 		@foreach($data as $value)
+			@if($value->booking_status == 'dokumen')
+				@php
+					$booking_status = "Pengajuan Dokumen"
+				@endphp
+			@elseif($value->booking_status == 'spr')
+				@php
+					$booking_status = "SPR"
+				@endphp
+			@elseif($value->booking_status == 'ppjb')
+				@php
+					$booking_status = "PPJB"
+				@endphp
+			@elseif($value->booking_status == 'cicilan')
+				@php
+					$booking_status = "Cicilan"
+				@endphp
+			@elseif($value->booking_status == 'akad')
+				@php
+					$booking_status = "Proses Akad KPR"
+				@endphp
+			@elseif($value->booking_status == 'ajb_handover')
+				@php
+					$booking_status = "Tahap AJB / Serah Terima Unit"
+				@endphp
+			@endif
 			<tr>
 				<td align="center" valign="middle">{{ $no++ }}</td>
 				<td valign="middle">'{{ $value->client->client_number }}</td>
@@ -49,6 +75,7 @@
 				<td align="center" valign="middle">{{ $value->regional_coordinator->full_name }}</td>
 				<td align="center" valign="middle">{{ ($value->unpaid_payments) ? 'Belum Lunas' : 'Lunas' }}</td>
 				<td align="center" valign="middle">{{ \Carbon\Carbon::parse($value->created_at)->locale('id')->translatedFormat('d F Y') }}</td>
+				<td align="center" valign="middle">{{ $booking_status }}</td>
 			</tr>
 		@endforeach
 	</tbody>	
