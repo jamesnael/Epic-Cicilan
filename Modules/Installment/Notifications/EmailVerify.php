@@ -7,20 +7,20 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ReminderHandover extends Notification
+class EmailVerify extends Notification
 {
     use Queueable;
 
-    public $booking;
+    public $client;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($booking)
+    public function __construct($client)
     {
-        $this->booking = $booking;
+        $this->client = $client;
     }
 
     /**
@@ -43,9 +43,8 @@ class ReminderHandover extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Notifikasi Acara Akad Kredit KPR')
-                    ->view('installment::emails.reminder_handover', 
-                        ['booking' => $this->booking]
+                    ->subject('Verifikasi Email')
+                    ->view('installment::emails.verified_email',['client' => $this->client]
                     );
     }
 

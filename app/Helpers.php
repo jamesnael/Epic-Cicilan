@@ -215,7 +215,7 @@ if (! function_exists('aside_menu')) {
                 'children' => [
                     [
                         'icon' => 'mdi-badge-account',
-                        'text' => 'User',
+                        'text' => 'User Admin',
                         'uri' => route('users.index'),
                         'model' => in_array(Route::currentRouteName(), ['users.index','users.create','users.edit']),
                         'show' => Auth::user()->is_admin || in_array('users.index', Auth::user()->user_access?: [])

@@ -388,6 +388,42 @@
     		        </v-col>
     		    </v-row>
     		    <v-row v-if="form_data.handover_doc_file_name_data != null">
+					<v-col
+    		          cols="12"
+    		          md="12">
+    		          	<validation-provider v-slot="{ errors }" name="Nomor BAST" rules="required|max:255">
+				    		<v-text-field
+				    			v-model="form_data.no_bast"
+				    			name="no_bast"
+					    		label="Nomor BAST"
+					    		hint="* harus diisi"
+					    		:counter="255"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+							>
+			    			</v-text-field>
+			    		</validation-provider>
+    		        </v-col>
+    		    </v-row>
+    		    <v-row v-if="form_data.handover_doc_file_name_data != null">
+					<v-col
+    		          cols="12"
+    		          md="12">
+    		          	<validation-provider v-slot="{ errors }" name="Nama Petugas" rules="required|max:255">
+				    		<v-text-field
+				    			v-model="form_data.nama_petugas"
+				    			name="nama_petugas"
+					    		label="Nama Petugas"
+					    		hint="* harus diisi"
+					    		:counter="255"
+					    		:persistent-hint="true"
+					    		:error-messages="errors"
+							>
+			    			</v-text-field>
+			    		</validation-provider>
+    		        </v-col>
+    		    </v-row>
+    		    <v-row v-if="form_data.handover_doc_file_name_data != null">
     		    	<v-col
     		          cols="12"
     		          md="12">

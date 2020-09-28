@@ -896,6 +896,21 @@
 	    	           name="regional_coor_id">
 	    	        </v-text-field>
 			    </v-row>
+
+        		<validation-provider v-slot="{ errors }" name="" rules="">
+    	    		<v-textarea
+    	    			rows="1"
+    	    			auto-grow
+    	    			class="mt-4"
+    	    			v-model="form_data.deal_closer"
+    	    			name="deal_closer"
+    		    		label="Deal Closer"
+    		    		:persistent-hint="true"
+    		    		:error-messages="errors"
+    		    		:disabled="field_state">
+        			</v-textarea>
+        		</validation-provider>
+
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
 		    		color="primary"

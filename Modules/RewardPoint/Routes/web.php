@@ -81,5 +81,10 @@ Route::group(['namespace' => 'TukarPoint'], function() {
 	Route::get('tukar-point/tambah/koordinator-wilayah', 'TukarPointController@createKorwil')->name('tukar-point-korwil.create');
 	Route::get('tukar-point/tambah/koordinator-utama', 'TukarPointController@createKorut')->name('tukar-point-korut.create');
 
+	Route::get('tukar-point/{tukar_point}/pdf-history-sales', 'TukarPointController@print_sales')->name('tukar-point-sales.print');
+	Route::get('tukar-point/{tukar_point}/pdf-history-agency', 'TukarPointController@print_agent')->name('tukar-point-agent.print');
+	Route::get('tukar-point/{tukar_point}/pdf-history-korwil', 'TukarPointController@print_korwil')->name('tukar-point-korwil.print');
+	Route::get('tukar-point/{tukar_point}/pdf-history-korut', 'TukarPointController@print_korut')->name('tukar-point-korut.print');
+
 	Route::resource('tukar-point', 'TukarPointController')->except(['show', 'edit', 'destroy', 'create']);
 });
