@@ -5,12 +5,12 @@
 	@include('components.breadcrumbs')
 
 	@php
-		// $page->table_headers[] = [
-  //           "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-  //           "align" => 'center',
-  //           "sortable" => false,
-  //           "value" => 'actions',
-  //       ];
+		$page->table_headers[] = [
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'actions',
+        ];
         $page->table_headers = collect($page->table_headers)->prepend([
             "text" => '#',
             "align" => 'center',
@@ -39,12 +39,16 @@
 					items-per-page-all-text="Semua"
 					items-per-page-text="Tampilkan"
 					page-text-locale="id"
-					delete-uri="tukar-point-korwil.destroy"
+					edit-uri="tukar-point-korwil.print"
+					edit-uri-parameter="id"
+					edit-text="Download PDF"
+					edit-icon="mdi-download"
+					{{-- delete-uri="tukar-point-korwil.destroy"
 					delete-uri-parameter="id"
 					delete-text="Cancel"
 					delete-confirmation-text="Apakah anda yakin untuk mengcancel penukaran point berikut ini ?"
 					delete-cancel-text="Tidak"
-					delete-icon="mdi-cancel"
+					delete-icon="mdi-cancel" --}}
 					>
 					@include('components.table')
 				</table-layout>

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Modules\RewardPoint\Notifications\PenukaranPoint;
+use PDF;
 
 class TukarPointController extends Controller
 {
@@ -259,8 +260,6 @@ class TukarPointController extends Controller
         }
     }
 
-
-
     public function cancelSales($id)
     {
         DB::beginTransaction();
@@ -360,12 +359,12 @@ class TukarPointController extends Controller
                 "sortable" => false,
                 "value" => 'date',
             ],
-            [
-                "text" => 'Tanggal Cancel',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'deleted_date',
-            ],
+            // [
+            //     "text" => 'Tanggal Cancel',
+            //     "align" => 'center',
+            //     "sortable" => false,
+            //     "value" => 'deleted_date',
+            // ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
@@ -436,12 +435,12 @@ class TukarPointController extends Controller
                 "sortable" => false,
                 "value" => 'date',
             ],
-            [
-                "text" => 'Tanggal Cancel',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'deleted_date',
-            ],
+            // [
+            //     "text" => 'Tanggal Cancel',
+            //     "align" => 'center',
+            //     "sortable" => false,
+            //     "value" => 'deleted_date',
+            // ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
@@ -512,12 +511,12 @@ class TukarPointController extends Controller
                 "sortable" => false,
                 "value" => 'date',
             ],
-            [
-                "text" => 'Tanggal Cancel',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'deleted_date',
-            ],
+            // [
+            //     "text" => 'Tanggal Cancel',
+            //     "align" => 'center',
+            //     "sortable" => false,
+            //     "value" => 'deleted_date',
+            // ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
@@ -588,12 +587,12 @@ class TukarPointController extends Controller
                 "sortable" => false,
                 "value" => 'date',
             ],
-            [
-                "text" => 'Tanggal Cancel',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'deleted_date',
-            ],
+            // [
+            //     "text" => 'Tanggal Cancel',
+            //     "align" => 'center',
+            //     "sortable" => false,
+            //     "value" => 'deleted_date',
+            // ],
             [
                 "text" => 'Category Rewards',
                 "align" => 'center',
@@ -1660,5 +1659,41 @@ class TukarPointController extends Controller
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
+    }
+
+    public function print_sales($id)
+    {
+        $record = ExchangePointSales::with('sales', 'reward_point', 'reward_point.category', 'sales.user')->where('id', $id)->orderBy('created_at', 'DESC')->first();
+        $date = date('d F Y');
+        $name = $record->sales->user->full_name;
+        $pdf  = PDF::loadView('rewardpoint::TukarPoint.pdf.history-point', ['record' => $record, 'date' => $date, 'name' => $name])->setPaper('a4', 'portrait');
+        return $pdf->download('History Penukaran Point ' . $date . '.pdf');
+    }
+
+    public function print_agent($id)
+    {
+        $record = ExchangePointSubAgent::with('agency', 'reward_point', 'reward_point.category')->where('id', $id)->orderBy('created_at', 'DESC')->first();
+        $date = date('d F Y');
+        $name = $record->agency->agency_name;
+        $pdf  = PDF::loadView('rewardpoint::TukarPoint.pdf.history-point', ['record' => $record, 'date' => $date, 'name' => $name])->setPaper('a4', 'portrait');
+        return $pdf->download('History Penukaran Point ' . $date . '.pdf');
+    }
+
+    public function print_korwil($id)
+    {
+        $record = ExchangePointKoorWilayah::with('regional_coordinator', 'reward_point', 'reward_point.category')->where('id', $id)->orderBy('created_at', 'DESC')->first();
+        $date = date('d F Y');
+        $name = $record->regional_coordinator->full_name;
+        $pdf  = PDF::loadView('rewardpoint::TukarPoint.pdf.history-point', ['record' => $record, 'date' => $date, 'name' => $name])->setPaper('a4', 'portrait');
+        return $pdf->download('History Penukaran Point ' . $date . '.pdf');
+    }
+
+    public function print_korut($id)
+    {
+        $record = ExchangePointKoorUmum::with('main_coordinator', 'reward_point', 'reward_point.category')->where('id', $id)->orderBy('created_at', 'DESC')->first();
+        $date = date('d F Y');
+        $name = $record->main_coordinator->full_name;
+        $pdf  = PDF::loadView('rewardpoint::TukarPoint.pdf.history-point', ['record' => $record, 'date' => $date, 'name' => $name])->setPaper('a4', 'portrait');
+        return $pdf->download('History Penukaran Point ' . $date . '.pdf');
     }
 }

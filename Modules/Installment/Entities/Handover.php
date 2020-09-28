@@ -22,6 +22,8 @@ class Handover extends Model
         'approval_notaris_status',
         'handover_doc_sign_name',
         'handover_sign_date',
+        'no_bast',
+        'nama_petugas'
     ];
 
     protected $appends = [

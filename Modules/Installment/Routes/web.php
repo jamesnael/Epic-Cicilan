@@ -144,3 +144,14 @@ Route::group(['namespace' => 'Report'], function() {
 	Route::get('report/{report}/data', 'ReportController@data')->name('report.data');
 	Route::resource('report', 'ReportController')->except(['show']);
 });
+
+Route::group(['namespace' => 'Cluster'], function() {
+	Route::get('cluster', 'ClusterController@index')->name('cluster.index');
+	Route::post('cluster/post', 'ClusterController@store')->name('cluster.store');
+	Route::get('cluster/table', 'ClusterController@table')->name('cluster.table');
+	Route::get('cluster/tambah', 'ClusterController@create')->name('cluster.create');
+	Route::put('cluster/{cluster}', 'ClusterController@update')->name('cluster.update');
+	Route::get('cluster/{cluster}/data', 'ClusterController@data')->name('cluster.data');
+	Route::get('cluster/{cluster}/ubah', 'ClusterController@edit')->name('cluster.edit');
+	Route::delete('cluster/{cluster}/delete', 'ClusterController@delete')->name('cluster.delete');
+});
