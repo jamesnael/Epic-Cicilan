@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClustersTable extends Migration
+class AddSlugCluster extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateClustersTable extends Migration
      */
     public function up()
     {
-        Schema::create('clusters', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('cluster_name')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('clusters', function (Blueprint $table) {
+             $table->string('slug')->nullable()->after('id');
+           
         });
     }
 
@@ -28,6 +26,8 @@ class CreateClustersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clusters');
+        Schema::table('', function (Blueprint $table) {
+
+        });
     }
 }
