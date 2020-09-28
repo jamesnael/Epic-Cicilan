@@ -99,7 +99,7 @@ class ReportController extends Controller
                     $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 }
             }
-            // return view('installment::report.report', ['data' => $data]);
+            // return view('installment::report.report', ['data' => $data, 'from_date' => $from_date, 'until_date' => $until_date]);
             return (new InstallmentReport($data, $from_date, $until_date))->download('Laporan Pembayaran Cicilan - '. $date_now. '.xlsx');
         } else {
             return response_json(false, 'Error!!', 'Laporan hanya untuk Pemebayaran Cicilan untuk sementara');
