@@ -113,6 +113,7 @@
                     regional_coor_id:'',
                     agent_id:'',
                     program_id:'',
+                    deal_closer:'',
             	},
                 program: {
                     nama_program: '',
@@ -226,6 +227,8 @@
                                     regional_coor_id:data.sales.regional_coordinator_id,
                                     agent_id:data.sales.agency_id,
                                     program_id:data.program_id,
+
+                                    deal_closer:data.deal_closer,
     		            		},
     		            		this.total_amount = data.total_amount
     		            		this.first_payment = data.first_payment

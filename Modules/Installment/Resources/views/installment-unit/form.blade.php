@@ -209,6 +209,18 @@
                           </v-text-field>
                       </v-col>
                   </v-row>
+                  <v-row>
+                      <v-col
+                          cols="12"
+                          md="12">
+                          <v-text-field
+                              v-model="form_data.deal_closer"
+                              label="Deal Closer"
+                              :readonly="!field_state"
+                              :disabled="field_state">
+                          </v-text-field>
+                      </v-col>
+                  </v-row>
               </v-card-text>
             </v-card>
 

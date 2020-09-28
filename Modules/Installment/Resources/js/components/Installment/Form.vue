@@ -97,6 +97,7 @@
                     payment_method_nup: '',
                     nup_date: '',
                     utj_date: '',
+                    deal_closer:'',
             	}
         	}
         },
@@ -167,7 +168,8 @@
     		            			main_coordinator:data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
 
-                                    payments: items
+                                    payments: items,
+                                    deal_closer: data.deal_closer
     		            		} 
 
                                 // _.forEach(data.payments, (value, key) => {

@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Client'], function() {
 	Route::get('klien/{client}/data', 'ClientController@data')->name('client.data');
 	Route::get('klien/{client}/ubah', 'ClientController@edit')->name('client.edit');
 	Route::delete('klien/{client}', 'ClientController@destroy')->name('client.destroy');
+	Route::get('klien/{client}/verifikasi-email', 'ClientController@VerifiyEmail')->name('client.verify.email');
 });
 
 Route::group(['namespace' => 'Booking'], function() {

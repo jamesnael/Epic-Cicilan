@@ -73,6 +73,9 @@
                     approval_notaris_status: '',
                     ajb_sign_date: '',
                     ajb_doc_sign_file_name: '',
+                    ajb_number: '',
+                    upload_date: '',
+                    notaris_name: ''
                 }
             }
         },
@@ -115,6 +118,10 @@
                                     ajb_sign_date: data.ajb ? data.ajb.ajb_sign_date : '',
                                     dokumen_akhir_ajb: data.ajb ? data.ajb.ajb_doc_sign_file_name : '',
                                     url_dokumen_akhir: data.ajb ? data.ajb.url_ajb_doc_sign_file_name : '',
+
+                                    ajb_number: data.ajb ? data.ajb.ajb_number : '',
+                                    upload_date: data.ajb ? data.ajb.upload_date : '',
+                                    notaris_name: data.ajb ? data.ajb.notaris_name : '',
                                 } 
 
                                 this.field_state = false
@@ -149,6 +156,7 @@
                     data.append("booking_id", this.form_data.booking_id);
                     data.append("ajb_date", this.form_data.ajb_date);
                     data.append("ajb_time", this.form_data.ajb_time);
+                    data.append("upload_date", this.form_data.upload_date);
                 }
 
                 this.field_state = true

@@ -8,6 +8,8 @@ use Illuminate\Routing\Controller;
 use Modules\Installment\Entities\Client;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Modules\Installment\Notifications\EmailVerify;
 
 class ClientController extends Controller
 {
@@ -109,10 +111,14 @@ class ClientController extends Controller
                 'client_number' => date('Y').date('m').date('d').sprintf("%06d", Client::count() + 1),
             ]);
 
-            $data = Client::create($request->all());
+            $client = Client::create($request->all());
+
+            Notification::route('mail', $client->client_email)
+                            ->notify(new EmailVerify($client));
+
             DB::commit();
             
-            return response_json(true, null, 'Data klien berhasil disimpan.', $data);
+            return response_json(true, null, 'Data klien berhasil disimpan.', $client);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
@@ -154,6 +160,28 @@ class ClientController extends Controller
             $data = $client->update($request->all());
             DB::commit();
             return response_json(true, null, 'Data klien berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function VerifiyEmail(Request $request, Client $client)
+    {
+        DB::beginTransaction();
+        try {
+            $data = $client->update(['email_verified_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')]);
+
+            DB::commit();
+
+            return view('installment::client.verify_success');
+
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
