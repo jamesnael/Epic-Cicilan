@@ -41,6 +41,7 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+	            showPassword: false,
             	form_data: {
             		main_coordinator_id: '',
             		full_name: '',
@@ -56,6 +57,7 @@
             		ppn: '',
             		pph_21: '',
             		pph_23: '',
+            		password:''
             	}
         	}
         },

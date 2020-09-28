@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"be13c2e3f5e4f149a7c8","1":"4da0375a4dfa6501aae8","2":"823f99dfe23c84f6cf8b","3":"0641965f34c864064388","4":"8573ae58d36b4809128a","5":"c258059ed3aa68d6b1a2","6":"8eefa19d8a430d7bc20a","7":"a22fd69f317c27726148","8":"e8a96335b08b75cd01cd","9":"d367e8ee8c1654b58e36","10":"e6bcfbca674fe5ccf39e","11":"29de4dd32a0afacc114c","12":"aa9c30799eb111ba589b","13":"113bd9ce3a6c209b967a","14":"0db562ff85821d4c2240","15":"088d6fa965a4d272464d","16":"ad456c813ef8ddcc1490","17":"6df765f681d5a868964e","18":"2d2796957e1f3a4e0722","19":"900e3be8d2bcc976f495","20":"2af8bc4e2817ec28f795","21":"abe00cf62336e2668d38","22":"a89731d0c31cd00d2d7c","23":"8c935d6c2c712e85cdf8","24":"576eb5b32efdd534ee98","25":"14a104fa10da66c9f05a","26":"81bf1fb33b050ba93dd3","27":"3dff2bc0a328e3abaa3b","28":"0e85d9b47b8e67c08abc","29":"5f4e8564fd204382fc85","30":"a725d69ab1d68a21fe0d","31":"624cb66a2279160f2d8d","32":"56e0cb98d1eb93e2bab3","33":"5f3aeef4e79477749df1","34":"8243e6d767ad23a77ab0","35":"4e2766f57a0eb6a967b8","36":"27b503fea5448ecfe6d2","37":"f4c68fbb2350a60e4c9e","38":"e8950ce9cbe9cab3db58"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"07d169e1b386750c2774","1":"b2fe27352bd29f3c9790","2":"823f99dfe23c84f6cf8b","3":"0641965f34c864064388","4":"8573ae58d36b4809128a","5":"c258059ed3aa68d6b1a2","6":"8eefa19d8a430d7bc20a","7":"a22fd69f317c27726148","8":"e8a96335b08b75cd01cd","9":"d367e8ee8c1654b58e36","10":"e6bcfbca674fe5ccf39e","11":"29de4dd32a0afacc114c","12":"aa9c30799eb111ba589b","13":"113bd9ce3a6c209b967a","14":"0db562ff85821d4c2240","15":"088d6fa965a4d272464d","16":"ad456c813ef8ddcc1490","17":"6df765f681d5a868964e","18":"2d2796957e1f3a4e0722","19":"900e3be8d2bcc976f495","20":"2af8bc4e2817ec28f795","21":"abe00cf62336e2668d38","22":"a89731d0c31cd00d2d7c","23":"8c935d6c2c712e85cdf8","24":"576eb5b32efdd534ee98","25":"14a104fa10da66c9f05a","26":"81bf1fb33b050ba93dd3","27":"3dff2bc0a328e3abaa3b","28":"0e85d9b47b8e67c08abc","29":"5f4e8564fd204382fc85","30":"a725d69ab1d68a21fe0d","31":"624cb66a2279160f2d8d","32":"56e0cb98d1eb93e2bab3","33":"5f3aeef4e79477749df1","34":"71a7cb84f29d1be0e444","35":"4ef5baa9e15dcadfbd60","36":"6cffd09ce49620437dd1","37":"f4c68fbb2350a60e4c9e","38":"e8950ce9cbe9cab3db58"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -89827,6 +89827,11 @@ var Ziggy = {
       "methods": ["DELETE"],
       "domain": null
     },
+    "client.verify.email": {
+      "uri": "klien\/{client}\/verifikasi-email",
+      "methods": ["GET", "HEAD"],
+      "domain": null
+    },
     "booking.table": {
       "uri": "booking\/table",
       "methods": ["GET", "HEAD"],
@@ -90803,9 +90808,9 @@ var Ziggy = {
       "domain": null
     }
   },
-  baseUrl: 'http://localhost/',
+  baseUrl: 'http://epic-cicilan.test/',
   baseProtocol: 'http',
-  baseDomain: 'localhost',
+  baseDomain: 'epic-cicilan.test',
   basePort: false,
   defaultParameters: []
 };

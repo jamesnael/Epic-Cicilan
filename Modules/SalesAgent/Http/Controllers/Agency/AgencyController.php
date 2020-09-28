@@ -10,6 +10,7 @@ use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Modules\Commission\Entities\Commission;
 use Modules\SalesAgent\Entities\MainCoordinator;
 use Illuminate\Support\Facades\Validator;
+use Modules\AppUser\Entities\User;
 use Illuminate\Support\Facades\DB;
 
 class AgencyController extends Controller
@@ -107,6 +108,20 @@ class AgencyController extends Controller
 
         DB::beginTransaction();
         try {
+
+            $request->merge([
+                'status' => 'sub_agent',
+                'full_name' => $request->agency_name,
+                'email' => $request->agency_email,
+                'address' => $request->agency_address,
+                'phone_number' => $request->agency_phone,
+            ]);
+
+            $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
+
+            $request->merge([
+                'user_id' => $user->id
+            ]);
 
             $data = Agency::create($request->all());
 
@@ -304,7 +319,7 @@ class AgencyController extends Controller
     {
         return Validator::make($request->all(), [
             "agency_name" => "bail|required|string|max:255",
-            "agency_email" => "bail|required|required|email",
+            "agency_email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
             "agency_phone" => "bail|required|string|max:255",
             "agency_address" => "bail|nullable|string|max:255",
             "province" => "bail|nullable|string|max:255",

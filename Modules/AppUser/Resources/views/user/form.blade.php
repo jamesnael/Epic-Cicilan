@@ -44,16 +44,6 @@
     		            @click:append="show1 = !show1"
     		          ></v-text-field>
 	    		</validation-provider>
-	    		{{-- <validation-provider v-slot="{ errors }" name="Hak akses user" rules="">
-		    		<v-select
-		    			v-model="form_data.role_id" 
-		              	:items="filter_role"
-		              	label="Hak Akses User"
-			    		:persistent-hint="true"
-			    		:error-messages="errors"
-			    		:readonly="field_state"
-		            ></v-select>
-	    		</validation-provider> --}}
 	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:15">
 		    		<v-text-field
 		    			class="mt-4"
@@ -84,28 +74,6 @@
 			    		:readonly="field_state">
 	    			</v-textarea>
 	    		</validation-provider>
-	    		{{-- <validation-provider v-slot="{ errors }" name="Province" rules="max:255">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="form_data.province"
-		    			name="province"
-		    			label="Province"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider>
-	    		<validation-provider v-slot="{ errors }" name="Kota" rules="max:255">
-		    		<v-text-field
-		    			class="mt-4"
-		    			v-model="form_data.city"
-		    			name="city"
-			    		label="Kota"
-			    		:counter="255"
-			    		:error-messages="errors"
-			    		:readonly="field_state">
-	    			</v-text-field>
-	    		</validation-provider> --}}
 	    		<address-input inline-template
 	    			:province-value="form_data.province"
 	    			province-class="mt-4"
@@ -119,6 +87,20 @@
 	    		>
 	    			@include('core::address')
 	    		</address-input>
+
+	    		<validation-provider v-slot="{ errors }" name="Hak akses user" rules="required">
+		    		 <v-autocomplete
+		    			class="mt-4"
+		    			v-model="form_data.role_id" 
+		              	:items="filter_role"
+		              	label="Hak Akses User"
+		              	name="role_id"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-autocomplete>
+	    		</validation-provider>
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"

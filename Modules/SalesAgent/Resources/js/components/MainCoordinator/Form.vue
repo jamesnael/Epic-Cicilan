@@ -35,6 +35,7 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+                showPassword: false,
             	form_data: {
             		full_name: '',
             		phone_number: '',
@@ -49,6 +50,7 @@
             		ppn: '',
             		pph_21: '',
             		pph_23: '',
+                    password:''
             	}
         	}
         },

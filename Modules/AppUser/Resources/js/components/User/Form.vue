@@ -83,7 +83,7 @@
     		            			address: data.address,
     		            			province: data.province,
     		            			city: data.city,
-    		            			role_id:''
+    		            			role_id:data.role_id
     		            		}
 
     			                this.field_state = false

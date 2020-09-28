@@ -53,10 +53,6 @@
 	            formAlertState: 'info',
 	            show1: false,
 	            refreshCK: true,
-	            rules: {
-	                      required: value => !!value || 'Required.',
-	                      min: v => v.length >= 8 || 'Min 8 karakter',
-	                    },
             	form_data: {
             		full_name: '',
             		email: '',
@@ -67,6 +63,8 @@
             		city: '',
             		role_id:'',
             		hak_akses: [],
+            		role_name: '',
+            		description:''
             	},
             	menu: '',
         	}
@@ -104,23 +102,7 @@
     		            .get(this.dataUri)
     		            .then(response => {
     		            	if (response.data.success) {
-    		            		console.log(response)
     		            		let data = response.data.data
-
-    		            		// var items = []
-                    //            _.forEach(this.filter_menu, (key) => {
-                    //    	        	if (key['has_child'] == 'true') {
-                   	// 	                _.forEach(key['submenu'], (parent) => {
-                   	// 	                	_.forEach(parent['routes'], (route) => {
-                   	// 	                	    this.form_data.hak_akses.push(route.uri)
-                   	// 	                	});
-                   	// 	                });
-                    //    	        	}else{
-                    //    	        		_.forEach(key['routes'], (child) => {
-                   	// 	                    this.form_data.hak_akses.push(child.uri)
-                   	// 	                });
-                    //    	        	}
-                    //    	        });
 
     		            		this.form_data = {
     		            			full_name: data.full_name,
@@ -131,7 +113,10 @@
     		            			city: data.city,
     		            			role_id:'',
 
-    		            			hak_akses: response.data.filter ? response.data.filter : []
+    		            			role_name: data.role_name,
+    		            			description: data.description,
+
+    		            			hak_akses: data.user_access ? data.user_access : []
     		            		},
 
 

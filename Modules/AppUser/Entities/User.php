@@ -28,7 +28,8 @@ class User extends Authenticatable
         'city',
         'province',
         'role_id',
-        'user_access'
+        'user_access',
+        'status'
     ];
 
     /**
@@ -112,5 +113,29 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasOne('Modules\SalesAgent\Entities\Sales', 'user_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function main_coordinator()
+    {
+        return $this->hasOne('Modules\SalesAgent\Entities\MainCoordinator', 'user_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function regional_coordinator()
+    {
+        return $this->hasOne('Modules\SalesAgent\Entities\RegionalCoordinator', 'user_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function agency()
+    {
+        return $this->hasOne('Modules\SalesAgent\Entities\Agency', 'user_id');
     }
 }

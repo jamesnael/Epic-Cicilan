@@ -27,6 +27,7 @@ class MainCoordinator extends Model
         'ppn',
         'pph_21',
         'pph_23',
+        'user_id'
     ];
 
     /**
@@ -156,5 +157,13 @@ class MainCoordinator extends Model
     public function exchange()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorUmum', 'main_coordinator_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function user()
+    {
+        return $this->belongsTo('Modules\AppUser\Entities\User', 'user_id');
     }
 }

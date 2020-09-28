@@ -28,6 +28,7 @@ class RegionalCoordinator extends Model
         'ppn',
         'pph_21',
         'pph_23',
+        'user_id'
     ];
 
     /**
@@ -155,5 +156,13 @@ class RegionalCoordinator extends Model
     public function exchange()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointKoorWilayah', 'regional_coordinator_id');
+    }
+
+     /**
+     * Get the relationship for the model.
+     */
+    public function user()
+    {
+        return $this->belongsTo('Modules\AppUser\Entities\User', 'user_id');
     }
 }

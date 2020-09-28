@@ -106,7 +106,11 @@ class SalesController extends Controller
         DB::beginTransaction();
         try {
 
-            $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city']));
+            $request->merge([
+                'status' => 'sales'
+            ]);
+
+            $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
             
             $request->merge([
                 'user_id' => $user->id
