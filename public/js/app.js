@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"835e9bc6f721368b08d0","1":"9260b16a27c39c05e0f8","2":"652b0264e3188d824f5c","3":"3cae66f17c9a1106218d","4":"3b3c5b56a8f7ed65aa5a","5":"179e631c130da701733c","6":"9afa5377fcf79da6826c","7":"0c784901a008d618b198","8":"0a475a04615819ffdf56","9":"edfbf831775bf7756d6f","10":"b320d451d177eb719eb7","11":"1a6a42e68f66a60a0240","12":"b1ccf5bc95b4f7ef19d8","13":"bad7fe7b334cf646f6c8","14":"222e65b424f832b2fb06","15":"994d771c88ab89a94789","16":"7c28d9035aac0db02f15","17":"e439277a4fba75d869ee","18":"10ebf4d755c63ac85c4e","19":"52a8ab7075cb78c3f51a","20":"db4cda77b53febe3ff7e","21":"d3d86fc0c40dc3cee3f9","22":"39ebca48d9ab43afa9f8","23":"4a673e5eb336fd2d8115","24":"976f9a1e9af3b621098b","25":"0b55096e3f7d5d5336fc","26":"5047bff502b5da3aebe3","27":"5fcaa9e2691bbfa3f0cf","28":"f059053bc135fa4d28d3","29":"14cf400dc24a5b366808","30":"d16aa1fb7979ea2a8c8a","31":"437c9cc0a23227e858f3","32":"37e6eddd92f232dee11f","33":"3c88af0db7285797de54","34":"5aadaddc67d0c53bbaed","35":"34683531a5a7831ad710","36":"407ad7170beb4356107b","37":"c5fb0c1249779908825d","38":"decfa7debfe3aa4f1066"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "public/chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"835e9bc6f721368b08d0","1":"9260b16a27c39c05e0f8","2":"652b0264e3188d824f5c","3":"3d6ce782fd22e6d9cc80","4":"3b3c5b56a8f7ed65aa5a","5":"179e631c130da701733c","6":"9afa5377fcf79da6826c","7":"0c784901a008d618b198","8":"0a475a04615819ffdf56","9":"edfbf831775bf7756d6f","10":"b320d451d177eb719eb7","11":"1a6a42e68f66a60a0240","12":"e04c7ce6c3bc96efc852","13":"bad7fe7b334cf646f6c8","14":"222e65b424f832b2fb06","15":"994d771c88ab89a94789","16":"7c28d9035aac0db02f15","17":"e439277a4fba75d869ee","18":"10ebf4d755c63ac85c4e","19":"52a8ab7075cb78c3f51a","20":"db4cda77b53febe3ff7e","21":"d3d86fc0c40dc3cee3f9","22":"39ebca48d9ab43afa9f8","23":"4a673e5eb336fd2d8115","24":"976f9a1e9af3b621098b","25":"0b55096e3f7d5d5336fc","26":"5047bff502b5da3aebe3","27":"5fcaa9e2691bbfa3f0cf","28":"f059053bc135fa4d28d3","29":"14cf400dc24a5b366808","30":"d16aa1fb7979ea2a8c8a","31":"437c9cc0a23227e858f3","32":"37e6eddd92f232dee11f","33":"3c88af0db7285797de54","34":"5aadaddc67d0c53bbaed","35":"34683531a5a7831ad710","36":"407ad7170beb4356107b","37":"c5fb0c1249779908825d","38":"decfa7debfe3aa4f1066"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -89603,12 +89603,12 @@ var Ziggy = {
       "domain": null
     },
     "salescommission.table.korwil": {
-      "uri": "komisi-sales\/table\/korwil",
+      "uri": "komisi-sales\/table\/koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "salescommission.table.korut": {
-      "uri": "komisi-sales\/table\/korut",
+      "uri": "komisi-sales\/table\/koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -89638,12 +89638,12 @@ var Ziggy = {
       "domain": null
     },
     "salescommission.edit.korwil": {
-      "uri": "komisi-sales\/{salescommission}\/ubah-korwil",
+      "uri": "komisi-sales\/{salescommission}\/ubah-koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "salescommission.edit.korut": {
-      "uri": "komisi-sales\/{salescommission}\/ubah-korut",
+      "uri": "komisi-sales\/{salescommission}\/ubah-koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90513,12 +90513,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.table": {
-      "uri": "tukar-point\/table-korwil",
+      "uri": "tukar-point\/table-koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.table": {
-      "uri": "tukar-point\/table-korut",
+      "uri": "tukar-point\/table-koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90543,22 +90543,22 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-history-korwil.table": {
-      "uri": "tukar-point\/table-korwil-history\/{id}",
+      "uri": "tukar-point\/table-koordinator-wilayah-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korwil-get-point.table": {
-      "uri": "tukar-point\/table-korwil-history-get-point\/{id}",
+      "uri": "tukar-point\/table-koordinator-wilayah-history-get-point\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korut.table": {
-      "uri": "tukar-point\/table-korut-history\/{id}",
+      "uri": "tukar-point\/table-koordinator-utama-history\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-history-korut-get-point.table": {
-      "uri": "tukar-point\/table-korut-history-get-point\/{id}",
+      "uri": "tukar-point\/table-koordinator-utama-history-get-point\/{id}",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90578,12 +90578,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.history": {
-      "uri": "tukar-point\/{tukar_point}\/history_korwil",
+      "uri": "tukar-point\/{tukar_point}\/history_koordinator_wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.history": {
-      "uri": "tukar-point\/{tukar_point}\/history_korut",
+      "uri": "tukar-point\/{tukar_point}\/history_koordinator_utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
@@ -90598,12 +90598,12 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-korwil.destroy": {
-      "uri": "tukar-point\/{tukar_point}\/cancel_korwil",
+      "uri": "tukar-point\/{tukar_point}\/cancel_koordinator_wilayah",
       "methods": ["DELETE"],
       "domain": null
     },
     "tukar-point-korut.destroy": {
-      "uri": "tukar-point\/{tukar_point}\/cancel_korut",
+      "uri": "tukar-point\/{tukar_point}\/cancel_koordinator_utama",
       "methods": ["DELETE"],
       "domain": null
     },
@@ -90613,17 +90613,17 @@ var Ziggy = {
       "domain": null
     },
     "tukar-point-agency.create": {
-      "uri": "tukar-point\/tambah\/agency",
+      "uri": "tukar-point\/tambah\/sub-agent",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korwil.create": {
-      "uri": "tukar-point\/tambah\/korwil",
+      "uri": "tukar-point\/tambah\/koordinator-wilayah",
       "methods": ["GET", "HEAD"],
       "domain": null
     },
     "tukar-point-korut.create": {
-      "uri": "tukar-point\/tambah\/korut",
+      "uri": "tukar-point\/tambah\/koordinator-utama",
       "methods": ["GET", "HEAD"],
       "domain": null
     },

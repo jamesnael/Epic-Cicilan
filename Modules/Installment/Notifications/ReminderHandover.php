@@ -44,7 +44,7 @@ class ReminderHandover extends Notification
     {
         return (new MailMessage)
                     ->subject('Notifikasi Acara Akad Kredit KPR')
-                    ->view('installment::emails.reminder_akad', 
+                    ->view('installment::emails.reminder_handover', 
                         ['booking' => $this->booking]
                     );
     }

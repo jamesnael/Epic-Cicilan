@@ -133,6 +133,13 @@
         	}
         },
         computed:{
+            hargaExcludePPN: function() {
+                if (this.total_amount) {
+                    return  _.isNumber(parseInt(this.total_amount)) ? _.round(parseInt(this.total_amount) / 1.1, 0) : 0;
+                }
+
+                return 0;
+            },
             principal: function() {
                 if (this.payment_type == 'KPR/KPA') {
                     this.credits = parseInt(this.total_amount) - parseInt(this.dp_amount);

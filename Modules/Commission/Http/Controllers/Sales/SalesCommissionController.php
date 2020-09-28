@@ -400,7 +400,7 @@ class SalesCommissionController extends Controller
      */
     public function editKorwil(Booking $salescommission)
     {
-        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sub Agent'];
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Koordinator Wilayah'];
 
         return view('commission::salescommission.edit-korwil',[
             'page' => $this,
@@ -415,7 +415,7 @@ class SalesCommissionController extends Controller
      */
     public function editKorut(Booking $salescommission)
     {
-        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Sales'];
+        $this->breadcrumbs[] = ['href' => route('salescommission.index'), 'text' => 'Edit Komisi Koordinator Utama'];
 
         return view('commission::salescommission.edit-korut',[
             'page' => $this,
@@ -679,7 +679,7 @@ class SalesCommissionController extends Controller
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_agent = $item->sales->agency->agency_commission;
 
-            $item->komisi_bruto = ($item->total_amount * $item->commission_agent) /100;
+            $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_agent) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
                                                         (($item->komisi_bruto * $item->pph_21) /100) - 
                                                         (($item->komisi_bruto * $item->ppn) /100) - 
@@ -796,7 +796,7 @@ class SalesCommissionController extends Controller
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_korwil = $item->sales->agency->regional_coordinator_commission;
 
-            $item->komisi_bruto = ($item->total_amount * $item->commission_korwil) /100;
+            $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_korwil) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
                                                         (($item->komisi_bruto * $item->pph_21) /100) - 
                                                         (($item->komisi_bruto * $item->ppn) /100) - 
@@ -914,7 +914,7 @@ class SalesCommissionController extends Controller
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_korut = $item->sales->agency->main_coordinator_commission;
 
-            $item->komisi_bruto = ($item->total_amount * $item->commission_korut) /100;
+            $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_korut) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
                                                         (($item->komisi_bruto * $item->pph_21) /100) - 
                                                         (($item->komisi_bruto * $item->ppn) /100) - 
@@ -1096,6 +1096,7 @@ class SalesCommissionController extends Controller
     public function data(Booking $salescommission)
     {
         $data = $salescommission->load('unit','client','sales','commission','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
+        $data->total_amount = round($data->total_amount / 1.1, 0);
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {

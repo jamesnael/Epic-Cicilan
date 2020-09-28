@@ -58,7 +58,8 @@
 				    			v-model="form_data.unit_price"
 				    			name="unit_price"
 					    		:error-messages="errors"
-					    		label="Harga Unit + PPN"
+					    		label="Harga Unit tanpa PPN"
+					    		hide-details="auto"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -108,7 +109,7 @@
 				    			v-model="form_data.korwil_name"
 				    			name="korwil_name"
 					    		:error-messages="errors"
-					    		label="Nama Korwil"
+					    		label="Nama Koordinator Wilayah"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
 			    			</v-text-field>
@@ -121,7 +122,7 @@
 				    		<v-text-field
 				    			v-model="form_data.korwil_commission"
 				    			name="korwil_commission"
-					    		label="Komisi Korwil (%)"
+					    		label="Komisi Koordinator Wilayah (%)"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
@@ -180,6 +181,7 @@
 				    		<v-text-field
 				    			:value="korwil_bruto_commission"
 					    		label="Komisi Bruto"
+					    		hide-details="auto"
 					    		:error-messages="errors"
 					    		:readonly="!field_state"
 					    		:disabled="field_state">
@@ -200,6 +202,7 @@
 					    			v-model="korwil_commission_1"
 					    			name="korwil_commission_1"
 						    		:persistent-hint="true"
+						    		hide-details="auto"
 						    		:error-messages="errors"
 						    		label="Pencairan 1 Komisi (50%)"
 						    		:readonly="!field_state"
@@ -283,6 +286,7 @@
 					    			v-model="korwil_commission_2"
 					    			name="korwil_commission_2"
 						    		:persistent-hint="true"
+						    		hide-details="auto"
 						    		:error-messages="errors"
 						    		label="Pencairan 2 Komisi (50%)"
 						    		:readonly="!field_state"

@@ -548,6 +548,16 @@
 	    			</v-text-field>
 	    			<small class="form-text text-muted">Rp @{{total_amount ? number_format(total_amount) : 0 }}</small>
 	    		</validation-provider>
+	    		<v-text-field
+	    			class="mt-4"
+	    			v-model="hargaExcludePPN"
+	    			name="harga_exclude_ppn"
+	    			hide-details="auto"
+		    		label="Harga tanpa PPN"
+		    		:readonly="!field_state"
+		    		:disabled="field_state">
+    			</v-text-field>
+    			<small class="form-text text-muted">Rp @{{hargaExcludePPN ? number_format(hargaExcludePPN) : 0 }}</small>
 	    		<validation-provider v-slot="{ errors }" name="DP" rules="numeric|min:0">
 		    		<v-text-field
 		    			class="mt-4"
