@@ -29,5 +29,12 @@ public function getRouteKeyName()
     }
 
 
+  public function point()
+    {
+        return $this->hasMany('Modules\RewardPoint\Entities\Point', 'cluster_id');
+    }
+
+
+
 }
 

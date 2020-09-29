@@ -11,7 +11,8 @@ class Point extends Model
 	use Sluggable,SoftDeletes;
 
     protected $fillable = [
-	    'slug',
+	    'cluster_id',
+        'slug',
 	    'building_type',
 	    'point',
         'closing_fee',
@@ -58,4 +59,11 @@ class Point extends Model
     {
         return 'slug';
     }
+
+
+  public function cluster()
+    {
+        return $this->belongsTo('Modules\Installment\Entities\Cluster', 'cluster_id');
+    }
+
 }

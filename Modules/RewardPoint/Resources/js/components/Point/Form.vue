@@ -26,6 +26,12 @@
 			    type: String,
 			    default: ''
 			},
+			filter_cluster: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
 		},
 		data: function () {
             return {
@@ -35,6 +41,7 @@
 	            formAlertState: 'info',
             	form_data: {
             		building_type: '',
+            		cluster_id: '',
             		point: '',
             		closing_fee:''
             	}
@@ -57,6 +64,7 @@
     		            			building_type: data.building_type,
     		            			point: data.point,
     		            			closing_fee: data.closing_fee,
+    		            			cluster_id: data.cluster_id,
     		            		}
 
     			                this.field_state = false
