@@ -323,12 +323,11 @@
 		    		            multiple 
 		    		            label="Pilih Dokumen"
 		    		            v-model="form_data.handover_doc_file_name"
-		    		            hint="* harus diisi"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				              	name="file_upload">
 			              </v-file-input>
-			              <a :href="form_data.file_upload" target="_blank" class="ml-8" v-if="form_data.file_upload !== ''">
+			              <a :href="form_data.file_upload" target="_blank" class="ml-8" v-if="form_data.file_upload">
 			              	<small>@{{form_data.handover_doc_file_name}}</small>
 			              </a>
 
