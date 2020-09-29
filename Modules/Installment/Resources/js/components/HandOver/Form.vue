@@ -60,6 +60,7 @@
                 menu4: false,
                 menu5: false,
                 menu6: false,
+                menu7: false,
 	            datepicker: false,
                 items_approval: [
                     'Approved',
@@ -82,6 +83,7 @@
 	            unit_handover: [],
             	form_data: {
                     handover_date: new Date().toISOString().substr(0, 10),
+                    bast_date: new Date().toISOString().substr(0, 10),
                     payment_date: new Date().toISOString().substr(0, 10),
             		unit_type:'',
             		client_name:'',
@@ -179,6 +181,7 @@
     		            			main_coordinator: data.sales.main_coordinator ? data.sales.main_coordinator.full_name : '',
     		            			regional_coordinator:data.sales.regional_coordinator ? data.sales.regional_coordinator.full_name : '',
                                     handover_date: data.handover ? data.handover.handover_date : null,
+                                    bast_date: data.handover ? data.handover.bast_date : null,
                                     time: data.handover ? this.reformatDateTime(data.handover.time, 'HH:mm:ss', 'HH:mm') : null,
                                     location: data.handover ? data.handover.location : null,
                                     address: data.handover ? data.handover.address : null,
@@ -238,6 +241,7 @@
                     data.append("_method", "put");
                     data.append("booking_id", this.form_data.booking_id);
                     data.append("handover_date", this.form_data.handover_date);
+                    data.append("bast_date", this.form_data.bast_date);
                     data.append("time", this.form_data.time);
                 }
                 
