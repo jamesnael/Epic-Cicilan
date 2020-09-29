@@ -3,9 +3,12 @@
 namespace Modules\AppUser\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Role extends Model
 {
+
+    use Sluggable;
     /**
      * The attributes that are mass assignable.
      *
@@ -14,6 +17,7 @@ class Role extends Model
     protected $fillable = [
         'role_name',
         'description',
+        'user_access',
     ];
 
     /**
@@ -31,7 +35,7 @@ class Role extends Model
      * @var array
      */
     protected $casts = [
-        
+        'user_access' => 'array',
     ];
 
     /**
@@ -40,6 +44,30 @@ class Role extends Model
     public function users()
     {
         return $this->hasMany('Modules\AppUser\Entities\User', 'role_id');
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => ['role_name', uniqid()],
+            ]
+        ];
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }

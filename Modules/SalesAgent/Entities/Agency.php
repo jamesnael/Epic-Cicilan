@@ -43,6 +43,7 @@ class Agency extends Model
         'ppn',
         'pph_21',
         'pph_23',
+        'user_id'
     ];
 
     /**
@@ -172,5 +173,13 @@ class Agency extends Model
     public function exchange()
     {
         return $this->hasMany('Modules\RewardPoint\Entities\ExchangePointSubAgent', 'agency_id');
+    }
+
+    /**
+     * Get the relationship for the model.
+     */
+    public function user()
+    {
+        return $this->belongsTo('Modules\AppUser\Entities\User', 'user_id');
     }
 }

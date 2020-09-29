@@ -20,7 +20,7 @@ class RoleUserController extends Controller
     public function __construct()
     {
         $this->middleware(['auth'])->except(['data']);
-        // $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('role.index'), 'text' => 'Hak Akses User'],
@@ -35,34 +35,16 @@ class RoleUserController extends Controller
     {
         $this->table_headers = [
             [
-                "text" => 'Nama User',
+                "text" => 'Nama Hak Akses User',
                 "align" => 'center',
                 "sortable" => false,
-                "value" => 'full_name',
-            ],
-            // [
-            //     "text" => 'Hak Akses',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => 'role.role_name',
-            // ],
-            [
-                "text" => 'Email',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'email',
+                "value" => 'role_name',
             ],
             [
-                "text" => 'Nomor Telepon',
+                "text" => 'Keterangan',
                 "align" => 'center',
                 "sortable" => false,
-                "value" => 'phone_number',
-            ],
-            [
-                "text" => 'Alamat',
-                "align" => 'center',
-                "sortable" => false,
-                "value" => 'address',
+                "value" => 'description',
             ]
            
         ];
@@ -77,20 +59,59 @@ class RoleUserController extends Controller
      */
     public function create()
     {
+        $path = storage_path() . "/app/public/app-access.json";
+        $hak_akses = json_decode(file_get_contents($path), true);
+
         $this->breadcrumbs[] = ['href' => route('role.index'), 'text' => 'Tambah Hak Akses User'];
 
         return view('appuser::role.create', [
             'page' => $this,
             'role' => Role::select('id AS value', 'role_name AS text')->get(),
+            'menu' => $hak_akses,
         ]);
     }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validator = $this->validateFormRequest($request);
+
+        if ($validator->fails()) {
+            return response_json(false, 'Isian form salah', $validator->errors()->first());
+        }
+
+        DB::beginTransaction();
+        try {
+
+            $request->merge(['user_access' => $request->input('hak_akses')]);
+            $data = Role::create($request->all());
+            
+            activity()
+               ->performedOn($data)
+               ->causedBy(\Auth::user())
+               ->log('Hak akses user berhasil dibuat');
+
+            DB::commit();
+            return response_json(true, null, 'Hak akses user berhasil disimpan.', $data);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
      * @return Response
      */
-    public function edit(User $role)
+    public function edit(Role $role)
     {
         $path = storage_path() . "/app/public/app-access.json";
         $hak_akses = json_decode(file_get_contents($path), true);
@@ -126,7 +147,7 @@ class RoleUserController extends Controller
      * @param  \App\Models\User  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $role)
+    public function update(Request $request, Role $role)
     {
         $validator = $this->validateFormRequest($request, $role->id);
 
@@ -171,15 +192,13 @@ class RoleUserController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::query();
+        $query = Role::query();
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
             $query->where(function($subquery) use ($generalSearch) {
-                $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
+                $subquery->where('role_name', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -221,11 +240,10 @@ class RoleUserController extends Controller
      * Handle incoming request for specific data
      *
      */
-    public function data(User $role)
+    public function data(Role $role)
     {
         try {
-            $hak_akses = $role->user_access;
-            return response_json(true, null, 'Sukses mengambil data.', $role, $hak_akses);
+            return response_json(true, null, 'Sukses mengambil data.', $role);
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }

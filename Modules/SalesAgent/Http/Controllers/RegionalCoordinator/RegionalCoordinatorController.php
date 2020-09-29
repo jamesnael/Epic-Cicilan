@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SalesAgent\Entities\RegionalCoordinator;
 use Modules\SalesAgent\Entities\MainCoordinator;
+use Modules\AppUser\Entities\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -106,7 +107,19 @@ class RegionalCoordinatorController extends Controller
 
         DB::beginTransaction();
         try {
+
+            $request->merge([
+                'status' => 'koordinator_wilayah'
+            ]);
+
+            $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
+
+            $request->merge([
+                'user_id' => $user->id
+            ]);
+
             $data = RegionalCoordinator::create($request->all());
+
             DB::commit();
             return response_json(true, null, 'Data koordinator wilayah berhasil disimpan.', $data);
         } catch (\Exception $e) {
@@ -306,7 +319,7 @@ class RegionalCoordinatorController extends Controller
     {
         return Validator::make($request->all(), [
             "full_name" => "bail|required|string|max:255",
-            "email" => "bail|required|required|email",
+            "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
             "phone_number" => "bail|required|numeric",
             "address" => "bail|nullable|string|max:255",
         ]);

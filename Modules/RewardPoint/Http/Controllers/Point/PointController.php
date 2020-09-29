@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\RewardPoint\Entities\Point;
+use Modules\Installment\Entities\Cluster;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -40,6 +41,12 @@ class PointController extends Controller
                 "value" => 'building_type',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Point',
                 "align" => 'center',
                 "sortable" => false,
@@ -67,7 +74,7 @@ class PointController extends Controller
 
         return view('rewardpoint::point.create', [
             'page' => $this,
-        ]);
+        ])->with($this->getHelper());
     }
 
      /**
@@ -108,7 +115,7 @@ class PointController extends Controller
             'page' => $this,
             'data' => $point,
 
-        ]);
+        ])->with($this->getHelper());
     }
 
     /**
@@ -179,7 +186,7 @@ class PointController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Point::orderBy('created_at', 'DESC');
+        $query = Point::with('cluster')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -197,6 +204,7 @@ class PointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
+            $item->cluster_name = $item->cluster->cluster_name;
             return $item;
         });
         return $data;
@@ -251,5 +259,26 @@ class PointController extends Controller
             "closing_fee" => "bail|required|numeric",
         ]);
     }
+
+
+    public function getHelper()
+    {
+        return [
+            'cluster_name' => Cluster::select('id AS value', 'cluster_name AS text')->get()
+        ];
+    }
+
+
+    public function formHelper()
+    {
+        try {
+            return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
+        } catch (Exception $e) {
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+
 
 }

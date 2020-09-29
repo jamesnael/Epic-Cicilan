@@ -48,6 +48,7 @@
             	formAlert: false,
 	            formAlertText: '',
 	            formAlertState: 'info',
+	            showPassword: false,
             	form_data: {
             		regional_coordinator_id: '',
             		agency_name: '',
@@ -70,6 +71,7 @@
             		ppn: '',
             		pph_21: '',
             		pph_23: '',
+            		password: ''
             	}
         	}
         },

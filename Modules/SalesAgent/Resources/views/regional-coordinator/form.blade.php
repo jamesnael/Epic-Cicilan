@@ -39,6 +39,21 @@
 			    		:readonly="field_state">
 	    			</v-text-field>
 	    		</validation-provider>
+	    		<validation-provider v-if="!dataUri" v-slot="{ errors }" name="Password" rules="required">
+		    		<v-text-field
+    		            v-model="form_data.password"
+    		            :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+    		            :type="showPassword ? 'text' : 'password'"
+    		            hint="* harus diisi minimal 8 karakter"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+    		            name="password"
+    		            label="Password"
+    		            counter
+    		            @click:append="showPassword = !showPassword"
+    		          ></v-text-field>
+	    		</validation-provider>
 	    		<validation-provider v-slot="{ errors }" name="Nomor HP" rules="required|max:15">
 		    		<v-text-field
 		    			class="mt-4"

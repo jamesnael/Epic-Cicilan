@@ -2,7 +2,7 @@
     <v-card flat>
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-		    	<v-card
+		    	{{-- <v-card
 	              elevation="5"
 	              >
 	              <v-card-title>
@@ -74,7 +74,7 @@
 	                    </v-col>
 	                </v-row>
 	              </v-card-text>
-	            </v-card>
+	            </v-card> --}}
 
 	            <v-card
 	              class="mt-6"
@@ -84,6 +84,31 @@
 	                Hak Akses User
 	              </v-card-title>
 	              <v-card-text>
+      	    		<validation-provider v-slot="{ errors }" name="Nama hak akses user" rules="required|max:255">
+      		    		<v-text-field
+      		    			class="mt-4"
+      		    			v-model="form_data.role_name"
+      		    			name="role_name"
+      			    		label="Nama Hak Akses User"
+      			    		hint="* harus diisi"
+      			    		:persistent-hint="true"
+      			    		:counter="255"
+      			    		:error-messages="errors"
+      			    		:readonly="field_state">
+      	    			</v-text-field>
+      	    		</validation-provider>
+      	    		<validation-provider v-slot="{ errors }" name="Keterangan" rules="">
+      		    		<v-text-field
+      		    			class="mt-4"
+      		    			v-model="form_data.description"
+      		    			name="description"
+      			    		label="Keterangan"
+      			    		{{-- hint="* harus diisi"
+      			    		:persistent-hint="true" --}}
+      			    		:error-messages="errors"
+      			    		:readonly="field_state">
+      	    			</v-text-field>
+      	    		</validation-provider>
 	                <v-row>
 	                    <v-col
 	                        cols="12"
