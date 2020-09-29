@@ -860,7 +860,11 @@ class TukarPointController extends Controller
      */
     public function getTableDataSales(Request $request)
     {
-        $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking');
+        if (\Auth::user()->is_admin){
+            $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking');
+        } else {
+            $query = Sales::with('regional_coordinator', 'main_coordinator', 'agency', 'user', 'point', 'booking')->where('id', \Auth::user()->sales->id);
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -936,8 +940,12 @@ class TukarPointController extends Controller
      */
     public function getTableDataAgent(Request $request)
     {
-        $query = Agency::with('regional_coordinator', 'point');
-
+        if (\Auth::user()->is_admin){
+            $query = Agency::with('regional_coordinator', 'point');
+        } else {
+            $query = Agency::with('regional_coordinator', 'point')->where('id', \Auth::user()->agency->id);
+        }
+        
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -1002,7 +1010,11 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorwil(Request $request)
     {
-        $query = RegionalCoordinator::with('main_coordinator', 'agency');
+        if (\Auth::user()->is_admin){
+            $query = RegionalCoordinator::with('main_coordinator', 'agency');
+        } else {
+            $query = RegionalCoordinator::with('main_coordinator', 'agency')->where('id', \Auth::user()->regional_coordinator->id);
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1068,7 +1080,11 @@ class TukarPointController extends Controller
      */
     public function getTableDataKorut(Request $request)
     {
-        $query = MainCoordinator::with('regional_coordinators', 'point');
+        if (\Auth::user()->is_admin){
+            $query = MainCoordinator::with('regional_coordinators', 'point');
+        } else {
+            $query = MainCoordinator::with('regional_coordinators', 'point')->where('id', \Auth::user()->main_coordinator->id);
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
