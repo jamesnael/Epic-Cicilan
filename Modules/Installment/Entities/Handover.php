@@ -39,7 +39,7 @@ class Handover extends Model
      */
     public function getUrlDocFileNameAttribute()
     {
-        return $this->attributes['handover_doc_file_name'] ? Storage::disk('public')->url('app/public/handover/handover_doc_file_names/'.$this->attributes['handover_doc_file_name']) : null;
+        return (!empty($this->attributes['handover_doc_file_name'])) ? Storage::disk('public')->url('app/public/handover/handover_doc_file_names/'.$this->attributes['handover_doc_file_name']) : null;
     }
 
     /**
