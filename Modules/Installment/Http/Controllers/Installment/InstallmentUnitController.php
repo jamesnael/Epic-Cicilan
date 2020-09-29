@@ -63,6 +63,13 @@ class InstallmentUnitController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+     
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -119,6 +126,13 @@ class InstallmentUnitController extends Controller
                 "sortable" => false,
                 "value" => 'unit_number',
             ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+     
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
@@ -452,7 +466,7 @@ class InstallmentUnitController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit','payments','sales.user')->whereIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
+        $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')->whereIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -491,7 +505,7 @@ class InstallmentUnitController extends Controller
             $item->dp_amount = 'Rp '.format_money($item->dp_amount);
             $item->installment = 'Rp '.format_money($item->installment);
             $item->sales_name = $item->sales->user->full_name;
-
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;
@@ -569,7 +583,7 @@ class InstallmentUnitController extends Controller
      */
     public function getTableDataLunas(Request $request)
     {
-        $query = Booking::with('client','unit','payments','sales.user')->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
+        $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -608,7 +622,7 @@ class InstallmentUnitController extends Controller
             $item->dp_amount = 'Rp '.format_money($item->dp_amount);
             $item->installment = 'Rp '.format_money($item->installment);
             $item->sales_name = $item->sales->user->full_name;
-
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

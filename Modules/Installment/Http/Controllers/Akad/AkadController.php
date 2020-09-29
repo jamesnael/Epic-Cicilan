@@ -64,6 +64,13 @@ class AkadController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+ 
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -126,6 +133,13 @@ class AkadController extends Controller
                 "sortable" => false,
                 "value" => 'unit_number',
             ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+ 
             [
                 "text" => 'Harga Unit',
                 "align" => 'center',
@@ -295,8 +309,8 @@ class AkadController extends Controller
                     'akad_doc_sign_file_name' => $file_name_akhir,
                 ]);
 
-                Notification::route('mail', $akad->client->client_email)
-                            ->notify(new ReminderAkad($akad));
+                // Notification::route('mail', $akad->client->client_email)
+                //             ->notify(new ReminderAkad($akad));
             }
 
             if ($akad->akad_kpr) {
@@ -390,7 +404,7 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb');
+        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster');
 
 
         if ($request->input('search')) {
@@ -436,7 +450,8 @@ class AkadController extends Controller
             $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? 'Pending';
             $item->approved_developer = $item->akad_kpr->approval_developer_status ?? 'Pending';
             $item->sisa_tunggakan = $item->sisa_tunggakan;
-            
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
+
             return $item;
         });
         return $data;
@@ -471,7 +486,7 @@ class AkadController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])->with('client', 'unit', 'sales', 'ajb');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])->with('client', 'unit', 'sales', 'ajb','unit.point.cluster');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -516,7 +531,8 @@ class AkadController extends Controller
             $item->approved_bank = $item->akad_kpr->approval_notaris_status ?? '';
             $item->approved_developer = $item->akad_kpr->approval_developer_status ?? '';
             $item->sisa_tunggakan = $item->sisa_tunggakan;
-            
+            $item->cluster_name  = $item->unit->point->cluster->cluster_name ?? '';
+
             return $item;
         });
         return $data;

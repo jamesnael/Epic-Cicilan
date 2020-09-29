@@ -77,4 +77,13 @@ class Unit extends Model
     {
         return $this->hasMany('Modules\Installment\Entities\Booking', 'unit_id');
     }
+
+        public function point()
+    {
+        return $this->belongsTo('Modules\RewardPoint\Entities\Point', 'id_unit_type');
+    }
+
+
 }
+
+

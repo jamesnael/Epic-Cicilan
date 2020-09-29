@@ -312,6 +312,14 @@ if (! function_exists('aside_menu')) {
                         'show' => Auth::user()->is_admin || in_array('tipe-program.index', Auth::user()->role->user_access?: [])
                     ],
                     [
+                        'icon' => 'mdi-office-building',
+                        'icon-alt' => 'mdi-chevron-down',
+                        'text' => 'Cluster',
+                        'uri' => route('cluster.index'),
+                        'model' => in_array(Route::currentRouteName(), ['cluster.index','cluster.create','cluster.edit','cluster.update']),
+                        'show' => Auth::user()->is_admin || in_array('cluster.index', Auth::user()->user_access?: [])
+                    ],
+                    [
                         'icon' => 'mdi-domain',
                         'text' => 'Tipe Unit',
                         'uri' => route('point.index'),
@@ -443,14 +451,7 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['report.index','report.create']),
                 'show' => Auth::user()->is_admin || in_array('report.create', Auth::user()->role->user_access?: [])
             ],
-            [
-                'icon' => 'mdi-home-city',
-                'icon-alt' => 'mdi-chevron-down',
-                'text' => 'Cluster',
-                'uri' => route('cluster.index'),
-                'model' => in_array(Route::currentRouteName(), ['cluster.index','cluster.create','cluster.edit','cluster.update']),
-                'show' => Auth::user()->is_admin || in_array('report.create', Auth::user()->user_access?: [])
-            ],
+            
 
         ];
     }

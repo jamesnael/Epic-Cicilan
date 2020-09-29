@@ -54,6 +54,12 @@ class PPJBController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -309,7 +315,7 @@ class PPJBController extends Controller
             "paginate" => "bail|required|numeric|in:5,10,15,-1",
             "sort" => "bail|present|array",
             "sort.*[0]" => "bail|required",
-            "sort.*[1]" => "bail|required|boolean",
+            "sort.*[1]" => "bail|required|boolean", 
         ]);
     }
 
@@ -320,7 +326,7 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb');
+        $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
         $query->whereHas('ppjb', function($subquery){ 
             $subquery->where('approval_client_status', '!=', 'Pending');
             $subquery->where('approval_developer_status', '!=', 'Pending');
@@ -389,6 +395,7 @@ class PPJBController extends Controller
             $item->approval_developer_status = $item->ppjb->approval_developer_status ?? 'Pending' ;
             $item->approval_client_status = $item->ppjb->approval_client_status ?? 'Pending' ;
             $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;
@@ -426,7 +433,7 @@ class PPJBController extends Controller
 
   public function getTableDataPending(Request $request)
     {
-        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -487,6 +494,7 @@ class PPJBController extends Controller
             $item->approval_developer_status = $item->ppjb->approval_developer_status ?? 'Pending' ;
             $item->approval_client_status = $item->ppjb->approval_client_status ?? 'Pending' ;
             $item->ppjb_doc_file_name = $item->ppjb->ppjb_doc_file_name ?? '' ;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

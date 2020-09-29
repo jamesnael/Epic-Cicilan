@@ -57,6 +57,12 @@ class SprController extends Controller
                 "sortable" => false,
                 "value" => 'unit_name',
             ],
+                   [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
             [
                 "text" => 'Sales',
                 "align" => 'center',
@@ -107,6 +113,12 @@ class SprController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_name',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Sales',
@@ -367,7 +379,7 @@ class SprController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user')->bookingStatus('spr')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')->bookingStatus('spr')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -412,7 +424,7 @@ class SprController extends Controller
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;
-
+            $item->cluster_name  = $item->unit->point->cluster->cluster_name ?? '';
             //Status Condition
             if ($item->spr){
                 if ($item->spr->print_date != null)
@@ -468,7 +480,7 @@ class SprController extends Controller
      */
     public function getTableApprovedData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user');
+        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster');
         $query->whereHas('spr', function($subquery) {
             $subquery->where('approval_status', 'Disetujui');
         });
@@ -516,7 +528,7 @@ class SprController extends Controller
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;
-
+            $item->cluster_name  = $item->unit->point->cluster->cluster_name;
             //Status Condition
             if ($item->spr){
                 if ($item->spr->print_date != null)

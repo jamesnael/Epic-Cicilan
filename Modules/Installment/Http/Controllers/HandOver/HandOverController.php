@@ -67,6 +67,12 @@ class HandOverController extends Controller
                 "value" => 'unit_name',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -121,6 +127,12 @@ class HandOverController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_name',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Harga Unit',
@@ -317,7 +329,7 @@ class HandOverController extends Controller
     public function getTableData(Request $request)
     {
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
-        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
         $query->whereDoesntHave('handover', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Disetujui');
             $subquery->where('approval_developer_status', '=', 'Disetujui');
@@ -374,6 +386,7 @@ class HandOverController extends Controller
             $item->agency_name          = $item->sales->agency ? $item->sales->agency->agency_name : '';
             $item->client_mobile_number = $item->client->client_mobile_number;
             $item->sales_name           = $item->sales->user->full_name;
+            $item->cluster_name         = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;
@@ -404,7 +417,7 @@ class HandOverController extends Controller
     public function getTableDataApproved(Request $request)
     {
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
-        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
+        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
         $query->whereHas('handover', function($subquery) {
             $subquery->where('approval_client_status', 'Disetujui');
             $subquery->where('approval_developer_status', 'Disetujui');
@@ -461,6 +474,7 @@ class HandOverController extends Controller
             $item->agency_name          = $item->sales->agency ? $item->sales->agency->agency_name : '';
             $item->client_mobile_number = $item->client->client_mobile_number;
             $item->sales_name           = $item->sales->user->full_name;
+            $item->cluster_name         = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

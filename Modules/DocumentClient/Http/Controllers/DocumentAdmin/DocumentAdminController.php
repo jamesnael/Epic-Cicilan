@@ -64,6 +64,12 @@ class DocumentAdminController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -348,7 +354,7 @@ class DocumentAdminController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document')->orderBy('created_at', 'DESC');
+        $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -380,7 +386,7 @@ class DocumentAdminController extends Controller
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
             $item->approval_developer = $item->document ? $item->document->approval_developer : '';
-            
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

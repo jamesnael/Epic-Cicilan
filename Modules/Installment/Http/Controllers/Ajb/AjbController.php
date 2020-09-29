@@ -60,6 +60,12 @@ class AjbController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -127,6 +133,12 @@ class AjbController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Harga Unit',
@@ -325,7 +337,7 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster')->orderBy('created_at', 'DESC');
 
         $query->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Disetujui');
@@ -389,7 +401,8 @@ class AjbController extends Controller
             $item->approved_client = $item->ajb->approval_client_status ?? 'Pending';
             $item->approved_bank = $item->ajb->approval_notaris_status ?? 'Pending';
             $item->approved_developer = $item->ajb->approval_developer_status ?? 'Pending';
-            
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
+
             return $item;
         });
         return $data;
@@ -425,7 +438,7 @@ class AjbController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')->orderBy('created_at', 'DESC');
         $query->whereHas('ajb', function($subquery) {
             $subquery->where('approval_client_status', 'Disetujui');
             $subquery->where('approval_developer_status', 'Disetujui');
@@ -479,7 +492,8 @@ class AjbController extends Controller
             $item->approved_client = $item->ajb->approval_client_status ?? '';
             $item->approved_bank = $item->ajb->approval_notaris_status ?? '';
             $item->approved_developer = $item->ajb->approval_developer_status ?? '';
-            
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
+
             return $item;
         });
         return $data;

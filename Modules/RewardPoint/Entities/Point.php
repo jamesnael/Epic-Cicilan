@@ -66,4 +66,9 @@ class Point extends Model
         return $this->belongsTo('Modules\Installment\Entities\Cluster', 'cluster_id');
     }
 
+    public function unit()
+    {
+        return $this->hasMany('Modules\Installment\Entities\Unit', 'id_unit_type');
+    }
+
 }
