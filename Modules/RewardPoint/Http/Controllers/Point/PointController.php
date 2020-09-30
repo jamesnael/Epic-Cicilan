@@ -195,6 +195,11 @@ class PointController extends Controller
                 $subquery->where('building_type', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
             });
+
+            $query->orWhereHas('cluster', function($subquery) use ($generalSearch){
+                $subquery->where('cluster_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
         }
 
         // foreach ($request->input('sort') as $sort_key => $sort) {

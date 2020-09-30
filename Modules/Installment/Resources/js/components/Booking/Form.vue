@@ -67,6 +67,7 @@
 	            datepicker: false,
             	form_data: {
             		unit_type:'',
+                    cluster_name:'',
             		client_name:'',
             		unit_number:'',
                     unit_address:'',
@@ -176,6 +177,7 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			id_unit_type:data.unit.id_unit_type,
+                                    cluster_name:data.unit.point.cluster.cluster_name,
                                     unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
     		            			unit_number:data.unit.unit_number,
@@ -350,14 +352,17 @@
 			},
             setSelectedUnitType() {
                 let unit = _.find(this.filter_unit_type, o => { return o.value == this.form_data.id_unit_type})
+                console.log(this.filter_unit_type);
                 if (_.isUndefined(unit)) {
                     this.form_data.closing_fee = ''
                     this.form_data.unit_type = ''
                     this.form_data.points = ''
+                    this.form_data.cluster_name = ''
                 } else {
                     this.form_data.unit_type = unit.text
                     this.form_data.closing_fee = unit.closing_fee
                     this.form_data.points = unit.point
+                    this.form_data.cluster_name = unit.cluster_name
                 }
             },
 			paymentType() {

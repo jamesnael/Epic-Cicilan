@@ -3,6 +3,10 @@
     	<validation-observer ref="observer" v-slot="{ validate, reset }">
 	    	<form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
 	    		<h3>Data Unit</h3>
+	    		<v-row>
+    		        <v-col
+    		          cols="12"
+    		          md="6">
 	    		<validation-provider v-slot="{ errors }" name="Tipe unit" rules="required">
 		    		 <v-autocomplete
 		    			class="mt-4"
@@ -17,6 +21,25 @@
 			    		:readonly="field_state"
 		            ></v-autocomplete>
 	    		</validation-provider>
+	    		</v-col>
+			    	<v-col
+    		          cols="12"
+    		          md="6">
+	    		<validation-provider v-slot="{ errors }" name="Nama cluster" rules="required">
+		    		 <v-text-field
+		    			class="mt-4"
+		    			v-model="form_data.cluster_name" 
+		              	label="Nama cluster"
+		              	name="cluster_name"
+			    		hint="* harus diisi"
+			    		:persistent-hint="true"
+			    		:error-messages="errors"
+			    		:readonly="field_state"
+		            ></v-text-field>
+	    		</validation-provider>
+	    			</v-col>
+			    </v-row>
+			    
 	    		<v-text-field
 		           v-model="form_data.unit_type"
 		           v-show=false
