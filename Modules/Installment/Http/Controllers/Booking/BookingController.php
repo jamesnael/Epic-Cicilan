@@ -61,6 +61,12 @@ class BookingController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Harga Unit',
                 "align" => 'center',
                 "sortable" => false,
@@ -298,7 +304,7 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->with('client','unit','payments')->orderBy('created_at', 'DESC');
+        $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -336,6 +342,7 @@ class BookingController extends Controller
             $item->principal = 'Rp '.format_money($item->principal);
             $item->point = $item->unit->points;
             $item->unit_type = $item->unit->unit_type;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

@@ -301,7 +301,7 @@ if (! function_exists('aside_menu')) {
                 'icon' => 'mdi-home-city',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola Booking',
-                'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit','client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit', 'point.index', 'point.create', 'point.edit']),
+                'model' => in_array(Route::currentRouteName(), ['tipe-program.index','tipe-program.create','tipe-program.edit','client.index','client.create', 'client.edit', 'unit.index', 'unit.create', 'unit.edit', 'booking.index', 'booking.create', 'booking.edit', 'cancel-booking.index', 'cancel-booking.create', 'cancel-booking.edit', 'installment.index', 'installment.create', 'installment.edit', 'point.index', 'point.create', 'point.edit','cluster.index','cluster.create','cluster.edit','cluster.update']),
                 'show' => Auth::user()->is_admin || in_array('tipe-program.index', Auth::user()->role->user_access?: []) || in_array('point.index', Auth::user()->role->user_access?: []) || in_array('client.index', Auth::user()->role->user_access?: []) || in_array('booking.index', Auth::user()->role->user_access?: []) || in_array('installment.index', Auth::user()->role->user_access?: []) || in_array('cancel-booking.index', Auth::user()->role->user_access?: []),
                 'children' => [
                     [
