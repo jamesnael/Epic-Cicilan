@@ -20,7 +20,7 @@ class ClientController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth'])->except(['VerifiyEmail']);
         $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
@@ -176,7 +176,10 @@ class ClientController extends Controller
     {
         DB::beginTransaction();
         try {
-            $data = $client->update(['email_verified_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')]);
+
+            $data = Client::where('slug', $client->slug)->first();
+            $data->email_verified_at = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+            $data->save();
 
             DB::commit();
 

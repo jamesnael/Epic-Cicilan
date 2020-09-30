@@ -29,7 +29,7 @@
 		            </span>
 		        </template>
 		    </v-btn>
-		    @if (Auth::user()->is_admin || in_array(str_replace('index', 'create', Route::currentRouteName()), Auth::user()->user_access))
+		    @if (Auth::user()->is_admin || in_array(str_replace('index', 'create', Route::currentRouteName()), Auth::user()->role ? Auth::user()->role->user_access : ''))
 		    	<v-btn
 	    			v-if="addNewUri"
 	    			:href="addNewUri"
@@ -77,7 +77,7 @@
 	        @{{ noResultsText }}
     	</template>
     	<template v-slot:item.actions="{ item }">
-    		@if (Auth::user()->is_admin || in_array(str_replace('index', 'edit', Route::currentRouteName()), Auth::user()->user_access))
+    		@if (Auth::user()->is_admin || in_array(str_replace('index', 'edit', Route::currentRouteName()), Auth::user()->role ? Auth::user()->role->user_access : ''))
     		<v-tooltip top :color="editColor">
     		    <template v-slot:activator="{ on, attrs }">
 		    		<v-btn 
@@ -94,7 +94,7 @@
     		    <span>@{{ editText }}</span>
     		</v-tooltip>
     		@endif
-    		@if (Auth::user()->is_admin || in_array(str_replace('index', 'destroy', Route::currentRouteName()), Auth::user()->user_access))
+    		@if (Auth::user()->is_admin || in_array(str_replace('index', 'destroy', Route::currentRouteName()), Auth::user()->role ? Auth::user()->role->user_access : ''))
     		<v-tooltip top :color="deleteColor">
     		    <template v-slot:activator="{ on, attrs }">
 		    		<v-btn v-if="deleteUri" icon :color="deleteColor" v-bind="attrs" v-on="on" @click.stop="promptDeleteItem(item)">

@@ -237,8 +237,16 @@ class AgencyController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Agency::with('regional_coordinator')
-                        ->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1') {
+            $query = Agency::with('regional_coordinator')
+                            ->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Agency::with('regional_coordinator')
+            ->where('user_id', $user->id)->orderBy('created_at', 'DESC');
+        }
+
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
