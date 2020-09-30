@@ -61,100 +61,104 @@
             "value" => 'table_index',
         ])->values();
 	@endphp
-	<v-tabs>
-	    <v-tab>Data Point Sales</v-tab>
-      	<v-tab-item>
-			<sales-table inline-template
-				uri="{{ route('tukar-point-sales.table') }}"
-				:headers='@json($page->table_headers)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				add-new-uri="{{ route('tukar-point-sales.create') }}"
-				add-new-text="Tukar Point"
-				add-new-color="light-blue lighten-2"
-				edit-uri="tukar-point-sales.history"
-				edit-uri-parameter="id"
-				edit-text="History"
-				edit-icon="mdi-history"
-				>
-				@include('components.table')
-			</sales-table>
-	   	</v-tab-item>
 
-	   	<v-tab>Data Point Sub Agent</v-tab>
-      	<v-tab-item>
-			<agent-table inline-template
-				uri="{{ route('tukar-point-agent.table') }}"
-				:headers='@json($page->table_headers_agent)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				add-new-uri="{{ route('tukar-point-agency.create') }}"
-				add-new-text="Tukar Point"
-				add-new-color="light-blue lighten-2"
-				edit-uri="tukar-point-agent.history"
-				edit-uri-parameter="id"
-				edit-text="History"
-				edit-icon="mdi-history"
-				>
-				@include('components.table')
-			</agent-table>
-		</v-tab-item>
+	@if(Auth::user()->is_admin)
+		<v-tabs>
+		    <v-tab>Data Point Sales</v-tab>
+	      	<v-tab-item>
+				<sales-table inline-template
+					uri="{{ route('tukar-point-sales.table') }}"
+					:headers='@json($page->table_headers)'
+					no-data-text="Tidak ada data ditemukan."
+					no-results-text="Tidak ada data ditemukan."
+					search-text="Pencarian"
+					refresh-text="Muat Ulang"
+					items-per-page-all-text="Semua"
+					items-per-page-text="Tampilkan"
+					page-text-locale="id"
+					add-new-uri="{{ route('tukar-point-sales.create') }}"
+					add-new-text="Tukar Point"
+					add-new-color="light-blue lighten-2"
+					edit-uri="tukar-point-sales.history"
+					edit-uri-parameter="id"
+					edit-text="History"
+					edit-icon="mdi-history"
+					>
+					@include('components.table')
+				</sales-table>
+		   	</v-tab-item>
 
-		<v-tab>Data Point Koordinator Wilayah</v-tab>
-      	<v-tab-item>
-			<korwil-table inline-template
-				uri="{{ route('tukar-point-korwil.table') }}"
-				:headers='@json($page->table_headers_korwil)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				add-new-uri="{{ route('tukar-point-korwil.create') }}"
-				add-new-text="Tukar Point"
-				add-new-color="light-blue lighten-2"
-				edit-uri="tukar-point-korwil.history"
-				edit-uri-parameter="id"
-				edit-text="History"
-				edit-icon="mdi-history"
-				>
-				@include('components.table')
-			</korwil-table>
-		</v-tab-item>
-		<v-tab>Data Point Koordinator Utama</v-tab>
-      	<v-tab-item>
-			<korut-table inline-template
-				uri="{{ route('tukar-point-korut.table') }}"
-				:headers='@json($page->table_headers_korut)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				add-new-uri="{{ route('tukar-point-korut.create') }}"
-				add-new-text="Tukar Point"
-				add-new-color="light-blue lighten-2"
-				edit-uri="tukar-point-korut.history"
-				edit-uri-parameter="id"
-				edit-text="History"
-				edit-icon="mdi-history"
-				>
-				@include('components.table')
-			</korut-table>
-      	</v-tab-item>
-	</v-tabs>
+		   	<v-tab>Data Point Sub Agent</v-tab>
+	      	<v-tab-item>
+				<agent-table inline-template
+					uri="{{ route('tukar-point-agent.table') }}"
+					:headers='@json($page->table_headers_agent)'
+					no-data-text="Tidak ada data ditemukan."
+					no-results-text="Tidak ada data ditemukan."
+					search-text="Pencarian"
+					refresh-text="Muat Ulang"
+					items-per-page-all-text="Semua"
+					items-per-page-text="Tampilkan"
+					page-text-locale="id"
+					add-new-uri="{{ route('tukar-point-agency.create') }}"
+					add-new-text="Tukar Point"
+					add-new-color="light-blue lighten-2"
+					edit-uri="tukar-point-agent.history"
+					edit-uri-parameter="id"
+					edit-text="History"
+					edit-icon="mdi-history"
+					>
+					@include('components.table')
+				</agent-table>
+			</v-tab-item>
+
+			<v-tab>Data Point Koordinator Wilayah</v-tab>
+	      	<v-tab-item>
+				<korwil-table inline-template
+					uri="{{ route('tukar-point-korwil.table') }}"
+					:headers='@json($page->table_headers_korwil)'
+					no-data-text="Tidak ada data ditemukan."
+					no-results-text="Tidak ada data ditemukan."
+					search-text="Pencarian"
+					refresh-text="Muat Ulang"
+					items-per-page-all-text="Semua"
+					items-per-page-text="Tampilkan"
+					page-text-locale="id"
+					add-new-uri="{{ route('tukar-point-korwil.create') }}"
+					add-new-text="Tukar Point"
+					add-new-color="light-blue lighten-2"
+					edit-uri="tukar-point-korwil.history"
+					edit-uri-parameter="id"
+					edit-text="History"
+					edit-icon="mdi-history"
+					>
+					@include('components.table')
+				</korwil-table>
+			</v-tab-item>
+			<v-tab>Data Point Koordinator Utama</v-tab>
+	      	<v-tab-item>
+				<korut-table inline-template
+					uri="{{ route('tukar-point-korut.table') }}"
+					:headers='@json($page->table_headers_korut)'
+					no-data-text="Tidak ada data ditemukan."
+					no-results-text="Tidak ada data ditemukan."
+					search-text="Pencarian"
+					refresh-text="Muat Ulang"
+					items-per-page-all-text="Semua"
+					items-per-page-text="Tampilkan"
+					page-text-locale="id"
+					add-new-uri="{{ route('tukar-point-korut.create') }}"
+					add-new-text="Tukar Point"
+					add-new-color="light-blue lighten-2"
+					edit-uri="tukar-point-korut.history"
+					edit-uri-parameter="id"
+					edit-text="History"
+					edit-icon="mdi-history"
+					>
+					@include('components.table')
+				</korut-table>
+	      	</v-tab-item>
+		</v-tabs>
+	@endif
+	
 @endsection

@@ -404,6 +404,36 @@
 			    		</validation-provider>
     		        </v-col>
     		    </v-row>
+    		    <v-row>
+    		    	<v-col
+    		          	cols="12"
+    		          	md="12">
+			    		<v-menu
+		    		        v-model="menu7"
+		    		        :close-on-content-click="false"
+		    		        :nudge-right="40"
+		    		        transition="scale-transition"
+		    		        offset-y
+		    		        min-width="290px"
+		    		    >
+	    		        	<template v-slot:activator="{ on, attrs }">
+				    		<validation-provider v-slot="{ errors }" name="Tanggal Invitation BAST" rules="required|min:1">
+		    		        <v-text-field
+		    		        	:value="reformatDateTime(form_data.bast_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+		    		        	hint="* harus diisi"
+		    		        	:persistent-hint="true"
+					    		:error-messages="errors"
+		    		            label="Tanggal Invitation BAST"
+		    		            v-bind="attrs"
+		    		            v-on="on"
+		    		            readonly
+		    		        ></v-text-field>
+				    		</validation-provider>
+	    		        	</template>
+	    		        	<v-date-picker name="bast_date" v-model="form_data.bast_date" @input="menu7 = false"></v-date-picker>
+	    		      	</v-menu>
+			    	</v-col>
+    		    </v-row>
     		    <v-row v-if="form_data.handover_doc_file_name_data != null">
 					<v-col
     		          cols="12"

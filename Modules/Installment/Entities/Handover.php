@@ -23,6 +23,7 @@ class Handover extends Model
         'handover_doc_sign_name',
         'handover_sign_date',
         'no_bast',
+        'bast_date',
         'nama_petugas'
     ];
 
