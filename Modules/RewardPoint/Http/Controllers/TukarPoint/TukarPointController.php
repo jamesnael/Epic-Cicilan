@@ -35,7 +35,7 @@ class TukarPointController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware('is-allowed')->only(['index', 'table', 'data', 'createSales', 'edit', 'destroy']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'createAgent' ,'createKorwil' ,'createKorut', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('tukar-point.index'), 'text' => 'Tukar Point'],
@@ -769,27 +769,19 @@ class TukarPointController extends Controller
      */
     public function getHelper()
     {
-        return [
-            'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
-            'reward_name_sales' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_sales')->get(),
-            'reward_name_agency' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_agency')->get(),
-            'reward_name_regional_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_regional_coordinator')->get(),
-            'reward_name_main_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_main_coordinator')->get(),
-                                    
+        if(\Auth::user()->is_admin) {
+            $sales = Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
+                    $item->value         = $item->id;
+                    $item->text          = $item->user->full_name;
+                    $item->agency_name   = $item->agency->agency_name ?? '';
+                    $item->total_point   = $item->total_point ?? '';
+                    $item->allowed_point = $item->allowed_point ?? '';
+                    $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
 
+                    return $item;
+            });
 
-
-            'sales_name' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->get()->transform(function($item){
-                $item->value         = $item->id;
-                $item->text          = $item->user->full_name;
-                $item->agency_name   = $item->agency->agency_name ?? '';
-                $item->total_point   = $item->total_point ?? '';
-                $item->allowed_point = $item->allowed_point ?? '';
-                $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
-
-                return $item;
-            }),
-            'agency_name' => Agency::with('booking','regional_coordinator')->get()->transform(function($item){
+            $agent = Agency::with('booking','regional_coordinator')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->agency_name;
                 $item->regional      = $item->regional_coordinator->full_name ?? '';
@@ -798,8 +790,9 @@ class TukarPointController extends Controller
                 $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
 
                 return $item;
-            }),
-            'korwil_name' => RegionalCoordinator::with('booking','main_coordinator')->get()->transform(function($item){
+            });
+
+            $korwil = RegionalCoordinator::with('booking','main_coordinator')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->full_name;
                 $item->maincoor      = $item->main_coordinator->full_name ?? '';
@@ -808,9 +801,9 @@ class TukarPointController extends Controller
                 $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
 
                 return $item;
-            }),
+            });
 
-            'korut_name' => MainCoordinator::with('booking')->get()->transform(function($item){
+            $korut = MainCoordinator::with('booking')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->full_name;
                 $item->total_point   = $item->total_point ?? '';
@@ -818,7 +811,62 @@ class TukarPointController extends Controller
                 $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
 
                 return $item;
-            })
+            });
+        } else {
+            $sales = Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->where('id', \Auth::user()->sales->id)->get()->transform(function($item){
+                $item->value         = $item->id;
+                $item->text          = $item->user->full_name;
+                $item->agency_name   = $item->agency->agency_name ?? '';
+                $item->total_point   = $item->total_point ?? '';
+                $item->allowed_point = $item->allowed_point ?? '';
+                $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
+
+                return $item;
+            });
+
+            $agent = Agency::with('booking','regional_coordinator')->where('id', \Auth::user()->agency->id)->get()->transform(function($item){
+                $item->value         = $item->id;
+                $item->text          = $item->agency_name;
+                $item->regional      = $item->regional_coordinator->full_name ?? '';
+                $item->total_point   = $item->total_point ?? '';
+                $item->allowed_point = $item->allowed_point ?? '';
+                $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
+
+                return $item;
+            });
+
+            $korwil = RegionalCoordinator::with('booking','main_coordinator')->where('id', \Auth::user()->regional_coordinator->id)->get()->transform(function($item){
+                $item->value         = $item->id;
+                $item->text          = $item->full_name;
+                $item->maincoor      = $item->main_coordinator->full_name ?? '';
+                $item->total_point   = $item->total_point ?? '';
+                $item->allowed_point = $item->allowed_point ?? '';
+                $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
+
+                return $item;
+            });
+
+            $korut = MainCoordinator::with('booking')->where('id', \Auth::user()->main_coordinator->id)->get()->transform(function($item){
+                $item->value         = $item->id;
+                $item->text          = $item->full_name;
+                $item->total_point   = $item->total_point ?? '';
+                $item->allowed_point = $item->allowed_point ?? '';
+                $item->sisa_point    = $item->allowed_point - $item->exchanged_point;
+
+                return $item;
+            });
+        }
+        return [
+            'category' => RewardCategory::select('id AS value', 'category_name AS text')->get(),
+            'reward_name_sales' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_sales')->get(),
+            'reward_name_agency' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_agency')->get(),
+            'reward_name_regional_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_regional_coordinator')->get(),
+            'reward_name_main_coordinator' => RewardPoint::select('id AS value', 'reward_name AS text', 'redeem_point_sales','redeem_point_agency','redeem_point_regional_coordinator','redeem_point_main_coordinator','category_reward_id','status')->where('status', 'Aktif')->whereNotNull('redeem_point_main_coordinator')->get(),
+
+            'sales_name'  => $sales ?? '',
+            'agency_name' => $agent ?? '',
+            'korwil_name' => $korwil ?? '',
+            'korut_name'  => $korut ?? '',
         ];
     }
 

@@ -314,7 +314,7 @@
 					<v-col
     		          cols="12"
     		          md="12">
-					    <h3 class="mt-4">Upload Surat Serah Terima Unit</h3>
+					    <h3 class="mt-4">Upload Surat Serah Terima Unit Awal</h3>
 			    		<validation-provider v-slot="{ errors }" name="Dokumen Awal" rules="">
 							<v-file-input 
 		    		            show-size
@@ -404,7 +404,7 @@
 			    		</validation-provider>
     		        </v-col>
     		    </v-row>
-    		    <v-row>
+    		    <v-row v-if="form_data.handover_doc_file_name_data != null">
     		    	<v-col
     		          	cols="12"
     		          	md="12">
@@ -456,7 +456,7 @@
     		    	<v-col
     		          cols="12"
     		          md="12">
-			    		<validation-provider v-slot="{ errors }" name="Surat Serah Terima Unit yang telah ditandatangani" rules="">
+			    		<validation-provider v-slot="{ errors }" name="Upload Surat Serah Terima Unit yang telah ditandatangani" rules="">
 			              	<v-file-input 
 		    		            show-size
 		    		            chips 

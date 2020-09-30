@@ -413,8 +413,12 @@
 				"uri": "tukar-point.index"
 			},
 			{
-				"title": "View Tukar Point",
-				"uri": "tukar-point.show"
+				"title": "History Tukar Point",
+				"uri": "tukar-point.edit"
+			},
+			{
+				"title": "Tambah Tukar Point",
+				"uri": "tukar-point.create"
 			}
 		]
 	}
