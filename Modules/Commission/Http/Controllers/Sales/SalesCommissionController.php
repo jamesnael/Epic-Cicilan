@@ -66,6 +66,13 @@ class SalesCommissionController extends Controller
                 "value" => 'unit_number',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+      
+            [
                 "text" => 'Harga Pricelist',
                 "align" => 'center',
                 "sortable" => false,
@@ -134,6 +141,12 @@ class SalesCommissionController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Harga Pricelist',
@@ -209,6 +222,12 @@ class SalesCommissionController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Harga Pricelist',
@@ -296,6 +315,12 @@ class SalesCommissionController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'unit_number',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Harga Pricelist',
@@ -678,6 +703,7 @@ class SalesCommissionController extends Controller
             $item->pph_23 = $item->sales->agency->pph_23;
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_agent = $item->sales->agency->agency_commission;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
 
             $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_agent) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
@@ -795,6 +821,7 @@ class SalesCommissionController extends Controller
             $item->pph_23 = $item->sales->agency->pph_23;
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_korwil = $item->sales->agency->regional_coordinator_commission;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
 
             $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_korwil) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
@@ -913,6 +940,7 @@ class SalesCommissionController extends Controller
             $item->pph_23 = $item->sales->agency->pph_23;
             $item->pph_final = $item->sales->agency->pph_final;
             $item->commission_korut = $item->sales->agency->main_coordinator_commission;
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
 
             $item->komisi_bruto = (round($item->total_amount / 1.1, 0) * $item->commission_korut) /100;
             $item->komisi_final = $item->komisi_bruto - (($item->komisi_bruto * $item->pph_final) /100) - 
@@ -1026,6 +1054,8 @@ class SalesCommissionController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
+            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
+
 
             $item->payment_korut_date = $item->commission ? $item->commission->korut_payment_date : '';
             $item->payment_korut_evidence = $item->commission ? $item->commission->korut_evidence : '';
