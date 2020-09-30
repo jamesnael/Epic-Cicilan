@@ -20,7 +20,7 @@ class ClusterController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'delete']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('cluster.index'), 'text' => 'Data Cluster'],
