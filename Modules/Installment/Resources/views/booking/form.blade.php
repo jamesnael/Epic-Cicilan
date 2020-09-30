@@ -34,7 +34,8 @@
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"
-			    		:readonly="field_state"
+			    		:readonly="!field_state"
+					    :disable="field_state"
 		            ></v-text-field>
 	    		</validation-provider>
 	    			</v-col>
