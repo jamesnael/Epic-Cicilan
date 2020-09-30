@@ -316,7 +316,7 @@ if (! function_exists('aside_menu')) {
                         'icon-alt' => 'mdi-chevron-down',
                         'text' => 'Cluster',
                         'uri' => route('cluster.index'),
-                        'model' => in_array(Route::currentRouteName(), ['cluster.index','cluster.create','cluster.edit','cluster.update']),
+                        'model' => in_array(Route::currentRouteName(), ['cluster.index','cluster.create','cluster.edit']),
                         'show' => Auth::user()->is_admin || in_array('cluster.index', Auth::user()->user_access?: [])
                     ],
                     [
