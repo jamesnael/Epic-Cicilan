@@ -10,7 +10,6 @@
 	create-uri="{{ route('tukar-point-agency.create') }}"
 	:filter_category='@json($category)'
 
-
 	:filter_reward_sales='@json($reward_name_sales)'
 	:filter_reward_agency='@json($reward_name_agency)'
 	:filter_reward_regional_coordinator='@json($reward_name_regional_coordinator)'

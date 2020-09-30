@@ -83,7 +83,6 @@
 	            unit_handover: [],
             	form_data: {
                     handover_date: new Date().toISOString().substr(0, 10),
-                    bast_date: new Date().toISOString().substr(0, 10),
                     payment_date: new Date().toISOString().substr(0, 10),
             		unit_type:'',
             		client_name:'',
@@ -142,7 +141,7 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
-                                console.log(data);
+                                console.log(data.handover);
                                 let arr_handover = []
     		            		this.form_data = {
                                     booking_id: data.id,
@@ -241,8 +240,8 @@
                     data.append("_method", "put");
                     data.append("booking_id", this.form_data.booking_id);
                     data.append("handover_date", this.form_data.handover_date);
-                    data.append("bast_date", this.form_data.bast_date);
                     data.append("time", this.form_data.time);
+                    data.append("bast_date", this.form_data.bast_date ? this.form_data.bast_date : '');
                 }
                 
                 this.field_state = true
