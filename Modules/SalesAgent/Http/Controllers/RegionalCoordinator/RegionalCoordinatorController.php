@@ -211,8 +211,13 @@ class RegionalCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = RegionalCoordinator::with('main_coordinator');
-                                    // ->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1') {
+            $query = RegionalCoordinator::with('main_coordinator');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = RegionalCoordinator::with('main_coordinator')->where('user_id', $user->id);
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

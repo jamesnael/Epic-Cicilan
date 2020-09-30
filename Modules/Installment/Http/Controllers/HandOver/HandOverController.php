@@ -159,6 +159,12 @@ class HandOverController extends Controller
                 "value" => 'handover.no_bast',
             ],
             [
+                "text" => 'Tanggal Invitation BAST',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'bast_date',
+            ],
+            [
                 "text" => 'Nama Petugas',
                 "align" => 'center',
                 "sortable" => false,
@@ -470,6 +476,7 @@ class HandOverController extends Controller
             $item->unit_price           = 'Rp '.format_money($item->total_amount);
             $item->payment_method       = $item->payment_method;
             $item->ajb_date             = $item->ajb ? ($item->ajb->ajb_date) != null ? \Carbon\Carbon::parse($item->ajb->ajb_date)->locale('id')->translatedFormat('d F Y'): '' : '';
+            $item->bast_date            = $item->handover ? ($item->handover->bast_date) != null ? \Carbon\Carbon::parse($item->handover->bast_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name          = $item->client->client_name;
             $item->agency_name          = $item->sales->agency ? $item->sales->agency->agency_name : '';
             $item->client_mobile_number = $item->client->client_mobile_number;

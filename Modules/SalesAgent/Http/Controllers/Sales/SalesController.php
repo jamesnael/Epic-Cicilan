@@ -285,7 +285,14 @@ class SalesController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
+        }elseif ($user->status == 'sales') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->where('id', $user->id)->orderBy('created_at', 'desc');
+        }
+
         // select(
         //     'users.slug',
         //     'users.full_name',
