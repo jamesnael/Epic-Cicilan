@@ -37,3 +37,7 @@ Route::group(['namespace' => 'Auth'], function() {
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('test/import', function() {
+    return Excel::toCollection(new App\Imports\HandleBookingImport, storage_path('app/public/import_epic_admin_template_rev_1.xlsx'));
+});
