@@ -241,7 +241,16 @@ class DocumentClientController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
+        
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

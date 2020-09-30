@@ -409,7 +409,7 @@ class BookingController extends Controller
                 $item->text  = $item->building_type;
                 $item->closing_fee = $item->closing_fee;
                 $item->point = $item->point;
-                $item->cluster_name = $item->cluster->cluster_name;
+                $item->cluster_name = $item->cluster ? $item->cluster->cluster_name : '';
                     
                 return $item->only(['value', 'text', 'closing_fee', 'point', 'cluster_name']);
 
