@@ -1009,7 +1009,15 @@ class SalesCommissionController extends Controller
      */
     public function getTableDataClosingFee(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

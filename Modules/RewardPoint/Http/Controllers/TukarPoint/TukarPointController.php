@@ -35,7 +35,7 @@ class TukarPointController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
+        $this->middleware('is-allowed')->only(['index', 'table', 'data', 'createSales', 'edit', 'destroy']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('tukar-point.index'), 'text' => 'Tukar Point'],
