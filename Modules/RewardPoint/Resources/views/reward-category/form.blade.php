@@ -32,6 +32,7 @@
 	    		
 	    		<v-btn
 		    		class="mt-4 mr-4 white--text"
+		    		type="submit"
 		    		color="primary"
 	    		    elevation="5"
 		    		:disabled="field_state"
