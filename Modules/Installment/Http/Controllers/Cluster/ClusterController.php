@@ -41,7 +41,7 @@ class ClusterController extends Controller
                 "value" => 'cluster_name',
             ],
         ];
-        return view('installment::Cluster.index', [
+        return view('installment::cluster.index', [
             'page' => $this,
         ]);
     }
@@ -54,7 +54,7 @@ class ClusterController extends Controller
     {
         $this->breadcrumbs[] = ['href' => route('cluster.index'), 'text' => 'Tambah Cluster'];
 
-        return view('installment::Cluster.create', [
+        return view('installment::cluster.create', [
             'page' => $this,
         ]);
     }
@@ -93,7 +93,7 @@ class ClusterController extends Controller
     {
         $this->breadcrumbs[] = ['href' => route('cluster.edit', [$cluster->slug]), 'text' => 'Edit Cluster ' . $cluster->cluster_name];
 
-        return view('installment::Cluster.edit', [
+        return view('installment::cluster.edit', [
             'page' => $this,
             'data' => $cluster,
 
