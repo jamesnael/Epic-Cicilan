@@ -326,7 +326,35 @@ class PPJBController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
+        // $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
+        
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('ppjb')
+                            ->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sub_agent') {
+           $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sales') {
+           $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }else{  
+            $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
+        }
+
+
+
+
         $query->whereHas('ppjb', function($subquery){ 
             $subquery->where('approval_client_status', '!=', 'Pending');
             $subquery->where('approval_developer_status', '!=', 'Pending');
@@ -433,7 +461,33 @@ class PPJBController extends Controller
 
   public function getTableDataPending(Request $request)
     {
-        $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
+        // $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')->bookingStatus('ppjb')->orderBy('created_at', 'DESC');
+
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')->bookingStatus('ppjb');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::bookingStatus('ppjb')->has('spr')
+                            ->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sub_agent') {
+           $query = Booking::bookingStatus('ppjb')->has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sales') {
+           $query = Booking::bookingStatus('ppjb')->has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }else{  
+            $query = Booking::bookingStatus('ppjb')->has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
+        }
+
+
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
