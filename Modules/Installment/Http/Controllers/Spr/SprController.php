@@ -402,8 +402,11 @@ class SprController extends Controller
                     ->whereHas('sales', function($subquery) use ($user){
                         $subquery->where('user_id', $user->id);
                     });
+        } else {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr');
         }
-
+        
         $query->orderBy('created_at', 'DESC');
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -523,6 +526,8 @@ class SprController extends Controller
                     ->whereHas('sales', function($subquery) use ($user){
                         $subquery->where('user_id', $user->id);
                     });
+        } else {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster');
         }
 
         $query->whereHas('spr', function($subquery) {
