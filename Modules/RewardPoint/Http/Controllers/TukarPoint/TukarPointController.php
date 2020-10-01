@@ -813,7 +813,7 @@ class TukarPointController extends Controller
                 return $item;
             });
         } else {
-            $sales = Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->where('id', \Auth::user()->sales->id)->get()->transform(function($item){
+            $sales = Sales::with('user','agency', 'main_coordinator', 'regional_coordinator','booking')->where('id', \Auth::user()->sales->id ?? '')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->user->full_name;
                 $item->agency_name   = $item->agency->agency_name ?? '';
@@ -824,7 +824,7 @@ class TukarPointController extends Controller
                 return $item;
             });
 
-            $agent = Agency::with('booking','regional_coordinator')->where('id', \Auth::user()->agency->id)->get()->transform(function($item){
+            $agent = Agency::with('booking','regional_coordinator')->where('id', \Auth::user()->agency->id ?? '')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->agency_name;
                 $item->regional      = $item->regional_coordinator->full_name ?? '';
@@ -835,7 +835,7 @@ class TukarPointController extends Controller
                 return $item;
             });
 
-            $korwil = RegionalCoordinator::with('booking','main_coordinator')->where('id', \Auth::user()->regional_coordinator->id)->get()->transform(function($item){
+            $korwil = RegionalCoordinator::with('booking','main_coordinator')->where('id', \Auth::user()->regional_coordinator->id ?? '')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->full_name;
                 $item->maincoor      = $item->main_coordinator->full_name ?? '';
@@ -846,7 +846,7 @@ class TukarPointController extends Controller
                 return $item;
             });
 
-            $korut = MainCoordinator::with('booking')->where('id', \Auth::user()->main_coordinator->id)->get()->transform(function($item){
+            $korut = MainCoordinator::with('booking')->where('id', \Auth::user()->main_coordinator->id ?? '')->get()->transform(function($item){
                 $item->value         = $item->id;
                 $item->text          = $item->full_name;
                 $item->total_point   = $item->total_point ?? '';
