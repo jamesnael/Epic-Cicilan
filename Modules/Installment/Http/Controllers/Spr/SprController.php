@@ -212,7 +212,7 @@ class SprController extends Controller
     public function print(Booking $spr)
     {
         // return view('installment::spr.print', ['data' => $spr]);
-        $date = date('d F Y');
+        $date = \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y');
         $pdf  = PDF::loadView('installment::spr.print', ['data' => $spr, 'date' => $date])->setPaper('a4', 'portrait');
         return $pdf->download('Surat Pemesanan Unit ' . $spr->client->client_name . '.pdf');
     }
