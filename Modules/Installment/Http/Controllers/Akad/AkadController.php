@@ -404,7 +404,35 @@ class AkadController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()
+                            ->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()
+                            ->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()
+                            ->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()
+                            ->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::has('payments')->has('ppjb')->doesntHave('unpaid_payments')->kprKpa()
+                            ->bookingStatus('akad')->with('client', 'unit', 'sales', 'akad_kpr','payments','ppjb','unit.point.cluster')
+                            ->orderBy('created_at', 'DESC');
+        }
+
 
 
         if ($request->input('search')) {
@@ -486,7 +514,41 @@ class AkadController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])->with('client', 'unit', 'sales', 'ajb','unit.point.cluster');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()
+                            ->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])
+                            ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                            ->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()
+                            ->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])
+                            ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster', 'regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+             $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()
+                            ->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])
+                            ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()
+                            ->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])
+                            ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->kprKpa()
+                            ->whereIn('booking_status',['ajb_handover', 'cicilan_sp3k'])
+                            ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                            ->orderBy('created_at', 'DESC');
+        }
+
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

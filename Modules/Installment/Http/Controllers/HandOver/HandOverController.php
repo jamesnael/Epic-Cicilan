@@ -335,7 +335,31 @@ class HandOverController extends Controller
     public function getTableData(Request $request)
     {
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
-        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sub_agent') {
+           $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sales') {
+           $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }else{
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        }
+
+        
         $query->whereDoesntHave('handover', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Disetujui');
             $subquery->where('approval_developer_status', '=', 'Disetujui');
@@ -423,7 +447,30 @@ class HandOverController extends Controller
     public function getTableDataApproved(Request $request)
     {
         // $query = Booking::has('ajb')->bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments');
-        $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }elseif ($user->status == 'sales') {
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            });
+        }else{
+            $query = Booking::bookingStatus('ajb_handover')->with('client', 'unit', 'handover', 'sales', 'ajb', 'payments','unit.point.cluster');
+        }
+        
         $query->whereHas('handover', function($subquery) {
             $subquery->where('approval_client_status', 'Disetujui');
             $subquery->where('approval_developer_status', 'Disetujui');

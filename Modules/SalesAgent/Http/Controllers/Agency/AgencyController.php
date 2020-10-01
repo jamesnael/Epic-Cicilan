@@ -239,12 +239,20 @@ class AgencyController extends Controller
     {
         $user = \Auth::user();
 
-        if ($user->is_admin == '1') {
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
             $query = Agency::with('regional_coordinator')
                             ->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'sub_agent') {
             $query = Agency::with('regional_coordinator')
             ->where('user_id', $user->id)->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Agency::with('regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Agency::with('regional_coordinator')
+                            ->orderBy('created_at', 'DESC');
         }
 
 

@@ -653,7 +653,17 @@ class SalesCommissionController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission','agency')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
+        // $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -771,7 +781,16 @@ class SalesCommissionController extends Controller
      */
     public function getTableDataKorwil(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission','regional_coordinator')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -890,7 +909,16 @@ class SalesCommissionController extends Controller
      */
     public function getTableDataKorut(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_utama') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission', 'main_coordinator')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('main_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -1013,10 +1041,25 @@ class SalesCommissionController extends Controller
         if ($user->is_admin == '1') {
             $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'sales') {
-            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
                             ->whereHas('sales', function($subquery) use ($user){
                                 $subquery->where('user_id', $user->id);
                             })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission','regional_coordinator')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission','agency')
+                            ->whereNotIn('booking_status', ['dokumen','spr'])
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::with('client', 'unit', 'document', 'sales','commission')->whereNotIn('booking_status', ['dokumen','spr'])->orderBy('created_at', 'DESC');
         }
 
         if ($request->input('search')) {

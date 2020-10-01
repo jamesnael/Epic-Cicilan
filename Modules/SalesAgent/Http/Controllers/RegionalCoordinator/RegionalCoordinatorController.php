@@ -213,10 +213,12 @@ class RegionalCoordinatorController extends Controller
     {
         $user = \Auth::user();
 
-        if ($user->is_admin == '1') {
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
             $query = RegionalCoordinator::with('main_coordinator');
         }elseif ($user->status == 'koordinator_wilayah') {
             $query = RegionalCoordinator::with('main_coordinator')->where('user_id', $user->id);
+        }else{
+            $query = RegionalCoordinator::with('main_coordinator');
         }
 
         if ($request->input('search')) {

@@ -291,6 +291,19 @@ class SalesController extends Controller
             $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
         }elseif ($user->status == 'sales') {
             $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->where('id', $user->id)->orderBy('created_at', 'desc');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator')
+                            ->whereHas('sales.regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator')
+                            ->whereHas('sales.agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
+        else{
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
         }
 
         // select(

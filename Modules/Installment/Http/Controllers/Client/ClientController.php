@@ -234,7 +234,28 @@ class ClientController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Client::orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Client::orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Client::with('client_bookings.regional_coordinator')
+                            ->whereHas('client_bookings.regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Client::with('client_bookings.agency')
+                            ->whereHas('client_bookings.agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Client::with('client_bookings.sales')
+                            ->whereHas('client_bookings.sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Client::orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

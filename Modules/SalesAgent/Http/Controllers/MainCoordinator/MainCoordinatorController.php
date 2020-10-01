@@ -223,13 +223,7 @@ class MainCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $user = \Auth::user();
-
-        if ($user->is_admin == '1') {
-            $query = MainCoordinator::orderBy('created_at', 'DESC');
-        }elseif ($user->status == 'koordinator_utama') {
-            $query = MainCoordinator::where('user_id', $user->id)->orderBy('created_at', 'DESC');
-        }
+        $query = MainCoordinator::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
