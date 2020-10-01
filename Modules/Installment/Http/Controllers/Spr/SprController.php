@@ -379,8 +379,35 @@ class SprController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')->bookingStatus('spr')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
 
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr');
+        } elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr')
+                    ->whereHas('regional_coordinator', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr')
+                    ->whereHas('agency', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } elseif ($user->status == 'sales') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr')
+                    ->whereHas('sales', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } else {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->bookingStatus('spr');
+        }
+        
+        $query->orderBy('created_at', 'DESC');
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 
@@ -480,7 +507,29 @@ class SprController extends Controller
      */
     public function getTableApprovedData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster');
+        } elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->whereHas('regional_coordinator', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->whereHas('agency', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } elseif ($user->status == 'sales') {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster')
+                    ->whereHas('sales', function($subquery) use ($user){
+                        $subquery->where('user_id', $user->id);
+                    });
+        } else {
+            $query = Booking::with('client', 'unit', 'spr', 'sales', 'sales.user','unit.point.cluster');
+        }
+
         $query->whereHas('spr', function($subquery) {
             $subquery->where('approval_status', 'Disetujui');
         });
@@ -528,7 +577,7 @@ class SprController extends Controller
             $item->received_date = $item->spr ? ($item->spr->received_date) != null ? \Carbon\Carbon::parse($item->spr->received_date)->locale('id')->translatedFormat('d F Y'): '' : '';
             $item->client_name   = $item->client->client_name;
             $item->sales_name    = $item->sales->user->full_name;
-            $item->cluster_name  = $item->unit->point->cluster->cluster_name;
+            $item->cluster_name  = $item->unit->point->cluster->cluster_name ?? '';
             //Status Condition
             if ($item->spr){
                 if ($item->spr->print_date != null)
