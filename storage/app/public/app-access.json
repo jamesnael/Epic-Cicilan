@@ -326,11 +326,11 @@
 		"routes": [
 			{
 				"title": "PPJB Tabel",
-				"uri": "ppjb.index"
+				"uri": "PPJB.index"
 			},
 			{
 				"title": "Ubah PPJB",
-				"uri": "ppjb.edit"
+				"uri": "PPJB.edit"
 			}
 		]
 	},
