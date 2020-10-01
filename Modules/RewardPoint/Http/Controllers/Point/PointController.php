@@ -209,7 +209,7 @@ class PointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
-            $item->cluster_name = $item->cluster->cluster_name;
+            $item->cluster_name = $item->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;
