@@ -177,7 +177,7 @@
     		            		let data = response.data.data
     		            		this.form_data = {
     		            			id_unit_type:data.unit.id_unit_type,
-                                    cluster_name:data.unit.point.cluster.cluster_name,
+                                    cluster_name:data.unit.point.cluster ? data.unit.point.cluster.cluster_name : '' ,
                                     unit_type:data.unit.unit_type,
     		            			unit_block:data.unit.unit_block,
     		            			unit_number:data.unit.unit_number,
