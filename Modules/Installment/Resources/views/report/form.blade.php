@@ -150,6 +150,8 @@
 			    		        <v-text-field
 			    		        	:value="reformatDateTime(from_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 				    		        prepend-icon="mdi-calendar"
+			    		        	hint="* harus diisi"
+			    		        	:persistent-hint="true"
 						    		:error-messages="errors"
 			    		            label="Dari Tanggal"
 			    		            v-bind="attrs"
@@ -178,6 +180,8 @@
 			    		        	:value="reformatDateTime(until_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
 				    		        prepend-icon="mdi-calendar"
 			    		            label="Sampai Tanggal"
+			    		        	hint="* harus diisi"
+			    		        	:persistent-hint="true"
 			    		            v-bind="attrs"
 			    		            v-on="on"
 			    		            :readonly="!field_state"
