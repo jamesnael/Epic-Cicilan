@@ -158,7 +158,7 @@ class RoleUserController extends Controller
         DB::beginTransaction();
         try {
             $request->merge(['user_access' => $request->input('hak_akses')]);
-            $role->update($request->only(["user_access"]));
+            $role->update($request->all());
 
             DB::commit();
             return response_json(true, null, 'Hak akses user berhasil disimpan.', $role);
