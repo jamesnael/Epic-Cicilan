@@ -11,6 +11,14 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+
+        $page->table_headers_2[] = [
+            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'actions',
+        ];
+
         $page->table_headers = collect($page->table_headers)->prepend([
             "text" => '#',
             "align" => 'center',
@@ -58,6 +66,9 @@
 				items-per-page-all-text="Semua"
 				items-per-page-text="Tampilkan"
 				page-text-locale="id"
+				edit-uri="handover.edit"
+				edit-uri-parameter="slug"
+				edit-text="Edit Serah Terima Unit"
 				>
 				
 				@include('components.table')
