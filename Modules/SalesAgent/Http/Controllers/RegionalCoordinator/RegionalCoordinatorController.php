@@ -151,7 +151,7 @@ class RegionalCoordinatorController extends Controller
      */
     public function update(Request $request, RegionalCoordinator $regional_coordinator)
     {
-        $validator = $this->validateFormRequest($request, $regional_coordinator->id);
+        $validator = $this->validateFormRequestUpdate($request, $regional_coordinator->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -327,6 +327,16 @@ class RegionalCoordinatorController extends Controller
         return Validator::make($request->all(), [
             "full_name" => "bail|required|string|max:255",
             "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
+            "phone_number" => "bail|required|numeric",
+            "address" => "bail|nullable|string|max:255",
+        ]);
+    }
+
+    public function validateFormRequestUpdate($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "full_name" => "bail|required|string|max:255",
+            "email" => "bail|required|email",
             "phone_number" => "bail|required|numeric",
             "address" => "bail|nullable|string|max:255",
         ]);

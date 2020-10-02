@@ -57,6 +57,11 @@
             		redeem_point_regional_coordinator: '',
             		redeem_point_agency: '',
             		redeem_point_sales: '',
+            		main_coordinator : false,
+            		regional_coordinator : false,
+            		agency : false,
+            		sales : false,
+
             	}
         	}
         },
@@ -82,10 +87,10 @@
     		            			// kuota: data.kuota,
     		            			description:data.description,
     		            			status: data.status,
-    		            			main_coordinator: (data) ? (data.redeem_point_main_coordinator != null) ? true : false : false,
-    		            			regional_coordinator: (data) ? (data.redeem_point_regional_coordinator != null) ? true : false : false,
-    		            			agency: (data) ? (data.redeem_point_agency != null) ? true : false : false,
-    		            			sales: (data) ? (data.redeem_point_sales != null) ? true : false : false,
+    		            			main_coordinator: (data.redeem_point_main_coordinator != null) ? true : false,
+    		            			regional_coordinator: (data.redeem_point_regional_coordinator != null) ? true : false,
+    		            			agency: (data.redeem_point_agency != null) ? true : false,
+    		            			sales: (data.redeem_point_sales != null) ? true : false,
     		            			redeem_point_main_coordinator: data.redeem_point_main_coordinator,
     		            			redeem_point_regional_coordinator: data.redeem_point_regional_coordinator,
     		            			redeem_point_agency: data.redeem_point_agency,

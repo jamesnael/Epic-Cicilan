@@ -135,7 +135,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.ppn"
-		    			name="pph_final"
+		    			name="ppn"
 			    		label="PPN"
 			    		:error-messages="errors"
 			    		hint="* harus diisi"
@@ -148,7 +148,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.pph_21"
-		    			name="pph_final"
+		    			name="pph_21"
 			    		label="PPH 21"
 			    		:error-messages="errors"
 			    		hint="* harus diisi"
@@ -161,7 +161,7 @@
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="form_data.pph_23"
-		    			name="pph_final"
+		    			name="pph_23"
 			    		label="PPH 23"
 			    		:error-messages="errors"
 			    		hint="* harus diisi"

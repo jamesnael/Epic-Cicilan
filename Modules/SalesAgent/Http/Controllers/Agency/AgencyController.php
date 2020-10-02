@@ -161,7 +161,7 @@ class AgencyController extends Controller
      */
     public function update(Request $request, Agency $agency)
     {
-        $validator = $this->validateFormRequest($request, $agency->id);
+        $validator = $this->validateFormRequestUpdate($request, $agency->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -351,6 +351,16 @@ class AgencyController extends Controller
             // "agency_address.required"=> __('salesagent::validation.required'),
             // "province.required"=> __('salesagent::validation.required'),
             // "city.required"=> __('salesagent::validation.required'),
+        ]);
+    }
+
+    public function validateFormRequestUpdate($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "full_name" => "bail|required|string|max:255",
+            "email" => "bail|required|email",
+            "phone_number" => "bail|required|numeric",
+            "address" => "bail|nullable|string|max:255",
         ]);
     }
 
