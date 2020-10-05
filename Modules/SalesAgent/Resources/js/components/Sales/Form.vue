@@ -114,6 +114,7 @@
     		            .then(response => {
     		            	if (response.data.success) {
     		            		let data = response.data.data
+    		            		console.log(data)
     		            		this.form_data = {
     		            			sales_nip: data.sales_nip,
     		            			main_coordinator_id:data.main_coordinator_id,
@@ -123,6 +124,8 @@
     		            			main_coordinator_commission:data.main_coordinator_commission,
     		            			regional_coordinator_id: '',
     		            			agency_id: '',
+    		            			province: data.province,
+    		            			city: data.city,
     		            			no_ktp: data.no_ktp,
     		            			file_ktp: data.file_ktp,
     		            			url_file_ktp: data.url_file_ktp,

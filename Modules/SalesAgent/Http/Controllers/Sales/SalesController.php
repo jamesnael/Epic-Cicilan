@@ -380,7 +380,8 @@ class SalesController extends Controller
      */
     public function data(User $sales)
     {
-        $data = [
+        $data = $sales;
+        $sales = [
             'agency_id' => $sales->sales->agency_id,
             'main_coordinator_id' => $sales->sales->main_coordinator_id,
             'regional_coordinator_id' => $sales->sales->regional_coordinator_id,

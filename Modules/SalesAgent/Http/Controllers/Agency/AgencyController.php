@@ -115,6 +115,8 @@ class AgencyController extends Controller
                 'email' => $request->agency_email,
                 'address' => $request->agency_address,
                 'phone_number' => $request->agency_phone,
+                'city' => $request->city,
+                'province' => $request->province
             ]);
 
             $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
