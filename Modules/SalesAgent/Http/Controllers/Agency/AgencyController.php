@@ -357,10 +357,13 @@ class AgencyController extends Controller
     public function validateFormRequestUpdate($request, $id = null)
     {
         return Validator::make($request->all(), [
-            "full_name" => "bail|required|string|max:255",
-            "email" => "bail|required|email",
-            "phone_number" => "bail|required|numeric",
-            "address" => "bail|nullable|string|max:255",
+            "agency_name" => "bail|required|string|max:255",
+            "agency_email" => "bail|required|email",
+            "agency_phone" => "bail|required|string|max:255",
+            "agency_address" => "bail|nullable|string|max:255",
+            "province" => "bail|nullable|string|max:255",
+            "city" => "bail|nullable|string|max:255",
+            "pph_final" => "bail|required|between:0,100",
         ]);
     }
 
