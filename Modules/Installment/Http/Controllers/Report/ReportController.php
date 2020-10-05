@@ -38,8 +38,6 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $this->breadcrumbs[] = ['href' => route('report.index'), 'text' => 'Laporan'];
-
         return view('installment::report.create', [
             'page' => $this,
         ])->with($this->getHelper());
@@ -51,8 +49,6 @@ class ReportController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('report.index'), 'text' => 'Laporan'];
-
         return view('installment::report.create', [
             'page' => $this,
         ])->with($this->getHelper());

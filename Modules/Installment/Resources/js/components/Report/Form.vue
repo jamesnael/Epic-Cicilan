@@ -133,15 +133,14 @@
         	},
         	clear () {
 		        this.form_data = {
-		        	category_reward_id: '',
-            		reward_name: '',
-            		description: '',
-            		status: '',
-            		redeem_point_main_coordinator: '0',
-            		redeem_point_regional_coordinator: '0',
-            		redeem_point_agency: '0',
-            		redeem_point_sales: '0',
+            		nama_laporan: '',
+		        	user_name: '',
+            		agency_name: '',
+            		regional_coordinator: '',
+            		status: 'All',
 		        }
+                from_date: ''
+                until_date: ''
 		        this.$refs.observer.reset()
 		    },
 		    setSelectedSales() {

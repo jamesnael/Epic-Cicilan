@@ -195,13 +195,6 @@
 				    	</v-col>
 				    </v-row>
 				    <br>
-				    <v-btn
-			      		class="mt-5"
-			      		outlined
-			      		:href="redirectUri"
-			      		:disabled="field_state">
-	    		      	Kembali
-	    		    </v-btn>
 		    		<v-btn
 			    		class="mt-5 mr-4 white--text"
 			    		color="primary"
@@ -216,6 +209,13 @@
 	    		            </span>
 	    		        </template>
 			    	</v-btn>
+				    <v-btn
+			      		class="mt-5"
+			      		outlined 
+			      		:disabled="field_state"
+	    		      	@click="clear">
+	    		      	Ulangi
+	    		    </v-btn>
 		    	</form>
 		    </v-card-text>
 	    </validation-observer>
