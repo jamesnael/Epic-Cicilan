@@ -106,14 +106,12 @@ class SalesController extends Controller
         DB::beginTransaction();
         try {
 
-            $request->merge([
-                'status' => 'sales'
-            ]);
-
             $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
+            $user->status = 'sales';
+            $user->save();
             
             $request->merge([
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
 
             $data = Sales::create($request->all());
@@ -380,8 +378,7 @@ class SalesController extends Controller
      */
     public function data(User $sales)
     {
-        $data = $sales;
-        $sales = [
+        $data = [
             'agency_id' => $sales->sales->agency_id,
             'main_coordinator_id' => $sales->sales->main_coordinator_id,
             'regional_coordinator_id' => $sales->sales->regional_coordinator_id,
@@ -403,6 +400,7 @@ class SalesController extends Controller
             'province' => $sales->province,
             'city' => $sales->city,
             'role_id' => $sales->role_id,
+            'status' => $sales->sales->status,
         ];
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
