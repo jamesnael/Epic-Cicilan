@@ -85,7 +85,7 @@
 			<!-- Admin & Officer Serah Terima -->
 			<th align="center"><b>No. BAST</b></th>
 			<th align="center"><b>Tanggal Invitation BAST dikirim</b></th>
-			<th align="center"><b>Tanggal Serath Terima</b></th>
+			<th align="center"><b>Tanggal Serah Terima</b></th>
 			<th align="center"><b>Officer BAST</b></th>
 			<!-- --Admin & Officer Serah Terima-- -->
 			
@@ -142,8 +142,8 @@
 				<td align="center" valign="middle">{{ $value->unit->unit_number }}</td>
 				<td align="center" valign="middle">{{ $value->unit->unit_type }}</td>
 				<td align="center" valign="middle">{{ $value->unit->points }}</td>
-				<td align="center" valign="middle">{{ $value->unit->surface_area }}</td>
-				<td align="center" valign="middle">{{ $value->unit->building_area }}</td>
+				<td align="center" valign="middle">{{ $value->unit->surface_area }} m<sup>2</sup></td>
+				<td align="center" valign="middle">{{ $value->unit->building_area }} m<sup>2</sup></td>
 				<td align="center" valign="middle">Rp. {{ format_money($value->nup_amount) }}</td>
 				<td align="center" valign="middle">{{ \Carbon\Carbon::parse($value->nup_date)->locale('id')->translatedFormat('d F Y') }}</td>
 				<td align="center" valign="middle"></td>
