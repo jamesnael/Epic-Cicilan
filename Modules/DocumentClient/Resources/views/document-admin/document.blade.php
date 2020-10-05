@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>DOKUMEN</title>
+	<title>Dokumen {{ $client }}</title>
 	<style>
 	.page-break {
 	    page-break-after: always;
@@ -11,6 +11,7 @@
 	.img-fluid{
 		max-width: 100%;
 		height: auto;
+		margin-top: 35px;
 	}
 
 
