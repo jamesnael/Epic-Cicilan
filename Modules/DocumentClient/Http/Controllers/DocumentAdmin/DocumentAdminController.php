@@ -317,8 +317,8 @@ class DocumentAdminController extends Controller
             if ($data->document) {
                 if ($data->document->url_file_ktp_pemohon || $data->document->url_file_ktp_suami_istri || $data->document->url_file_kk){
 
-                    $pdf = PDF::loadview('documentclient::document-admin.document',['data' => $data]);
-                    return $pdf->download('document.pdf');
+                    $pdf = PDF::loadview('documentclient::document-admin.document',['data' => $data, 'client' => $document_admin->client->client_name]);
+                    return $pdf->download('Dokumen '.$document_admin->client->client_name.'.pdf');
 
                 }else{
                     return response_json(false, null, 'Dokumen tidak ditemukan.');
