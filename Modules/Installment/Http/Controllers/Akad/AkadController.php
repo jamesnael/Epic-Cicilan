@@ -349,6 +349,7 @@ class AkadController extends Controller
                         ]);
                     }
                     // Tambah Installment
+                    $payments = [];
                     $mth = 1;
                     $installment = round(($akad_kpr->installment - $request->total_kpr) / $akad->installment_time_sp3k, 0);
                     $credits = $akad_kpr->installment - $request->total_kpr;
@@ -376,6 +377,8 @@ class AkadController extends Controller
                         
                         $credits = $payment['credit'];
                     }
+                    $akad->payments()->createMany($payments);
+                    $akad->installment_time = $akad->installment_time + $akad->installment_time_sp3k;
                 }
                 
                 $akad->save();
