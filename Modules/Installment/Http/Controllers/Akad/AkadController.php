@@ -336,6 +336,46 @@ class AkadController extends Controller
                     $akad->booking_status = 'ajb_handover';
                 }else{
                     $akad->booking_status = 'cicilan_sp3k';
+                    // Update Akad KPR
+                    $akad_kpr = collect($akad->payments)->last();
+                    if ($akad_kpr->payment == 'Akad Kredit') {
+                        $akad_kpr->update([
+                            'due_date' => $data->akad_date,
+                            'payment_status' => 'Paid',
+                            'payment_date' => $data->akad_date,
+                            'payment_method' => 'Akad KPR',
+                            'total_paid' => $request->total_kpr,
+                            'credit' => $akad_kpr->installment - $request->total_kpr
+                        ]);
+                    }
+                    // Tambah Installment
+                    $mth = 1;
+                    $installment = round(($akad_kpr->installment - $request->total_kpr) / $akad->installment_time_sp3k, 0);
+                    $credits = $akad_kpr->installment - $request->total_kpr;
+                    for ($i = 1; $i <= $akad->installment_time_sp3k; $i++) {
+                        $date = \Carbon\Carbon::parse(get_next_month(get_next_date($akad->due_date), $i));
+                        $payment = [];
+                        $payment['payment'] = 'Cicilan SP3K ' . $i;
+                        $payment['due_date'] = $date->format('Y-m-d');
+                        $payment['sp1_date'] = $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+                        $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+                        $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
+                        $payment['installment'] = $i == $akad->installment_time_sp3k ? $credits : $installment;
+                        $payment['credit'] = $credits - $installment;
+                        $payment['payment_status'] = 'Unpaid';
+                        $payment['number_of_delays'] = null;
+                        $payment['fine'] = null;
+                        $payment['notification_mail_7'] = null;
+                        $payment['notification_mail_1'] = null;
+                        $payment['notification_mail_sp1'] = null;
+                        $payment['notification_mail_sp2'] = null;
+                        $payment['notification_mail_sp3'] = null;
+                        $payment['pg_number'] = null;
+
+                        $payments[] = $payment;
+                        
+                        $credits = $payment['credit'];
+                    }
                 }
                 
                 $akad->save();
