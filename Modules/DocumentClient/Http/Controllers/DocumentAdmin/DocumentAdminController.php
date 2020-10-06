@@ -317,8 +317,8 @@ class DocumentAdminController extends Controller
             if ($data->document) {
                 if ($data->document->url_file_ktp_pemohon || $data->document->url_file_ktp_suami_istri || $data->document->url_file_kk){
 
-                    $pdf = PDF::loadview('documentclient::document-admin.document',['data' => $data]);
-                    return $pdf->download('document.pdf');
+                    $pdf = PDF::loadview('documentclient::document-admin.document',['data' => $data, 'client' => $document_admin->client->client_name]);
+                    return $pdf->download('Dokumen '.$document_admin->client->client_name.'.pdf');
 
                 }else{
                     return response_json(false, null, 'Dokumen tidak ditemukan.');
@@ -354,7 +354,27 @@ class DocumentAdminController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
+         $user = \Auth::user();
+        if ($user->is_admin == '1') {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+           $query = Booking::with('client', 'unit', 'document','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster', 'regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster', 'agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else {
+            $query = Booking::with('client', 'unit', 'document','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

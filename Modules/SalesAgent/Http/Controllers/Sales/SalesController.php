@@ -106,14 +106,12 @@ class SalesController extends Controller
         DB::beginTransaction();
         try {
 
-            $request->merge([
-                'status' => 'sales'
-            ]);
-
             $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
+            $user->status = 'sales';
+            $user->save();
             
             $request->merge([
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
 
             $data = Sales::create($request->all());
@@ -291,6 +289,19 @@ class SalesController extends Controller
             $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
         }elseif ($user->status == 'sales') {
             $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->where('id', $user->id)->orderBy('created_at', 'desc');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator')
+                            ->whereHas('sales.regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator', 'sales.regional_coordinator')
+                            ->whereHas('sales.agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }
+        else{
+            $query = User::has('sales')->with('sales.agency', 'sales.main_coordinator')->orderBy('created_at', 'desc');
         }
 
         // select(
@@ -389,6 +400,7 @@ class SalesController extends Controller
             'province' => $sales->province,
             'city' => $sales->city,
             'role_id' => $sales->role_id,
+            'status' => $sales->sales->status,
         ];
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);

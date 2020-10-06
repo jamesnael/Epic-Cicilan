@@ -2,11 +2,47 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title>Surat Pemesanan Unit {{ $data->client->client_name }}</title>
 	<style type="text/css">
+		/*@page {
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		html {
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		body {
+			padding-left: 25px;
+			padding-right: 25px;
+		}*/
+		.page-break {
+		    page-break-after: always;
+		}
+		.text-center{
+			text-align:center;
+		}
+		.text-left{
+			text-align:left;
+		}
+		.text-right{
+			text-align:right;
+		}
 		.mt-cm {
-			margin-top: 3cm;
+			margin-top: 3.5cm;
+		}
+		.mt-2 {
+			margin-top: 16px;
+		}
+		.mt-3 {
+			margin-top: 25px;
+		}
+		.my-4 {
+			margin-top: 30px;
+			margin-bottom: 30px;
+		}
+		.mt-cm-2 {
+			margin-top: 2.75cm;
 		}
 		.sans{
             font-size : 12.5px;
@@ -15,6 +51,9 @@
 	</style>
 </head>
 <body>
+	<!-- <div style="position: fixed; left: 0px; top: 0px; right: 0px; bottom: 0px; text-align: center;z-index: -1000;">
+        <img src="{{base_path('kop.png')}}" style="width: 100%;">
+    </div> -->
 	<!-- Kop Surat -->
 	<div class="mt-cm">&nbsp;</div>
 	
@@ -150,7 +189,7 @@
 
 	<!-- Footer -->
 	<p class="sans text-right">Jakarta, {{ $date }}</p>
-	<table border="1" cellspacing="0" cellpadding="3" class="sans mt-3" style="font-size:11px" width="100%">
+	<table border="1" cellspacing="0" cellpadding="3" class="sans mt-2" style="font-size:11px" width="100%">
 		<tr>
 			<th width="25%"><div class="text-center">ADMIN</div></th>
 			<th width="25%"><div class="text-center">SALES</div></th>
@@ -174,32 +213,44 @@
 	<!-- Page Break -->
 	<div style="page-break-before: always;">&nbsp;</div>
 
-	<!-- Kop Surat -->
-	<div class="mt-cm">&nbsp;</div>
+	@if(!empty($data->payments))
+		@php
+			$no = 1
+		@endphp
+		
+		@foreach(collect($data->payments)->chunk(28) as $chunk)
+			<!-- Kop Surat -->
+			<div class="mt-cm-2">&nbsp;</div>
 
-	<!-- Page 2 -->
-	<div class="text-center">
-		<font style="font-family: sans-serif;font-size: 15px;"><strong>JADWAL PEMBAYARAN</strong></font>
-	</div>
-	<table border="1" cellspacing="0" cellpadding="5" class="sans mt-3" style="font-size:12px" width="100%">
-		<tr>
-			<th width="5%"><div class="text-center">No.</div></th>
-			<th width="35%"><div class="text-center">PEMBAYARAN</div></th>
-			<th width="20%"><div class="text-center">JATUH TEMPO</div></th>
-			<th width="20%"><div class="text-center">ANGSURAN</div></th>
-			<th width="20%"><div class="text-center">SISA ANGSURAN</div></th>
-		</tr>
-		@if(!empty($data->payments))
-			@foreach($data->payments as $payment)
+			<!-- Page 2 -->
+			@if($loop->first)
+				<div class="text-center">
+					<font style="font-family: sans-serif;font-size: 15px;"><strong>JADWAL PEMBAYARAN</strong></font>
+				</div>
+			@endif
+
+			<table border="1" cellspacing="0" cellpadding="5" class="sans mt-3" style="font-size:12px" width="100%">
 				<tr>
-					<td><div class="text-center">{{ $loop->iteration }}</div></td>
-					<td><div class="text-center">{{ $payment->payment }}</div></td>
-					<td><div class="text-center">{{ \Carbon\Carbon::parse($payment->due_date)->locale('id')->translatedFormat('d F Y') }}</div></td>
-					<td><div class="text-center">Rp. {{ format_money($payment->installment) }}</div></td>
-					<td><div class="text-center">Rp. {{ format_money($payment->credit) }}</div></td>
+					<th width="5%"><div class="text-center">No.</div></th>
+					<th width="35%"><div class="text-center">PEMBAYARAN</div></th>
+					<th width="20%"><div class="text-center">JATUH TEMPO</div></th>
+					<th width="20%"><div class="text-center">ANGSURAN</div></th>
+					<th width="20%"><div class="text-center">SISA ANGSURAN</div></th>
 				</tr>
-			@endforeach
-		@endif
-	</table>
+					@foreach($chunk as $payment)
+						<tr>
+							<td><div class="text-center">{{ $no++ }}</div></td>
+							<td><div class="text-center">{{ $payment->payment }}</div></td>
+							<td><div class="text-center">{{ \Carbon\Carbon::parse($payment->due_date)->locale('id')->translatedFormat('d F Y') }}</div></td>
+							<td><div class="text-center">Rp. {{ format_money($payment->installment) }}</div></td>
+							<td><div class="text-center">Rp. {{ format_money($payment->credit) }}</div></td>
+						</tr>
+					@endforeach
+			</table>
+			@if (!($loop->last))
+				<div class="page-break"></div>
+			@endif
+		@endforeach
+	@endif
 </body>
 </html>

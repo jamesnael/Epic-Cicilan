@@ -19,6 +19,7 @@ use Modules\Installment\Entities\Client;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\BookingPayment;
 use Modules\Installment\Entities\TipeProgram;
+use Modules\Installment\Entities\Spr;
 
 class BookingImport implements ToCollection, WithStartRow, WithHeadingRow
 {
@@ -178,6 +179,14 @@ class BookingImport implements ToCollection, WithStartRow, WithHeadingRow
 			 			]);
 	 				}
 	 			}
+	 			$spr = Spr::create([
+	 				'booking_id' =>$booking->id,
+ 					'print_date' => $row['tanggal_cetak_sppr'],
+ 					'sent_date' => $row['tanggal_kirim_sppr'],
+ 					'received_date' => $row['tanggal_kembali_sppr'],
+ 					'approval_status' => 'Pending',
+	 			]);
+
 	   		}
     	}
     }

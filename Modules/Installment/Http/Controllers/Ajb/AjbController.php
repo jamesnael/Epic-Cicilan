@@ -337,7 +337,36 @@ class AjbController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster')
+                            ->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+             $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                            ->with('client', 'unit', 'sales', 'ajb', 'akad_kpr','unit.point.cluster')
+                            ->orderBy('created_at', 'DESC');
+        }
+
 
         $query->whereDoesntHave('ajb', function($subquery) {
             $subquery->where('approval_client_status', '=', 'Disetujui');
@@ -438,7 +467,36 @@ class AjbController extends Controller
      */
     public function getTableDataApproved(Request $request)
     {
-        $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+           $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                        ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                        ->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                        ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster','regional_coordinator')
+                        ->whereHas('regional_coordinator', function($subquery) use ($user){
+                            $subquery->where('user_id', $user->id);
+                        })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                        ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster','agency')
+                        ->whereHas('agency', function($subquery) use ($user){
+                            $subquery->where('user_id', $user->id);
+                        })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                        ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                        ->whereHas('sales', function($subquery) use ($user){
+                            $subquery->where('user_id', $user->id);
+                        })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')
+                        ->with('client', 'unit', 'sales', 'ajb','unit.point.cluster')
+                        ->orderBy('created_at', 'DESC');
+        }
+        
         $query->whereHas('ajb', function($subquery) {
             $subquery->where('approval_client_status', 'Disetujui');
             $subquery->where('approval_developer_status', 'Disetujui');

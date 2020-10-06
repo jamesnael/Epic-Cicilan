@@ -5,12 +5,15 @@
 	@include('components.breadcrumbs')
 
 	@php
-	 	$page->table_headers[] = [
-            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-            "align" => 'center',
-            "sortable" => false,
-            "value" => 'actions',
-        ];
+		if(\Auth::user()->is_admin) {
+		 	$page->table_headers[] = [
+	            "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
+	            "align" => 'center',
+	            "sortable" => false,
+	            "value" => 'actions',
+	        ];
+	    }
+	    
         $page->table_headers = collect($page->table_headers)->prepend([
             "text" => '#',
             "align" => 'center',

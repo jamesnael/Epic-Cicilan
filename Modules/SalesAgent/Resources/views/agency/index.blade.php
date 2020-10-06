@@ -35,11 +35,11 @@
 		edit-uri="agencies.edit"
 		edit-uri-parameter="slug"
 		edit-text="Ubah"
-		delete-uri="agencies.destroy"
+		{{-- delete-uri="agencies.destroy"
 		delete-uri-parameter="slug"
 		delete-text="Hapus"
 		delete-confirmation-text="Apakah Anda yakin untuk menghapus data ini ?"
-		delete-cancel-text="Batal"
+		delete-cancel-text="Batal" --}}
 		>
 		
 		@include('components.table')

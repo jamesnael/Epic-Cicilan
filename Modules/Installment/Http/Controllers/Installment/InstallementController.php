@@ -287,7 +287,28 @@ class InstallementController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster','sales')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');

@@ -115,6 +115,8 @@ class AgencyController extends Controller
                 'email' => $request->agency_email,
                 'address' => $request->agency_address,
                 'phone_number' => $request->agency_phone,
+                'city' => $request->city,
+                'province' => $request->province
             ]);
 
             $user = User::create($request->only(['full_name','email','password','phone_number','address','province','city','sales','status']));
@@ -161,7 +163,7 @@ class AgencyController extends Controller
      */
     public function update(Request $request, Agency $agency)
     {
-        $validator = $this->validateFormRequest($request, $agency->id);
+        $validator = $this->validateFormRequestUpdate($request, $agency->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -239,12 +241,20 @@ class AgencyController extends Controller
     {
         $user = \Auth::user();
 
-        if ($user->is_admin == '1') {
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
             $query = Agency::with('regional_coordinator')
                             ->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'sub_agent') {
             $query = Agency::with('regional_coordinator')
             ->where('user_id', $user->id)->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Agency::with('regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Agency::with('regional_coordinator')
+                            ->orderBy('created_at', 'DESC');
         }
 
 
@@ -343,6 +353,19 @@ class AgencyController extends Controller
             // "agency_address.required"=> __('salesagent::validation.required'),
             // "province.required"=> __('salesagent::validation.required'),
             // "city.required"=> __('salesagent::validation.required'),
+        ]);
+    }
+
+    public function validateFormRequestUpdate($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "agency_name" => "bail|required|string|max:255",
+            "agency_email" => "bail|required|email",
+            "agency_phone" => "bail|required|string|max:255",
+            "agency_address" => "bail|nullable|string|max:255",
+            "province" => "bail|nullable|string|max:255",
+            "city" => "bail|nullable|string|max:255",
+            "pph_final" => "bail|required|between:0,100",
         ]);
     }
 

@@ -40,12 +40,12 @@ class AppUserController extends Controller
                 "sortable" => false,
                 "value" => 'full_name',
             ],
-            // [
-            //     "text" => 'Hak Akses',
-            //     "align" => 'center',
-            //     "sortable" => false,
-            //     "value" => 'role.role_name',
-            // ],
+            [
+                "text" => 'Hak Akses',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'role_name',
+            ],
             [
                 "text" => 'Email',
                 "align" => 'center',
@@ -205,7 +205,6 @@ class AppUserController extends Controller
                 $subquery->where('full_name', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('email', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('address', 'LIKE', '%' . $generalSearch . '%');
-                $subquery->orWhere('pph_final', 'LIKE', '%' . $generalSearch . '%');
             });
         }
 
@@ -215,7 +214,7 @@ class AppUserController extends Controller
 
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
-            $item->pph_final = $item->pph_final . ' %';
+            $item->role_name = $item->role ? $item->role->role_name : '';
             return $item;
         });
         return $data;

@@ -175,22 +175,6 @@ class Booking extends Model
         return $collection;
     }
 
-    // public function getTotalPointAttribute()
-    // {
-    //     if($this->booking_status != 'dokumen' || $this->booking_status != 'spr')
-    //     {
-    //         $collection = collect($this->unit)->sum(function($item) {
-    //             if (!empty($item->points)) {
-    //                 return $item->points;
-    //             }
-    //             return 0;
-    //         });
-    //         return $collection;
-    //     } else {
-    //         return 0;
-    //     }
-    // }
-
     /**
      * Scope a query.
      *

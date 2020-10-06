@@ -19,110 +19,81 @@
             "value" => 'table_index',
         ])->values();
 
-        // // Table Koordinator Wilayah
-        // $page->table_headers_korwil[] = [
-        //     "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'actions',
-        // ];
-        // $page->table_headers_korwil = collect($page->table_headers_korwil)->prepend([
-        //     "text" => '#',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'table_index',
-        // ])->values();
-
-        // $page->table_headers_korut[] = [
-        //     "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'actions',
-        // ];
-        // $page->table_headers_korut = collect($page->table_headers_korut)->prepend([
-        //     "text" => '#',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'table_index',
-        // ])->values();
-
-        // $page->table_headers_closingfee[] = [
-        //     "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'actions',
-        // ];
-        // $page->table_headers_closingfee = collect($page->table_headers_closingfee)->prepend([
-        //     "text" => '#',
-        //     "align" => 'center',
-        //     "sortable" => false,
-        //     "value" => 'table_index',
-        // ])->values();
 	@endphp
 
 	<v-tabs>
-	    <v-tab>Sub Agent</v-tab>
-      	<v-tab-item>
-			<table-layout inline-template
-				uri="{{ route('salescommission.table') }}"
-				:headers='@json($page->table_headers)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				edit-uri="salescommission.edit"
-				edit-uri-parameter="slug"
-				edit-text="Ubah"
-				>
-				
-				@include('components.table')
-			</table-layout>
-	   	</v-tab-item>
+		@if (\Auth::user()->status != 'sales')
 
-	   	<v-tab>Koordinator Wilayah</v-tab>
-      	<v-tab-item>
-			<table-layout inline-template
-				uri="{{ route('salescommission.table.korwil') }}"
-				:headers='@json($page->table_headers_korwil)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				edit-uri="salescommission.edit.korwil"
-				edit-uri-parameter="slug"
-				edit-text="Ubah"
-				>
-				
-				@include('components.table')
-			</table-layout>
-		</v-tab-item>
+			@if (\Auth::user()->is_admin || \Auth::user()->status == 'sub_agent')
+			    <v-tab>Sub Agent</v-tab>
+		      	<v-tab-item>
+					<table-layout inline-template
+						uri="{{ route('salescommission.table') }}"
+						:headers='@json($page->table_headers)'
+						no-data-text="Tidak ada data ditemukan."
+						no-results-text="Tidak ada data ditemukan."
+						search-text="Pencarian"
+						refresh-text="Muat Ulang"
+						items-per-page-all-text="Semua"
+						items-per-page-text="Tampilkan"
+						page-text-locale="id"
+						edit-uri="salescommission.edit"
+						edit-uri-parameter="slug"
+						edit-text="Ubah"
+						>
+						
+						@include('components.table')
+					</table-layout>
+			   	</v-tab-item>
+			@endif
+			
+			@if (\Auth::user()->is_admin || \Auth::user()->status == 'koordinator_wilayah')
+			   	<v-tab>Koordinator Wilayah</v-tab>
+		      	<v-tab-item>
+					<table-layout inline-template
+						uri="{{ route('salescommission.table.korwil') }}"
+						:headers='@json($page->table_headers_korwil)'
+						no-data-text="Tidak ada data ditemukan."
+						no-results-text="Tidak ada data ditemukan."
+						search-text="Pencarian"
+						refresh-text="Muat Ulang"
+						items-per-page-all-text="Semua"
+						items-per-page-text="Tampilkan"
+						page-text-locale="id"
+						edit-uri="salescommission.edit.korwil"
+						edit-uri-parameter="slug"
+						edit-text="Ubah"
+						>
+						
+						@include('components.table')
+					</table-layout>
+				</v-tab-item>
+			@endif
 
-		<v-tab>Koordinator Utama</v-tab>
-      	<v-tab-item>
-			<table-layout inline-template
-				uri="{{ route('salescommission.table.korut') }}"
-				:headers='@json($page->table_headers_korut)'
-				no-data-text="Tidak ada data ditemukan."
-				no-results-text="Tidak ada data ditemukan."
-				search-text="Pencarian"
-				refresh-text="Muat Ulang"
-				items-per-page-all-text="Semua"
-				items-per-page-text="Tampilkan"
-				page-text-locale="id"
-				edit-uri="salescommission.edit.korut"
-				edit-uri-parameter="slug"
-				edit-text="Ubah"
-				>
-				
-				@include('components.table')
-			</table-layout>
-		</v-tab-item>
+			@if (\Auth::user()->is_admin || \Auth::user()->status == 'koordinator_utama')
+				<v-tab>Koordinator Utama</v-tab>
+		      	<v-tab-item>
+					<table-layout inline-template
+						uri="{{ route('salescommission.table.korut') }}"
+						:headers='@json($page->table_headers_korut)'
+						no-data-text="Tidak ada data ditemukan."
+						no-results-text="Tidak ada data ditemukan."
+						search-text="Pencarian"
+						refresh-text="Muat Ulang"
+						items-per-page-all-text="Semua"
+						items-per-page-text="Tampilkan"
+						page-text-locale="id"
+						edit-uri="salescommission.edit.korut"
+						edit-uri-parameter="slug"
+						edit-text="Ubah"
+						>
+						
+						@include('components.table')
+					</table-layout>
+				</v-tab-item>
+			@endif
+		@endif
+		
 		<v-tab>Closing Fee</v-tab>
       	<v-tab-item>
 			<table-layout inline-template

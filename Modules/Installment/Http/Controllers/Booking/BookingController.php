@@ -304,7 +304,28 @@ class BookingController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster')->orderBy('created_at', 'DESC');
+        $user = \Auth::user();
+
+        if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'koordinator_wilayah') {
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster','regional_coordinator')
+                            ->whereHas('regional_coordinator', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sub_agent') {
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster','agency')
+                            ->whereHas('agency', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }elseif ($user->status == 'sales') {
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster','sales')
+                            ->whereHas('sales', function($subquery) use ($user){
+                                $subquery->where('user_id', $user->id);
+                            })->orderBy('created_at', 'DESC');
+        }else{
+            $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster')->orderBy('created_at', 'DESC');
+        }
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -377,7 +398,7 @@ class BookingController extends Controller
      */
     public function data(Booking $booking)
     {
-        $data = $booking->load('unit','client','sales','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator');
+        $data = $booking->load('unit','client','sales','sales.user','sales.main_coordinator', 'sales.agency', 'sales.regional_coordinator','unit.point.cluster');
         try {
             return response_json(true, null, 'Sukses mengambil data.', $data);
         } catch (Exception $e) {
@@ -403,7 +424,17 @@ class BookingController extends Controller
                         return $item->only(['value', 'text', 'agency_name', 'regional_coordinator', 'main_coordinator', 'main_coordinator_id','regional_coordinator_id', 'agency_id']);
                     }),
             'client' => Client::select('id AS value', 'client_name AS text', 'client_number', 'client_email', 'client_address', 'client_phone_number', 'client_mobile_number')->get(),
-            'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->get(),
+            // 'unit' => Point::select('id AS value', 'building_type AS text', 'closing_fee', 'point')->with('cluster')->get(),
+            'unit' => Point::with('cluster')->get()->transform(function($item){
+                $item->value = $item->id;
+                $item->text  = $item->building_type;
+                $item->closing_fee = $item->closing_fee;
+                $item->point = $item->point;
+                $item->cluster_name = $item->cluster ? $item->cluster->cluster_name : '';
+                    
+                return $item->only(['value', 'text', 'closing_fee', 'point', 'cluster_name']);
+
+            }),
             'tipe_programs' => TipeProgram::get(),
         ];
     }

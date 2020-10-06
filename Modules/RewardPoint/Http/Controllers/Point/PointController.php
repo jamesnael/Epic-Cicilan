@@ -195,6 +195,11 @@ class PointController extends Controller
                 $subquery->where('building_type', 'LIKE', '%' . $generalSearch . '%');
                 $subquery->orWhere('point', 'LIKE', '%' . $generalSearch . '%');
             });
+
+            $query->orWhereHas('cluster', function($subquery) use ($generalSearch){
+                $subquery->where('cluster_name', 'LIKE', '%'.$generalSearch.'%');
+            });
+
         }
 
         // foreach ($request->input('sort') as $sort_key => $sort) {
@@ -204,7 +209,7 @@ class PointController extends Controller
         $data = $query->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
             $item->closing_fee = 'Rp '.format_money($item->closing_fee);
-            $item->cluster_name = $item->cluster->cluster_name;
+            $item->cluster_name = $item->cluster->cluster_name ?? '';
             return $item;
         });
         return $data;

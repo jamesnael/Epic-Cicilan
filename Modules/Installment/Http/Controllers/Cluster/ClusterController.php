@@ -20,7 +20,7 @@ class ClusterController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'destroy']);
+        $this->middleware('is-allowed')->only(['index', 'create', 'edit', 'delete']);
         $this->breadcrumbs = [
             ['href' => url('/'), 'text' => 'Home'],
             ['href' => route('cluster.index'), 'text' => 'Data Cluster'],
@@ -93,7 +93,7 @@ class ClusterController extends Controller
     {
         $this->breadcrumbs[] = ['href' => route('cluster.edit', [$cluster->slug]), 'text' => 'Edit Cluster ' . $cluster->cluster_name];
 
-        return view('installment::cluster.edit', [
+        return view('installment::Cluster.edit', [
             'page' => $this,
             'data' => $cluster,
 

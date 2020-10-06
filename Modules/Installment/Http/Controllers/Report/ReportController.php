@@ -38,8 +38,6 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $this->breadcrumbs[] = ['href' => route('report.index'), 'text' => 'Laporan'];
-
         return view('installment::report.create', [
             'page' => $this,
         ])->with($this->getHelper());
@@ -51,8 +49,6 @@ class ReportController extends Controller
      */
     public function create()
     {
-        $this->breadcrumbs[] = ['href' => route('report.index'), 'text' => 'Laporan'];
-
         return view('installment::report.create', [
             'page' => $this,
         ])->with($this->getHelper());
@@ -64,10 +60,21 @@ class ReportController extends Controller
      * @return Renderable
      */
 
+    function convertDateIn($string)
+    {
+        $bulanIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September' , 'Oktober', 'November', 'Desember'];
+     
+        $tanggal = explode(" ", $string)[0];
+        $bulan = sprintf('%02d', array_search(explode(" ", $string)[1], $bulanIndo));
+        $tahun = explode(" ", $string)[2];
+     
+        return $tahun . "-" . $bulan . "-" . $tanggal;
+    }
+
     public function store(Request $request)
     {
-        $from_date  = \Carbon\Carbon::parse($request->from_date)->locale('id')->translatedFormat('Y-m-d');
-        $until_date = \Carbon\Carbon::parse($request->until_date)->locale('id')->translatedFormat('Y-m-d');
+        $from_date  = $this->convertDateIn($request->from_date);
+        $until_date = $this->convertDateIn($request->until_date);
         $date_now   = \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y');
 
         if ($request->nama_laporan == "Pembayaran Cicilan")
@@ -99,8 +106,10 @@ class ReportController extends Controller
                     $data = Booking::has('unpaid_payments')->with('client','unit','payments','sales', 'agency', 'regional_coordinator', 'sales.user')->whereBetween('created_at', [$from_date, $until_date])->orderBy('created_at', 'DESC')->get();
                 }
             }
-            // return view('installment::report.report', ['data' => $data, 'from_date' => $from_date, 'until_date' => $until_date]);
-            return (new InstallmentReport($data, $from_date, $until_date))->download('Laporan Pembayaran Cicilan - '. $date_now. '.xlsx');
+
+            $max_installment = $data->max('installment_time');
+            // return view('installment::report.report', ['data' => $data, 'from_date' => $from_date, 'until_date' => $until_date , 'max_installment' => $max_installment]);
+            return (new InstallmentReport($data, $from_date, $until_date, $max_installment))->download('Laporan Pembayaran Cicilan - '. $date_now. '.xlsx');
         } else {
             return response_json(false, 'Error!!', 'Laporan hanya untuk Pemebayaran Cicilan untuk sementara');
         }

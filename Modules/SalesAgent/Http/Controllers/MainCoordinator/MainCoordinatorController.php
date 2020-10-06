@@ -149,7 +149,7 @@ class MainCoordinatorController extends Controller
      */
     public function update(Request $request, MainCoordinator $main_coordinator)
     {
-        $validator = $this->validateFormRequest($request, $main_coordinator->id);
+        $validator = $this->validateFormRequestUpdate($request, $main_coordinator->id);
 
         if ($validator->fails()) {
             return response_json(false, 'Isian form salah', $validator->errors()->first());
@@ -223,13 +223,7 @@ class MainCoordinatorController extends Controller
      */
     public function getTableData(Request $request)
     {
-        $user = \Auth::user();
-
-        if ($user->is_admin == '1') {
-            $query = MainCoordinator::orderBy('created_at', 'DESC');
-        }elseif ($user->status == 'koordinator_utama') {
-            $query = MainCoordinator::where('user_id', $user->id)->orderBy('created_at', 'DESC');
-        }
+        $query = MainCoordinator::orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
@@ -300,6 +294,16 @@ class MainCoordinatorController extends Controller
         return Validator::make($request->all(), [
             "full_name" => "bail|required|string|max:255",
             "email" => "bail|required|email|unique:Modules\AppUser\Entities\User,email,$id,id,deleted_at,NULL",
+            "phone_number" => "bail|required|numeric",
+            "address" => "bail|nullable|string|max:255",
+        ]);
+    }
+
+    public function validateFormRequestUpdate($request, $id = null)
+    {
+        return Validator::make($request->all(), [
+            "full_name" => "bail|required|string|max:255",
+            "email" => "bail|required|email",
             "phone_number" => "bail|required|numeric",
             "address" => "bail|nullable|string|max:255",
         ]);
