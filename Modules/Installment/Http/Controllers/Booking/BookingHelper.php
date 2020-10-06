@@ -39,7 +39,9 @@ class BookingHelper
         $payments[] = $payment;
 
         $credits = $booking->payment_type == 'KPR/KPA' ? $booking->dp_amount - $booking->nup_amount - $booking->utj_amount : $booking->total_amount - $booking->nup_amount - $booking->utj_amount;
-        $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
+        // $mth = $booking->due_date == \Carbon\Carbon::now()->day ? 1 : 0;
+        $mth = 0;
+
         for ($i = 1; $i <= $booking->installment_time; $i++) {
             if (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') {
                 $credits = $credits - $booking->payments[$i]->installment;

@@ -315,20 +315,21 @@ class AkadController extends Controller
 
             if ($akad->akad_kpr) {
                 $data = AkadKpr::where('booking_id', $request->booking_id)->update($request->only(['booking_id', 'akad_date', 'akad_time', 'location', 'address','akad_doc_file_name','akad_doc_sign_file_name', 'approval_client_status', 'approval_notaris_status', 'approval_developer_status','total_kpr']));
+                $data_akad = AkadKpr::where('booking_id', $request->booking_id)->firstOrFail();
+
                  activity()
                  ->performedOn($akad)
                  ->causedBy(\Auth::user())
                  ->log('Akad berhasil diubah');
 
             }else{
-                $data = AkadKpr::create($request->all());
+                $data_akad = AkadKpr::create($request->all());
                 activity()
                  ->performedOn($akad)
                  ->causedBy(\Auth::user())
                  ->log('Akad baru berhasil dibuat');
 
             }
-
 
             if ($request->input('approval_client_status') == 'Disetujui' && $request->input('approval_notaris_status') == 'Disetujui' && $request->input('approval_developer_status') == 'Disetujui') {
 
@@ -340,9 +341,9 @@ class AkadController extends Controller
                     $akad_kpr = collect($akad->payments)->last();
                     if ($akad_kpr->payment == 'Akad Kredit') {
                         $akad_kpr->update([
-                            'due_date' => $data->akad_date,
+                            'due_date' => $data_akad->akad_date,
                             'payment_status' => 'Paid',
-                            'payment_date' => $data->akad_date,
+                            'payment_date' => $data_akad->akad_date,
                             'payment_method' => 'Akad KPR',
                             'total_paid' => $request->total_kpr,
                             'credit' => $akad_kpr->installment - $request->total_kpr
@@ -351,7 +352,7 @@ class AkadController extends Controller
                     // Tambah Installment
                     $payments = [];
                     $mth = 1;
-                    $installment = round(($akad_kpr->installment - $request->total_kpr) / $akad->installment_time_sp3k, 0);
+                    $installment = round(($akad_kpr->installment - $request->total_kpr) / $request->installment_time_sp3k, 0);
                     $credits = $akad_kpr->installment - $request->total_kpr;
                     for ($i = 1; $i <= $akad->installment_time_sp3k; $i++) {
                         $date = \Carbon\Carbon::parse(get_next_month(get_next_date($akad->due_date), $i));

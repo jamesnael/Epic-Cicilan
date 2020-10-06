@@ -69,6 +69,9 @@
         	}
         },
         computed:{
+            difference: function() {
+                return parseInt(this.form_data.credits) - parseInt(this.form_data.total_kpr);
+            }
         },
         mounted() {
             this.setData();
@@ -89,6 +92,8 @@
                                     client_mobile_number:data.client.client_mobile_number,
                                     unit_number:data.unit.unit_number + '/' + data.unit.unit_block,
                                     unit_price: this.moneyFormat(data.total_amount),
+                                    credits: data.credits,
+                                    installment_time_sp3k: data.installment_time_sp3k,
                                     unit_type: data.unit.unit_type + ' ' + data.unit.unit_number + '/' + data.unit.unit_block,
                                     sales_name:data.sales.user.full_name,
                                     agency_name:data.sales.agency ? data.sales.agency.agency_name : '',
@@ -97,7 +102,6 @@
                                     location: data.akad_kpr ? data.akad_kpr.location : '',
                                     address: data.akad_kpr ? data.akad_kpr.address : '',
                                     ppjb_date: data.ppjb ? data.ppjb.ppjb_date : '',
-
                                     dokumen_awal_akad: data.akad_kpr ? data.akad_kpr.akad_doc_file_name : '',
                                     url_dokumen_awal: data.akad_kpr ?  data.akad_kpr.url_akad_doc_file_name : '',
 

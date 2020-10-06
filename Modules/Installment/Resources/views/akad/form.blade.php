@@ -314,20 +314,83 @@
 				            </validation-provider>
 			          </v-col>
 					</v-row>
-					<validation-provider v-slot="{ errors }" name="Jumlah KPR" rules="required|numeric">
-			    		<v-text-field
-			    			class="mt-4"
-			    			v-model="form_data.total_kpr"
-			    			name="total_kpr"
-				    		label="Jumlah KPR"
-				    		hint="* harus diisi"
-				    		:error-messages="errors"
-				    		:persistent-hint="true"
-				    		:readonly="field_state"
-				    		>
-		    			</v-text-field>
-		    			<small class="form-text text-muted">Rp @{{ form_data.total_kpr ? number_format(form_data.total_kpr) : 0 }}</small>
-		    		</validation-provider>
+					<v-row>
+						<v-col
+	    		          	cols="12"
+	    		          	md="12">
+							<validation-provider v-slot="{ errors }" name="Jumlah SP3K" rules="required|numeric">
+					    		<v-text-field
+					    			class="mt-4"
+					    			v-model="form_data.credits"
+					    			name="credits"
+						    		label="Jumlah SP3K"
+						    		hint="* harus diisi"
+						    		:error-messages="errors"
+						    		:persistent-hint="true"
+						    		:readonly="true"
+						    		>
+				    			</v-text-field>
+				    			<small class="form-text text-muted">Rp @{{ form_data.credits ? number_format(form_data.credits) : 0 }}</small>
+				    		</validation-provider>
+				    	</v-col>
+				    </v-row>
+					<v-row>
+						<v-col
+	    		          	cols="12"
+	    		          	md="12">
+							<validation-provider v-slot="{ errors }" name="Jumlah KPR" rules="required|numeric">
+					    		<v-text-field
+					    			class="mt-4"
+					    			v-model="form_data.total_kpr"
+					    			name="total_kpr"
+						    		label="Jumlah KPR"
+						    		hint="* harus diisi"
+						    		:error-messages="errors"
+						    		:persistent-hint="true"
+						    		:readonly="field_state"
+						    		>
+				    			</v-text-field>
+				    			<small class="form-text text-muted">Rp @{{ form_data.total_kpr ? number_format(form_data.total_kpr) : 0 }}</small>
+				    		</validation-provider>
+				    	</v-col>
+				    </v-row>
+				    <v-row>
+						<v-col
+	    		          	cols="12"
+	    		          	md="12">
+							<validation-provider v-slot="{ errors }" name="Jumlah Selisih" rules="required|numeric">
+					    		<v-text-field
+					    			class="mt-4"
+					    			v-model="difference"
+					    			name="difference"
+						    		label="Jumlah Selisih"
+						    		:error-messages="errors"
+						    		:persistent-hint="true"
+						    		:readonly="true"
+						    		>
+				    			</v-text-field>
+				    			<small class="form-text text-muted">Rp @{{ difference ? number_format(difference) : 0 }}</small>
+				    		</validation-provider>
+				    	</v-col>
+				    </v-row>
+				    <v-row v-if="difference > 0">
+						<v-col
+	    		          	cols="12"
+	    		          	md="12">
+							    <validation-provider v-slot="{ errors }" name="Lama cicilan SP3K" rules="required|numeric|min:1">
+						    		<v-text-field
+						    			class="mt-4"
+						    			v-model="form_data.installment_time_sp3k"
+						    			name="installment_time_sp3k"
+							    		label="Lama Cicilan SP3K"
+							    		hint="* harus diisi"
+							    		:persistent-hint="true"
+							    		:error-messages="errors"
+							    		:readonly="field_state">
+					    			</v-text-field>
+					    		</validation-provider>
+					    </v-col>
+					</v-row>
 				</div>
 
 	            <v-btn

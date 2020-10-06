@@ -400,7 +400,7 @@ if (! function_exists('aside_menu')) {
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Pembayaran Cicilan',
                 'uri' => route('installment-unit.index'),
-                'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit']),
+                'model' => in_array(Route::currentRouteName(), ['installment-unit.index','installment-unit.create', 'installment-unit.edit', 'installment-unit.edit.lunas']),
                 'show' => Auth::user()->is_admin || in_array('installment-unit.index', Auth::user()->role ? Auth::user()->role->user_access : [])
             ], 
             [
