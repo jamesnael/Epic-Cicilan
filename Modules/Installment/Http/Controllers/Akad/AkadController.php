@@ -335,14 +335,21 @@ class AkadController extends Controller
 
                 if ($request->total_kpr == $akad->credits) {
                     $akad->booking_status = 'ajb_handover';
+                    $akad->save();
                 }else{
                     $akad->booking_status = 'cicilan_sp3k';
+                    $akad->installment_time_sp3k = $request->input('installment_time_sp3k');
+                    $akad->installment_time = $akad->installment_time + $akad->installment_time_sp3k;
+                    $akad->dp_amount = $akad->dp_amount + ($akad->credits - $request->total_kpr);
+                    $akad->save();
+
                     // Update Akad KPR
                     $akad_kpr = collect($akad->payments)->last();
                     if ($akad_kpr->payment == 'Akad Kredit') {
                         $akad_kpr->update([
                             'due_date' => $data_akad->akad_date,
                             'payment_status' => 'Paid',
+                            'installment' => $request->total_kpr,
                             'payment_date' => $data_akad->akad_date,
                             'payment_method' => 'Akad KPR',
                             'total_paid' => $request->total_kpr,
@@ -351,11 +358,10 @@ class AkadController extends Controller
                     }
                     // Tambah Installment
                     $payments = [];
-                    $mth = 1;
                     $installment = round(($akad_kpr->installment - $request->total_kpr) / $request->installment_time_sp3k, 0);
                     $credits = $akad_kpr->installment - $request->total_kpr;
                     for ($i = 1; $i <= $akad->installment_time_sp3k; $i++) {
-                        $date = \Carbon\Carbon::parse(get_next_month(get_next_date($akad->due_date), $i));
+                        $date = \Carbon\Carbon::parse(get_next_month(get_next_date($akad->due_date), $i - 1));
                         $payment = [];
                         $payment['payment'] = 'Cicilan SP3K ' . $i;
                         $payment['due_date'] = $date->format('Y-m-d');
@@ -367,11 +373,11 @@ class AkadController extends Controller
                         $payment['payment_status'] = 'Unpaid';
                         $payment['number_of_delays'] = null;
                         $payment['fine'] = null;
-                        $payment['notification_mail_7'] = null;
-                        $payment['notification_mail_1'] = null;
-                        $payment['notification_mail_sp1'] = null;
-                        $payment['notification_mail_sp2'] = null;
-                        $payment['notification_mail_sp3'] = null;
+                        $payment['notification_mail_7'] = false;
+                        $payment['notification_mail_1'] = false;
+                        $payment['notification_mail_sp1'] = false;
+                        $payment['notification_mail_sp2'] = false;
+                        $payment['notification_mail_sp3'] = false;
                         $payment['pg_number'] = null;
 
                         $payments[] = $payment;
@@ -379,15 +385,12 @@ class AkadController extends Controller
                         $credits = $payment['credit'];
                     }
                     $akad->payments()->createMany($payments);
-                    $akad->installment_time = $akad->installment_time + $akad->installment_time_sp3k;
                 }
-                
-                $akad->save();
             }
 
 
             DB::commit();
-            return response_json(true, null, 'Data Akad KPR berhasil disimpan.', $data);
+            return response_json(true, null, 'Data Akad KPR berhasil disimpan.', $data_akad);
         } catch (\Exception $e) {
             DB::rollback();
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
