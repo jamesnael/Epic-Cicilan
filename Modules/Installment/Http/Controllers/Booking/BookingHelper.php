@@ -87,23 +87,23 @@ class BookingHelper
                 } else {
                     $payment['payment'] = 'Cicilan ' . $i;
                 }
-                $payment['due_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->due_date : \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
-                $payment['sp1_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp1_date : $date->addDays(option('sp1_date', 14))->format('Y-m-d');
-                $payment['sp2_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp2_date : $date->addDays(option('sp2_date', 21))->format('Y-m-d');
-                $payment['sp3_date'] = isset($booking->payments[$i]) ? $booking->payments[$i]->sp3_date : $date->addDays(option('sp3_date', 28))->format('Y-m-d');
+                $payment['due_date'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->due_date : \Carbon\Carbon::parse(get_next_month(get_next_date($booking->due_date), $mth))->format('Y-m-d');
+                $payment['sp1_date'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->sp1_date : $date->addDays(option('sp1_date', 14))->format('Y-m-d');
+                $payment['sp2_date'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->sp2_date : $date->addDays(option('sp2_date', 21))->format('Y-m-d');
+                $payment['sp3_date'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->sp3_date : $date->addDays(option('sp3_date', 28))->format('Y-m-d');
                 $payment['installment'] = $i == 1 ? $booking->first_payment : ($i == $booking->installment_time ? $booking->installment + $credits : $booking->installment);
                 $payment['credit'] = $i == $booking->installment_time ? 0 : $credits;
                 $payment['payment_status'] = 'Unpaid';
 
-                $payment['number_of_delays'] = isset($booking->payments[$i]) ? $booking->payments[$i]->number_of_delays : null;
-                $payment['fine'] = isset($booking->payments[$i]) ? $booking->payments[$i]->fine : null;
+                $payment['number_of_delays'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->number_of_delays : null;
+                $payment['fine'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->fine : null;
 
-                $payment['notification_mail_7'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_7 : null;
-                $payment['notification_mail_1'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_1 : null;
-                $payment['notification_mail_sp1'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp1 : null;
-                $payment['notification_mail_sp2'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp2 : null;
-                $payment['notification_mail_sp3'] = isset($booking->payments[$i]) ? $booking->payments[$i]->notification_mail_sp3 : null;
-                $payment['pg_number'] = isset($booking->payments[$i]) ? $booking->payments[$i]->pg_number : null;
+                $payment['notification_mail_7'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->notification_mail_7 : null;
+                $payment['notification_mail_1'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->notification_mail_1 : null;
+                $payment['notification_mail_sp1'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->notification_mail_sp1 : null;
+                $payment['notification_mail_sp2'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->notification_mail_sp2 : null;
+                $payment['notification_mail_sp3'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->notification_mail_sp3 : null;
+                $payment['pg_number'] = (isset($booking->payments[$i]) && $booking->payments[$i]->payment_status == 'Paid') ? $booking->payments[$i]->pg_number : null;
 
                 $payments[] = $payment;
             }

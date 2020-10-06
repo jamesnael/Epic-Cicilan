@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Installment\Http\Controllers\Booking\BookingHelper;
 use Modules\Installment\Entities\Booking;
 use Modules\Installment\Entities\Unit;
-use Modules\Installment\Entities\HandOver;
+use Modules\Installment\Entities\Handover;
 use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\SalesAgent\Entities\Agency;
@@ -270,7 +270,7 @@ class HandOverController extends Controller
                 Notification::route('mail', $handover->client->client_email)
                             ->notify(new ReminderHandover($handover));
             }
-            $has_handover = HandOver::where('booking_id', $request->booking_id)->first();
+            $has_handover = Handover::where('booking_id', $request->booking_id)->first();
             if ($has_handover) {
                 $data = $has_handover->update($request->all());
                  activity()
@@ -278,7 +278,7 @@ class HandOverController extends Controller
                  ->causedBy(\Auth::user())
                  ->log('Handover berhasil diubah');
             }else{
-                $data = HandOver::create($request->all());
+                $data = Handover::create($request->all());
                  activity()
                  ->performedOn($handover)
                  ->causedBy(\Auth::user())

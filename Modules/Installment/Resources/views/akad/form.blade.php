@@ -248,7 +248,7 @@
 						<v-col
 	    		          cols="12"
 	    		          md="12">
-						    <h3 class="mt-4">Approval Akad</h3>
+						    <h3 class="my-4">Approval Akad</h3>
 				    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
 								<v-select
 						        v-model="form_data.approval_client_status"
@@ -314,16 +314,17 @@
 				            </validation-provider>
 			          </v-col>
 					</v-row>
+				    <h3 class="mt-2">SP3K</h3>
 					<v-row>
 						<v-col
 	    		          	cols="12"
 	    		          	md="12">
-							<validation-provider v-slot="{ errors }" name="Jumlah SP3K" rules="required|numeric">
+							<validation-provider v-slot="{ errors }" name="Total DP" rules="required|numeric">
 					    		<v-text-field
 					    			class="mt-4"
 					    			v-model="form_data.credits"
 					    			name="credits"
-						    		label="Jumlah SP3K"
+						    		label="Total DP"
 						    		hint="* harus diisi"
 						    		:error-messages="errors"
 						    		:persistent-hint="true"

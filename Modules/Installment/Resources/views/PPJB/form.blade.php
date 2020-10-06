@@ -237,86 +237,82 @@
 		    		  </a>
 			    		</validation-provider>
 			    	</v-col>
-
 		    	</v-row>
 
-		    	 <h3 class="mt-4"
-		    	 v-if="form_data.ppjb_sign_date_data !== ''"
-		    	 >Approval PPJB</h3>
-
-		    		
+		    	<v-row v-if="form_data.ppjb_doc_file_name != null">
 		    		<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
-		    			<v-select
-			    			v-model="form_data.approval_client_status" 
-			              	:items="['Disetujui','Pending']"	
-			              	label="Approval Pembeli"
-			              	name="approval_client_status"
-			              	v-if="form_data.ppjb_sign_date_data !== ''"
-			              	:persistent-hint="true"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-select>
+			    	 	<h3 class="mt-4">Approval PPJB</h3>
+			    		<validation-provider v-slot="{ errors }" name="Approval Pembeli" rules="">
+			    			<v-select
+				    			v-model="form_data.approval_client_status" 
+				              	:items="['Disetujui','Pending']"	
+				              	label="Approval Pembeli"
+				              	name="approval_client_status"
+				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            	></v-select>
 
-					</validation-provider>
+						</validation-provider>
 			    	</v-col>
 
 			    	<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
-		    			<v-select
-			    			v-model="form_data.approval_developer_status" 
-			              	:items="['Disetujui','Pending']"
-			              	label="Approval Developer"
-			              	name="approval_developer_status"
-			              	v-if="form_data.ppjb_sign_date_data !== ''"
-			              	:persistent-hint="true"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-select>
+			    		<validation-provider v-slot="{ errors }" name="Approval Developer" rules="">
+			    			<v-select
+				    			v-model="form_data.approval_developer_status" 
+				              	:items="['Disetujui','Pending']"
+				              	label="Approval Developer"
+				              	name="approval_developer_status"
+				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            	></v-select>
 
-					</validation-provider>
+						</validation-provider>
 			    	</v-col>
 
 					<v-col
     		          	cols="12"
     		          	md="12">	
-		    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="">
-		    			<v-select
-			    			v-model="form_data.approval_notaris_status" 
-			              	:items="['Disetujui','Pending']"
-			              	label="Approval Notaris"
-			              	name="approval_notaris_status"
-			              	v-if="form_data.ppjb_sign_date_data !== ''"
-			              	:persistent-hint="true"
-				    		:error-messages="errors"
-				    		:readonly="field_state"
-			            	></v-select>
+			    		<validation-provider v-slot="{ errors }" name="Approval Notaris" rules="">
+			    			<v-select
+				    			v-model="form_data.approval_notaris_status" 
+				              	:items="['Disetujui','Pending']"
+				              	label="Approval Notaris"
+				              	name="approval_notaris_status"
+				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	:persistent-hint="true"
+					    		:error-messages="errors"
+					    		:readonly="field_state"
+				            	></v-select>
 
-					</validation-provider>
+						</validation-provider>
 			    	</v-col>
 
-			    <v-col
+			    	<v-col
     		          	cols="12"
     		          	md="12">
 			    		<validation-provider v-slot="{ errors }" name="Upload Surat PPJB" rules="">
 				    		<v-file-input
 				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
-					    		v-if="form_data.ppjb_sign_date_data !== ''"
+					    		v-if="form_data.ppjb_doc_file_name != null"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
-					    		>
+				    		>
 			    			</v-file-input>
 			    			<a :href="form_data.url_file_doc_sign" target="_blank" class="ml-8">
 		    		  	<small>@{{form_data.ppjb_doc_sign_file_name}}</small>
 		    		  </a>
 			    		</validation-provider>
 			    	</v-col>
-
+			   	</v-row>
 
 
 			    
