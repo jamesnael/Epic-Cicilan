@@ -70,9 +70,9 @@ class BookingHelper
                 $payments[] = $payment;
                 $mth++;
             } else {
-                if (!isset($booking->payments[$i])) {
-                    $mth++;
-                }
+                // if (!isset($booking->payments[$i])) {
+                //     $mth++;
+                // }
                 if ($i == 1) {
                     $credits = $credits - $booking->first_payment;
                 } else {
@@ -107,7 +107,7 @@ class BookingHelper
 
                 $payments[] = $payment;
             }
-            
+            $mth++;
         }
 
         if ($booking->payment_type == 'KPR/KPA') {
