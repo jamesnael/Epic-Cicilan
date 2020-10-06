@@ -616,28 +616,33 @@ class InstallmentUnitController extends Controller
 
         if ($user->is_admin == '1' || $user->status == 'koordinator_utama') {
             $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')
+                            ->doesntHave('unpaid_payments')
                             ->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])
                             ->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'koordinator_wilayah') {
             $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster','regional_coordinator')
+                            ->doesntHave('unpaid_payments')
                             ->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])
                             ->whereHas('regional_coordinator', function($subquery) use ($user){
                                 $subquery->where('user_id', $user->id);
                             })->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'sub_agent') {
             $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster','agency')
+                            ->doesntHave('unpaid_payments')
                             ->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])
                             ->whereHas('agency', function($subquery) use ($user){
                                 $subquery->where('user_id', $user->id);
                             })->orderBy('created_at', 'DESC');
         }elseif ($user->status == 'sales') {
             $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster','sales')
+                            ->doesntHave('unpaid_payments')
                             ->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])
                             ->whereHas('sales', function($subquery) use ($user){
                                 $subquery->where('user_id', $user->id);
                             })->orderBy('created_at', 'DESC');
         }else{
             $query = Booking::with('client','unit','payments','sales.user','unit.point.cluster')
+                            ->doesntHave('unpaid_payments')
                             ->whereNotIn('booking_status',['cicilan','cicilan_sp3k'])
                             ->orderBy('created_at', 'DESC');
         }
