@@ -361,7 +361,7 @@ class AkadController extends Controller
                         $payment['sp2_date'] = $date->addDays(option('sp2_date', 21))->format('Y-m-d');
                         $payment['sp3_date'] = $date->addDays(option('sp3_date', 28))->format('Y-m-d');
                         $payment['installment'] = $i == $akad->installment_time_sp3k ? $credits : $installment;
-                        $payment['credit'] = $credits - $installment;
+                        $payment['credit'] = $i == $akad->installment_time_sp3k ? 0 : ($credits - $installment);
                         $payment['payment_status'] = 'Unpaid';
                         $payment['number_of_delays'] = null;
                         $payment['fine'] = null;
