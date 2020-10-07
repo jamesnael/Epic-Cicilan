@@ -277,16 +277,17 @@
             		            :disabled="field_state">
             		        </v-text-field>
             		    </v-col>
-            		    <v-col
-            		        cols="12"
-            		        md="4">
-            		        <v-text-field
-            		            :value="number_format(form_data.first_payment)"
-            		            label="Pembayaran Pertama"
-            		            :readonly="!field_state"
-            		            :disabled="field_state">
-            		        </v-text-field>
-            		    </v-col>
+                        <v-col
+                            v-if="form_data.payment_type == 'KPR/KPA'"
+                            cols="12"
+                            md="4">
+                            <v-text-field
+                                :value="number_format(form_data.dp_amount)"
+                                label="Total DP"
+                                :readonly="!field_state"
+                                :disabled="field_state">
+                            </v-text-field>
+                        </v-col>
             		</v-row>
             		<v-row>
             		    <v-col
@@ -294,7 +295,17 @@
             		        md="4">
             		        <v-text-field
             		            :value="number_format(form_data.principal)"
-            		            label="Total Cicilan Yang Harus Dibayar"
+            		            label="Total Cicilan Yang Harus Dibayar (* Dikurangi NUP + UTJ)"
+            		            :readonly="!field_state"
+            		            :disabled="field_state">
+            		        </v-text-field>
+            		    </v-col>
+            		    <v-col
+            		        cols="12"
+            		        md="4">
+            		        <v-text-field
+            		            :value="number_format(form_data.first_payment)"
+            		            label="Pembayaran Pertama"
             		            :readonly="!field_state"
             		            :disabled="field_state">
             		        </v-text-field>

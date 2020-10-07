@@ -327,6 +327,9 @@ class BookingController extends Controller
             $query = Booking::has('payments')->with('client','unit','payments','unit.point.cluster')->orderBy('created_at', 'DESC');
         }
 
+        // Where Not Cancel Status
+        $query->whereNotIn('booking_status', ['akad_cancel', 'ppjb_cancel','cicilan_cancel', 'spr_cancel','dokumen_cancel']);
+
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
 

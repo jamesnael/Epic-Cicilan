@@ -319,12 +319,12 @@
 						<v-col
 	    		          	cols="12"
 	    		          	md="12">
-							<validation-provider v-slot="{ errors }" name="Total DP" rules="required|numeric">
+							<validation-provider v-slot="{ errors }" name="Sisa Akad Kredit" rules="required|numeric">
 					    		<v-text-field
 					    			class="mt-4"
 					    			v-model="form_data.credits"
 					    			name="credits"
-						    		label="Total DP"
+						    		label="Sisa Akad Kredit"
 						    		hint="* harus diisi"
 						    		:error-messages="errors"
 						    		:persistent-hint="true"
@@ -339,12 +339,12 @@
 						<v-col
 	    		          	cols="12"
 	    		          	md="12">
-							<validation-provider v-slot="{ errors }" name="Jumlah KPR" rules="required|numeric">
+							<validation-provider v-slot="{ errors }" name="Total KPR yang disetujui" rules="required|numeric|min:1">
 					    		<v-text-field
 					    			class="mt-4"
 					    			v-model="form_data.total_kpr"
 					    			name="total_kpr"
-						    		label="Jumlah KPR"
+						    		label="Total KPR yang disetujui"
 						    		hint="* harus diisi"
 						    		:error-messages="errors"
 						    		:persistent-hint="true"

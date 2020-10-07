@@ -139,6 +139,7 @@
                                     payment_method_nup: data.payment_method_nup,
                                     nup_date: data.nup_date,
                                     utj_amount: data.utj_amount,
+                                    dp_amount: data.dp_amount,
                                     payment_method_utj: data.payment_method_utj,
                                     utj_date: data.utj_date,
                                     payment_type: data.payment_type,

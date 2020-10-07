@@ -598,13 +598,13 @@
 	    		</validation-provider>
 	    		
 
-	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar" rules="required|numeric|min:0">
+	    		<validation-provider v-slot="{ errors }" name="Total cicilan yang harus dibayar (* Sudah dikurangi NUP + UTJ)" rules="required|numeric|min:0">
 
 		    		<v-text-field
 		    			class="mt-4"
 		    			v-model="principal"
 		    			name="principal"
-			    		label="Total Cicilan Yang Harus Dibayar"
+			    		label="Total Cicilan yang harus dibayar (* Sudah dikurangi NUP + UTJ)"
 			    		hint="* harus diisi"
 			    		:persistent-hint="true"
 			    		:error-messages="errors"

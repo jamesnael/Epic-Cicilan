@@ -1286,7 +1286,21 @@ class TukarPointController extends Controller
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
-            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+
+            // Point Status
+            if ($item->booking_status == 'cicilan_cancel') {
+                $item->status = "Cancel di Cicilan";
+            } elseif ($item->booking_status == 'ppjb_cancel') {
+                $item->status = "Cancel di PPJB";
+            } elseif ($item->booking_status == 'akad_cancel') {
+                $item->status = "Cancel di Akad KPR";
+            } elseif ($item->booking_status == 'dokumen_cancel') {
+                $item->status = "Cancel di Dokumen";
+            } elseif ($item->booking_status == 'spr_cancel') {
+                $item->status = "Cancel di SPR";
+            } else {
+                $item->status = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+            }
             return $item;
         });
         return $data;
@@ -1422,7 +1436,20 @@ class TukarPointController extends Controller
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
-            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+            // Point Status
+            if ($item->booking_status == 'cicilan_cancel') {
+                $item->status = "Cancel di Cicilan";
+            } elseif ($item->booking_status == 'ppjb_cancel') {
+                $item->status = "Cancel di PPJB";
+            } elseif ($item->booking_status == 'akad_cancel') {
+                $item->status = "Cancel di Akad KPR";
+            } elseif ($item->booking_status == 'dokumen_cancel') {
+                $item->status = "Cancel di Dokumen";
+            } elseif ($item->booking_status == 'spr_cancel') {
+                $item->status = "Cancel di SPR";
+            } else {
+                $item->status = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+            }
 
             return $item;
         });
@@ -1559,8 +1586,21 @@ class TukarPointController extends Controller
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
-            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
-
+            
+            // Point Status
+            if ($item->booking_status == 'cicilan_cancel') {
+                $item->status = "Cancel di Cicilan";
+            } elseif ($item->booking_status == 'ppjb_cancel') {
+                $item->status = "Cancel di PPJB";
+            } elseif ($item->booking_status == 'akad_cancel') {
+                $item->status = "Cancel di Akad KPR";
+            } elseif ($item->booking_status == 'dokumen_cancel') {
+                $item->status = "Cancel di Dokumen";
+            } elseif ($item->booking_status == 'spr_cancel') {
+                $item->status = "Cancel di SPR";
+            } else {
+                $item->status = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+            }
             return $item;
         });
         return $data;
@@ -1696,8 +1736,21 @@ class TukarPointController extends Controller
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
-            $item->status       = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
-
+            
+            // Point Status
+            if ($item->booking_status == 'cicilan_cancel') {
+                $item->status = "Cancel di Cicilan";
+            } elseif ($item->booking_status == 'ppjb_cancel') {
+                $item->status = "Cancel di PPJB";
+            } elseif ($item->booking_status == 'akad_cancel') {
+                $item->status = "Cancel di Akad KPR";
+            } elseif ($item->booking_status == 'dokumen_cancel') {
+                $item->status = "Cancel di Dokumen";
+            } elseif ($item->booking_status == 'spr_cancel') {
+                $item->status = "Cancel di SPR";
+            } else {
+                $item->status = ($item->point_status == 'T') ? 'Dapat digunakan' : 'Belum dapat digunakan';
+            }
             return $item;
         });
         return $data;

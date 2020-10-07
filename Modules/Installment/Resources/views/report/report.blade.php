@@ -112,6 +112,10 @@
 				@php
 					$booking_status = "Cicilan"
 				@endphp
+			@elseif($value->booking_status == 'cicilan_sp3k')
+				@php
+					$booking_status = "Cicilan SP3K"
+				@endphp
 			@elseif($value->booking_status == 'akad')
 				@php
 					$booking_status = "Proses Akad KPR"
@@ -119,6 +123,30 @@
 			@elseif($value->booking_status == 'ajb_handover')
 				@php
 					$booking_status = "Tahap AJB / Serah Terima Unit"
+				@endphp
+			@elseif($value->booking_status == 'cicilan_cancel') 
+                @php
+	                $booking_status = "Cancel di Cicilan"
+            	@endphp
+            @elseif($value->booking_status == 'ppjb_cancel')
+                @php
+	                $booking_status = "Cancel di PPJB"
+            	@endphp
+            @elseif($value->booking_status == 'akad_cancel')
+                @php
+	                $booking_status = "Cancel di Akad KPR"
+            	@endphp
+            @elseif($value->booking_status == 'dokumen_cancel')
+                @php
+	                $booking_status = "Cancel di Dokumen"
+            	@endphp
+            @elseif($value->booking_status == 'spr_cancel')
+                @php
+	                $booking_status = "Cancel di SPR"
+				@endphp
+			@else
+				@php
+	                $booking_status = ""
 				@endphp
 			@endif
 			<tr>
