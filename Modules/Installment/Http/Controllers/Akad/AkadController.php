@@ -309,8 +309,8 @@ class AkadController extends Controller
                     'akad_doc_sign_file_name' => $file_name_akhir,
                 ]);
 
-                // Notification::route('mail', $akad->client->client_email)
-                //             ->notify(new ReminderAkad($akad));
+                Notification::route('mail', $akad->client->client_email)
+                            ->notify(new ReminderAkad($akad));
             }
 
             if ($akad->akad_kpr) {
