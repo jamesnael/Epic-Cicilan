@@ -399,6 +399,12 @@ class TukarPointController extends Controller
                 "value" => 'units',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Point',
                 "align" => 'center',
                 "sortable" => false,
@@ -476,6 +482,12 @@ class TukarPointController extends Controller
                 "value" => 'units',
             ],
             [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
+            ],
+            [
                 "text" => 'Point',
                 "align" => 'center',
                 "sortable" => false,
@@ -549,6 +561,12 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'units',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Point',
@@ -625,6 +643,12 @@ class TukarPointController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'units',
+            ],
+            [
+                "text" => 'Nama Cluster',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'cluster_name',
             ],
             [
                 "text" => 'Point',
@@ -1316,6 +1340,7 @@ class TukarPointController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
+            $item->cluster_name = $item->booking->unit->point->cluster->cluster_name ?? '';
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
 
@@ -1466,6 +1491,7 @@ class TukarPointController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
+            $item->cluster_name = $item->booking->unit->point->cluster->cluster_name ?? '';
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             // Point Status
@@ -1616,6 +1642,7 @@ class TukarPointController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
+            $item->cluster_name = $item->booking->unit->point->cluster->cluster_name ?? '';
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             
@@ -1766,6 +1793,7 @@ class TukarPointController extends Controller
         $data->getCollection()->transform(function($item) {
             $item->date         = date('d F Y', strtotime($item->created_date));
             $item->units        = $item->booking->unit->unit_type . ' ' . $item->booking->unit->unit_number . '/' . $item->booking->unit->unit_block;
+            $item->cluster_name = $item->booking->unit->point->cluster->cluster_name ?? '';
             $item->updated_date = ($item->point_status == 'T') ? date('d F Y', strtotime($item->updated_date)): '-';
             $item->deleted_date = $item->deleted_at ? date('d F Y', strtotime($item->deleted_at)) : '-';
             
