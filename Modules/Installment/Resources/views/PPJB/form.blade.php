@@ -239,7 +239,7 @@
 			    	</v-col>
 		    	</v-row>
 
-		    	<v-row v-if="form_data.ppjb_doc_file_name != null">
+		    	<v-row v-if="form_data.ppjb_doc_file_name">
 		    		<v-col
     		          	cols="12"
     		          	md="12">	
@@ -250,7 +250,7 @@
 				              	:items="['Disetujui','Pending']"	
 				              	label="Approval Pembeli"
 				              	name="approval_client_status"
-				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	v-if="form_data.ppjb_doc_file_name"
 				              	:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state"
@@ -268,7 +268,7 @@
 				              	:items="['Disetujui','Pending']"
 				              	label="Approval Developer"
 				              	name="approval_developer_status"
-				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	v-if="form_data.ppjb_doc_file_name"
 				              	:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state"
@@ -286,7 +286,7 @@
 				              	:items="['Disetujui','Pending']"
 				              	label="Approval Notaris"
 				              	name="approval_notaris_status"
-				              	v-if="form_data.ppjb_doc_file_name != null"
+				              	v-if="form_data.ppjb_doc_file_name"
 				              	:persistent-hint="true"
 					    		:error-messages="errors"
 					    		:readonly="field_state"
@@ -302,7 +302,7 @@
 				    		<v-file-input
 				    			name="sign_upload"
 					    		label="Upload Surat PPJB"
-					    		v-if="form_data.ppjb_doc_file_name != null"
+					    		v-if="form_data.ppjb_doc_file_name"
 					    		:persistent-hint="true"
 					    		:error-messages="errors"
 				    		>

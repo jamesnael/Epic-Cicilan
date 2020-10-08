@@ -393,13 +393,12 @@ class InstallmentUnitController extends Controller
 
         DB::beginTransaction();
         try {
-
-
             $payment->update([
                 'payment_status' => 'Paid',
                 'payment_date' => $request->payment_date,
                 'payment_method' => $request->payment_method,
                 'total_paid' => $request->total_paid,
+                'description' => $request->description,
             ]);
         
             $booking = $payment->booking;

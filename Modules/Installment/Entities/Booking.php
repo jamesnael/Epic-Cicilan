@@ -142,10 +142,7 @@ class Booking extends Model
     public function getSisaTunggakanAttribute()
     {
         $collection = collect($this->payments)->sum(function($item) {
-            if ($item->payment != 'Akad Kredit') {
-                return $item->installment;
-            }
-            return 0;
+            return $item->installment;
         });
         return $collection - $this->total_pembayaran;
     }

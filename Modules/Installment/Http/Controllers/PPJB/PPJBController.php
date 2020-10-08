@@ -352,9 +352,6 @@ class PPJBController extends Controller
             $query = Booking::has('ppjb')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
         }
 
-
-
-
         $query->whereHas('ppjb', function($subquery){ 
             $subquery->where('approval_client_status', '!=', 'Pending');
             $subquery->where('approval_developer_status', '!=', 'Pending');
@@ -487,7 +484,7 @@ class PPJBController extends Controller
             $query = Booking::bookingStatus('ppjb')->has('spr')->with('client', 'unit', 'document','sales','sales.agency', 'ppjb','unit.point.cluster');
         }
 
-
+        $query->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
