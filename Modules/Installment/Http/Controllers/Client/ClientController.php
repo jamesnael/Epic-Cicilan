@@ -113,8 +113,16 @@ class ClientController extends Controller
 
             $client = Client::create($request->all());
 
-            Notification::route('mail', $client->client_email)
-                            ->notify(new EmailVerify($client));
+            try {
+                Notification::route('mail', $client->client_email)
+                                ->notify(new EmailVerify($client));
+            } catch (\Exception $e) {
+                \Log::error(json_encode([
+                    'action' => 'Send Email Verifikasi Client',
+                    'data' => $client,
+                    'error' => $e->getMessage()
+                ], JSON_PRETTY_PRINT));
+            }
 
             DB::commit();
             

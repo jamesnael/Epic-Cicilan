@@ -67,19 +67,35 @@ class SendMailUpdateFine extends Command
                 // Check -7 Notification
                 if ($diff == -7 && !$installment->notification_mail_7) {
                     // Send Email -7 Notification
-                    Notification::route('mail', $booking->client->client_email)
-                                ->notify(new HMin7Installment($installment, $booking));
-                    $installment->notification_mail_7 = true;
-                    $installment->save();
+                    try {
+                        Notification::route('mail', $booking->client->client_email)
+                                    ->notify(new HMin7Installment($installment, $booking));
+                        $installment->notification_mail_7 = true;
+                        $installment->save();
+                    } catch (\Exception $e) {
+                        \Log::error(json_encode([
+                            'action' => 'Send Email -7 Notification',
+                            'data' => $booking,
+                            'error' => $e->getMessage()
+                        ], JSON_PRETTY_PRINT));
+                    }
                 }
 
                 // Check -1 Notification
                 if ($diff == -1 && !$installment->notification_mail_1) {
                     // Send Email -1 Notification
-                    Notification::route('mail', $booking->client->client_email)
-                                ->notify(new HMin1Installment($installment, $booking));
-                    $installment->notification_mail_1 = true;
-                    $installment->save();
+                    try {
+                        Notification::route('mail', $booking->client->client_email)
+                                    ->notify(new HMin1Installment($installment, $booking));
+                        $installment->notification_mail_1 = true;
+                        $installment->save();
+                    } catch (\Exception $e) {
+                        \Log::error(json_encode([
+                            'action' => 'Send Email -1 Notification',
+                            'data' => $booking,
+                            'error' => $e->getMessage()
+                        ], JSON_PRETTY_PRINT));
+                    }
                 }
 
                 // Update Fine
@@ -93,28 +109,52 @@ class SendMailUpdateFine extends Command
                 // Check SP 1 Notification
                 if ($sp1_diff == 0 && !$installment->notification_mail_sp1) {
                     // Send Email SP 1 Notification
-                    Notification::route('mail', $booking->client->client_email)
-                                ->notify(new SP1Installment($installment, $booking));
-                    $installment->notification_mail_sp1 = true;
-                    $installment->save();
+                    try {
+                        Notification::route('mail', $booking->client->client_email)
+                                    ->notify(new SP1Installment($installment, $booking));
+                        $installment->notification_mail_sp1 = true;
+                        $installment->save();
+                    } catch (\Exception $e) {
+                        \Log::error(json_encode([
+                            'action' => 'Send Email SP1 Notification',
+                            'data' => $booking,
+                            'error' => $e->getMessage()
+                        ], JSON_PRETTY_PRINT));
+                    }
                 }
 
                 // Check SP 2 Notification
                 if ($sp2_diff == 0 && !$installment->notification_mail_sp2) {
                     // Send Email SP 2 Notification
-                    Notification::route('mail', $booking->client->client_email)
-                                ->notify(new SP2Installment($installment, $booking));
-                    $installment->notification_mail_sp2 = true;
-                    $installment->save();
+                    try {
+                        Notification::route('mail', $booking->client->client_email)
+                                    ->notify(new SP2Installment($installment, $booking));
+                        $installment->notification_mail_sp2 = true;
+                        $installment->save();
+                    } catch (\Exception $e) {
+                        \Log::error(json_encode([
+                            'action' => 'Send Email SP2 Notification',
+                            'data' => $booking,
+                            'error' => $e->getMessage()
+                        ], JSON_PRETTY_PRINT));
+                    }
                 }
 
                 // Check SP 3 Notification
                 if ($sp3_diff == 0 && !$installment->notification_mail_sp3) {
                     // Send Email SP 3 Notification
-                    Notification::route('mail', $booking->client->client_email)
-                                ->notify(new SP3Installment($installment, $booking));
-                    $installment->notification_mail_sp3 = true;
-                    $installment->save();
+                    try {
+                        Notification::route('mail', $booking->client->client_email)
+                                    ->notify(new SP3Installment($installment, $booking));
+                        $installment->notification_mail_sp3 = true;
+                        $installment->save();
+                    } catch (\Exception $e) {
+                        \Log::error(json_encode([
+                            'action' => 'Send Email SP3 Notification',
+                            'data' => $booking,
+                            'error' => $e->getMessage()
+                        ], JSON_PRETTY_PRINT));
+                    }
                 }
             }
 

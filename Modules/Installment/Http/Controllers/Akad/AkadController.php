@@ -309,8 +309,16 @@ class AkadController extends Controller
                     'akad_doc_sign_file_name' => $file_name_akhir,
                 ]);
 
-                Notification::route('mail', $akad->client->client_email)
-                            ->notify(new ReminderAkad($akad));
+                try {
+                    Notification::route('mail', $akad->client->client_email)
+                                ->notify(new ReminderAkad($akad));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Reminder Akad Kredit',
+                        'data' => $akad,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
 
             if ($akad->akad_kpr) {

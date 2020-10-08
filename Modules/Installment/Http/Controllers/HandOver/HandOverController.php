@@ -267,8 +267,16 @@ class HandOverController extends Controller
                     'handover_doc_sign_name' => $file_name,
                 ]);
 
-                Notification::route('mail', $handover->client->client_email)
-                            ->notify(new ReminderHandover($handover));
+                try {
+                    Notification::route('mail', $handover->client->client_email)
+                                ->notify(new ReminderHandover($handover));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Reminder Serah Terima',
+                        'data' => $handover,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
             $has_handover = Handover::where('booking_id', $request->booking_id)->first();
             if ($has_handover) {

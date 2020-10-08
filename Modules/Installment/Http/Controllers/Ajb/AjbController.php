@@ -256,8 +256,16 @@ class AjbController extends Controller
                     'ajb_doc_sign_file_name' => $file_name_akhir,
                 ]);
 
-                Notification::route('mail', $ajb->client->client_email)
-                            ->notify(new ReminderAJB($ajb));
+                try {
+                    Notification::route('mail', $ajb->client->client_email)
+                                ->notify(new ReminderAJB($ajb));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Reminder AJB',
+                        'data' => $ajb,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
 
             if ($ajb->ajb) {

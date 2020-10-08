@@ -697,8 +697,16 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                Notification::route('mail', $data->sales->user->email)
-                            ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                try {
+                    Notification::route('mail', $data->sales->user->email)
+                                ->notify(new PenukaranPoint($data->sales->user->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Tukar Point Sales',
+                        'data' => $data->sales,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
 
             // Agent Condition
@@ -709,9 +717,17 @@ class TukarPointController extends Controller
                     'exchange_point'  => $request->redeem_point,
                 ]);
 
-                //Email Notification
-                Notification::route('mail', $data->agency->agency_email)
+                //Email Notification                
+                try {
+                    Notification::route('mail', $data->agency->agency_email)
                             ->notify(new PenukaranPoint($data->agency->agency_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Tukar Point Sub Agent',
+                        'data' => $data->agency,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
 
             // Korwil Condition
@@ -722,9 +738,17 @@ class TukarPointController extends Controller
                     'exchange_point'          => $request->redeem_point,
                 ]);
 
-                //Email Notification
-                Notification::route('mail', $data->regional_coordinator->email)
+                //Email Notification                
+                try {
+                    Notification::route('mail', $data->regional_coordinator->email)
                             ->notify(new PenukaranPoint($data->regional_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Tukar Point Koordinator Wilayah',
+                        'data' => $data->regional_coordinator,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
 
             // Korut Condition
@@ -736,8 +760,16 @@ class TukarPointController extends Controller
                 ]);
 
                 //Email Notification
-                Notification::route('mail', $data->main_coordinator->email)
+                try {
+                    Notification::route('mail', $data->main_coordinator->email)
                             ->notify(new PenukaranPoint($data->main_coordinator->full_name, $data->exchange_point, $data->reward_point->reward_name, $data->created_at));
+                } catch (\Exception $e) {
+                    \Log::error(json_encode([
+                        'action' => 'Send Email Tukar Point Koordinator Utama',
+                        'data' => $data->main_coordinator,
+                        'error' => $e->getMessage()
+                    ], JSON_PRETTY_PRINT));
+                }
             }
             //Log Activity
             activity()
