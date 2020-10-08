@@ -351,8 +351,13 @@ class AkadController extends Controller
                     $akad->dp_amount = $akad->dp_amount + ($akad->credits - $request->total_kpr);
                     $akad->save();
 
-                    // Update Akad KPR
+                    // Tambah Installment
                     $akad_kpr = collect($akad->payments)->last();
+                    $payments = [];
+                    $installment = round(($akad_kpr->installment - $request->total_kpr) / $request->installment_time_sp3k, 0);
+                    $credits = $akad_kpr->installment - $request->total_kpr;
+                    
+                    // Update Akad KPR
                     if ($akad_kpr->payment == 'Akad Kredit') {
                         $akad_kpr->update([
                             'due_date' => $data_akad->akad_date,
@@ -364,10 +369,7 @@ class AkadController extends Controller
                             'credit' => $akad_kpr->installment - $request->total_kpr
                         ]);
                     }
-                    // Tambah Installment
-                    $payments = [];
-                    $installment = round(($akad_kpr->installment - $request->total_kpr) / $request->installment_time_sp3k, 0);
-                    $credits = $akad_kpr->installment - $request->total_kpr;
+                    
                     for ($i = 1; $i <= $akad->installment_time_sp3k; $i++) {
                         $date = \Carbon\Carbon::parse(get_next_month(get_next_date($akad->due_date), $i - 1));
                         $payment = [];
