@@ -432,7 +432,7 @@ if (! function_exists('aside_menu')) {
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Komisi Sales',
                 'uri' => route('salescommission.index'),
-                'model' => in_array(Route::currentRouteName(), ['salescommission.index','salescommission.create', 'salescommission.edit']),
+                'model' => in_array(Route::currentRouteName(), ['salescommission.index','salescommission.create', 'salescommission.edit', 'salescommission.edit.korwil', 'salescommission.edit.korut', 'salescommission.edit.closingfee']),
                 'show' => Auth::user()->is_admin || in_array('salescommission.index', Auth::user()->role ? Auth::user()->role->user_access : [])
             ],
             [

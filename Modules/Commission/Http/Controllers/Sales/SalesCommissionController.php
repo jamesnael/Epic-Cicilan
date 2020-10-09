@@ -835,10 +835,10 @@ class SalesCommissionController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
-            $item->ppn = $item->sales->agency->ppn;
-            $item->pph_21 = $item->sales->agency->pph_21;
-            $item->pph_23 = $item->sales->agency->pph_23;
-            $item->pph_final = $item->sales->agency->pph_final;
+            $item->ppn = $item->sales->regional_coordinator->ppn;
+            $item->pph_21 = $item->sales->regional_coordinator->pph_21;
+            $item->pph_23 = $item->sales->regional_coordinator->pph_23;
+            $item->pph_final = $item->sales->regional_coordinator->pph_final;
             $item->commission_korwil = $item->sales->agency->regional_coordinator_commission;
             $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
 
@@ -963,10 +963,10 @@ class SalesCommissionController extends Controller
             $item->client_profesion = $item->client->profession;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
             $item->unit_price = 'Rp '.format_money($item->total_amount);
-            $item->ppn = $item->sales->agency->ppn;
-            $item->pph_21 = $item->sales->agency->pph_21;
-            $item->pph_23 = $item->sales->agency->pph_23;
-            $item->pph_final = $item->sales->agency->pph_final;
+            $item->ppn = $item->sales->main_coordinator->ppn;
+            $item->pph_21 = $item->sales->main_coordinator->pph_21;
+            $item->pph_23 = $item->sales->main_coordinator->pph_23;
+            $item->pph_final = $item->sales->main_coordinator->pph_final;
             $item->commission_korut = $item->sales->agency->main_coordinator_commission;
             $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
 

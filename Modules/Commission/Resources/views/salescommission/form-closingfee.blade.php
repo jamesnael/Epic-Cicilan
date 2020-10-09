@@ -352,7 +352,7 @@
 			    <v-row>
 				    <v-col
     		          cols="12"
-    		          md="6"
+    		          md="12"
     		          class="mt-4">
 			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
 							<v-file-input 
@@ -452,7 +452,7 @@
 			    <v-row>
 				    <v-col
     		          cols="12"
-    		          md="6"
+    		          md="12"
     		          class="mt-4">
 			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
 							<v-file-input 
@@ -553,7 +553,7 @@
 			    <v-row>
 				    <v-col
     		          cols="12"
-    		          md="6"
+    		          md="12"
     		          class="mt-4">
 			    		<validation-provider v-slot="{ errors }" name="Upload Bukti Pembayaran" rules="">
 							<v-file-input 

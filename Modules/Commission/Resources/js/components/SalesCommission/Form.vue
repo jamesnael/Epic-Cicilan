@@ -94,78 +94,97 @@
         computed:{
             commission_1: function() {
             	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) / 2 ;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.agency_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) / 2 ;
                 return result.toFixed();  
             },
             commission_2: function() {
             	let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) - this.commission_1 ;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.agency_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) - this.commission_1 ;
                 return result.toFixed();  
             },
             bruto_commission: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.agency_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.pph_final) / 100;
-                let result = commission - pph_final_result - pph_21;
-                return result.toFixed();  
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.agency_commission)) / 100;
+                console.log(total_unit_price);
+                let ppn = commission * parseFloat(this.form_data.ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.pph_final) / 100;
+                let result = commission - pph_final_result - pph_21 - pph_23 - ppn;
+                return result.toFixed();
             },
 
             //Korwil
             korwil_commission_1: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) / 2 ;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korwil_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korwil_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korwil_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korwil_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korwil_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) / 2 ;
                 return result.toFixed();  
             },
             korwil_commission_2: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) - this.korwil_commission_1 ;
-                return result.toFixed();  
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korwil_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korwil_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korwil_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korwil_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korwil_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) - this.korwil_commission_1 ;
+                return result.toFixed();
             },
             korwil_bruto_commission: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korwil_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korwil_pph_final) / 100;
-                let result = commission - pph_final_result - pph_21;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korwil_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korwil_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korwil_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korwil_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korwil_pph_final) / 100;
+                let result = commission - pph_final_result - pph_21 - pph_23 - ppn;
                 return result.toFixed();  
             },
 
             //Korut
             korut_commission_1: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) / 2 ;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korut_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korut_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korut_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korut_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korut_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) / 2 ;
                 return result.toFixed();  
             },
             korut_commission_2: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
-                let result = (commission - pph_final_result - pph_21) - this.korut_commission_1 ;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korut_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korut_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korut_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korut_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korut_pph_final) / 100;
+                let result = (commission - pph_final_result - pph_21 - pph_23 - ppn) - this.korut_commission_1 ;
                 return result.toFixed();  
             },
             korut_bruto_commission: function() {
                 let total_unit_price = _.toString(this.form_data.unit_price).split('.').join('')
-                let commission = (parseInt(total_unit_price) * parseInt(this.form_data.korut_commission)) / 100;
-                let pph_21 = commission * parseInt(this.form_data.pph_21) / 100;
-                let pph_final_result = commission * parseInt(this.form_data.korut_pph_final) / 100;
-                let result = commission - pph_final_result - pph_21;
+                let commission = (parseInt(total_unit_price) * parseFloat(this.form_data.korut_commission)) / 100;
+                let ppn = commission * parseFloat(this.form_data.korut_ppn) / 100;
+                let pph_21 = commission * parseFloat(this.form_data.korut_pph_21) / 100;
+                let pph_23 = commission * parseFloat(this.form_data.korut_pph_23) / 100;
+                let pph_final_result = commission * parseFloat(this.form_data.korut_pph_final) / 100;
+                let result = commission - pph_final_result - pph_21 - pph_23 - ppn;
                 return result.toFixed();  
             },
         }, 
@@ -211,6 +230,9 @@
                                     pph_23: data.sales.agency.pph_23,
                                     korwil_pph_23: data.sales.regional_coordinator.pph_23,
                                     korut_pph_23: data.sales.main_coordinator.pph_23,
+                                    ppn: data.sales.agency.ppn,
+                                    korwil_ppn: data.sales.regional_coordinator.ppn,
+                                    korut_ppn: data.sales.main_coordinator.ppn,
 
                                     prosentase_komisi: data.prosentase_komisi,
 
