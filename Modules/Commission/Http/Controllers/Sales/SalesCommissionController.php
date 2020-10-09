@@ -290,7 +290,7 @@ class SalesCommissionController extends Controller
                 "text" => 'Koordinator Wilayah',
                 "align" => 'center',
                 "sortable" => false,
-                "value" => 'korut_name',
+                "value" => 'korwil_name',
             ],
             [
                 "text" => 'Koordinator Utama',

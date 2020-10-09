@@ -12,7 +12,29 @@
             "sortable" => false,
             "value" => 'actions',
         ];
+
         $page->table_headers = collect($page->table_headers)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
+
+        $page->table_headers_korwil = collect($page->table_headers_korwil)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
+
+        $page->table_headers_korut = collect($page->table_headers_korut)->prepend([
+            "text" => '#',
+            "align" => 'center',
+            "sortable" => false,
+            "value" => 'table_index',
+        ])->values();
+
+        $page->table_headers_closingfee = collect($page->table_headers_closingfee)->prepend([
             "text" => '#',
             "align" => 'center',
             "sortable" => false,
