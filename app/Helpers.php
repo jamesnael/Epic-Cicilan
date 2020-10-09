@@ -207,6 +207,14 @@ if (! function_exists('aside_menu')) {
     {
         return [
             [
+                'icon' => 'mdi-view-dashboard',
+                'icon-alt' => 'mdi-chevron-down',
+                'text' => 'Dashboard',
+                'uri' => route('dashboard.index'),
+                'model' => in_array(Route::currentRouteName(), ['dashboard.index']),
+                'show' => Auth::user()->is_admin || in_array('dashboard.index', Auth::user()->role ? Auth::user()->role->user_access : [])
+            ],
+            [
                 'icon' => 'mdi-account-multiple',
                 'icon-alt' => 'mdi-chevron-down',
                 'text' => 'Kelola User',
@@ -451,8 +459,6 @@ if (! function_exists('aside_menu')) {
                 'model' => in_array(Route::currentRouteName(), ['report.index','report.create']),
                 'show' => Auth::user()->is_admin || in_array('report.create', Auth::user()->role ? Auth::user()->role->user_access : [])
             ],
-            
-
         ];
     }
 }
