@@ -329,10 +329,10 @@ class SalesCommissionController extends Controller
                 "value" => 'unit_price',
             ],
             [
-                "text" => 'Cara Bayar',
+                "text" => 'Closing Fee',
                 "align" => 'center',
                 "sortable" => false,
-                "value" => 'payment_method',
+                "value" => 'closing_fee',
             ],
             [
                 "text" => 'Closing Fee Sales',
@@ -1097,15 +1097,16 @@ class SalesCommissionController extends Controller
         $data = $query->whereNotIn('booking_status', ['dokumen','spr', 'ppjb'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
 
         $data->getCollection()->transform(function($item) {
-            $item->sales_name = $item->sales->user->full_name;
+            $item->sales_name  = $item->sales->user->full_name;
             $item->agency_name = $item->sales->agency ? $item->sales->agency->agency_name : '';
             $item->korwil_name = $item->sales->regional_coordinator ? $item->sales->regional_coordinator->full_name : '';
-            $item->korut_name = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
-            $item->client_name = $item->client->client_name;
+            $item->korut_name       = $item->sales->main_coordinator ? $item->sales->main_coordinator->full_name : '';
+            $item->client_name      = $item->client->client_name;
             $item->client_profesion = $item->client->profession;
-            $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block ;
-            $item->unit_price = 'Rp '.format_money($item->total_amount);
-            $item->cluster_name = $item->unit->point->cluster->cluster_name ?? '';
+            $item->unit_number      = $item->unit->unit_number .'/'. $item->unit->unit_block ;
+            $item->unit_price       = 'Rp '.format_money($item->total_amount);
+            $item->closing_fee      = 'Rp '.format_money($item->unit->closing_fee);
+            $item->cluster_name     = $item->unit->point->cluster->cluster_name ?? '';
 
 
             $item->payment_korut_date = $item->commission ? $item->commission->korut_payment_date : '';
