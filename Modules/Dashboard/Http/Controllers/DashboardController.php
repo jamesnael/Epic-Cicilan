@@ -117,7 +117,8 @@ class DashboardController extends Controller
                                             })
                                             ->count();
 
-        $installment_paid = BookingPayment::whereMonth('due_date', '<=', $now)
+        $installment_paid = BookingPayment::whereMonth('due_date', $now)
+                                          ->whereYear('due_date', $year_now)
                                           ->whereNotNull('payment_date')
                                           ->where('payment_status', 'Paid')
                                           ->whereHas('booking', function($subquery) {
@@ -126,6 +127,7 @@ class DashboardController extends Controller
                                           ->count();
 
         $unpaid = BookingPayment::whereMonth('due_date','<=', $now)
+                                 ->whereYear('due_date', '<=', $year_now)        
                                  ->whereNull('payment_date')
                                  ->where('payment_status', 'Unpaid')
                                  ->whereHas('booking', function($subquery) {
@@ -134,6 +136,7 @@ class DashboardController extends Controller
                                  ->sum('installment');
 
         $paid = BookingPayment::whereMonth('due_date','<=', $now)
+                                ->whereYear('due_date', '<=', $year_now)
                                 ->whereNotNull('payment_date')
                                 ->where('payment_status', 'Paid')
                                 ->whereHas('booking', function($subquery) {
