@@ -104,7 +104,7 @@
 					            elevation="5"
 					            >
 					            <v-card-title>
-					                Informasi Pembayaran Cicilan
+					                Informasi Pembayaran Cicilan Bulan {{\Carbon\Carbon::now()->locale('id')->translatedFormat('F Y')}}
 					            </v-card-title>
 
 					            <v-card-text>
@@ -123,7 +123,7 @@
 							            	    </v-card-text>
 
 							            	    <v-card-text>
-							            	      <div class="text-h6 font-weight-thin">Cicilan Unit Belum Dibayar</div>
+							            	      <div class="text-h6 font-weight-thin">Pembayaran Cicilan Unit Belum Dibayar</div>
 							            	    </v-card-text>
 
 							            	    <v-divider></v-divider>
@@ -147,7 +147,7 @@
 							            	    </v-card-text>
 
 							            	    <v-card-text>
-							            	      <div class="text-h6 font-weight-thin">Cicilan Unit Sudah Dibayar</div>
+							            	      <div class="text-h6 font-weight-thin">Pembayaran Cicilan Unit Sudah Dibayar</div>
 							            	    </v-card-text>
 
 							            	    <v-divider></v-divider>

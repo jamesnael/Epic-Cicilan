@@ -88,10 +88,10 @@ class DashboardController extends Controller
             ]
         ];
 
-        $document = Booking::bookingStatus('dokumen')->whereHas('document', function($subquery){
-                            $subquery->where('approval_developer', '=', 'Pending');
+        $document = Booking::bookingStatus('dokumen')->whereDoesntHave('document')
+                    ->orWhereHas('document', function($subquery){
+                            $subquery->where('approval_developer', '!=', 'Disetujui');
                     })->count();
-        
         $akad_kpr = Booking::has('payments')->has('ppjb')
                             ->doesntHave('unpaid_payments')->kprKpa()
                             ->bookingStatus('akad')->count();
@@ -106,25 +106,39 @@ class DashboardController extends Controller
                             })->count();
         
         $now = \Carbon\Carbon::now()->format('m');
+        $year_now = \Carbon\Carbon::now()->format('Y');
 
         $installment_pending = BookingPayment::whereMonth('due_date', $now)
-                                             ->whereNull('payment_date')
-                                             ->where('payment_status', 'Unpaid')
-                                             ->count();
+                                            ->whereYear('due_date', $year_now)
+                                            ->whereNull('payment_date')
+                                            ->where('payment_status', 'Unpaid')
+                                            ->whereHas('booking', function($subquery) {
+                                                 $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                                            })
+                                            ->count();
 
         $installment_paid = BookingPayment::whereMonth('due_date', '<=', $now)
                                           ->whereNotNull('payment_date')
                                           ->where('payment_status', 'Paid')
+                                          ->whereHas('booking', function($subquery) {
+                                                 $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                                            })
                                           ->count();
 
         $unpaid = BookingPayment::whereMonth('due_date','<=', $now)
                                  ->whereNull('payment_date')
                                  ->where('payment_status', 'Unpaid')
-                                 ->sum('total_paid');
+                                 ->whereHas('booking', function($subquery) {
+                                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                                 })
+                                 ->sum('installment');
 
         $paid = BookingPayment::whereMonth('due_date','<=', $now)
                                 ->whereNotNull('payment_date')
                                 ->where('payment_status', 'Paid')
+                                ->whereHas('booking', function($subquery) {
+                                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                                })
                                 ->sum('total_paid');
 
         $ajb_schedule = AkteJualBeli::with('booking', 'booking.unit', 'booking.client')->whereNotNull('ajb_date')->whereNotNull('ajb_time')->get();
