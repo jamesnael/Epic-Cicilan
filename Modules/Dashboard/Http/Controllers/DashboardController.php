@@ -92,57 +92,87 @@ class DashboardController extends Controller
                     ->orWhereHas('document', function($subquery){
                             $subquery->where('approval_developer', '!=', 'Disetujui');
                     })->count();
-        $akad_kpr = Booking::has('payments')->has('ppjb')
-                            ->doesntHave('unpaid_payments')->kprKpa()
-                            ->bookingStatus('akad')->count();
+        
+        //Akad
+        $akad_pending = Booking::has('payments')->kprKpa()->bookingStatus('akad')
+                        ->whereHas('akad_kpr', function($subquery) {
+                            $subquery->where('approval_client_status', '=', null);
+                            $subquery->orWhere('approval_client_status', '=', 'Pending');
+                            $subquery->orWhere('approval_developer_status', '=', null);
+                            $subquery->orWhere('approval_developer_status', '=', 'Pending');
+                            $subquery->orWhere('approval_notaris_status', '=', null);
+                            $subquery->orWhere('approval_notaris_status', '=', 'Pending');
+                            $subquery->orWhere('akad_doc_sign_file_name', '!=', null);
+                        })->count();
+        $akad_empty = Booking::bookingStatus('akad')->whereDoesntHave('akad_kpr')->count();
+        $akad_kpr = $akad_pending + $akad_empty;
 
-        $ajb = Booking::has('payments')->doesntHave('unpaid_payments')->bookingStatus('ajb_handover')->count();
-        $handover = Booking::bookingStatus('ajb_handover')->with('handover')
-                            ->whereDoesntHave('handover', function($subquery) {
-                                $subquery->where('approval_client_status', '=', 'Approved');
-                                $subquery->where('approval_developer_status', '=', 'Approved');
-                                $subquery->where('approval_notaris_status', '=', 'Approved');
-                                $subquery->where('handover_doc_sign_name', '!=', '');
+        //AJB
+        $ajb_pending = Booking::has('payments')->bookingStatus('ajb_handover')
+                        ->whereHas('ajb', function($subquery) {
+                            $subquery->where('approval_client_status', '=', null);
+                            $subquery->orWhere('approval_client_status', '=', 'Pending');
+                            $subquery->orWhere('approval_developer_status', '=', null);
+                            $subquery->orWhere('approval_developer_status', '=', 'Pending');
+                            $subquery->orWhere('approval_notaris_status', '=', null);
+                            $subquery->orWhere('approval_notaris_status', '=', 'Pending');
+                            $subquery->orWhere('ajb_doc_sign_file_name', '=', null);
+                        })->count();
+        $ajb_empty = Booking::bookingStatus('ajb_handover')->whereDoesntHave('ajb')->count();
+        $ajb = $ajb_pending + $ajb_empty;
+
+        //Handover
+        $handover_pending = Booking::has('payments')->bookingStatus('ajb_handover')
+                            ->whereHas('handover', function($subquery) {
+                                $subquery->where('approval_client_status', '=', null);
+                                $subquery->orWhere('approval_client_status', '=', 'Pending');
+                                $subquery->orWhere('approval_developer_status', '=', null);
+                                $subquery->orWhere('approval_developer_status', '=', 'Pending');
+                                $subquery->orWhere('approval_notaris_status', '=', null);
+                                $subquery->orWhere('approval_notaris_status', '=', 'Pending');
+                                $subquery->orWhere('handover_doc_sign_name', '=', null);
                             })->count();
+        $handover_empty = Booking::bookingStatus('ajb_handover')->whereDoesntHave('handover')->count();
+        $handover = $handover_pending + $handover_empty;
         
         $now = \Carbon\Carbon::now()->format('m');
         $year_now = \Carbon\Carbon::now()->format('Y');
 
         $installment_pending = BookingPayment::whereMonth('due_date', $now)
-                                            ->whereYear('due_date', $year_now)
-                                            ->whereNull('payment_date')
-                                            ->where('payment_status', 'Unpaid')
-                                            ->whereHas('booking', function($subquery) {
-                                                 $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
-                                            })
-                                            ->count();
-
-        $installment_paid = BookingPayment::whereMonth('due_date', $now)
-                                          ->whereYear('due_date', $year_now)
-                                          ->whereNotNull('payment_date')
-                                          ->where('payment_status', 'Paid')
-                                          ->whereHas('booking', function($subquery) {
-                                                 $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
-                                            })
-                                          ->count();
-
-        $unpaid = BookingPayment::whereMonth('due_date','<=', $now)
-                                 ->whereYear('due_date', '<=', $year_now)        
-                                 ->whereNull('payment_date')
-                                 ->where('payment_status', 'Unpaid')
-                                 ->whereHas('booking', function($subquery) {
-                                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
-                                 })
-                                 ->sum('installment');
-
-        $paid = BookingPayment::whereMonth('due_date','<=', $now)
-                                ->whereYear('due_date', '<=', $year_now)
-                                ->whereNotNull('payment_date')
-                                ->where('payment_status', 'Paid')
+                                ->whereYear('due_date', $year_now)
+                                ->whereNull('payment_date')
+                                ->where('payment_status', 'Unpaid')
                                 ->whereHas('booking', function($subquery) {
                                      $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
                                 })
-                                ->sum('total_paid');
+                                ->count();
+
+        $installment_paid = BookingPayment::whereMonth('due_date', $now)
+                              ->whereYear('due_date', $year_now)
+                              ->whereNotNull('payment_date')
+                              ->where('payment_status', 'Paid')
+                              ->whereHas('booking', function($subquery) {
+                                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                                })
+                              ->count();
+
+        $unpaid = BookingPayment::whereMonth('due_date','<=', $now)
+                 ->whereYear('due_date', '<=', $year_now)        
+                 ->whereNull('payment_date')
+                 ->where('payment_status', 'Unpaid')
+                 ->whereHas('booking', function($subquery) {
+                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                 })
+                 ->sum('installment');
+
+        $paid = BookingPayment::whereMonth('due_date','<=', $now)
+                ->whereYear('due_date', '<=', $year_now)
+                ->whereNotNull('payment_date')
+                ->where('payment_status', 'Paid')
+                ->whereHas('booking', function($subquery) {
+                     $subquery->whereIn('booking_status',['cicilan','cicilan_sp3k']);
+                })
+                ->sum('total_paid');
 
         $ajb_schedule = AkteJualBeli::with('booking', 'booking.unit', 'booking.client')->whereNotNull('ajb_date')->whereNotNull('ajb_time')->get();
         $collection_ajb = collect($ajb_schedule)->transform(function($item) {

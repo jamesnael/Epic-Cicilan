@@ -82,7 +82,7 @@ class InstallmentUnitController extends Controller
                 "value" => 'payment_type',
             ],
             [
-                "text" => 'Total Bayar',
+                "text" => 'Cicilan Per Bulan',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'installment',
@@ -92,6 +92,12 @@ class InstallmentUnitController extends Controller
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'due_date',
+            ],
+            [
+                "text" => 'Status',
+                "align" => 'center',
+                "sortable" => false,
+                "value" => 'status',
             ],
             [
                 "text" => 'Sales',
@@ -146,7 +152,7 @@ class InstallmentUnitController extends Controller
                 "value" => 'payment_type',
             ],
             [
-                "text" => 'Total Bayar',
+                "text" => 'Cicilan Per Bulan',
                 "align" => 'center',
                 "sortable" => false,
                 "value" => 'installment',
@@ -525,6 +531,33 @@ class InstallmentUnitController extends Controller
 
         $data = $query->whereIn('booking_status',['cicilan','cicilan_sp3k'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            $now      = \Carbon\Carbon::now()->format('m');
+            $year_now = \Carbon\Carbon::now()->format('Y');
+            $date_now = \Carbon\Carbon::now()->format('d');
+            $payments = BookingPayment::where('booking_id', $item->id)->whereMonth('due_date', $now)->whereYear('due_date', $year_now)->whereNotIn('payment', ['UTJ + NUP', 'Akad Kredit'])->first();
+            if ($payments) {
+                if (!empty($payments->payment_date)) {
+                    $status = "Sudah dibayar";
+                } else {
+                    if ($payments->notification_mail_sp1 == 1) {
+                        $status = 'SP 1';
+                    } else if ($payments->notification_mail_sp2 == 1 && $payments->notification_mail_sp1 == 1) {
+                        $status = 'SP 2';
+                    } else if ($payments->notification_mail_sp3 == 1 && $payments->notification_mail_sp2 == 1 && $payments->notification_mail_sp1 == 1) {
+                        $status = 'SP 3';
+                    } else {
+                        $late_payment = $date_now - date('d', strtotime($payments->due_date));
+                        if ($late_payment > 0) {
+                            $status = "Telat bayar";
+                        } else {
+                            $status = "Belum dibayar";
+                        }
+                    }
+                }
+            } else {
+                $status = "-";
+            }
+            $item->status = $status;
             $item->client_number = $item->client->client_number;
             $item->client_name = $item->client->client_name;
             $item->unit_number = $item->unit->unit_number .'/'. $item->unit->unit_block;
