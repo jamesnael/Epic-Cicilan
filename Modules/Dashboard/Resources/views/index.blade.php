@@ -28,7 +28,7 @@
 										        >
 										        </v-badge>
 					        	        		<v-btn text small href="{{ route('document-admin.index') }}">
-												 	Dokumen pengajuan klien yang belum di verifikasi
+												 	Dokumen pengajuan belum disetujui
 												</v-btn>
 											</v-list-item-title>
 					        	      	</v-list-item-content>
@@ -43,7 +43,7 @@
 										        >
 										        </v-badge>
 										        <v-btn text small href="{{ route('akad.index') }}">
-						        	        		Akad KPR yang belum dibuat jadwal
+						        	        		Akad KPR yang masih pending
 						        	        	</v-btn>
 						        	        </v-list-item-title>
 					        	      	</v-list-item-content>
@@ -58,7 +58,7 @@
 										        >
 										        </v-badge>
 										        <v-btn text small href="{{ route('ajb.index') }}">
-							        	        	AJB yang belum dibuat jadwal
+							        	        	AJB yang masih pending
 							        	        </v-btn>
 						        	        </v-list-item-title>
 					        	      	</v-list-item-content>
@@ -73,7 +73,7 @@
 										        >
 										        </v-badge>
 										        <v-btn text small href="{{ route('handover.index') }}">
-											    	Serah terima unit yang belum dibuat jadwal
+											    	Serah terima unit yang masih pending
 											    </v-btn>
 										    </v-list-item-title>
 					        	      	</v-list-item-content>
@@ -88,7 +88,7 @@
 										        >
 										        </v-badge>
 										        <v-btn text small href="{{ route('installment-unit.index') }}">
-											    	Pembayaran cicilan unit yang sudah jatuh tempo
+											    	Pembayaran cicilan yang jatuh tempo
 											    </v-btn>	
 										    </v-list-item-title>
 					        	      	</v-list-item-content>
