@@ -531,14 +531,15 @@ class InstallmentUnitController extends Controller
 
         $data = $query->whereIn('booking_status',['cicilan','cicilan_sp3k'])->paginate($request->input('paginate') == '-1' ? 100000 : $request->input('paginate'));
         $data->getCollection()->transform(function($item) {
+            date_default_timezone_set('Asia/Jakarta');
             $now      = \Carbon\Carbon::now()->format('m');
             $year_now = \Carbon\Carbon::now()->format('Y');
-            $date_now = \Carbon\Carbon::now()->format('d');
-            $payments = BookingPayment::where('booking_id', $item->id)->whereMonth('due_date', $now)->whereYear('due_date', $year_now)->whereNotIn('payment', ['UTJ + NUP', 'Akad Kredit'])->first();
+            $date_now = \Carbon\Carbon::now()->format('Y-m-d');
+            $payments = BookingPayment::where('booking_id', $item->id)->where('payment_status', 'Unpaid')->whereNotIn('payment', ['UTJ + NUP', 'Akad Kredit'])->first();
             if ($payments) {
-                if (!empty($payments->payment_date)) {
-                    $status = "Sudah dibayar";
-                } else {
+                $count_due_date = \Carbon\Carbon::parse(date('Y-m-d'))->diffInDays(\Carbon\Carbon::parse($payments->due_date),false);
+                if ($count_due_date < 30)
+                {
                     if ($payments->notification_mail_sp1 == 1) {
                         $status = 'SP 1';
                     } else if ($payments->notification_mail_sp2 == 1 && $payments->notification_mail_sp1 == 1) {
@@ -546,16 +547,18 @@ class InstallmentUnitController extends Controller
                     } else if ($payments->notification_mail_sp3 == 1 && $payments->notification_mail_sp2 == 1 && $payments->notification_mail_sp1 == 1) {
                         $status = 'SP 3';
                     } else {
-                        $late_payment = $date_now - date('d', strtotime($payments->due_date));
+                        $late_payment = \Carbon\Carbon::parse($payments->due_date)->diffInDays(\Carbon\Carbon::now()->format('Y-m-d'),false);
                         if ($late_payment > 0) {
                             $status = "Telat bayar";
                         } else {
                             $status = "Belum dibayar";
                         }
                     }
+                } else {
+                    $status = "Sudah dibayar";
                 }
             } else {
-                $status = "-";
+                $status = "Sudah dibayar";
             }
             $item->status = $status;
             $item->client_number = $item->client->client_number;
