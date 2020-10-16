@@ -64,7 +64,7 @@ class Sales extends Model
     public function getTotalPointAttribute()
     {
         $collection = collect($this->booking)->sum(function($item) {
-            if($item->booking_status != 'dokumen' && $item->booking_status != 'spr'){
+            if($item->booking_status != 'dokumen' && $item->booking_status != 'spr' && $item->booking_status != 'spr_cancel' && $item->booking_status != 'dokumen_cancel'){
                 if (!empty($item->unit->points)) {
                     return $item->unit->points;
                 }
