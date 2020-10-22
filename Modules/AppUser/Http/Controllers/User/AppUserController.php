@@ -101,6 +101,9 @@ class AppUserController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->role_id == '5') {
+                $request->merge(['is_admin' => true]);
+            }
             $data = User::create($request->all());
             DB::commit();
             return response_json(true, null, 'Data user berhasil disimpan.', $data);
@@ -143,6 +146,9 @@ class AppUserController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->role_id == '5') {
+                $request->merge(['is_admin' => true]);
+            }
             $data = $user->update($request->all());
             DB::commit();
             return response_json(true, null, 'Data user berhasil disimpan.', $data);
@@ -196,7 +202,7 @@ class AppUserController extends Controller
     public function getTableData(Request $request)
     {
         // $query = User::doesntHave('sales')->with('role');
-        $query = User::with('role');
+        $query = User::with('role')->orderBy('created_at', 'DESC');
 
         if ($request->input('search')) {
             $generalSearch = $request->input('search');
