@@ -14,6 +14,7 @@ use Modules\RewardPoint\Entities\Point;
 use Modules\Installment\Entities\TipeProgram;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 class BookingController extends Controller
 {
@@ -419,7 +420,7 @@ class BookingController extends Controller
         return [
             'sales' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator')->get()->transform(function($item){
                         $item->value = $item->id;
-                        $item->text = $item->user->full_name;
+                        $item->text = $item->user->full_name ?? '';
                         $item->agency_name = $item->agency->agency_name ?? '';
                         $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
                         $item->main_coordinator = $item->main_coordinator->full_name ?? '';
@@ -453,6 +454,46 @@ class BookingController extends Controller
             return response_json(true, null, 'Sukses mengambil data.', $this->getHelper());
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
+        }
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     * @return Response
+     */
+    public function pageImport()
+    {   
+        $this->breadcrumbs[] = ['href' => route('booking.index'), 'text' => 'Import Data Booking'];
+
+        return view('installment::booking.import', [
+            'page' => $this,
+        ]);
+    }
+
+    /**
+     * Import Data Booking
+     * @return Response
+     */
+    public function importBooking(Request $request)
+    {   
+        ini_set('memory_limit', '1024M');
+        set_time_limit(120);
+        DB::beginTransaction();
+        try {
+
+
+            if ($request->hasFile('file_import')) {
+                Excel::import(new \App\Imports\HandleBookingImport, $request->file('file_import'));
+            } else {
+                return response_json(true, null, 'Tidak ditemukan file import');
+            }
+
+            DB::commit();
+            return response_json(true, null, 'Import data booking berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat menyimpan data, silahkan dicoba kembali beberapa saat lagi.');
         }
     }
 }

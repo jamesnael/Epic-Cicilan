@@ -31,6 +31,8 @@
 		add-new-uri="{{ route('booking.create') }}"
 		add-new-text="Tambah"
 		add-new-color="light-blue lighten-2"
+		import-uri="{{ route('page-import') }}"
+		import-text="Import"
 		edit-uri="booking.edit"
 		edit-uri-parameter="slug"
 		edit-text="Ubah"

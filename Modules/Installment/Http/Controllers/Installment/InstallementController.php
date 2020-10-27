@@ -191,7 +191,7 @@ class InstallementController extends Controller
         return [
             'sales' => Sales::with('user','agency', 'main_coordinator', 'regional_coordinator')->get()->transform(function($item){
                         $item->value = $item->id;
-                        $item->text = $item->user->full_name;
+                        $item->text = $item->user->full_name ?? '';
                         $item->agency_name = $item->agency->agency_name ?? '';
                         $item->regional_coordinator = $item->regional_coordinator->full_name ?? '';
                         $item->main_coordinator = $item->main_coordinator->full_name ?? '';

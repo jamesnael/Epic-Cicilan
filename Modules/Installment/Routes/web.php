@@ -28,6 +28,8 @@ Route::group(['namespace' => 'Client'], function() {
 Route::group(['namespace' => 'Booking'], function() {
 	Route::get('booking/table', 'BookingController@table')->name('booking.table');
 	Route::get('booking/{booking}/data', 'BookingController@data')->name('booking.data');
+	Route::get('booking/import', 'BookingController@pageImport')->name('page-import');
+	Route::post('booking/import', 'BookingController@importBooking')->name('import-booking');
 	Route::resource('booking', 'BookingController');
 
 	Route::get('cancel-booking', 'CancelBookingController@index')->name('cancel-booking.index');

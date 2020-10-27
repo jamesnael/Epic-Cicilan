@@ -41,6 +41,18 @@
 	    		    <span class="hidden-xs-only ml-2">@{{ addNewText }}</span>
 			    </v-btn>
 		    @endif
+		    @if (Auth::user()->is_admin || in_array(str_replace('index', 'create', Route::currentRouteName()), Auth::user()->role ? Auth::user()->role->user_access : []))
+		    	<v-btn
+	    			v-if="importUri"
+	    			:href="importUri"
+	    			class="ma-2 white--text"
+	    		    elevation="5"
+	    		    :color="importColor"
+	    		    >
+	    		    <v-icon>@{{ importIcon }}</v-icon>
+	    		    <span class="hidden-xs-only ml-2">@{{ importText }}</span>
+			    </v-btn>
+		    @endif
     	</v-col>
 	</v-row>
 
