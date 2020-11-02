@@ -29,6 +29,17 @@
 	    					    		  ></v-file-input>
 	    				    		</validation-provider>
 						    	</v-col>
+						    	<v-col
+						      		class="mr-4"
+				    		        cols="12"a
+				    		        md="12">
+								    <a
+								    	href="{{ asset('storage/app/public/template_import.xlsx') }}"
+	    					      		color="info" 
+	    					     	>
+	    			    		      	Download Template Import
+	    			    		    </a>
+	    			    		</v-col>
 						    </v-row>
 				    		<v-btn
 					    		class="mt-4 mr-4 white--text"

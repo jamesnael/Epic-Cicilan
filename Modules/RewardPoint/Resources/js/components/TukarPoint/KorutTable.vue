@@ -52,6 +52,22 @@ export default {
             type: String,
             default: "info"
         },
+        importText: {
+            type: String,
+            default: "Import"
+        },
+        importIcon: {
+            type: String,
+            default: "mdi-application-import"
+        },
+        importUri: {
+            type: String,
+            default: ""
+        },
+        importColor: {
+            type: String,
+            default: "warning"
+        },
         itemsPerPageAllText: {
             type: String,
             default: "All"

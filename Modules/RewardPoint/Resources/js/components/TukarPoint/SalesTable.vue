@@ -36,6 +36,22 @@ export default {
             type: String,
             default: "mdi-sync"
         },
+        importText: {
+            type: String,
+            default: "Import"
+        },
+        importIcon: {
+            type: String,
+            default: "mdi-application-import"
+        },
+        importUri: {
+            type: String,
+            default: ""
+        },
+        importColor: {
+            type: String,
+            default: "warning"
+        },
         addNewText: {
             type: String,
             default: "Add New"
