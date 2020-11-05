@@ -241,7 +241,11 @@
 						<tr>
 							<td><div class="text-center">{{ $no++ }}</div></td>
 							<td><div class="text-center">{{ $payment->payment }}</div></td>
+							@if($payment->payment != 'Akad Kredit')
 							<td><div class="text-center">{{ \Carbon\Carbon::parse($payment->due_date)->locale('id')->translatedFormat('d F Y') }}</div></td>
+							@else
+								<td></td>
+							@endif
 							<td><div class="text-center">Rp. {{ format_money($payment->installment) }}</div></td>
 							<td><div class="text-center">Rp. {{ format_money($payment->credit) }}</div></td>
 						</tr>
