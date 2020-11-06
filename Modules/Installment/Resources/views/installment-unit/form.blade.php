@@ -447,9 +447,144 @@
                   @{{item.payment_method}}
                 </template>
                 <template v-slot:item.actions="{ item }">
-                  <form method="post" id="formEl" enctype="multipart/form-data" ref="post-form">
-                    <span v-if="item.payment == 'Uang Tanda Jadi' || item.payment == 'Akad Kredit' || item.payment_date"></span>
-                    <v-dialog v-else v-model="item.dialog" persistent max-width="700">
+                  <form method="post" id="formEl" enctype="multipart/form-data" ref="print-form">
+                    <!-- <span v-if="item.payment == 'Uang Tanda Jadi' || item.payment == 'Akad Kredit'"></span> -->
+                    <v-dialog v-if="item.payment_date && item.payment != 'UTJ + NUP' && item.payment != 'Akad Kredit'" v-model="item.dialog" persistent max-width="700">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                color="warning"
+                                small
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                Detail
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title class="headline">@{{item.payment}}</v-card-title>
+                            <v-divider></v-divider>
+                            <v-card-text>
+                                <v-card
+                                    class="mt-5"
+                                    elevation="5">
+                                    <v-list dense>
+                                        <v-list-item>
+                                            <v-list-item-content>Jatuh Tempo:</v-list-item-content>
+                                            <v-list-item-content class="align-end">@{{ reformatDateTime(item.due_date, 'YYYY-MM-DD', 'DD MMMM YYYY') }}</v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-list-item>
+                                            <v-list-item-content>Angsuran:</v-list-item-content>
+                                            <v-list-item-content class="align-end">@{{ number_format(item.installment) }}</v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-list-item>
+                                            <v-list-item-content>Telat (Hari):</v-list-item-content>
+                                            <v-list-item-content class="align-end">@{{ item.number_of_delays }}</v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-list-item>
+                                            <v-list-item-content>Denda:</v-list-item-content>
+                                            <v-list-item-content class="align-end">@{{ number_format(item.fine * item.number_of_delays) }}</v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-divider></v-divider>
+
+                                        <v-list-item>
+                                            <v-list-item-content><strong>Total Pembayaran:</strong></v-list-item-content>
+                                            <v-list-item-content class="align-end"><strong>@{{ number_format(item.installment + item.fine * item.number_of_delays) }}</strong></v-list-item-content>
+                                            {{-- <v-text-field
+                                               v-show=false
+                                               :value="item.installment + item.fine * item.number_of_delays"
+                                               name="total"
+                                               v-model="total"
+                                               vid="confirmation">
+                                            </v-text-field> --}}
+                                        </v-list-item>
+
+                                    </v-list>
+                                </v-card>
+                                <v-card
+                                    class="mt-5"
+                                    elevation="5">
+                                    <v-list dense>
+                                        <v-list-item>
+                                            <v-list-item-content>Tanggal Pembayaran :</v-list-item-content>
+                                            <v-list-item-content>
+                                                <v-text-field
+                                                    :value="reformatDateTime(item.payment_date, 'YYYY-MM-DD', 'DD MMMM YYYY')"
+                                                    hint="* harus diisi"
+                                                    :persistent-hint="true"
+                                                    :readonly="true"
+                                                ></v-text-field>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content>Jumlah Pembayaran :</v-list-item-content>
+                                            <v-list-item-content>
+                                              <validation-provider v-slot="{ errors }" name="Jumlah pembayaran" rules="required|numeric">
+                                                <v-text-field
+                                                    v-model="item.total_paid"
+                                                    name="total_paid"
+                                                    hint="* harus diisi"
+                                                    :persistent-hint="true"
+                                                    :error-messages="errors"
+                                                    :readonly="true"
+                                                >
+                                                </v-text-field>
+                                                <small class="form-text text-muted">Rp @{{ item.total_paid ? number_format(item.total_paid) : 0 }}</small>
+                                              </validation-provider>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content>Cara Pembayaran : </v-list-item-content>
+                                            <v-list-item-content>
+                                                <v-text-field
+                                                    :value="item.payment_method"
+                                                    hint="* harus diisi"
+                                                    :persistent-hint="true"
+                                                    :readonly="true"
+                                                ></v-text-field>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-list-item>
+                                            <v-list-item-content>Keterangan :</v-list-item-content>
+                                            <v-list-item-content>
+                                                <v-textarea
+                                                    v-model="item.description"
+                                                    :disabled="field_state"
+                                                    auto-grow
+                                                    filled
+                                                    rows="3"
+                                                    name="description"
+                                                    :readonly="true"
+                                                >
+                                                </v-textarea>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-card>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn text @click="item.dialog = false" :disabled="field_state">Tutup</v-btn>
+                                <v-btn
+                                    color="warning"
+                                    :href="ziggy('installment-unit.print', item.slug).url()"
+                                    target="_blank"
+                                >
+                                    Cetak Kuitansi
+                                    <template v-slot:loader>
+                                        <span class="custom-loader">
+                                            <v-icon light>mdi-sync</v-icon>
+                                        </span>
+                                    </template>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <v-dialog v-if="!item.payment_date && item.payment != 'UTJ + NUP' && item.payment != 'Akad Kredit'" v-model="item.dialog" persistent max-width="700">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 color="primary"

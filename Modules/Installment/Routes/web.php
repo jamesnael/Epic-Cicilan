@@ -68,6 +68,7 @@ Route::group(['namespace' => 'Installment'], function() {
 	Route::get('cicilan-unit/{installment_unit}/data', 'InstallmentUnitController@data')->name('installment-unit.data');
 	Route::get('cicilan-unit/{installment_unit}/ubah', 'InstallmentUnitController@edit')->name('installment-unit.edit');
 	Route::get('cicilan-unit/{installment_unit}/lunas', 'InstallmentUnitController@editLunas')->name('installment-unit.edit.lunas');
+	Route::get('cicilan-unit/{installment_unit}/print_receipt', 'InstallmentUnitController@print_receipt')->name('installment-unit.print');
 	
 	Route::put('cicilan-unit/{installment_unit}/{payment}/paid', 'InstallmentUnitController@payment')->name('manual-payment');
 	Route::put('cicilan-unit/{installment_unit}/cancel', 'InstallmentUnitController@cancelInstallment')->name('installment-unit.cancel');

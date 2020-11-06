@@ -215,18 +215,13 @@
 					</v-row>
 			        <v-card
 			            elevation="5"
-			            >
+			            class="my-5"
+		            >
 			            <v-card-title>
 			                Informasi Pembayaran Cicilan Bulan {{\Carbon\Carbon::now()->locale('id')->translatedFormat('F Y')}}
 			            </v-card-title>
 
 		            	@php
-		            		$page->table_headers[] = [
-		                        "text" => config('app.locale', 'en') == 'en' ? 'Actions' : 'Aksi',
-		                        "align" => 'center',
-		                        "sortable" => false,
-		                        "value" => 'actions',
-		                    ];
 		                    $page->table_headers = collect($page->table_headers)->prepend([
 		                        "text" => '#',
 		                        "align" => 'center',
@@ -249,9 +244,6 @@
 		            					items-per-page-all-text="Semua"
 		            					items-per-page-text="Tampilkan"
 		            					page-text-locale="id"
-		            					edit-uri="installment-unit.edit"
-		            					edit-uri-parameter="slug"
-		            					edit-text="Edit Serah Terima Unit"
 		            					>
 		            					
 		            					@include('components.table')
@@ -269,9 +261,6 @@
 		            					items-per-page-all-text="Semua"
 		            					items-per-page-text="Tampilkan"
 		            					page-text-locale="id"
-		            					edit-uri="installment-unit.edit"
-		            					edit-uri-parameter="slug"
-		            					edit-text="Edit Serah Terima Unit"
 		            					>
 		            					
 		            					@include('components.table')

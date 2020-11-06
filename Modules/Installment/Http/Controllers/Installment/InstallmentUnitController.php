@@ -13,6 +13,7 @@ use Modules\Installment\Entities\Client;
 use Modules\SalesAgent\Entities\Sales;
 use Modules\Installment\Entities\BookingPayment;
 use Modules\Core\Entities\PaymentMethod;
+use PDF;
 
 class InstallmentUnitController extends Controller
 {
@@ -745,5 +746,13 @@ class InstallmentUnitController extends Controller
         } catch (Exception $e) {
             return response_json(false, $e->getMessage() . ' on file ' . $e->getFile() . ' on line number ' . $e->getLine(), 'Terdapat kesalahan saat mengambil data, silahkan dicoba kembali beberapa saat lagi.');
         }
+    }
+
+    public function print_receipt(BookingPayment $installment_unit)
+    {
+        // return view('installment::installment-unit.receipt', ['data' => $installment_unit]);
+        $date = \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y');
+        $pdf  = PDF::loadView('installment::installment-unit.receipt', ['data' => $installment_unit])->setPaper('a5', 'landscape')->setWarnings(false);
+        return $pdf->download('Payment Receipt ' . $installment_unit->booking->client->client_name . '.pdf');
     }
 }

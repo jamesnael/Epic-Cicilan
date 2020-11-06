@@ -12,6 +12,15 @@ if (! function_exists('format_money')) {
     }
 }
 
+if (! function_exists('numFormatToWords')) {
+    function numFormatToWords($num = 0)
+    {
+        $f = new \NumberFormatter("id", \NumberFormatter::SPELLOUT);
+        $f->setTextAttribute(\NumberFormatter::DEFAULT_RULESET, "%spellout-numbering-verbose");
+        return $f->format($num);
+    }
+}
+
 if (! function_exists('clean_string')) {
     function clean_string($string)
     {
