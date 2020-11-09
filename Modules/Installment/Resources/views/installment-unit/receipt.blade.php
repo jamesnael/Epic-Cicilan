@@ -142,7 +142,7 @@
                                     <td width="25%" class="border" align="left">
                                         <span class="mg-l-10">IDR</span>
                                         <span class="text-right">
-                                            {{ format_money($data->credit) }}
+                                            {{ format_money($data->total_paid) }}
                                         </span>
                                     </td>
                                     <td width="5%"></td>
@@ -159,7 +159,11 @@
                                     </td>
                                     <td width="3%" align="center">:</td>
                                     <td width="85%" class="border-bottom">
-                                        <span>{{ucfirst(numFormatToWords($data->credit))}} rupiah</span>
+                                        @php
+                                            $paid = ucfirst(numFormatToWords($data->total_paid));
+                                            $total_paid = str_replace('juts', 'juta', $paid);
+                                        @endphp
+                                        <span>{{ $paid }} rupiah</span>
                                     </td>
                                     <td width="5%"></td>
                                 </tr>

@@ -753,6 +753,6 @@ class InstallmentUnitController extends Controller
         // return view('installment::installment-unit.receipt', ['data' => $installment_unit]);
         $date = \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y');
         $pdf  = PDF::loadView('installment::installment-unit.receipt', ['data' => $installment_unit])->setPaper('a5', 'landscape')->setWarnings(false);
-        return $pdf->download('Payment Receipt ' . $installment_unit->booking->client->client_name . '.pdf');
+        return $pdf->download('Payment Receipt ' . $installment_unit->booking->client->client_name . ' - ' . $installment_unit->payment .'.pdf');
     }
 }
